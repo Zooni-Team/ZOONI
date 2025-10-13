@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Zooni")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4de92ef17b024e3b9951923018837bbbfc174d50")]
 [assembly: System.Reflection.AssemblyProductAttribute("Zooni")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Zooni")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
