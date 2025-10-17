@@ -9,187 +9,187 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = Zooni
 build_property.RootNamespace = Zooni
-build_property.ProjectDir = c:\Users\49092919\ZOONI\
+build_property.ProjectDir = c:\Users\49317356\ZOONI\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = c:\Users\49092919\ZOONI
+build_property.MSBuildProjectDirectory = c:\Users\49317356\ZOONI
 build_property._RazorSourceGeneratorDebug = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Calendario.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Calendario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDYWxlbmRhcmlvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/ChatSevicioContactar.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/ChatSevicioContactar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGF0U2V2aWNpb0NvbnRhY3Rhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/ChatsListado.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/ChatsListado.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaGF0c0xpc3RhZG8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/CirculoConfianza.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/CirculoConfianza.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDaXJjdWxvQ29uZmlhbnphLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Closet.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Closet.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDbG9zZXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/CompraMetodoPago.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/CompraMetodoPago.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxDb21wcmFNZXRvZG9QYWdvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/FichaComportamiento.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/FichaComportamiento.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaWNoYUNvbXBvcnRhbWllbnRvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/FichaConsejos.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/FichaConsejos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaWNoYUNvbnNlam9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/FichaConsultas.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/FichaConsultas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaWNoYUNvbnN1bHRhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/FichaDietas.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/FichaDietas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaWNoYURpZXRhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/FichaMedica.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/FichaMedica.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaWNoYU1lZGljYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/FichaModoViaje.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/FichaModoViaje.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaWNoYU1vZG9WaWFqZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/FichaOtros.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/FichaOtros.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaWNoYU90cm9zLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/FichaTratamientos.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/FichaTratamientos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaWNoYVRyYXRhbWllbnRvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/FichaVacunas.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/FichaVacunas.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxGaWNoYVZhY3VuYXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Index.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Notificaciones.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Notificaciones.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxOb3RpZmljYWNpb25lcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Pefil.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Pefil.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQZWZpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/PerfilPaseador.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/PerfilPaseador.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQZXJmaWxQYXNlYWRvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/PerfilPeluquero.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/PerfilPeluquero.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQZXJmaWxQZWx1cXVlcm8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/PerfilVeterinario.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/PerfilVeterinario.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQZXJmaWxWZXRlcmluYXJpby5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/ProductoCompra.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/ProductoCompra.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcm9kdWN0b0NvbXByYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Registro1.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Registro1.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3RybzEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Registro2.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Registro2.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3RybzIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Registro3.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Registro3.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3RybzMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Registro4.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Registro4.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3RybzQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Registro5.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Registro5.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3RybzUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Registro6.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Registro6.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3RybzYuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Registro7.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Registro7.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxSZWdpc3RybzcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/ServicioPaseadores.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/ServicioPaseadores.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZXJ2aWNpb1Bhc2VhZG9yZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/ServicioPeluqueros.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/ServicioPeluqueros.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZXJ2aWNpb1BlbHVxdWVyb3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/Servicios.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/Servicios.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZXJ2aWNpb3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/ServicioVeterinarios.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/ServicioVeterinarios.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxTZXJ2aWNpb1ZldGVyaW5hcmlvcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/TiendaAlimentos.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/TiendaAlimentos.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaWVuZGFBbGltZW50b3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/TiendaEquipaje.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/TiendaEquipaje.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaWVuZGFFcXVpcGFqZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/TiendaHogar.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/TiendaHogar.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaWVuZGFIb2dhci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/TiendaInicio.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/TiendaInicio.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaWVuZGFJbmljaW8uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/TiendaJuguetes.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/TiendaJuguetes.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaWVuZGFKdWd1ZXRlcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/TiendaUtileria.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/TiendaUtileria.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaWVuZGFVdGlsZXJpYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Home/TiendaVivienda.cshtml]
+[c:/Users/49317356/ZOONI/Views/Home/TiendaVivienda.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaWVuZGFWaXZpZW5kYS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Shared/_Layout.cshtml]
+[c:/Users/49317356/ZOONI/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/Shared/_ValidationScriptsPartial.cshtml]
+[c:/Users/49317356/ZOONI/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/_ViewImports.cshtml]
+[c:/Users/49317356/ZOONI/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[c:/Users/49092919/ZOONI/Views/_ViewStart.cshtml]
+[c:/Users/49317356/ZOONI/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

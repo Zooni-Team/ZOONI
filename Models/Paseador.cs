@@ -12,7 +12,7 @@ public class Paseador
 
     public decimal Precio_Hora { get; set; }
 
-    public decimal Valoracion_Promedio { get; set; }
+    public decimal Estrellas { get; set; }
 
     public int Cantidad_Paseos { get; set; }
 
