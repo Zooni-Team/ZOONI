@@ -13,7 +13,7 @@
 
 ## 🐾 Descripción General
 
-**Zooni** (anteriormente *LaMasco*, ahora **Kani**) es una app integral que conecta a **dueños de mascotas** con **veterinarios, paseadores, peluquerías y cuidadores**, unificando todo el cuidado animal en un solo lugar.  
+**Zooni** (anteriormente Kani) es una app integral que conecta a **dueños de mascotas** con **veterinarios, paseadores, peluquerías y cuidadores**, unificando todo el cuidado animal en un solo lugar.  
 Combina **tecnología, empatía y diseño emocional**, convirtiendo el cuidado responsable en una experiencia divertida, confiable y personalizada.
 
 > “Porque cuidar a tu mascota no debería ser un caos de chats y papeles, sino un mimo digital bien hecho.”
@@ -67,15 +67,15 @@ Esto genera:
 
 ---
 
-## 🧩 Ecosistema Kani (Zooni)
+## 🧩 Ecosistema Zooni
 
 Zooni evoluciona hacia un **hub completo de bienestar animal**, con módulos ampliables:
 
-- 🧬 **Kani Empresas:** gestión integral para clínicas y guarderías.  
-- 🐾 **Kani Refugios:** fichas adoptables y seguimiento post-adopción.  
-- 💼 **Kani Freelancers:** paseadores y cuidadores con reputación gamificada.  
-- 🏖️ **Kani Turismo Pet-Friendly:** mapa de lugares amigables con mascotas.  
-- 🩹 **Kani Seguros:** microseguros veterinarios activables desde la app.  
+- 🧬 **Zooni Empresas:** gestión integral para clínicas y guarderías.  
+- 🐾 **Zooni Refugios:** fichas adoptables y seguimiento post-adopción.  
+- 💼 **Zooni Freelancers:** paseadores y cuidadores con reputación gamificada.  
+- 🏖️ **Zooni Turismo Pet-Friendly:** mapa de lugares amigables con mascotas.  
+- 🩹 **Zooni Seguros:** microseguros veterinarios activables desde la app.  
 
 ---
 
@@ -91,7 +91,7 @@ Comparación con competidores principales:
 | VetHelp | Media | ✅ | ❌ | ❌ |
 | PetBacker | ✅ | ✅ | ❌ | ✅ |
 | Vet Cloud | ✅ | ❌ | ❌ | ❌ |
-| **Zooni (Kani)** | ✅ | ✅ | ✅ | ✅ |
+| **Zooni** | ✅ | ✅ | ✅ | ✅ |
 
 ---
 
