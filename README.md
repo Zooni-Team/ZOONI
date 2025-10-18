@@ -137,7 +137,7 @@ Cada mascota tiene una historia, y nuestra app se asegura de que esté **contada
 ## 🐶 Demo Visual
 
 <div align="center">
-  <img src="smoking1.png" width="220" alt="Zooni mascot con smoking"/>
+<img width="180" height="1536" alt="SMOKING1" src="https://github.com/user-attachments/assets/69924974-655b-4a5b-afb9-c888982d7896" />
   <p><i>La mascota de Zooni, elegante y lista para revolucionar el petcare.</i></p>
 </div>
 
