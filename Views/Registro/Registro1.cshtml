@@ -70,6 +70,7 @@
             flex-direction: column;
             align-items: center;
             gap: 14px;
+            margin-bottom: 12px;
         }
 
         input {
@@ -89,6 +90,7 @@
         }
 
         .btn-principal {
+            display: inline-block;
             width: 100%;
             max-width: 320px;
             background-color: var(--amarillo);
@@ -97,14 +99,17 @@
             font-weight: 700;
             font-size: 18px;
             color: #5b4500;
+            text-align: center;
             padding: 14px 0;
             cursor: pointer;
             box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
-            transition: background 0.2s ease;
+            transition: background 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
         }
 
         .btn-principal:hover {
             background-color: var(--amarillo-hover);
+            transform: scale(1.02);
         }
 
         .divider {
@@ -119,7 +124,7 @@
             justify-content: center;
             align-items: center;
             gap: 30px;
-            margin: 5px 0 12px;
+            margin-top: 10px;
         }
 
         .socials img {
@@ -144,6 +149,32 @@
             color: var(--marron);
             font-weight: 700;
         }
+
+        @@media (max-width: 768px) {
+    h1 {
+        font-size: 64px;
+    }
+    h2 {
+        font-size: 18px;
+    }
+    .btn-principal {
+        font-size: 16px;
+    }
+}
+
+@@media (max-width: 480px) {
+    h1 {
+        font-size: 54px;
+    }
+    .container {
+        width: 90%;
+        padding: 0 10px;
+    }
+    input {
+        padding: 12px;
+    }
+}
+
     </style>
 </head>
 
@@ -151,28 +182,47 @@
     <div class="container">
         <h1>Zooni</h1>
 
-        <!-- 🐾 Imagen ilustración principal -->
+        <!-- Imagen de bienvenida -->
         <img src="~/img/mascotas-bienvenida.png" alt="Zooni mascotas" class="illustration" />
 
         <h2>¡Bienvenido a Zooni!</h2>
 
-        <!-- 🐾 Formulario -->
+        <!-- 🐾 Botón de crear cuenta (link corregido) -->
+<a id="crearCuentaBtn" class="btn-principal">Crear cuenta</a>
+
+<script>
+document.getElementById("crearCuentaBtn").addEventListener("click", async () => {
+    try {
+        const response = await fetch("/Registro/CrearUsuarioRapido", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+        });
+        const result = await response.json();
+
+        if (result.success) {
+            window.location.href = "/Registro/Registro2"; // Redirige al paso 2
+        } else {
+            alert("Hubo un error al crear el usuario. Intenta de nuevo.");
+        }
+    } catch (err) {
+        console.error(err);
+        alert("Error de conexión con el servidor.");
+    }
+});
+</script>
+
+
+        <!-- 🐾 Formulario de inicio de sesión -->
         <form asp-action="Registro1" asp-controller="Registro" method="post">
             <input asp-for="Email" placeholder="Usuario / Email / Teléfono" required />
             <input asp-for="Password" placeholder="Contraseña" type="password" required />
-            <button type="submit" class="btn-principal">Crear cuenta</button>
+            <button type="submit" class="btn-principal">Iniciar sesión</button>
         </form>
-
-        <div class="divider">O iniciá sesión</div>
 
         <div class="socials">
             <img src="~/img/google-icon.png" alt="Google" />
             <img src="~/img/facebook-icon.png" alt="Facebook" />
             <img src="~/img/apple-icon.png" alt="Apple" />
-        </div>
-
-        <div class="link">
-            ¿Ya tenés cuenta? <a asp-controller="Account" asp-action="Login">Iniciá sesión</a>
         </div>
     </div>
 </body>

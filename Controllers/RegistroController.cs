@@ -14,9 +14,9 @@ namespace Zooni.Controllers
             _context = context;
         }
 
-        // ============================
-        // ✅ PASO 1: REGISTRO DE USUARIO
-        // ============================
+        // ==========================
+        // ✅ PASO 1: REGISTRO USUARIO
+        // ==========================
 
         [HttpGet]
         public IActionResult Registro1()
@@ -31,7 +31,6 @@ namespace Zooni.Controllers
             if (!ModelState.IsValid)
                 return View(model);
 
-            // Verificar si ya existe un usuario con ese email
             bool existe = await _context.Usuario.AnyAsync(u => u.Email == model.Email);
             if (existe)
             {
@@ -39,24 +38,46 @@ namespace Zooni.Controllers
                 return View(model);
             }
 
-            // Guardar usuario nuevo
             model.Fecha_Registro = DateTime.Now;
             model.Estado = true;
 
             _context.Usuario.Add(model);
             await _context.SaveChangesAsync();
 
-            // Guardar sesión para los próximos pasos
             HttpContext.Session.SetInt32("UserId", model.Id);
             HttpContext.Session.SetString("UserEmail", model.Email);
 
-            // Redirigir al paso 2 (mascota)
             return RedirectToAction(nameof(Registro2));
         }
 
-        // ============================
-        // ✅ PASO 2: REGISTRO DE MASCOTA
-        // ============================
+        // =========================================================
+        // 🟡 CREAR USUARIO RÁPIDO (para el botón "Crear cuenta")
+        // =========================================================
+        [HttpPost]
+        public async Task<IActionResult> CrearUsuarioRapido()
+        {
+            var user = new User
+            {
+                Nombre = "Nuevo",
+                Apellido = "Usuario",
+                Email = $"temp_{Guid.NewGuid()}@zooni.app",
+                Password = "temp",
+                Fecha_Registro = DateTime.Now,
+                Estado = true
+            };
+
+            _context.Usuario.Add(user);
+            await _context.SaveChangesAsync();
+
+            HttpContext.Session.SetInt32("UserId", user.Id);
+            HttpContext.Session.SetString("UserEmail", user.Email);
+
+            return Json(new { success = true, userId = user.Id });
+        }
+
+        // ==========================
+        // ✅ PASO 2: REGISTRO MASCOTA
+        // ==========================
 
         [HttpGet]
         public IActionResult Registro2()
@@ -70,62 +91,57 @@ namespace Zooni.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Registro2(Mascota mascota)
+        public async Task<IActionResult> Registro2(Mascota model)
         {
-            if (!ModelState.IsValid)
-                return View(mascota);
-
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
                 return RedirectToAction(nameof(Registro1));
 
-            mascota.Id_User = userId.Value;
+            if (string.IsNullOrEmpty(model.Especie))
+            {
+                ViewBag.Error = "Por favor seleccioná la especie de mascota.";
+                return View(model);
+            }
 
-            _context.Mascotas.Add(mascota);
+            model.Id_User = userId.Value;
+            model.Estado = true;
+
+            _context.Mascotas.Add(model);
             await _context.SaveChangesAsync();
 
-            // Paso siguiente: confirmación o configuración inicial
+            HttpContext.Session.SetInt32("MascotaId", model.Id_Mascota);
+            HttpContext.Session.SetString("MascotaEspecie", model.Especie);
+            HttpContext.Session.SetString("MascotaNombre", model.Nombre);
+
             return RedirectToAction(nameof(Registro3));
         }
 
-        // ============================
-        // ✅ RESTO DEL FLUJO DE REGISTRO
-        // ============================
-
+        // ==========================
+        // ✅ PASO 3 Y SIGUIENTES
+        // ==========================
         [HttpGet]
         public IActionResult Registro3()
         {
+            ViewBag.MascotaEspecie = HttpContext.Session.GetString("MascotaEspecie");
+            ViewBag.MascotaNombre = HttpContext.Session.GetString("MascotaNombre");
             return View();
         }
 
         [HttpGet]
-        public IActionResult Registro4()
-        {
-            return View();
-        }
+        public IActionResult Registro4() => View();
 
         [HttpGet]
-        public IActionResult Registro5()
-        {
-            return View();
-        }
+        public IActionResult Registro5() => View();
 
         [HttpGet]
-        public IActionResult Registro6()
-        {
-            return View();
-        }
+        public IActionResult Registro6() => View();
 
         [HttpGet]
-        public IActionResult Registro7()
-        {
-            return View();
-        }
+        public IActionResult Registro7() => View();
 
-        // ============================
-        // ✅ MÉTODO AUXILIAR (opcional)
-        // ============================
-        // Permite limpiar sesión si se reinicia el registro
+        // ==========================
+        // 🔄 REINICIAR FLUJO
+        // ==========================
         [HttpGet]
         public IActionResult Reiniciar()
         {

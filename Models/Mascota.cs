@@ -42,5 +42,8 @@ namespace Zooni.Models
 
         [StringLength(255)]
         public string Foto { get; set; }
+
+        public bool Estado { get; set; } = true;
+
     }
 }

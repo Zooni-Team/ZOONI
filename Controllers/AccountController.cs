@@ -14,108 +14,133 @@ namespace Zooni.Controllers
             _context = context;
         }
 
-        // GET: /Account/Register
+        // ========================
+        // ✅ REGISTRO DE USUARIO
+        // ========================
         [HttpGet]
         public IActionResult Register()
         {
-            return View();
+            return View(new User());
         }
 
-        // POST: /Account/Register
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(User model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
+                return View(model);
+
+            // Verificar si ya existe el usuario
+            var existingUser = await _context.Usuario
+                .FirstOrDefaultAsync(u => u.Email == model.Email);
+
+            if (existingUser != null)
             {
-                var existingUser = await _context.Usuario
-                    .FirstOrDefaultAsync(u => u.Email == model.Email);
-
-                if (existingUser != null)
-                {
-                    ViewBag.Error = "Ya existe un usuario con ese correo.";
-                    return View(model);
-                }
-
-                _context.Usuario.Add(model);
-                await _context.SaveChangesAsync();
-
-                HttpContext.Session.SetString("UserEmail", model.Email);
-                HttpContext.Session.SetInt32("UserId", model.Id);
-
-                return RedirectToAction("Index", "Home");
+                ViewBag.Error = "Ya existe un usuario con ese correo electrónico.";
+                return View(model);
             }
 
-            return View(model);
+            // Guardar usuario
+            model.Fecha_Registro = DateTime.Now;
+            model.Estado = true;
+
+            _context.Usuario.Add(model);
+            await _context.SaveChangesAsync();
+
+            // Crear sesión
+            HttpContext.Session.SetString("UserEmail", model.Email);
+            HttpContext.Session.SetInt32("UserId", model.Id);
+
+            // Redirige al paso 2 del flujo de registro (mascota)
+            return RedirectToAction("Registro2", "Registro");
         }
 
-        // GET: /Account/Login
+        // ========================
+        // ✅ LOGIN DE USUARIO
+        // ========================
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            return View(new User());
         }
 
-        // POST: /Account/Login
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(string email, string password)
         {
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                ViewBag.Error = "Por favor ingresá tus credenciales.";
+                return View();
+            }
+
             var user = await _context.Usuario
                 .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
 
-            if (user != null)
+            if (user == null)
             {
-                HttpContext.Session.SetString("UserEmail", user.Email);
-                HttpContext.Session.SetInt32("UserId", user.Id);
-                return RedirectToAction("Index", "Home");
+                ViewBag.Error = "Correo o contraseña incorrectos.";
+                return View();
             }
 
-            ViewBag.Error = "Correo o contraseña incorrectos.";
-            return View();
+            // Crear sesión
+            HttpContext.Session.SetString("UserEmail", user.Email);
+            HttpContext.Session.SetInt32("UserId", user.Id);
+
+            // Si el usuario tiene mascota → ir al perfil, sino → crear mascota
+            var tieneMascota = await _context.Mascotas.AnyAsync(m => m.Id_User == user.Id);
+            if (tieneMascota)
+                return RedirectToAction("Perfil");
+            else
+                return RedirectToAction("Registro2", "Registro");
         }
 
-        // GET: /Account/Logout
+        // ========================
+        // ✅ LOGOUT
+        // ========================
         [HttpGet]
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login");
         }
 
-        // GET: /Account/Perfil
+        // ========================
+        // ✅ PERFIL DE USUARIO
+        // ========================
         [HttpGet]
         public async Task<IActionResult> Perfil()
         {
             var userId = HttpContext.Session.GetInt32("UserId");
 
             if (userId == null)
-            {
                 return RedirectToAction("Login");
-            }
 
             var usuario = await _context.Usuario
                 .Include(u => u.Perfil)
                 .FirstOrDefaultAsync(u => u.Id == userId);
 
             if (usuario == null)
-            {
                 return RedirectToAction("Login");
-            }
 
             return View(usuario);
         }
 
-        // POST: /Account/ActualizarPerfil
+        // ========================
+        // ✅ ACTUALIZAR PERFIL
+        // ========================
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> ActualizarPerfil(Perfil perfil)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Perfiles.Update(perfil);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Perfil");
-            }
+            if (!ModelState.IsValid)
+                return View("Perfil", perfil);
 
-            return View("Perfil", perfil);
+            _context.Perfiles.Update(perfil);
+            await _context.SaveChangesAsync();
+
+            TempData["Mensaje"] = "Perfil actualizado correctamente.";
+            return RedirectToAction("Perfil");
         }
     }
 }
