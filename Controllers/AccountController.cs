@@ -1,146 +1,147 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Zooni.Data;
 using Zooni.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
 
 namespace Zooni.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public AccountController(ApplicationDbContext context)
+        private int EnsureTipoUsuario()
         {
-            _context = context;
+            var result = BD.ExecuteScalar(
+                "SELECT ISNULL((SELECT TOP 1 Id_TipoUsuario FROM TipoUsuario WHERE Descripcion = 'Usuario'), 0)"
+            );
+
+            if (Convert.ToInt32(result) > 0)
+                return Convert.ToInt32(result);
+
+            return Convert.ToInt32(BD.ExecuteScalar(
+                "INSERT INTO TipoUsuario (Descripcion) VALUES ('Usuario'); SELECT SCOPE_IDENTITY();"
+            ));
         }
 
-        // ========================
-        // ✅ REGISTRO DE USUARIO
-        // ========================
+        private int EnsureUbicacionDefault()
+        {
+            var result = BD.ExecuteScalar(
+                "SELECT ISNULL((SELECT TOP 1 Id_Ubicacion FROM Ubicacion WHERE Tipo = 'Default'), 0)"
+            );
+
+            if (Convert.ToInt32(result) > 0)
+                return Convert.ToInt32(result);
+
+            return Convert.ToInt32(BD.ExecuteScalar(@"
+                INSERT INTO Ubicacion (Latitud, Longitud, Direccion, Tipo)
+                VALUES (0, 0, 'Sin especificar', 'Default');
+                SELECT SCOPE_IDENTITY();"
+            ));
+        }
+
+        // ===============================================
+        // ✅ Registro de usuario
+        // ===============================================
         [HttpGet]
-        public IActionResult Register()
-        {
-            return View(new User());
-        }
+        public IActionResult Register() => View();
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(User model)
+        public IActionResult Register(string correo, string contrasena)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            // Verificar si ya existe el usuario
-            var existingUser = await _context.Usuario
-                .FirstOrDefaultAsync(u => u.Email == model.Email);
-
-            if (existingUser != null)
+            if (string.IsNullOrWhiteSpace(correo) || string.IsNullOrWhiteSpace(contrasena))
             {
-                ViewBag.Error = "Ya existe un usuario con ese correo electrónico.";
-                return View(model);
-            }
-
-            // Guardar usuario
-            model.Fecha_Registro = DateTime.Now;
-            model.Estado = true;
-
-            _context.Usuario.Add(model);
-            await _context.SaveChangesAsync();
-
-            // Crear sesión
-            HttpContext.Session.SetString("UserEmail", model.Email);
-            HttpContext.Session.SetInt32("UserId", model.Id);
-
-            // Redirige al paso 2 del flujo de registro (mascota)
-            return RedirectToAction("Registro2", "Registro");
-        }
-
-        // ========================
-        // ✅ LOGIN DE USUARIO
-        // ========================
-        [HttpGet]
-        public IActionResult Login()
-        {
-            return View(new User());
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(string email, string password)
-        {
-            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
-            {
-                ViewBag.Error = "Por favor ingresá tus credenciales.";
+                ViewBag.Error = "Por favor completá correo y contraseña.";
                 return View();
             }
 
-            var user = await _context.Usuario
-                .FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
-
-            if (user == null)
+            try
             {
-                ViewBag.Error = "Correo o contraseña incorrectos.";
-                return View();
-            }
+                int existe = Convert.ToInt32(BD.ExecuteScalar(
+                    "SELECT COUNT(*) FROM Mail WHERE Correo = @Correo",
+                    new() { { "@Correo", correo } }
+                ));
 
-            // Crear sesión
-            HttpContext.Session.SetString("UserEmail", user.Email);
-            HttpContext.Session.SetInt32("UserId", user.Id);
+                if (existe > 0)
+                {
+                    ViewBag.Error = "Ese correo ya está registrado.";
+                    return View();
+                }
 
-            // Si el usuario tiene mascota → ir al perfil, sino → crear mascota
-            var tieneMascota = await _context.Mascotas.AnyAsync(m => m.Id_User == user.Id);
-            if (tieneMascota)
-                return RedirectToAction("Perfil");
-            else
+                // Crear Mail
+                int idMail = Convert.ToInt32(BD.ExecuteScalar(@"
+                    INSERT INTO Mail (Correo, Contrasena, Fecha_Creacion)
+                    VALUES (@Correo, @Contrasena, SYSDATETIME());
+                    SELECT SCOPE_IDENTITY();",
+                    new() { { "@Correo", correo }, { "@Contrasena", contrasena } }
+                ));
+
+                // Crear User
+                int idTipoUsuario = EnsureTipoUsuario();
+                int idUbicacion = EnsureUbicacionDefault();
+
+                int idUser = Convert.ToInt32(BD.ExecuteScalar(@"
+                    INSERT INTO [User] (Id_Mail, Nombre, Apellido, Fecha_Registro, Estado, Id_TipoUsuario, Id_Ubicacion)
+                    VALUES (@Id_Mail, 'Nuevo', 'Usuario', SYSDATETIME(), 1, @Id_TipoUsuario, @Id_Ubicacion);
+                    SELECT SCOPE_IDENTITY();",
+                    new() { { "@Id_Mail", idMail }, { "@Id_TipoUsuario", idTipoUsuario }, { "@Id_Ubicacion", idUbicacion } }
+                ));
+
+                HttpContext.Session.SetInt32("UserId", idUser);
+                HttpContext.Session.SetString("UserEmail", correo);
+
                 return RedirectToAction("Registro2", "Registro");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error en Register: {ex.Message}");
+                ViewBag.Error = "Error al crear usuario.";
+                return View();
+            }
         }
 
-        // ========================
-        // ✅ LOGOUT
-        // ========================
+        // ===============================================
+        // ✅ Login
+        // ===============================================
+        [HttpGet]
+        public IActionResult Login() => View();
+
+        [HttpPost]
+        public IActionResult Login(string correo, string contrasena)
+        {
+            try
+            {
+                var dt = BD.ExecuteQuery(@"
+                    SELECT TOP 1 U.Id_User, M.Correo
+                    FROM Mail M
+                    JOIN [User] U ON M.Id_Mail = U.Id_Mail
+                    WHERE M.Correo = @Correo AND M.Contrasena = @Contrasena AND U.Estado = 1;",
+                    new() { { "@Correo", correo }, { "@Contrasena", contrasena } }
+                );
+
+                if (dt.Rows.Count == 0)
+                {
+                    ViewBag.Error = "Usuario o contraseña incorrectos.";
+                    return View();
+                }
+
+                int userId = Convert.ToInt32(dt.Rows[0]["Id_User"]);
+                HttpContext.Session.SetInt32("UserId", userId);
+                HttpContext.Session.SetString("UserEmail", correo);
+
+                return RedirectToAction("Registro2", "Registro");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"⚠️ Error en Login: {ex.Message}");
+                ViewBag.Error = "No se pudo conectar con la base de datos.";
+                return View();
+            }
+        }
+
         [HttpGet]
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
             return RedirectToAction("Login");
-        }
-
-        // ========================
-        // ✅ PERFIL DE USUARIO
-        // ========================
-        [HttpGet]
-        public async Task<IActionResult> Perfil()
-        {
-            var userId = HttpContext.Session.GetInt32("UserId");
-
-            if (userId == null)
-                return RedirectToAction("Login");
-
-            var usuario = await _context.Usuario
-                .Include(u => u.Perfil)
-                .FirstOrDefaultAsync(u => u.Id == userId);
-
-            if (usuario == null)
-                return RedirectToAction("Login");
-
-            return View(usuario);
-        }
-
-        // ========================
-        // ✅ ACTUALIZAR PERFIL
-        // ========================
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ActualizarPerfil(Perfil perfil)
-        {
-            if (!ModelState.IsValid)
-                return View("Perfil", perfil);
-
-            _context.Perfiles.Update(perfil);
-            await _context.SaveChangesAsync();
-
-            TempData["Mensaje"] = "Perfil actualizado correctamente.";
-            return RedirectToAction("Perfil");
         }
     }
 }

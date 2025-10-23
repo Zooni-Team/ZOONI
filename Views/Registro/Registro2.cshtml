@@ -1,6 +1,6 @@
 @model Zooni.Models.Mascota
 @{
-    ViewData["Title"] = "Registro - Mascota";
+    ViewData["Title"] = "Registro Mascota - Zooni";
     Layout = null;
 }
 
@@ -9,52 +9,85 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>@ViewData["Title"] - Zooni</title>
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --verde: #3ac37d;
+            --verde-hover: #2ea968;
+            --gris: #555;
+            --gris-claro: #ccc;
+            --fondo: #fff;
+            --marron: #8B5E3C;
+        }
+
         body {
-            margin: 0;
-            padding: 0;
-            background-color: #fff;
             font-family: 'Poppins', sans-serif;
+            background-color: var(--fondo);
             display: flex;
             justify-content: center;
             align-items: center;
-            flex-direction: column;
             height: 100vh;
+            margin: 0;
+            position: relative;
             overflow: hidden;
         }
 
-        .contenedor-registro2 {
+        .contenedor {
             text-align: center;
-            width: 90%;
-            max-width: 420px;
-            padding: 2rem;
             background: #ffffffd9;
             border-radius: 25px;
+            padding: 2.5rem;
             box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.08);
+            width: 90%;
+            max-width: 440px;
             z-index: 2;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(6px);
         }
 
-        h2 {
-            font-size: 2rem;
-            color: #2b2b2b;
-            margin-bottom: 1.5rem;
+        h1 {
+            color: var(--marron);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1.3rem;
         }
 
-        .opciones-mascota {
+        .formulario {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            align-items: center;
+        }
+
+        input, select {
+            width: 100%;
+            max-width: 320px;
+            padding: 13px;
+            border-radius: 20px;
+            border: 1.8px solid var(--gris-claro);
+            outline: none;
+            font-size: 15px;
+            text-align: center;
+            transition: border 0.2s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--verde);
+        }
+
+        .opciones {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 1rem;
-            margin-bottom: 2rem;
+            width: 100%;
+            max-width: 320px;
+            margin: 10px 0 18px;
         }
 
-        .opciones-mascota input[type="radio"] {
-            display: none;
-        }
+        .opciones input[type="radio"] { display: none; }
 
-        .opciones-mascota label {
+        .opciones label {
             background: #f8f8f8;
             border-radius: 20px;
             padding: 1rem 0.5rem;
@@ -69,26 +102,25 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
-        .opciones-mascota label:hover {
+        .opciones label:hover {
             background: #e9fff0;
             transform: scale(1.03);
         }
 
-        .opciones-mascota input[type="radio"]:checked + label {
-            background: #3ac37d;
+        .opciones input[type="radio"]:checked + label {
+            background: var(--verde);
             color: #fff;
-            border: 2px solid #2ea968;
+            border: 2px solid var(--verde-hover);
             transform: scale(1.05);
         }
 
         .emoji {
-            font-size: 2rem;
-            display: block;
+            font-size: 1.9rem;
             margin-bottom: 0.3rem;
         }
 
         .btn-principal {
-            background-color: #3ac37d;
+            background-color: var(--verde);
             color: #fff;
             border: none;
             border-radius: 25px;
@@ -96,10 +128,13 @@
             font-size: 1.1rem;
             cursor: pointer;
             transition: 0.3s ease;
+            width: 100%;
+            max-width: 320px;
+            margin-top: 1rem;
         }
 
         .btn-principal:hover {
-            background-color: #2ea968;
+            background-color: var(--verde-hover);
             transform: translateY(-2px);
         }
 
@@ -118,46 +153,27 @@
             object-fit: cover;
         }
 
-        /* RESPONSIVE */
         @@media (max-width: 768px) {
-            h2 {
-                font-size: 1.6rem;
-            }
-
-            .contenedor-registro2 {
-                padding: 1.5rem;
-            }
-
-            .opciones-mascota {
-                grid-template-columns: 1fr;
-            }
-
-            .btn-principal {
-                width: 100%;
-                font-size: 1rem;
-            }
-
-            .imagen-bienvenida img {
-                max-width: 600px;
-            }
+            h1 { font-size: 1.8rem; }
+            .contenedor { padding: 1.5rem; }
+            .btn-principal { font-size: 1rem; }
+            .imagen-bienvenida img { max-width: 600px; }
         }
 
-    @@media (max-width: 480px) {
-            h2 {
-                font-size: 1.4rem;
-            }
-            .emoji {
-                font-size: 1.8rem;
-            }
+        @@media (max-width: 480px) {
+            h1 { font-size: 1.5rem; }
+            .emoji { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
-    <div class="contenedor-registro2">
-        <h2>¿Qué Especie de mascota tenés?</h2>
+    <div class="contenedor">
+        <h1>Contanos sobre tu mascota 🐾</h1>
 
-        <form asp-action="Registro2" asp-controller="Registro" method="post">
-            <div class="opciones-mascota">
+        <form asp-action="Registro2" asp-controller="Registro" method="post" class="formulario">
+            <input type="text" name="Nombre" placeholder="Nombre de tu mascota" required autocomplete="off" />
+
+            <div class="opciones">
                 <input type="radio" id="perro" name="Especie" value="Perro" required />
                 <label for="perro"><span class="emoji">🐶</span>Perro</label>
 
@@ -177,15 +193,12 @@
                 <label for="pez"><span class="emoji">🐟</span>Pez</label>
             </div>
 
-            <input type="hidden" name="Nombre" value="MiMascota" />
-            <input type="hidden" name="Edad" value="0" />
-
             <button type="submit" class="btn-principal">Continuar</button>
         </form>
     </div>
 
     <div class="imagen-bienvenida">
-        <img src="~/images/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
+        <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
     </div>
 </body>
 </html>

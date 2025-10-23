@@ -1,0 +1,196 @@
+@model Zooni.Models.Mascota
+@{
+    ViewData["Title"] = "Registro Mascota - Detalles";
+    Layout = null;
+
+    var especie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
+    var imagenSuperior = $"/img/{especie}caja.png";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --marron: #8B5E3C;
+            --amarillo: #FFD85A;
+            --amarillo-hover: #FFC93C;
+            --verde: #3ac37d;
+            --verde-hover: #2ea968;
+            --gris: #555;
+            --gris-claro: #ccc;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .contenedor {
+            background: #ffffffd9;
+            border-radius: 25px;
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.08);
+            padding: 2.3rem 2rem;
+            text-align: center;
+            width: 90%;
+            max-width: 420px;
+            z-index: 2;
+            backdrop-filter: blur(5px);
+        }
+
+        h1 {
+            color: var(--marron);
+            font-weight: 700;
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            color: var(--gris);
+            margin-bottom: 1.3rem;
+        }
+
+        img.mascota-caja {
+            width: 130px;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            max-width: 320px;
+            padding: 12px;
+            border-radius: 20px;
+            border: 1.8px solid var(--gris-claro);
+            text-align: center;
+            font-size: 15px;
+            transition: border 0.2s ease;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--amarillo);
+        }
+
+        .edad-container {
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: var(--amarillo);
+        }
+
+        .edad-texto {
+            font-weight: 600;
+            color: var(--marron);
+            margin-top: 0.5rem;
+        }
+
+        .btn-principal {
+            background-color: var(--verde);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.3s ease;
+            margin-top: 15px;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .btn-principal:hover {
+            background-color: var(--verde-hover);
+            transform: translateY(-2px);
+        }
+
+        .imagen-bienvenida {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .imagen-bienvenida img {
+            width: 100%;
+            max-width: 900px;
+            object-fit: cover;
+        }
+
+        @@media (max-width: 768px) {
+            h1 { font-size: 1.7rem; }
+            .contenedor { padding: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="contenedor">
+        <h1>¡Completá los datos de tu mascota!</h1>
+        <img src="@imagenSuperior" alt="Mascota en caja" class="mascota-caja" />
+        <h2>Ingresá los datos de tu @ViewBag.MascotaEspecie</h2>
+
+        <form asp-action="Registro3" asp-controller="Registro" method="post">
+            <select name="Sexo" required>
+                <option value="">Sexo</option>
+                <option value="Macho">Macho</option>
+                <option value="Hembra">Hembra</option>
+            </select>
+
+            <input type="text" name="Raza" placeholder="Raza" required />
+            <input type="text" name="Color" placeholder="Color" required />
+
+            <div class="edad-container">
+                <label for="Edad">Edad</label>
+                <input type="range" id="Edad" name="Edad" min="0" max="240" value="0" />
+                <div class="edad-texto" id="edadTexto">0 meses</div>
+            </div>
+
+            <button type="submit" class="btn-principal">Continuar</button>
+        </form>
+    </div>
+
+    <div class="imagen-bienvenida">
+        <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
+    </div>
+
+    <script>
+        const slider = document.getElementById("Edad");
+        const texto = document.getElementById("edadTexto");
+
+        slider.addEventListener("input", () => {
+            const meses = parseInt(slider.value);
+            if (meses < 12)
+                texto.textContent = `${meses} ${meses === 1 ? "mes" : "meses"}`;
+            else {
+                const años = (meses / 12).toFixed(1);
+                texto.textContent = `${años} ${años == 1 ? "año" : "años"}`;
+            }
+        });
+    </script>
+</body>
+</html>

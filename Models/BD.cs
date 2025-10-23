@@ -1,64 +1,63 @@
 using System.Data;
 using Microsoft.Data.SqlClient;
-using Dapper;
+
 namespace Zooni.Models
 {
-    public class bd
+    public static class BD
     {
-        // 🔹 Cadena de conexión a tu base de datos "Zooni"
-        // 💡 Cambiá el Server si tu instancia no es (localdb)\MSSQLLocalDB
         private static string connectionString =
-            "Server=(localdb)\\MSSQLLocalDB;Database=Zooni;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True";
+            @"Server=localhost;Database=Zooni;Integrated Security=True;TrustServerCertificate=True;";
 
-        // Si usás SQL Server Express o un servidor remoto, sería por ejemplo:
-        // "Server=localhost\\SQLEXPRESS;Database=Zooni;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=true";
-        //
-        // O si usás autenticación SQL:
-        // "Server=localhost;Database=Zooni;User Id=sa;Password=tu_contraseña;TrustServerCertificate=True;MultipleActiveResultSets=true";
-
-        // 🔹 Método para obtener conexión abierta
-        public static SqlConnection ObtenerConexion()
+        public static SqlConnection GetConnection()
         {
-            var conexion = new SqlConnection(connectionString);
-            conexion.Open();
-            return conexion;
+            var conn = new SqlConnection(connectionString);
+            conn.Open();
+            return conn;
         }
 
-        // 🔹 Método auxiliar: ejecutar un comando rápido
-        public static int EjecutarComando(string query, params SqlParameter[] parametros)
+        public static DataTable ExecuteQuery(string query, Dictionary<string, object>? parameters = null)
         {
-            using (var conexion = new SqlConnection(connectionString))
-            {
-                conexion.Open();
-                using (var comando = new SqlCommand(query, conexion))
-                {
-                    if (parametros != null)
-                        comando.Parameters.AddRange(parametros);
+            using var connection = GetConnection();
+            using var command = new SqlCommand(query, connection);
 
-                    return comando.ExecuteNonQuery();
-                }
+            if (parameters != null)
+            {
+                foreach (var p in parameters)
+                    command.Parameters.AddWithValue(p.Key, p.Value ?? DBNull.Value);
             }
+
+            using var adapter = new SqlDataAdapter(command);
+            var table = new DataTable();
+            adapter.Fill(table);
+            return table;
         }
 
-        // 🔹 Método auxiliar: obtener datos en DataTable
-        public static DataTable EjecutarConsulta(string query, params SqlParameter[] parametros)
+        public static object? ExecuteScalar(string query, Dictionary<string, object>? parameters = null)
         {
-            using (var conexion = new SqlConnection(connectionString))
-            {
-                conexion.Open();
-                using (var comando = new SqlCommand(query, conexion))
-                {
-                    if (parametros != null)
-                        comando.Parameters.AddRange(parametros);
+            using var connection = GetConnection();
+            using var command = new SqlCommand(query, connection);
 
-                    using (var adaptador = new SqlDataAdapter(comando))
-                    {
-                        DataTable tabla = new DataTable();
-                        adaptador.Fill(tabla);
-                        return tabla;
-                    }
-                }
+            if (parameters != null)
+            {
+                foreach (var p in parameters)
+                    command.Parameters.AddWithValue(p.Key, p.Value ?? DBNull.Value);
             }
+
+            return command.ExecuteScalar();
+        }
+
+        public static int ExecuteNonQuery(string query, Dictionary<string, object>? parameters = null)
+        {
+            using var connection = GetConnection();
+            using var command = new SqlCommand(query, connection);
+
+            if (parameters != null)
+            {
+                foreach (var p in parameters)
+                    command.Parameters.AddWithValue(p.Key, p.Value ?? DBNull.Value);
+            }
+
+            return command.ExecuteNonQuery();
         }
     }
 }

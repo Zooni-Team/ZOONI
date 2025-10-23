@@ -1,152 +1,160 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Zooni.Data;
 using Zooni.Models;
+using System;
+using System.Collections.Generic;
 
 namespace Zooni.Controllers
 {
     public class RegistroController : Controller
     {
-        private readonly ApplicationDbContext _context;
-
-        public RegistroController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
-
-        // ==========================
-        // ✅ PASO 1: REGISTRO USUARIO
-        // ==========================
-
+        // =============================
+        // PASO 1 - REGISTRO USUARIO
+        // =============================
         [HttpGet]
         public IActionResult Registro1()
         {
-            return View(new User());
+            return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Registro1(User model)
+        public IActionResult CrearUsuarioRapido(string correo, string contrasena)
         {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            bool existe = await _context.Usuario.AnyAsync(u => u.Email == model.Email);
-            if (existe)
+            try
             {
-                ViewBag.Error = "Ya existe un usuario con ese correo electrónico.";
-                return View(model);
+                // 1️⃣ Crear registro en Mail
+                string queryMail = @"
+                    INSERT INTO Mail (Correo, Contrasena, Fecha_Creacion)
+                    VALUES (@Correo, @Contrasena, SYSDATETIME());
+                    SELECT SCOPE_IDENTITY();";
+
+                var mailParams = new Dictionary<string, object>
+                {
+                    { "@Correo", correo ?? $"temp_{Guid.NewGuid()}@zooni.app" },
+                    { "@Contrasena", contrasena ?? "temp123" }
+                };
+
+                int idMail = Convert.ToInt32(BD.ExecuteScalar(queryMail, mailParams));
+
+                // 2️⃣ Crear registro en User vinculado
+                string queryUser = @"
+                    INSERT INTO [User] (Id_Mail, Nombre, Apellido, Fecha_Registro, Id_Ubicacion, Id_TipoUsuario)
+                    VALUES (@Id_Mail, 'Nuevo', 'Usuario', SYSDATETIME(), 1, 1);
+                    SELECT SCOPE_IDENTITY();";
+
+                var userParams = new Dictionary<string, object>
+                {
+                    { "@Id_Mail", idMail }
+                };
+
+                int idUser = Convert.ToInt32(BD.ExecuteScalar(queryUser, userParams));
+
+                // Guardar sesión
+                HttpContext.Session.SetInt32("UserId", idUser);
+
+                return Json(new { success = true, idUser });
             }
-
-            model.Fecha_Registro = DateTime.Now;
-            model.Estado = true;
-
-            _context.Usuario.Add(model);
-            await _context.SaveChangesAsync();
-
-            HttpContext.Session.SetInt32("UserId", model.Id);
-            HttpContext.Session.SetString("UserEmail", model.Email);
-
-            return RedirectToAction(nameof(Registro2));
-        }
-
-        // =========================================================
-        // 🟡 CREAR USUARIO RÁPIDO (para el botón "Crear cuenta")
-        // =========================================================
-        [HttpPost]
-        public async Task<IActionResult> CrearUsuarioRapido()
-        {
-            var user = new User
+            catch (Exception ex)
             {
-                Nombre = "Nuevo",
-                Apellido = "Usuario",
-                Email = $"temp_{Guid.NewGuid()}@zooni.app",
-                Password = "temp",
-                Fecha_Registro = DateTime.Now,
-                Estado = true
-            };
-
-            _context.Usuario.Add(user);
-            await _context.SaveChangesAsync();
-
-            HttpContext.Session.SetInt32("UserId", user.Id);
-            HttpContext.Session.SetString("UserEmail", user.Email);
-
-            return Json(new { success = true, userId = user.Id });
+                Console.WriteLine("❌ Error al crear usuario rápido: " + ex.Message);
+                return Json(new { success = false, message = "Error al conectar con la base de datos." });
+            }
         }
 
-        // ==========================
-        // ✅ PASO 2: REGISTRO MASCOTA
-        // ==========================
-
+        // =============================
+        // PASO 2 - REGISTRO MASCOTA
+        // =============================
         [HttpGet]
         public IActionResult Registro2()
         {
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
-                return RedirectToAction(nameof(Registro1));
+            {
+                TempData["Error"] = "Primero registrá un usuario.";
+                return RedirectToAction("Registro1");
+            }
 
             return View(new Mascota());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Registro2(Mascota model)
+        public IActionResult Registro2(Mascota model)
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-                return RedirectToAction(nameof(Registro1));
-
-            if (string.IsNullOrEmpty(model.Especie))
+            try
             {
-                ViewBag.Error = "Por favor seleccioná la especie de mascota.";
+                var userId = HttpContext.Session.GetInt32("UserId");
+                if (userId == null)
+                {
+                    TempData["Error"] = "No hay usuario en sesión.";
+                    return RedirectToAction("Registro1");
+                }
+
+                if (string.IsNullOrWhiteSpace(model.Especie))
+                {
+                    ViewBag.Error = "Seleccioná una especie antes de continuar.";
+                    return View(model);
+                }
+
+                // ✅ Inserción sin la columna Estado
+                string query = @"
+                    INSERT INTO Mascota (Id_User, Nombre, Especie, Edad, Raza, Sexo, Peso, Color, Chip, Foto, Esterilizado, Fecha_Nacimiento)
+                    VALUES (@Id_User, @Nombre, @Especie, @Edad, @Raza, @Sexo, @Peso, @Color, @Chip, @Foto, @Esterilizado, SYSDATETIME());
+                    SELECT SCOPE_IDENTITY();";
+
+                var parametros = new Dictionary<string, object>
+                {
+                    { "@Id_User", userId.Value },
+                    { "@Nombre", model.Nombre ?? "MiMascota" },
+                    { "@Especie", model.Especie },
+                    { "@Edad", model.Edad },
+                    { "@Raza", model.Raza ?? "" },
+                    { "@Sexo", model.Sexo ?? "" },
+                    { "@Peso", model.Peso },
+                    { "@Color", model.Color ?? "" },
+                    { "@Chip", model.Chip ?? "" },
+                    { "@Foto", model.Foto ?? "" },
+                    { "@Esterilizado", model.Esterilizado }
+                };
+
+                var idMascotaObj = BD.ExecuteScalar(query, parametros);
+
+                if (idMascotaObj == null)
+                {
+                    ViewBag.Error = "Error al registrar la mascota.";
+                    return View(model);
+                }
+
+                int idMascota = Convert.ToInt32(idMascotaObj);
+
+                // Guardar en sesión
+                HttpContext.Session.SetInt32("MascotaId", idMascota);
+                HttpContext.Session.SetString("MascotaNombre", model.Nombre ?? "MiMascota");
+                HttpContext.Session.SetString("MascotaEspecie", model.Especie ?? "Desconocida");
+
+                return RedirectToAction("Registro3");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en Registro2 POST: " + ex.Message);
+                ViewBag.Error = "Ocurrió un error al registrar la mascota.";
                 return View(model);
             }
-
-            model.Id_User = userId.Value;
-            model.Estado = true;
-
-            _context.Mascotas.Add(model);
-            await _context.SaveChangesAsync();
-
-            HttpContext.Session.SetInt32("MascotaId", model.Id_Mascota);
-            HttpContext.Session.SetString("MascotaEspecie", model.Especie);
-            HttpContext.Session.SetString("MascotaNombre", model.Nombre);
-
-            return RedirectToAction(nameof(Registro3));
         }
 
-        // ==========================
-        // ✅ PASO 3 Y SIGUIENTES
-        // ==========================
+        // =============================
+        // PASO 3 - CONFIRMACIÓN
+        // =============================
         [HttpGet]
         public IActionResult Registro3()
         {
-            ViewBag.MascotaEspecie = HttpContext.Session.GetString("MascotaEspecie");
             ViewBag.MascotaNombre = HttpContext.Session.GetString("MascotaNombre");
+            ViewBag.MascotaEspecie = HttpContext.Session.GetString("MascotaEspecie");
+
+            if (ViewBag.MascotaNombre == null)
+                return RedirectToAction("Registro1");
+
             return View();
         }
-
-        [HttpGet]
-        public IActionResult Registro4() => View();
-
-        [HttpGet]
-        public IActionResult Registro5() => View();
-
-        [HttpGet]
-        public IActionResult Registro6() => View();
-
-        [HttpGet]
-        public IActionResult Registro7() => View();
-
-        // ==========================
-        // 🔄 REINICIAR FLUJO
-        // ==========================
-        [HttpGet]
-        public IActionResult Reiniciar()
-        {
-            HttpContext.Session.Clear();
-            return RedirectToAction(nameof(Registro1));
-        }
+        
     }
 }

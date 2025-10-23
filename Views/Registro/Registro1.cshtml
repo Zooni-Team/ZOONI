@@ -1,4 +1,3 @@
-@model Zooni.Models.User
 @{
     ViewData["Title"] = "Registro - Zooni";
     Layout = null;
@@ -105,6 +104,7 @@
             box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
             transition: background 0.2s ease, transform 0.2s ease;
             text-decoration: none;
+            margin-bottom: 4.5%;
         }
 
         .btn-principal:hover {
@@ -151,30 +151,16 @@
         }
 
         @@media (max-width: 768px) {
-    h1 {
-        font-size: 64px;
-    }
-    h2 {
-        font-size: 18px;
-    }
-    .btn-principal {
-        font-size: 16px;
-    }
-}
+            h1 { font-size: 64px; }
+            h2 { font-size: 18px; }
+            .btn-principal { font-size: 16px; }
+        }
 
-@@media (max-width: 480px) {
-    h1 {
-        font-size: 54px;
-    }
-    .container {
-        width: 90%;
-        padding: 0 10px;
-    }
-    input {
-        padding: 12px;
-    }
-}
-
+        @@media (max-width: 480px) {
+            h1 { font-size: 54px; }
+            .container { width: 90%; padding: 0 10px; }
+            input { padding: 12px; }
+        }
     </style>
 </head>
 
@@ -182,40 +168,43 @@
     <div class="container">
         <h1>Zooni</h1>
 
-        <!-- Imagen de bienvenida -->
+        <!-- Imagen -->
         <img src="~/img/mascotas-bienvenida.png" alt="Zooni mascotas" class="illustration" />
 
         <h2>¡Bienvenido a Zooni!</h2>
 
-        <!-- 🐾 Botón de crear cuenta (link corregido) -->
-<a id="crearCuentaBtn" class="btn-principal">Crear cuenta</a>
+        <!-- ✅ Crear cuenta rápida -->
+        <button id="crearCuentaBtn" type="button" class="btn-principal">Crear cuenta</button>
 
-<script>
-document.getElementById("crearCuentaBtn").addEventListener("click", async () => {
-    try {
-        const response = await fetch("/Registro/CrearUsuarioRapido", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" }
-        });
-        const result = await response.json();
-
-        if (result.success) {
-            window.location.href = "/Registro/Registro2"; // Redirige al paso 2
-        } else {
-            alert("Hubo un error al crear el usuario. Intenta de nuevo.");
+        <script>
+    document.getElementById("crearCuentaBtn").addEventListener("click", async (e) => {
+        e.preventDefault();
+        try {
+            const correoTemp = `temp_${Date.now()}@@zooni.app`;
+            const response = await fetch("/Account/Register", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({
+                    correo: correoTemp,
+                    contrasena: "zooni@@123" // ← escapado correctamente
+                })
+            });
+            if (response.ok) window.location.href = "/Registro/Registro2";
+            else alert("❌ Error al crear la cuenta.");
+        } catch (err) {
+            console.error("❌ Error:", err);
+            alert("Error de conexión con el servidor.");
         }
-    } catch (err) {
-        console.error(err);
-        alert("Error de conexión con el servidor.");
-    }
-});
+    });
 </script>
 
 
         <!-- 🐾 Formulario de inicio de sesión -->
-        <form asp-action="Registro1" asp-controller="Registro" method="post">
-            <input asp-for="Email" placeholder="Usuario / Email / Teléfono" required />
-            <input asp-for="Password" placeholder="Contraseña" type="password" required />
+        <div class="divider">O iniciá sesión</div>
+
+        <form action="/Account/Login" method="post">
+            <input name="correo" placeholder="Correo electrónico" required autocomplete="off"/>
+            <input name="contrasena" placeholder="Contraseña" type="password" required autocomplete="off"/>
             <button type="submit" class="btn-principal">Iniciar sesión</button>
         </form>
 
