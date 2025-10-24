@@ -1,0 +1,262 @@
+@{
+    ViewData["Title"] = "Registro - Zooni";
+    Layout = null;
+    var especie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
+    var raza = ViewBag.MascotaRaza?.ToString()?.ToLower() ?? "basico";
+    var rutaImagen = $"/img/mascotas/{especie}s/{raza}/{especie}_basico.png";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+    :root {
+        --marron: #8B5E3C;
+        --verde: #3ac37d;
+        --gris: #555;
+        --gris-claro: #ccc;
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        margin: 0;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+    }
+
+    h1 {
+        color: var(--marron);
+        font-size: 2.3rem;
+        margin-bottom: 0;
+        margin-top: 1rem;
+        font-weight: 700;
+        z-index: 3;
+    }
+
+    h2 {
+        color: var(--gris);
+        font-weight: 700;
+        margin-top: 0.3rem;
+        font-size: 1.2rem;
+        z-index: 3;
+    }
+
+    
+
+    .volver {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: none;
+        border: none;
+        font-size: 28px;
+        color: var(--marron);
+        cursor: pointer;
+        transition: transform 0.2s ease, color 0.2s ease;
+        z-index: 5;
+    }
+
+    .volver:hover {
+        transform: scale(1.1);
+        color: var(--verde);
+    }
+
+    .nombre-mascota {
+        font-weight: 700;
+        font-size: 1.4rem;
+        margin-top: 0.5rem;
+        margin-bottom: 0.6rem;
+        color: #000;
+        z-index: 3;
+    }
+
+    .mascota-img {
+        width: 200px; /* Más grande */
+        height: auto;
+        margin: 0.5rem 0 1rem 0;
+        object-fit: contain;
+        z-index: 3;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        width: 100%;
+        z-index: 4;
+        position: relative;
+    }
+
+    .fila {
+        display: flex;
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    input {
+        width: 100%;
+        max-width: 320px;
+        padding: 12px;
+        border-radius: 20px;
+        border: 1.8px solid var(--gris-claro);
+        font-size: 15px;
+        text-align: center;
+        outline: none;
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+        background: #fff;
+        z-index: 4;
+    }
+
+    input:focus {
+        border-color: var(--verde);
+        box-shadow: 0 0 0 2px rgba(58, 195, 125, 0.25);
+    }
+
+    .btn-principal {
+        background-color: var(--verde);
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        padding: 13px 40px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: 0.2s ease;
+        margin-top: 18px;
+        width: 100%;
+        max-width: 320px;
+        font-weight: 600;
+        z-index: 5;
+    }
+
+    .btn-principal:hover {
+        background-color: #2fa567;
+        transform: translateY(-2px);
+    }
+
+    .imagen-bienvenida {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    .imagen-bienvenida img {
+        width: 100%;
+        max-width: 900px;
+        object-fit: cover;
+
+    }
+.contenedor {
+        background: #fff;
+        border-radius: 25px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        padding: 2rem 2.2rem;
+        width: 90%;
+        max-width: 400px;
+        position: relative;
+        z-index: 2;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    /* ✅ Responsive */
+    @@media (max-width: 768px) {
+        .contenedor {
+            padding: 1.5rem;
+            max-width: 360px;
+        }
+
+        .mascota-img {
+            width: 170px;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .btn-principal {
+            font-size: 1rem;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .contenedor {
+            padding: 1.2rem;
+            max-width: 340px;
+        }
+
+        .mascota-img {
+            width: 150px;
+        }
+
+        h1 {
+            font-size: 1.7rem;
+        }
+
+        input {
+            font-size: 14px;
+        }
+
+        .volver {
+            top: 12px;
+            left: 12px;
+            font-size: 24px;
+        }
+    }
+    .mascota-img
+    {
+        width: 68%;
+    }
+</style>
+
+</head>
+<body>
+    <h1>Zooni</h1>
+    <h2>¡Registrate!</h2>
+
+    <div class="contenedor">
+        <button class="volver" onclick="window.location.href='/Registro/Registro3'">←</button>
+        <div class="nombre-mascota">@ViewBag.MascotaNombre</div>
+        <img src="@rutaImagen" alt="Mascota" class="mascota-img" class="mascota-img"/>
+
+        <p style="font-weight:600; color:#444;">¡Ahora ingrese tus datos!</p>
+
+        <form asp-action="Registro4" asp-controller="Registro" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="fila">
+                <input type="text" name="nombre" placeholder="Nombre" required />
+                <input type="text" name="apellido" placeholder="Apellido" required />
+            </div>
+
+            <input type="Mail" name="mail" placeholder="Mail" required autocomplete="off" />
+            <input type="password" name="contrasena" placeholder="Contraseña" required autocomplete="off" />
+
+                        <button type="submit" class="btn-principal">Continuar</button>
+
+        </form>
+    </div>
+
+    <div class="imagen-bienvenida">
+        <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
+    </div>
+</body>
+</html>

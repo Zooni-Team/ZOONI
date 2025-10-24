@@ -6,6 +6,7 @@
     var especie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
     var imagenSuperior = $"/img/cajas/{especie}caja.png";
 }
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,9 +19,7 @@
         :root {
             --marron: #8B5E3C;
             --amarillo: #FFD85A;
-            --amarillo-hover: #FFC93C;
             --verde: #3ac37d;
-            --verde-hover: #2ea968;
             --gris: #555;
             --gris-claro: #ccc;
         }
@@ -31,82 +30,141 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             min-height: 100vh;
             margin: 0;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        .titulo-principal {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .titulo-principal h1 {
+            color: var(--marron);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .titulo-principal h2 {
+            color: var(--gris);
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin: 0.3rem 0 1.5rem;
         }
 
         .contenedor {
-            background: #ffffffd9;
+            background: #fff;
             border-radius: 25px;
             box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.08);
-            padding: 2.3rem 2rem;
+            padding: 2.2rem 2rem 2.5rem;
             text-align: center;
             width: 90%;
             max-width: 420px;
+            position: relative;
             z-index: 2;
-            backdrop-filter: blur(5px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease forwards;
         }
 
-        h1 {
+        @@keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .volver {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--marron);
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+            z-index: 5;
+        }
+
+        .volver:hover {
+            transform: scale(1.1);
+            color: var(--verde);
+        }
+
+        h3 {
             color: var(--marron);
             font-weight: 700;
-            font-size: 2rem;
-            margin-bottom: 1.2rem;
-        }
-
-        h2 {
-            font-size: 1.1rem;
-            color: var(--gris);
-            margin-bottom: 1.3rem;
+            font-size: 1.6rem;
+            margin: 0.8rem 0 1.2rem;
+            line-height: 1.3;
         }
 
         img.mascota-caja {
-            width: 130px;
-            margin-bottom: 1rem;
+            width: 180px;
+            margin-bottom: 1.2rem;
+            object-fit: contain;
+            image-rendering: crisp-edges;
         }
 
         form {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 15px;
+            gap: 14px;
+            width: 100%;
+            z-index: 4;
         }
 
-        input, select {
+        select, input {
             width: 100%;
             max-width: 320px;
-            padding: 12px;
+            padding: 12px 14px;
             border-radius: 20px;
             border: 1.8px solid var(--gris-claro);
             text-align: center;
             font-size: 15px;
-            transition: border 0.2s ease;
             outline: none;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+            background: #fff;
         }
 
-        input:focus, select:focus {
-            border-color: var(--amarillo);
+        select:focus, input:focus {
+            border-color: var(--verde);
+            box-shadow: 0 0 0 2px rgba(58, 195, 125, 0.25);
         }
 
-        .edad-container {
-            width: 100%;
-            max-width: 320px;
-            text-align: center;
-            margin-top: 10px;
+        label {
+            color: var(--marron);
+            font-weight: 600;
+            margin-top: 0.3rem;
+            font-size: 0.95rem;
         }
 
         input[type="range"] {
             width: 100%;
             accent-color: var(--amarillo);
+            cursor: pointer;
         }
 
-        .edad-texto {
-            font-weight: 600;
-            color: var(--marron);
-            margin-top: 0.5rem;
-        }
+        
+.edad-texto {
+    font-weight: 600;
+    color: var(--marron);
+    margin-top: 0.3rem;
+    font-size: 0.95rem;
+    text-align: center;
+}
 
         .btn-principal {
             background-color: var(--verde);
@@ -116,14 +174,15 @@
             padding: 12px 40px;
             font-size: 1.1rem;
             cursor: pointer;
-            transition: 0.3s ease;
-            margin-top: 15px;
+            transition: 0.25s ease;
+            margin-top: 1.3rem;
             width: 100%;
             max-width: 320px;
+            font-weight: 600;
         }
 
         .btn-principal:hover {
-            background-color: var(--verde-hover);
+            background-color: #2fa567;
             transform: translateY(-2px);
         }
 
@@ -133,6 +192,7 @@
             width: 100%;
             display: flex;
             justify-content: center;
+            pointer-events: none;
             z-index: 1;
         }
 
@@ -143,208 +203,80 @@
         }
 
         @@media (max-width: 768px) {
-            h1 { font-size: 1.7rem; }
-            .contenedor { padding: 1.7rem; }
+            .contenedor {
+                padding: 1.5rem;
+                max-width: 360px;
+            }
+            h3 { font-size: 1.4rem; }
         }
-/* ========== Tablets pequeñas / phablets (max 900px) ========== */
-@@media (max-width: 900px) {
-    .contenedor {
-        max-width: 380px;
-        padding: 1.8rem;
-    }
 
-    h1 {
-        font-size: 1.8rem;
-        margin-bottom: 1rem;
-    }
-
-    h2 {
-        font-size: 1rem;
-        margin-bottom: 1.2rem;
-    }
-
-    img.mascota-caja {
-        width: 110px;
-        margin-bottom: 0.8rem;
-    }
-
-    input, select {
-        font-size: 14px;
-        padding: 11px;
-    }
-
-    .btn-principal {
-        font-size: 1rem;
-        padding: 11px 35px;
-    }
+        @@media (max-width: 480px) {
+            .contenedor {
+                padding: 1.2rem;
+                max-width: 340px;
+            }
+            h3 { font-size: 1.3rem; }
+            .volver {
+                top: 12px;
+                left: 12px;
+                font-size: 24px;
+            }
+        }
+        .edad-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    margin-top: 0.8rem;
 }
 
-/* ========== Celulares grandes (max 600px, ej: iPhone 14 Pro Max) ========== */
-@@media (max-width: 600px) {
-    body {
-        justify-content: flex-start;
-        padding-top: 40px;
-    }
-
-    .contenedor {
-        width: 90%;
-        max-width: 340px;
-        padding: 1.5rem;
-        border-radius: 22px;
-        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
-    }
-
-    h1 {
-        font-size: 1.6rem;
-        margin-bottom: 0.9rem;
-    }
-
-    h2 {
-        font-size: 0.95rem;
-        line-height: 1.3rem;
-        margin-bottom: 1.1rem;
-    }
-
-    img.mascota-caja {
-        width: 95px;
-    }
-
-    input, select {
-        font-size: 13.5px;
-        padding: 10px;
-    }
-
-    .btn-principal {
-        font-size: 0.95rem;
-        padding: 10px 30px;
-    }
-
-    .edad-container label {
-        font-size: 0.9rem;
-    }
-
-    .edad-texto {
-        font-size: 0.95rem;
-    }
-
-    .imagen-bienvenida img {
-        max-width: 550px;
-    }
+.edad-container label {
+    color: var(--marron);
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    font-size: 1rem;
+    text-align: center;
 }
 
-/* ========== Celulares medianos (max 480px, ej: iPhone 12 Mini / Galaxy S10e) ========== */
-@@media (max-width: 480px) {
-    body {
-        padding-top: 25px;
-    }
-
-    .contenedor {
-        width: 92%;
-        max-width: 310px;
-        padding: 1.3rem;
-    }
-
-    h1 {
-        font-size: 1.4rem;
-    }
-
-    h2 {
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
-    }
-
-    img.mascota-caja {
-        width: 85px;
-    }
-
-    input, select {
-        font-size: 13px;
-        padding: 9px;
-        border-radius: 16px;
-    }
-
-    .btn-principal {
-        font-size: 0.9rem;
-        border-radius: 20px;
-        padding: 10px 25px;
-    }
-
-    .edad-container label {
-        font-size: 0.85rem;
-    }
-
-    .edad-texto {
-        font-size: 0.9rem;
-    }
-
-    .imagen-bienvenida img {
-        max-width: 450px;
-    }
+.edad-container input[type="range"] {
+    width: 80%;
+    margin: 0.5rem auto;
+    display: block;
+    accent-color: var(--amarillo);
 }
-
-/* ========== Celulares pequeños (max 380px, ej: iPhone SE / Galaxy A10) ========== */
-@@media (max-width: 380px) {
-    body {
-        padding-top: 15px;
-    }
-
-    .contenedor {
-        max-width: 280px;
-        padding: 1rem;
-        border-radius: 18px;
-    }
-
-    h1 {
-        font-size: 1.25rem;
-        margin-bottom: 0.8rem;
-    }
-
-    h2 {
-        font-size: 0.85rem;
-        margin-bottom: 0.8rem;
-    }
-
-    img.mascota-caja {
-        width: 70px;
-    }
-
-    input, select {
-        font-size: 12px;
-        padding: 8px;
-        border-radius: 14px;
-    }
-
-    .btn-principal {
-        font-size: 0.85rem;
-        padding: 9px 22px;
-    }
-
-    .edad-texto {
-        font-size: 0.85rem;
-    }
-
-    .imagen-bienvenida img {
-        max-width: 380px;
-    }
-}
-
     </style>
 </head>
+
 <body>
+    <div class="titulo-principal">
+        <h1>Zooni</h1>
+        <h2>¡Registrate!</h2>
+    </div>
+
     <div class="contenedor">
-        <h1>¡Completá los datos de tu mascota!</h1>
+        <button class="volver" onclick="window.location.href='/Registro/Registro2'">←</button>
+
+        <h3>Completá los datos de tu @ViewBag.MascotaEspecie 🐾</h3>
         <img src="@imagenSuperior" alt="Mascota en caja" class="mascota-caja" />
-        <h2>Ingresá los datos de tu @ViewBag.MascotaEspecie</h2>
 
         <form asp-action="Registro3" asp-controller="Registro" method="post">
+            @Html.AntiForgeryToken()
+
             <select name="Sexo" required>
                 <option value="">Sexo</option>
                 <option value="Macho">Macho</option>
                 <option value="Hembra">Hembra</option>
             </select>
 
-            <input type="text" name="Raza" placeholder="Raza" required />
-            <input type="text" name="Color" placeholder="Color" required />
+            <select id="Raza" name="Raza" required>
+                <option value="">Seleccioná una opción</option>
+            </select>
+
+            <select id="Color" name="Color" required>
+                <option value="">Seleccioná una opción</option>
+            </select>
 
             <div class="edad-container">
                 <label for="Edad">Edad</label>
@@ -361,18 +293,59 @@
     </div>
 
     <script>
-        const slider = document.getElementById("Edad");
-        const texto = document.getElementById("edadTexto");
+    const especie = "@especie";
+    const razasPorEspecie = {
+        perro: ["Labrador Retriever", "Golden Retriever", "Bulldog", "Beagle", "Poodle", "Chihuahua", "Pug", "Dálmata", "Husky Siberiano", "Cocker Spaniel", "Otra raza"],
+        gato: ["Persa", "Siames", "Maine Coon", "Bengala", "Sphynx", "Ragdoll", "British Shorthair", "Bombay", "Esfinge", "Otra raza"],
+        conejo: ["Mini Lop", "Angora", "Rex", "Belier", "Cabeza de León", "Otra raza"],
+        ave: ["Cacatúa", "Guacamayo", "Periquito", "Amazonas", "Agapornis", "Otra raza"],
+        pez: ["Betta", "Goldfish", "Guppy", "Cíclido", "Koi", "Otra raza"],
+        reptil: ["Iguana", "Camaleón", "Tortuga", "Gecko", "Otra raza"]
+    };
 
-        slider.addEventListener("input", () => {
-            const meses = parseInt(slider.value);
-            if (meses < 12)
-                texto.textContent = `${meses} ${meses === 1 ? "mes" : "meses"}`;
-            else {
-                const años = (meses / 12).toFixed(1);
-                texto.textContent = `${años} ${años == 1 ? "año" : "años"}`;
-            }
+    const coloresComunes = ["Negro", "Blanco", "Marrón", "Gris", "Dorado", "Crema", "Naranja", "Atigrado", "Manchado", "Otra"];
+
+    function llenarSelect(select, opciones) {
+        select.innerHTML = "<option value=''>Seleccioná una opción</option>";
+        opciones.forEach(op => {
+            const opt = document.createElement("option");
+            opt.value = op;
+            opt.textContent = op;
+            select.appendChild(opt);
         });
-    </script>
+    }
+
+    const razaSelect = document.getElementById("Raza");
+    const colorSelect = document.getElementById("Color");
+    llenarSelect(razaSelect, razasPorEspecie[especie] || razasPorEspecie.perro);
+    llenarSelect(colorSelect, coloresComunes);
+
+    // 🧠 Cuando se envía el formulario, si la raza es "Otra raza", se guarda como "Zooni" internamente
+    const form = document.querySelector("form");
+    form.addEventListener("submit", () => {
+        if (razaSelect.value === "Otra raza") {
+            const hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = "Raza";
+            hiddenInput.value = "Zooni";
+            form.appendChild(hiddenInput);
+
+            // Y evitamos que el <select> sobreescriba el valor
+            razaSelect.disabled = true;
+        }
+    });
+
+    // 🎚️ Slider de edad
+    const slider = document.getElementById("Edad");
+    const texto = document.getElementById("edadTexto");
+
+    slider.addEventListener("input", () => {
+        const meses = parseInt(slider.value);
+        texto.textContent = meses < 12
+            ? `${meses} ${meses === 1 ? "mes" : "meses"}`
+            : `${(meses / 12).toFixed(1)} ${(meses / 12 === 1) ? "año" : "años"}`;
+    });
+</script>
+
 </body>
 </html>
