@@ -108,10 +108,10 @@ Comparación con competidores principales:
 
 ## 🧑‍💻 Equipo de Desarrollo
 
-**Ignacio Eskenazi** — UX / UI & Branding  
-**Theo Trosman** — Lógica, backend y ecosistema MVC  
+**Theo Trosman** — Project Leader, Fullstack & Branding
+**Ignacio Eskenazi** — UX / UI Design
+**Santiago Dobrovitsky** — Fullstack Developer MVC
 **Lucas Dueñaz** — Investigación, redacción y estructura  
-**Santiago Dobrovitsky** — Product design & presentación  
 
 ---
 
