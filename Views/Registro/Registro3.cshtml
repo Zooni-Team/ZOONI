@@ -4,7 +4,7 @@
     Layout = null;
 
     var especie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
-    var imagenSuperior = $"/img/{especie}caja.png";
+    var imagenSuperior = $"/img/cajas/{especie}caja.png";
 }
 <!DOCTYPE html>
 <html lang="es">
@@ -146,6 +146,188 @@
             h1 { font-size: 1.7rem; }
             .contenedor { padding: 1.7rem; }
         }
+/* ========== Tablets pequeñas / phablets (max 900px) ========== */
+@@media (max-width: 900px) {
+    .contenedor {
+        max-width: 380px;
+        padding: 1.8rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+    }
+
+    h2 {
+        font-size: 1rem;
+        margin-bottom: 1.2rem;
+    }
+
+    img.mascota-caja {
+        width: 110px;
+        margin-bottom: 0.8rem;
+    }
+
+    input, select {
+        font-size: 14px;
+        padding: 11px;
+    }
+
+    .btn-principal {
+        font-size: 1rem;
+        padding: 11px 35px;
+    }
+}
+
+/* ========== Celulares grandes (max 600px, ej: iPhone 14 Pro Max) ========== */
+@@media (max-width: 600px) {
+    body {
+        justify-content: flex-start;
+        padding-top: 40px;
+    }
+
+    .contenedor {
+        width: 90%;
+        max-width: 340px;
+        padding: 1.5rem;
+        border-radius: 22px;
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        margin-bottom: 0.9rem;
+    }
+
+    h2 {
+        font-size: 0.95rem;
+        line-height: 1.3rem;
+        margin-bottom: 1.1rem;
+    }
+
+    img.mascota-caja {
+        width: 95px;
+    }
+
+    input, select {
+        font-size: 13.5px;
+        padding: 10px;
+    }
+
+    .btn-principal {
+        font-size: 0.95rem;
+        padding: 10px 30px;
+    }
+
+    .edad-container label {
+        font-size: 0.9rem;
+    }
+
+    .edad-texto {
+        font-size: 0.95rem;
+    }
+
+    .imagen-bienvenida img {
+        max-width: 550px;
+    }
+}
+
+/* ========== Celulares medianos (max 480px, ej: iPhone 12 Mini / Galaxy S10e) ========== */
+@@media (max-width: 480px) {
+    body {
+        padding-top: 25px;
+    }
+
+    .contenedor {
+        width: 92%;
+        max-width: 310px;
+        padding: 1.3rem;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    h2 {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+
+    img.mascota-caja {
+        width: 85px;
+    }
+
+    input, select {
+        font-size: 13px;
+        padding: 9px;
+        border-radius: 16px;
+    }
+
+    .btn-principal {
+        font-size: 0.9rem;
+        border-radius: 20px;
+        padding: 10px 25px;
+    }
+
+    .edad-container label {
+        font-size: 0.85rem;
+    }
+
+    .edad-texto {
+        font-size: 0.9rem;
+    }
+
+    .imagen-bienvenida img {
+        max-width: 450px;
+    }
+}
+
+/* ========== Celulares pequeños (max 380px, ej: iPhone SE / Galaxy A10) ========== */
+@@media (max-width: 380px) {
+    body {
+        padding-top: 15px;
+    }
+
+    .contenedor {
+        max-width: 280px;
+        padding: 1rem;
+        border-radius: 18px;
+    }
+
+    h1 {
+        font-size: 1.25rem;
+        margin-bottom: 0.8rem;
+    }
+
+    h2 {
+        font-size: 0.85rem;
+        margin-bottom: 0.8rem;
+    }
+
+    img.mascota-caja {
+        width: 70px;
+    }
+
+    input, select {
+        font-size: 12px;
+        padding: 8px;
+        border-radius: 14px;
+    }
+
+    .btn-principal {
+        font-size: 0.85rem;
+        padding: 9px 22px;
+    }
+
+    .edad-texto {
+        font-size: 0.85rem;
+    }
+
+    .imagen-bienvenida img {
+        max-width: 380px;
+    }
+}
+
     </style>
 </head>
 <body>

@@ -1,0 +1,16 @@
+El formato de nombre para las imagenes de cajas es: /img/cajas/(especie)caja.png
+Cajas completas:
+
+Perro [🚫]
+Gato [🚫]
+Conejo [🚫]
+Ave [🚫]
+Reptil [🚫]
+Pez [🚫]
+
+Prompt para generar imagen de caja con animal: 
+Cute cartoon illustration of a {{ESPECIE}} inside a small yellow cardboard box with a question mark on the front. 
+The box has a happy face drawn on it. 
+The animal is smiling, looking friendly and adorable, peeking out of the box with its front paws resting on the edge. 
+Flat vector art, minimalistic design, clean pastel colors, soft shading, smooth lines, kawaii style, white background, same aesthetic and proportions as “cute cat in a box” emoji illustration.
+Make the animal and the box the typical style of "Zooni" images that we have been generating in this project.
