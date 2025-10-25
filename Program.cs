@@ -29,6 +29,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseSession();
+app.UseStatusCodePagesWithReExecute("/Error/{0}");
 app.UseRouting();
 app.UseAuthorization();
 
