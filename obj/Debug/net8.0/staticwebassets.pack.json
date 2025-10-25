@@ -1,148 +1,184 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\css\\registro.css",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\css\\registro.css",
       "PackagePath": "staticwebassets\\css\\registro.css"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\css\\site.css",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\favicon.ico",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\apple-icon.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\apple-icon.png",
       "PackagePath": "staticwebassets\\img\\apple-icon.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\Cajas.ReadMe",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\Cajas.ReadMe",
       "PackagePath": "staticwebassets\\img\\cajas\\Cajas.ReadMe"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\avecaja.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\avecaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\avecaja.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\conejocaja.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\conejocaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\conejocaja.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\gatocaja.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\gatocaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\gatocaja.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\perrocaja.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\perrocaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\perrocaja.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\pezcaja.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\pezcaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\pezcaja.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\reptilcaja.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\reptilcaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\reptilcaja.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\facebook-icon.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\facebook-icon.png",
       "PackagePath": "staticwebassets\\img\\facebook-icon.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\google-icon.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\google-icon.png",
       "PackagePath": "staticwebassets\\img\\google-icon.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas-bienvenida.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
       "PackagePath": "staticwebassets\\img\\mascotas-bienvenida.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\esfinge\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_peakyblinder.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_peakyblinder.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\esfinge\\gato_peakyblinder.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\beagle\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\bulldog\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\bulldog\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\chihuahua\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\chihuahua\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\dálmata\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\dálmata\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\golden retriever\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\golden retriever\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\poodle\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\poodle\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\pug\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\pug\\perro_smoking.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_ballindeverdad.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_ballindeverdad.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\zooni\\perro_ballindeverdad.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\zooni\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_bienagustin.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_bienagustin.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\zooni\\perro_bienagustin.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_breakingbad.png",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_breakingbad.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\zooni\\perro_breakingbad.png"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\js\\registro.js",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\js\\registro.js",
       "PackagePath": "staticwebassets\\js\\registro.js"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\js\\site.js",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Zooni.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Zooni.Microsoft.AspNetCore.StaticWebAssets.props",

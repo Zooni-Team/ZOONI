@@ -29,7 +29,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -74,7 +74,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -111,7 +111,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -156,7 +156,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -193,7 +193,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -238,7 +238,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -275,7 +275,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -320,13 +320,587 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
           "Value": "sha256-QEY9eZXz5TZBgwyezHvqOD5utWJUzfZEZ/cpx/v6BIY="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/Cajas.ReadMe",
+      "AssetFile": "img/cajas/Cajas.ReadMe",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "817"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1wROLigdC7HlPMzmuWq/Ew8GMIVHhxjeKBz3/VssLKE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 02:32:00 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1wROLigdC7HlPMzmuWq/Ew8GMIVHhxjeKBz3/VssLKE="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/Cajas.ldorb72f29.ReadMe",
+      "AssetFile": "img/cajas/Cajas.ReadMe",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "817"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1wROLigdC7HlPMzmuWq/Ew8GMIVHhxjeKBz3/VssLKE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 02:32:00 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ldorb72f29"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-1wROLigdC7HlPMzmuWq/Ew8GMIVHhxjeKBz3/VssLKE="
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/Cajas.ReadMe"
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/avecaja.png",
+      "AssetFile": "img/cajas/avecaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1462346"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"7oHFmcaqVDLWTPJiKcWgBW/UaC16SZ4BJsRbQCOs1bk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-7oHFmcaqVDLWTPJiKcWgBW/UaC16SZ4BJsRbQCOs1bk="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/avecaja.qe4bnfoc5f.png",
+      "AssetFile": "img/cajas/avecaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1462346"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"7oHFmcaqVDLWTPJiKcWgBW/UaC16SZ4BJsRbQCOs1bk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qe4bnfoc5f"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-7oHFmcaqVDLWTPJiKcWgBW/UaC16SZ4BJsRbQCOs1bk="
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/avecaja.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/conejocaja.enmp3yj6dt.png",
+      "AssetFile": "img/cajas/conejocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1455230"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FmaChbvXWEfpcbsYadapXmGK6qAd8neQNgsY61fIka4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "enmp3yj6dt"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-FmaChbvXWEfpcbsYadapXmGK6qAd8neQNgsY61fIka4="
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/conejocaja.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/conejocaja.png",
+      "AssetFile": "img/cajas/conejocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1455230"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FmaChbvXWEfpcbsYadapXmGK6qAd8neQNgsY61fIka4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-FmaChbvXWEfpcbsYadapXmGK6qAd8neQNgsY61fIka4="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/gatocaja.png",
+      "AssetFile": "img/cajas/gatocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1497009"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tKescnLeH+bJK6SYp4H2P8Blzo35akCODiN2MqF+t8w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-tKescnLeH+bJK6SYp4H2P8Blzo35akCODiN2MqF+t8w="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/gatocaja.s8ho7draf0.png",
+      "AssetFile": "img/cajas/gatocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1497009"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tKescnLeH+bJK6SYp4H2P8Blzo35akCODiN2MqF+t8w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "s8ho7draf0"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-tKescnLeH+bJK6SYp4H2P8Blzo35akCODiN2MqF+t8w="
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/gatocaja.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/perrocaja.png",
+      "AssetFile": "img/cajas/perrocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1600963"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sWvn0j7R7fdAYRTi1Czj+hJtGKbvzVvnZgOATqQDLK0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-sWvn0j7R7fdAYRTi1Czj+hJtGKbvzVvnZgOATqQDLK0="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/perrocaja.tt0yfhuge9.png",
+      "AssetFile": "img/cajas/perrocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1600963"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sWvn0j7R7fdAYRTi1Czj+hJtGKbvzVvnZgOATqQDLK0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tt0yfhuge9"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-sWvn0j7R7fdAYRTi1Czj+hJtGKbvzVvnZgOATqQDLK0="
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/perrocaja.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/pezcaja.png",
+      "AssetFile": "img/cajas/pezcaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1528787"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IwYcJVpwIr0o8NFZdSIhA/23oGot2PlZ21+mA9xLJBw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-IwYcJVpwIr0o8NFZdSIhA/23oGot2PlZ21+mA9xLJBw="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/pezcaja.v5tez6u7l5.png",
+      "AssetFile": "img/cajas/pezcaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1528787"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IwYcJVpwIr0o8NFZdSIhA/23oGot2PlZ21+mA9xLJBw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "v5tez6u7l5"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-IwYcJVpwIr0o8NFZdSIhA/23oGot2PlZ21+mA9xLJBw="
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/pezcaja.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/reptilcaja.gk74holxdz.png",
+      "AssetFile": "img/cajas/reptilcaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1497561"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sF9OxsYxgW+dSLlRKk84vzT/XbkMUCe6HTve7aFJeY4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "gk74holxdz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-sF9OxsYxgW+dSLlRKk84vzT/XbkMUCe6HTve7aFJeY4="
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/reptilcaja.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/reptilcaja.png",
+      "AssetFile": "img/cajas/reptilcaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1497561"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sF9OxsYxgW+dSLlRKk84vzT/XbkMUCe6HTve7aFJeY4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-sF9OxsYxgW+dSLlRKk84vzT/XbkMUCe6HTve7aFJeY4="
         }
       ]
     },
@@ -357,7 +931,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -402,7 +976,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -439,7 +1013,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -484,7 +1058,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -521,7 +1095,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -566,13 +1140,1325 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
           "Value": "sha256-lnfSiQ17oDiywp/r2a5hZzls91yUbVV0jnScZaD+WgQ="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/esfinge/gato_basico.png",
+      "AssetFile": "img/mascotas/gatos/esfinge/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26484"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/esfinge/gato_basico.unk82q2x1y.png",
+      "AssetFile": "img/mascotas/gatos/esfinge/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26484"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "unk82q2x1y"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/esfinge/gato_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/esfinge/gato_peakyblinder.7xleitxwva.png",
+      "AssetFile": "img/mascotas/gatos/esfinge/gato_peakyblinder.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "98134"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7xleitxwva"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/esfinge/gato_peakyblinder.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/esfinge/gato_peakyblinder.png",
+      "AssetFile": "img/mascotas/gatos/esfinge/gato_peakyblinder.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "98134"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/beagle/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/beagle/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1487667"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TMlB4RQz2BX2pEOncPexGAT3ytEzPLpw3QQ+ueVlqUo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TMlB4RQz2BX2pEOncPexGAT3ytEzPLpw3QQ+ueVlqUo="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/beagle/perro_basico.whnfq2b3fd.png",
+      "AssetFile": "img/mascotas/perros/beagle/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1487667"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TMlB4RQz2BX2pEOncPexGAT3ytEzPLpw3QQ+ueVlqUo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "whnfq2b3fd"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TMlB4RQz2BX2pEOncPexGAT3ytEzPLpw3QQ+ueVlqUo="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/beagle/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/bulldog/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/bulldog/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1396246"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"wbElt+iJII7KJzrI8szgKOJ+WcxO4ON/AzPJ3aRmuNs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-wbElt+iJII7KJzrI8szgKOJ+WcxO4ON/AzPJ3aRmuNs="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/bulldog/perro_basico.vsfttvoj8x.png",
+      "AssetFile": "img/mascotas/perros/bulldog/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1396246"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"wbElt+iJII7KJzrI8szgKOJ+WcxO4ON/AzPJ3aRmuNs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "vsfttvoj8x"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-wbElt+iJII7KJzrI8szgKOJ+WcxO4ON/AzPJ3aRmuNs="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/bulldog/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/chihuahua/perro_basico.2h429iwi1b.png",
+      "AssetFile": "img/mascotas/perros/chihuahua/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1455785"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JjSn5FCV6GIXPrhT7tMur9sG0OceiNTtNvRLK8kI+80=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "2h429iwi1b"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-JjSn5FCV6GIXPrhT7tMur9sG0OceiNTtNvRLK8kI+80="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/chihuahua/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/chihuahua/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/chihuahua/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1455785"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JjSn5FCV6GIXPrhT7tMur9sG0OceiNTtNvRLK8kI+80=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JjSn5FCV6GIXPrhT7tMur9sG0OceiNTtNvRLK8kI+80="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/cocker spaniel/perro_basico.4vcbb0g85o.png",
+      "AssetFile": "img/mascotas/perros/cocker spaniel/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1486446"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IP/Vp/JeBQmlAoIN1rpe3EbmQazSiVVIsdxxc42OF70=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4vcbb0g85o"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-IP/Vp/JeBQmlAoIN1rpe3EbmQazSiVVIsdxxc42OF70="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/cocker spaniel/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/cocker spaniel/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/cocker spaniel/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1486446"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IP/Vp/JeBQmlAoIN1rpe3EbmQazSiVVIsdxxc42OF70=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-IP/Vp/JeBQmlAoIN1rpe3EbmQazSiVVIsdxxc42OF70="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/dálmata/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/dálmata/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1664691"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Cmfrih8GSrFluOht32FT4fYM3/lyeZBPs6KyXxzo4fA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Cmfrih8GSrFluOht32FT4fYM3/lyeZBPs6KyXxzo4fA="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/dálmata/perro_basico.q8d82o56yg.png",
+      "AssetFile": "img/mascotas/perros/dálmata/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1664691"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Cmfrih8GSrFluOht32FT4fYM3/lyeZBPs6KyXxzo4fA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "q8d82o56yg"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Cmfrih8GSrFluOht32FT4fYM3/lyeZBPs6KyXxzo4fA="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/dálmata/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/golden retriever/perro_basico.jtv02phjm8.png",
+      "AssetFile": "img/mascotas/perros/golden retriever/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1496876"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6UhNzmQ8T2eELv9m/V4P53cVjCoUdb/nxw/1DMii9F8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jtv02phjm8"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6UhNzmQ8T2eELv9m/V4P53cVjCoUdb/nxw/1DMii9F8="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/golden retriever/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/golden retriever/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/golden retriever/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1496876"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6UhNzmQ8T2eELv9m/V4P53cVjCoUdb/nxw/1DMii9F8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6UhNzmQ8T2eELv9m/V4P53cVjCoUdb/nxw/1DMii9F8="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/husky siberiano/perro_basico.9bbsghp9no.png",
+      "AssetFile": "img/mascotas/perros/husky siberiano/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1581971"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ReyCpWBH2uEOC8HHk8CvFL8K2Xm+F4AqCV3OtdeWSO4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9bbsghp9no"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ReyCpWBH2uEOC8HHk8CvFL8K2Xm+F4AqCV3OtdeWSO4="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/husky siberiano/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/husky siberiano/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/husky siberiano/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1581971"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ReyCpWBH2uEOC8HHk8CvFL8K2Xm+F4AqCV3OtdeWSO4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ReyCpWBH2uEOC8HHk8CvFL8K2Xm+F4AqCV3OtdeWSO4="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/poodle/perro_basico.n4t7gq3ofr.png",
+      "AssetFile": "img/mascotas/perros/poodle/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1477523"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n4t7gq3ofr"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/poodle/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/poodle/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/poodle/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1477523"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/pug/perro_basico.7vlksx3syr.png",
+      "AssetFile": "img/mascotas/perros/pug/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1426619"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TWT6SVaQuK+KJ+j51xybcswbFc/8GHn3G1eehL2ftpE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7vlksx3syr"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TWT6SVaQuK+KJ+j51xybcswbFc/8GHn3G1eehL2ftpE="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/pug/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/pug/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/pug/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1426619"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TWT6SVaQuK+KJ+j51xybcswbFc/8GHn3G1eehL2ftpE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TWT6SVaQuK+KJ+j51xybcswbFc/8GHn3G1eehL2ftpE="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/pug/perro_smoking.2vlie4gijw.png",
+      "AssetFile": "img/mascotas/perros/pug/perro_smoking.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "381457"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "2vlie4gijw"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/pug/perro_smoking.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/pug/perro_smoking.png",
+      "AssetFile": "img/mascotas/perros/pug/perro_smoking.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "381457"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_ballindeverdad.png",
+      "AssetFile": "img/mascotas/perros/zooni/perro_ballindeverdad.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1635578"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0vIFc0GUbvsbpFQAjAWYGHtqNcVCvrVRzAu/4yA0w9s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-0vIFc0GUbvsbpFQAjAWYGHtqNcVCvrVRzAu/4yA0w9s="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_ballindeverdad.u1tvijpdqv.png",
+      "AssetFile": "img/mascotas/perros/zooni/perro_ballindeverdad.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1635578"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0vIFc0GUbvsbpFQAjAWYGHtqNcVCvrVRzAu/4yA0w9s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "u1tvijpdqv"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-0vIFc0GUbvsbpFQAjAWYGHtqNcVCvrVRzAu/4yA0w9s="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/zooni/perro_ballindeverdad.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_basico.4cobjrrwv8.png",
+      "AssetFile": "img/mascotas/perros/zooni/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1434424"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"9D4MageGMkwJrWqDqxuJYOKNm81IwkB420qCVkpvOX4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4cobjrrwv8"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-9D4MageGMkwJrWqDqxuJYOKNm81IwkB420qCVkpvOX4="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/zooni/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/zooni/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1434424"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"9D4MageGMkwJrWqDqxuJYOKNm81IwkB420qCVkpvOX4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-9D4MageGMkwJrWqDqxuJYOKNm81IwkB420qCVkpvOX4="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_bienagustin.0p2i7rbnke.png",
+      "AssetFile": "img/mascotas/perros/zooni/perro_bienagustin.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1552850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JAHJ+6hQi9NQDwYCeuuo4Ow7377ghgUhWeW4V357UA4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0p2i7rbnke"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-JAHJ+6hQi9NQDwYCeuuo4Ow7377ghgUhWeW4V357UA4="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/zooni/perro_bienagustin.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_bienagustin.png",
+      "AssetFile": "img/mascotas/perros/zooni/perro_bienagustin.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1552850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JAHJ+6hQi9NQDwYCeuuo4Ow7377ghgUhWeW4V357UA4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JAHJ+6hQi9NQDwYCeuuo4Ow7377ghgUhWeW4V357UA4="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_breakingbad.awt1yl339d.png",
+      "AssetFile": "img/mascotas/perros/zooni/perro_breakingbad.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1543058"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "awt1yl339d"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/zooni/perro_breakingbad.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_breakingbad.png",
+      "AssetFile": "img/mascotas/perros/zooni/perro_breakingbad.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1543058"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI="
         }
       ]
     },
@@ -603,7 +2489,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -648,7 +2534,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -685,7 +2571,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -722,7 +2608,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -767,7 +2653,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -812,7 +2698,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -849,7 +2735,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -894,7 +2780,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -931,7 +2817,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -976,7 +2862,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1013,7 +2899,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1050,7 +2936,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1095,7 +2981,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1140,7 +3026,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1177,7 +3063,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1222,7 +3108,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1259,7 +3145,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1304,7 +3190,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1341,7 +3227,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1378,7 +3264,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1423,7 +3309,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1468,7 +3354,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1505,7 +3391,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1550,7 +3436,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1587,7 +3473,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1632,7 +3518,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1677,7 +3563,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [
@@ -1714,7 +3600,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 24 Oct 2025 01:52:24 GMT"
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
         }
       ],
       "EndpointProperties": [

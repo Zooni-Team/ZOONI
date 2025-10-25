@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "loLBDH+HQKpkT5EGa6LZSmJHR7mWh54vRpcuglRDWrY=",
+  "Hash": "RUdbiLKsMZpIwEGnajRYvWVDAUKp4WGDlSq0LDjlDm8=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -10,695 +10,4545 @@
     {
       "Name": "Zooni\\wwwroot",
       "Source": "Zooni",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\css\\registro.css",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\css\\registro.css",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "css/registro.css",
+      "RelativePath": "css/registro#[.{fingerprint}]?.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "2tajlv2x4b",
+      "Integrity": "di5Wg21xfD0JFa5wx6x0fgYx9lL3WqE4OLxs6W30oJA=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\registro.css"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\css\\site.css",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\css\\site.css",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "css/site.css",
+      "RelativePath": "css/site#[.{fingerprint}]?.css",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "a38qo91zj2",
+      "Integrity": "iqhpOBG1/Br7hvXFOGW6aoriLrZkTuiT2EVQ8JyUuhY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\favicon.ico",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\favicon.ico",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "favicon.ico",
+      "RelativePath": "favicon#[.{fingerprint}]?.ico",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "61n19gt1b8",
+      "Integrity": "Jtxf9L+5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\apple-icon.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\apple-icon.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/apple-icon.png",
+      "RelativePath": "img/apple-icon#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "clk49fkmla",
+      "Integrity": "QEY9eZXz5TZBgwyezHvqOD5utWJUzfZEZ/cpx/v6BIY=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\apple-icon.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\avecaja.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\avecaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/cajas/avecaja.png",
+      "RelativePath": "img/cajas/avecaja#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "qe4bnfoc5f",
+      "Integrity": "7oHFmcaqVDLWTPJiKcWgBW/UaC16SZ4BJsRbQCOs1bk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\cajas\\avecaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\Cajas.ReadMe",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\Cajas.ReadMe",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/cajas/Cajas.ReadMe",
+      "RelativePath": "img/cajas/Cajas#[.{fingerprint}]?.ReadMe",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "ldorb72f29",
+      "Integrity": "1wROLigdC7HlPMzmuWq/Ew8GMIVHhxjeKBz3/VssLKE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\cajas\\Cajas.ReadMe"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\conejocaja.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\conejocaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/cajas/conejocaja.png",
+      "RelativePath": "img/cajas/conejocaja#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "enmp3yj6dt",
+      "Integrity": "FmaChbvXWEfpcbsYadapXmGK6qAd8neQNgsY61fIka4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\cajas\\conejocaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\gatocaja.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\gatocaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/cajas/gatocaja.png",
+      "RelativePath": "img/cajas/gatocaja#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "s8ho7draf0",
+      "Integrity": "tKescnLeH+bJK6SYp4H2P8Blzo35akCODiN2MqF+t8w=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\cajas\\gatocaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\perrocaja.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\perrocaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/cajas/perrocaja.png",
+      "RelativePath": "img/cajas/perrocaja#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "tt0yfhuge9",
+      "Integrity": "sWvn0j7R7fdAYRTi1Czj+hJtGKbvzVvnZgOATqQDLK0=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\cajas\\perrocaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\pezcaja.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\pezcaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/cajas/pezcaja.png",
+      "RelativePath": "img/cajas/pezcaja#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "v5tez6u7l5",
+      "Integrity": "IwYcJVpwIr0o8NFZdSIhA/23oGot2PlZ21+mA9xLJBw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\cajas\\pezcaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\cajas\\reptilcaja.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\reptilcaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/cajas/reptilcaja.png",
+      "RelativePath": "img/cajas/reptilcaja#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "gk74holxdz",
+      "Integrity": "sF9OxsYxgW+dSLlRKk84vzT/XbkMUCe6HTve7aFJeY4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\cajas\\reptilcaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\facebook-icon.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\facebook-icon.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/facebook-icon.png",
+      "RelativePath": "img/facebook-icon#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "8tbuvocn21",
+      "Integrity": "tAmOBrlVyQeBA/IL+qxRKtKmy6KcijC487SXSee8JOI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\facebook-icon.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\google-icon.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\google-icon.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/google-icon.png",
+      "RelativePath": "img/google-icon#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "jruk67dyzk",
+      "Integrity": "QZWRwymmKaag7llS6BVoT7pZdQbYWf0RuVm5ufR0ZRM=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\google-icon.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas-bienvenida.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas-bienvenida.png",
+      "RelativePath": "img/mascotas-bienvenida#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "mlu6ganf0d",
+      "Integrity": "lnfSiQ17oDiywp/r2a5hZzls91yUbVV0jnScZaD+WgQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas-bienvenida.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas/gatos/esfinge/gato_basico.png",
+      "RelativePath": "img/mascotas/gatos/esfinge/gato_basico#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "unk82q2x1y",
+      "Integrity": "ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_peakyblinder.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_peakyblinder.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas/gatos/esfinge/gato_peakyblinder.png",
+      "RelativePath": "img/mascotas/gatos/esfinge/gato_peakyblinder#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "7xleitxwva",
+      "Integrity": "e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_peakyblinder.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas/perros/pug/perro_basico.png",
+      "RelativePath": "img/mascotas/perros/beagle/perro_basico#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "whnfq2b3fd",
+      "Integrity": "TMlB4RQz2BX2pEOncPexGAT3ytEzPLpw3QQ+ueVlqUo=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\bulldog\\perro_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/perros/bulldog/perro_basico#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "vsfttvoj8x",
+      "Integrity": "wbElt+iJII7KJzrI8szgKOJ+WcxO4ON/AzPJ3aRmuNs=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\bulldog\\perro_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\chihuahua\\perro_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/perros/chihuahua/perro_basico#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "2h429iwi1b",
+      "Integrity": "JjSn5FCV6GIXPrhT7tMur9sG0OceiNTtNvRLK8kI+80=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\chihuahua\\perro_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/perros/cocker spaniel/perro_basico#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "4vcbb0g85o",
+      "Integrity": "IP/Vp/JeBQmlAoIN1rpe3EbmQazSiVVIsdxxc42OF70=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\dálmata\\perro_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/perros/dálmata/perro_basico#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "q8d82o56yg",
+      "Integrity": "Cmfrih8GSrFluOht32FT4fYM3/lyeZBPs6KyXxzo4fA=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\dálmata\\perro_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\golden retriever\\perro_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/perros/golden retriever/perro_basico#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "jtv02phjm8",
+      "Integrity": "6UhNzmQ8T2eELv9m/V4P53cVjCoUdb/nxw/1DMii9F8=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\golden retriever\\perro_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/perros/husky siberiano/perro_basico#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "9bbsghp9no",
+      "Integrity": "ReyCpWBH2uEOC8HHk8CvFL8K2Xm+F4AqCV3OtdeWSO4=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\poodle\\perro_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/perros/poodle/perro_basico#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "n4t7gq3ofr",
+      "Integrity": "N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\poodle\\perro_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/perros/pug/perro_basico#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "7vlksx3syr",
+      "Integrity": "TWT6SVaQuK+KJ+j51xybcswbFc/8GHn3G1eehL2ftpE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas/perros/pug/perro_smoking.png",
+      "RelativePath": "img/mascotas/perros/pug/perro_smoking#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "2vlie4gijw",
+      "Integrity": "0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_ballindeverdad.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_ballindeverdad.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas/perros/zooni/perro_ballindeverdad.png",
+      "RelativePath": "img/mascotas/perros/zooni/perro_ballindeverdad#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "u1tvijpdqv",
+      "Integrity": "0vIFc0GUbvsbpFQAjAWYGHtqNcVCvrVRzAu/4yA0w9s=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\zooni\\perro_ballindeverdad.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_basico.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas/perros/zooni/perro_basico.png",
+      "RelativePath": "img/mascotas/perros/zooni/perro_basico#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "4cobjrrwv8",
+      "Integrity": "9D4MageGMkwJrWqDqxuJYOKNm81IwkB420qCVkpvOX4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\zooni\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_bienagustin.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_bienagustin.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas/perros/zooni/perro_bienagustin.png",
+      "RelativePath": "img/mascotas/perros/zooni/perro_bienagustin#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "0p2i7rbnke",
+      "Integrity": "JAHJ+6hQi9NQDwYCeuuo4Ow7377ghgUhWeW4V357UA4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\zooni\\perro_bienagustin.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_breakingbad.png",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_breakingbad.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas/perros/zooni/perro_breakingbad.png",
+      "RelativePath": "img/mascotas/perros/zooni/perro_breakingbad#[.{fingerprint}]?.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "awt1yl339d",
+      "Integrity": "ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\zooni\\perro_breakingbad.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\js\\registro.js",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\js\\registro.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "js/registro.js",
+      "RelativePath": "js/registro#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "6k7jmpnf56",
+      "Integrity": "Brc4CIrIfV9QgWq3VK8XlOoSrgRAtY4Vq0tlY1gXKkE=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\registro.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\js\\site.js",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\js\\site.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "js/site.js",
+      "RelativePath": "js/site#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "xtxxf3hu2r",
+      "Integrity": "hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "03hjc8e09r",
+      "Integrity": "xJbBMLGhYbXlPrrrddrSVmduyF6KEtbxEsYxw7hYZV4=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "48y08845bh",
+      "Integrity": "RFWFWIIPsjB4DucR4jqwxTWw13ZmtI+s6tVR2LJmZXk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE#[.{fingerprint}]?.txt",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "356vix0kms",
+      "Integrity": "16aFlqtpsG9RyieKZUUUjkJpqTgcJtWXwT312I4Iz1s=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
+      "RelativePath": "lib/jquery-validation/dist/additional-methods#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "ay5nd8zt9x",
+      "Integrity": "4jrcLBsi0Ugm8iLKdqDsAyaCDjkscYZdoGuNH/zqs4E=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
+      "RelativePath": "lib/jquery-validation/dist/additional-methods.min#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "9oaff4kq20",
+      "Integrity": "N11IyJpHTgDcSCb3AfX4VrBnpGQeem1NoNzzgcXVyCc=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
+      "RelativePath": "lib/jquery-validation/dist/jquery.validate#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "6d0lkjaslc",
+      "Integrity": "5qqb5VxQ2t2a6Zx/neW5uppLLvaGn4nn0NdYp6g8Lyg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
+      "RelativePath": "lib/jquery-validation/dist/jquery.validate.min#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "l1zq2mitth",
+      "Integrity": "6e0N+WJiVKBeTitK1GKSwPi3rbdPpLtuqaiitZjeD2w=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery-validation/LICENSE.md",
+      "RelativePath": "lib/jquery-validation/LICENSE#[.{fingerprint}]?.md",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "x0q3zqp4vz",
+      "Integrity": "geHEkw/WGPdaHQMRq5HuNY9snliNzU/y2OW8ycnhGXw=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery/dist/jquery.js",
+      "RelativePath": "lib/jquery/dist/jquery#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "7s2n0ol71w",
+      "Integrity": "KSI/3xxCrCexCupdzQJRP1B6Iqg+2NA+X2u38cQdqq8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery/dist/jquery.min.js",
+      "RelativePath": "lib/jquery/dist/jquery.min#[.{fingerprint}]?.js",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "ehgnz7f14e",
+      "Integrity": "zp0HUArZHsK1JMJwdk7EyaM+eDINjTdOxADt5Ij2JRs=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery/dist/jquery.min.map",
+      "RelativePath": "lib/jquery/dist/jquery.min#[.{fingerprint}]?.map",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "5pze98is44",
+      "Integrity": "OZVI+w57FGwS9boYCZpH1ZSpcP7pYhLu4KtIUvPlZ4I=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONI\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONI\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "lib/jquery/LICENSE.txt",
+      "RelativePath": "lib/jquery/LICENSE#[.{fingerprint}]?.txt",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeBehavior": "",
       "AssetMergeSource": "",
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
+      "Fingerprint": "mlv21k5csn",
+      "Integrity": "hjIBkvmgxQXbNXK3B9YQ3t06RwLuQSQzC/dpvuB/lMk=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\LICENSE.txt"
+    }
+  ],
+  "Endpoints": [
+    {
+      "Route": "css/registro.2tajlv2x4b.css",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\css\\registro.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2999"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"di5Wg21xfD0JFa5wx6x0fgYx9lL3WqE4OLxs6W30oJA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "2tajlv2x4b"
+        },
+        {
+          "Name": "label",
+          "Value": "css/registro.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-di5Wg21xfD0JFa5wx6x0fgYx9lL3WqE4OLxs6W30oJA="
+        }
+      ]
+    },
+    {
+      "Route": "css/registro.css",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\css\\registro.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2999"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"di5Wg21xfD0JFa5wx6x0fgYx9lL3WqE4OLxs6W30oJA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-di5Wg21xfD0JFa5wx6x0fgYx9lL3WqE4OLxs6W30oJA="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.a38qo91zj2.css",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "289"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"iqhpOBG1/Br7hvXFOGW6aoriLrZkTuiT2EVQ8JyUuhY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "a38qo91zj2"
+        },
+        {
+          "Name": "label",
+          "Value": "css/site.css"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-iqhpOBG1/Br7hvXFOGW6aoriLrZkTuiT2EVQ8JyUuhY="
+        }
+      ]
+    },
+    {
+      "Route": "css/site.css",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\css\\site.css",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "289"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/css"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"iqhpOBG1/Br7hvXFOGW6aoriLrZkTuiT2EVQ8JyUuhY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-iqhpOBG1/Br7hvXFOGW6aoriLrZkTuiT2EVQ8JyUuhY="
+        }
+      ]
+    },
+    {
+      "Route": "favicon.61n19gt1b8.ico",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\favicon.ico",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5430"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/x-icon"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Jtxf9L+5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "61n19gt1b8"
+        },
+        {
+          "Name": "label",
+          "Value": "favicon.ico"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Jtxf9L+5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM="
+        }
+      ]
+    },
+    {
+      "Route": "favicon.ico",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\favicon.ico",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5430"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/x-icon"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Jtxf9L+5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Jtxf9L+5ITKRc1gIRl4VbUpGkRNfOBXjYTdhJD4facM="
+        }
+      ]
+    },
+    {
+      "Route": "img/apple-icon.clk49fkmla.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\apple-icon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1147"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"QEY9eZXz5TZBgwyezHvqOD5utWJUzfZEZ/cpx/v6BIY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "clk49fkmla"
+        },
+        {
+          "Name": "label",
+          "Value": "img/apple-icon.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-QEY9eZXz5TZBgwyezHvqOD5utWJUzfZEZ/cpx/v6BIY="
+        }
+      ]
+    },
+    {
+      "Route": "img/apple-icon.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\apple-icon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1147"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"QEY9eZXz5TZBgwyezHvqOD5utWJUzfZEZ/cpx/v6BIY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-QEY9eZXz5TZBgwyezHvqOD5utWJUzfZEZ/cpx/v6BIY="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/avecaja.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\avecaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1462346"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"7oHFmcaqVDLWTPJiKcWgBW/UaC16SZ4BJsRbQCOs1bk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-7oHFmcaqVDLWTPJiKcWgBW/UaC16SZ4BJsRbQCOs1bk="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/avecaja.qe4bnfoc5f.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\avecaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1462346"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"7oHFmcaqVDLWTPJiKcWgBW/UaC16SZ4BJsRbQCOs1bk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "qe4bnfoc5f"
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/avecaja.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-7oHFmcaqVDLWTPJiKcWgBW/UaC16SZ4BJsRbQCOs1bk="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/Cajas.ldorb72f29.ReadMe",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\Cajas.ReadMe",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "817"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1wROLigdC7HlPMzmuWq/Ew8GMIVHhxjeKBz3/VssLKE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 02:32:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ldorb72f29"
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/Cajas.ReadMe"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-1wROLigdC7HlPMzmuWq/Ew8GMIVHhxjeKBz3/VssLKE="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/Cajas.ReadMe",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\Cajas.ReadMe",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "817"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1wROLigdC7HlPMzmuWq/Ew8GMIVHhxjeKBz3/VssLKE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 02:32:00 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1wROLigdC7HlPMzmuWq/Ew8GMIVHhxjeKBz3/VssLKE="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/conejocaja.enmp3yj6dt.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\conejocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1455230"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FmaChbvXWEfpcbsYadapXmGK6qAd8neQNgsY61fIka4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "enmp3yj6dt"
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/conejocaja.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-FmaChbvXWEfpcbsYadapXmGK6qAd8neQNgsY61fIka4="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/conejocaja.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\conejocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1455230"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"FmaChbvXWEfpcbsYadapXmGK6qAd8neQNgsY61fIka4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-FmaChbvXWEfpcbsYadapXmGK6qAd8neQNgsY61fIka4="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/gatocaja.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\gatocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1497009"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tKescnLeH+bJK6SYp4H2P8Blzo35akCODiN2MqF+t8w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-tKescnLeH+bJK6SYp4H2P8Blzo35akCODiN2MqF+t8w="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/gatocaja.s8ho7draf0.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\gatocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1497009"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tKescnLeH+bJK6SYp4H2P8Blzo35akCODiN2MqF+t8w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "s8ho7draf0"
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/gatocaja.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-tKescnLeH+bJK6SYp4H2P8Blzo35akCODiN2MqF+t8w="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/perrocaja.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\perrocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1600963"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sWvn0j7R7fdAYRTi1Czj+hJtGKbvzVvnZgOATqQDLK0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-sWvn0j7R7fdAYRTi1Czj+hJtGKbvzVvnZgOATqQDLK0="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/perrocaja.tt0yfhuge9.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\perrocaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1600963"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sWvn0j7R7fdAYRTi1Czj+hJtGKbvzVvnZgOATqQDLK0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "tt0yfhuge9"
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/perrocaja.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-sWvn0j7R7fdAYRTi1Czj+hJtGKbvzVvnZgOATqQDLK0="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/pezcaja.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\pezcaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1528787"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IwYcJVpwIr0o8NFZdSIhA/23oGot2PlZ21+mA9xLJBw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-IwYcJVpwIr0o8NFZdSIhA/23oGot2PlZ21+mA9xLJBw="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/pezcaja.v5tez6u7l5.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\pezcaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1528787"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IwYcJVpwIr0o8NFZdSIhA/23oGot2PlZ21+mA9xLJBw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "v5tez6u7l5"
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/pezcaja.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-IwYcJVpwIr0o8NFZdSIhA/23oGot2PlZ21+mA9xLJBw="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/reptilcaja.gk74holxdz.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\reptilcaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1497561"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sF9OxsYxgW+dSLlRKk84vzT/XbkMUCe6HTve7aFJeY4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "gk74holxdz"
+        },
+        {
+          "Name": "label",
+          "Value": "img/cajas/reptilcaja.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-sF9OxsYxgW+dSLlRKk84vzT/XbkMUCe6HTve7aFJeY4="
+        }
+      ]
+    },
+    {
+      "Route": "img/cajas/reptilcaja.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\cajas\\reptilcaja.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1497561"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"sF9OxsYxgW+dSLlRKk84vzT/XbkMUCe6HTve7aFJeY4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-sF9OxsYxgW+dSLlRKk84vzT/XbkMUCe6HTve7aFJeY4="
+        }
+      ]
+    },
+    {
+      "Route": "img/facebook-icon.8tbuvocn21.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\facebook-icon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2475"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tAmOBrlVyQeBA/IL+qxRKtKmy6KcijC487SXSee8JOI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "8tbuvocn21"
+        },
+        {
+          "Name": "label",
+          "Value": "img/facebook-icon.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-tAmOBrlVyQeBA/IL+qxRKtKmy6KcijC487SXSee8JOI="
+        }
+      ]
+    },
+    {
+      "Route": "img/facebook-icon.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\facebook-icon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2475"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"tAmOBrlVyQeBA/IL+qxRKtKmy6KcijC487SXSee8JOI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-tAmOBrlVyQeBA/IL+qxRKtKmy6KcijC487SXSee8JOI="
+        }
+      ]
+    },
+    {
+      "Route": "img/google-icon.jruk67dyzk.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\google-icon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2892"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"QZWRwymmKaag7llS6BVoT7pZdQbYWf0RuVm5ufR0ZRM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jruk67dyzk"
+        },
+        {
+          "Name": "label",
+          "Value": "img/google-icon.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-QZWRwymmKaag7llS6BVoT7pZdQbYWf0RuVm5ufR0ZRM="
+        }
+      ]
+    },
+    {
+      "Route": "img/google-icon.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\google-icon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2892"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"QZWRwymmKaag7llS6BVoT7pZdQbYWf0RuVm5ufR0ZRM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-QZWRwymmKaag7llS6BVoT7pZdQbYWf0RuVm5ufR0ZRM="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas-bienvenida.mlu6ganf0d.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "112814"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lnfSiQ17oDiywp/r2a5hZzls91yUbVV0jnScZaD+WgQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "mlu6ganf0d"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas-bienvenida.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-lnfSiQ17oDiywp/r2a5hZzls91yUbVV0jnScZaD+WgQ="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas-bienvenida.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "112814"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"lnfSiQ17oDiywp/r2a5hZzls91yUbVV0jnScZaD+WgQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-lnfSiQ17oDiywp/r2a5hZzls91yUbVV0jnScZaD+WgQ="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/esfinge/gato_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26484"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/esfinge/gato_basico.unk82q2x1y.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "26484"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "unk82q2x1y"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/esfinge/gato_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/esfinge/gato_peakyblinder.7xleitxwva.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_peakyblinder.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "98134"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7xleitxwva"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/esfinge/gato_peakyblinder.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/esfinge/gato_peakyblinder.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_peakyblinder.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "98134"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/beagle/perro_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1487667"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TMlB4RQz2BX2pEOncPexGAT3ytEzPLpw3QQ+ueVlqUo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TMlB4RQz2BX2pEOncPexGAT3ytEzPLpw3QQ+ueVlqUo="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/beagle/perro_basico.whnfq2b3fd.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1487667"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TMlB4RQz2BX2pEOncPexGAT3ytEzPLpw3QQ+ueVlqUo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "whnfq2b3fd"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/beagle/perro_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TMlB4RQz2BX2pEOncPexGAT3ytEzPLpw3QQ+ueVlqUo="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/bulldog/perro_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\bulldog\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1396246"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"wbElt+iJII7KJzrI8szgKOJ+WcxO4ON/AzPJ3aRmuNs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-wbElt+iJII7KJzrI8szgKOJ+WcxO4ON/AzPJ3aRmuNs="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/bulldog/perro_basico.vsfttvoj8x.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\bulldog\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1396246"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"wbElt+iJII7KJzrI8szgKOJ+WcxO4ON/AzPJ3aRmuNs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "vsfttvoj8x"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/bulldog/perro_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-wbElt+iJII7KJzrI8szgKOJ+WcxO4ON/AzPJ3aRmuNs="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/chihuahua/perro_basico.2h429iwi1b.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\chihuahua\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1455785"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JjSn5FCV6GIXPrhT7tMur9sG0OceiNTtNvRLK8kI+80=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "2h429iwi1b"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/chihuahua/perro_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-JjSn5FCV6GIXPrhT7tMur9sG0OceiNTtNvRLK8kI+80="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/chihuahua/perro_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\chihuahua\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1455785"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JjSn5FCV6GIXPrhT7tMur9sG0OceiNTtNvRLK8kI+80=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JjSn5FCV6GIXPrhT7tMur9sG0OceiNTtNvRLK8kI+80="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/cocker spaniel/perro_basico.4vcbb0g85o.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1486446"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IP/Vp/JeBQmlAoIN1rpe3EbmQazSiVVIsdxxc42OF70=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4vcbb0g85o"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/cocker spaniel/perro_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-IP/Vp/JeBQmlAoIN1rpe3EbmQazSiVVIsdxxc42OF70="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/cocker spaniel/perro_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1486446"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"IP/Vp/JeBQmlAoIN1rpe3EbmQazSiVVIsdxxc42OF70=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-IP/Vp/JeBQmlAoIN1rpe3EbmQazSiVVIsdxxc42OF70="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/dálmata/perro_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\dálmata\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1664691"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Cmfrih8GSrFluOht32FT4fYM3/lyeZBPs6KyXxzo4fA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Cmfrih8GSrFluOht32FT4fYM3/lyeZBPs6KyXxzo4fA="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/dálmata/perro_basico.q8d82o56yg.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\dálmata\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1664691"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Cmfrih8GSrFluOht32FT4fYM3/lyeZBPs6KyXxzo4fA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "q8d82o56yg"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/dálmata/perro_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Cmfrih8GSrFluOht32FT4fYM3/lyeZBPs6KyXxzo4fA="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/golden retriever/perro_basico.jtv02phjm8.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\golden retriever\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1496876"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6UhNzmQ8T2eELv9m/V4P53cVjCoUdb/nxw/1DMii9F8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jtv02phjm8"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/golden retriever/perro_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6UhNzmQ8T2eELv9m/V4P53cVjCoUdb/nxw/1DMii9F8="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/golden retriever/perro_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\golden retriever\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1496876"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6UhNzmQ8T2eELv9m/V4P53cVjCoUdb/nxw/1DMii9F8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6UhNzmQ8T2eELv9m/V4P53cVjCoUdb/nxw/1DMii9F8="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/husky siberiano/perro_basico.9bbsghp9no.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1581971"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ReyCpWBH2uEOC8HHk8CvFL8K2Xm+F4AqCV3OtdeWSO4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9bbsghp9no"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/husky siberiano/perro_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ReyCpWBH2uEOC8HHk8CvFL8K2Xm+F4AqCV3OtdeWSO4="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/husky siberiano/perro_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1581971"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ReyCpWBH2uEOC8HHk8CvFL8K2Xm+F4AqCV3OtdeWSO4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ReyCpWBH2uEOC8HHk8CvFL8K2Xm+F4AqCV3OtdeWSO4="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/poodle/perro_basico.n4t7gq3ofr.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\poodle\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1477523"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n4t7gq3ofr"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/poodle/perro_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/poodle/perro_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\poodle\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1477523"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/pug/perro_basico.7vlksx3syr.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1426619"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TWT6SVaQuK+KJ+j51xybcswbFc/8GHn3G1eehL2ftpE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7vlksx3syr"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/pug/perro_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-TWT6SVaQuK+KJ+j51xybcswbFc/8GHn3G1eehL2ftpE="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/pug/perro_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1426619"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"TWT6SVaQuK+KJ+j51xybcswbFc/8GHn3G1eehL2ftpE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-TWT6SVaQuK+KJ+j51xybcswbFc/8GHn3G1eehL2ftpE="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/pug/perro_smoking.2vlie4gijw.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "381457"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "2vlie4gijw"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/pug/perro_smoking.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/pug/perro_smoking.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "381457"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_ballindeverdad.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_ballindeverdad.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1635578"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0vIFc0GUbvsbpFQAjAWYGHtqNcVCvrVRzAu/4yA0w9s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-0vIFc0GUbvsbpFQAjAWYGHtqNcVCvrVRzAu/4yA0w9s="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_ballindeverdad.u1tvijpdqv.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_ballindeverdad.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1635578"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0vIFc0GUbvsbpFQAjAWYGHtqNcVCvrVRzAu/4yA0w9s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "u1tvijpdqv"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/zooni/perro_ballindeverdad.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-0vIFc0GUbvsbpFQAjAWYGHtqNcVCvrVRzAu/4yA0w9s="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_basico.4cobjrrwv8.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1434424"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"9D4MageGMkwJrWqDqxuJYOKNm81IwkB420qCVkpvOX4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4cobjrrwv8"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/zooni/perro_basico.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-9D4MageGMkwJrWqDqxuJYOKNm81IwkB420qCVkpvOX4="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_basico.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1434424"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"9D4MageGMkwJrWqDqxuJYOKNm81IwkB420qCVkpvOX4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-9D4MageGMkwJrWqDqxuJYOKNm81IwkB420qCVkpvOX4="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_bienagustin.0p2i7rbnke.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_bienagustin.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1552850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JAHJ+6hQi9NQDwYCeuuo4Ow7377ghgUhWeW4V357UA4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0p2i7rbnke"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/zooni/perro_bienagustin.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-JAHJ+6hQi9NQDwYCeuuo4Ow7377ghgUhWeW4V357UA4="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_bienagustin.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_bienagustin.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1552850"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JAHJ+6hQi9NQDwYCeuuo4Ow7377ghgUhWeW4V357UA4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JAHJ+6hQi9NQDwYCeuuo4Ow7377ghgUhWeW4V357UA4="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_breakingbad.awt1yl339d.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_breakingbad.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1543058"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "awt1yl339d"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/zooni/perro_breakingbad.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perro_breakingbad.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_breakingbad.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1543058"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI="
+        }
+      ]
+    },
+    {
+      "Route": "js/registro.6k7jmpnf56.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\js\\registro.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9635"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Brc4CIrIfV9QgWq3VK8XlOoSrgRAtY4Vq0tlY1gXKkE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6k7jmpnf56"
+        },
+        {
+          "Name": "label",
+          "Value": "js/registro.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Brc4CIrIfV9QgWq3VK8XlOoSrgRAtY4Vq0tlY1gXKkE="
+        }
+      ]
+    },
+    {
+      "Route": "js/registro.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\js\\registro.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9635"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Brc4CIrIfV9QgWq3VK8XlOoSrgRAtY4Vq0tlY1gXKkE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Brc4CIrIfV9QgWq3VK8XlOoSrgRAtY4Vq0tlY1gXKkE="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\js\\site.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "231"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo="
+        }
+      ]
+    },
+    {
+      "Route": "js/site.xtxxf3hu2r.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\js\\site.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "231"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "xtxxf3hu2r"
+        },
+        {
+          "Name": "label",
+          "Value": "js/site.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-hRQyftXiu1lLX2P9Ly9xa4gHJgLeR1uGN5qegUobtGo="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.03hjc8e09r.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19820"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"xJbBMLGhYbXlPrrrddrSVmduyF6KEtbxEsYxw7hYZV4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "03hjc8e09r"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-xJbBMLGhYbXlPrrrddrSVmduyF6KEtbxEsYxw7hYZV4="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "19820"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"xJbBMLGhYbXlPrrrddrSVmduyF6KEtbxEsYxw7hYZV4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-xJbBMLGhYbXlPrrrddrSVmduyF6KEtbxEsYxw7hYZV4="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.48y08845bh.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5831"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RFWFWIIPsjB4DucR4jqwxTWw13ZmtI+s6tVR2LJmZXk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "48y08845bh"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-RFWFWIIPsjB4DucR4jqwxTWw13ZmtI+s6tVR2LJmZXk="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "5831"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"RFWFWIIPsjB4DucR4jqwxTWw13ZmtI+s6tVR2LJmZXk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-RFWFWIIPsjB4DucR4jqwxTWw13ZmtI+s6tVR2LJmZXk="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation-unobtrusive/LICENSE.356vix0kms.txt",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1139"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"16aFlqtpsG9RyieKZUUUjkJpqTgcJtWXwT312I4Iz1s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "356vix0kms"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery-validation-unobtrusive/LICENSE.txt"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-16aFlqtpsG9RyieKZUUUjkJpqTgcJtWXwT312I4Iz1s="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation-unobtrusive/LICENSE.txt",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1139"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"16aFlqtpsG9RyieKZUUUjkJpqTgcJtWXwT312I4Iz1s=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-16aFlqtpsG9RyieKZUUUjkJpqTgcJtWXwT312I4Iz1s="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation/dist/additional-methods.ay5nd8zt9x.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "52977"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"4jrcLBsi0Ugm8iLKdqDsAyaCDjkscYZdoGuNH/zqs4E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ay5nd8zt9x"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery-validation/dist/additional-methods.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-4jrcLBsi0Ugm8iLKdqDsAyaCDjkscYZdoGuNH/zqs4E="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation/dist/additional-methods.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "52977"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"4jrcLBsi0Ugm8iLKdqDsAyaCDjkscYZdoGuNH/zqs4E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-4jrcLBsi0Ugm8iLKdqDsAyaCDjkscYZdoGuNH/zqs4E="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation/dist/additional-methods.min.9oaff4kq20.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "22177"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"N11IyJpHTgDcSCb3AfX4VrBnpGQeem1NoNzzgcXVyCc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "9oaff4kq20"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery-validation/dist/additional-methods.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-N11IyJpHTgDcSCb3AfX4VrBnpGQeem1NoNzzgcXVyCc="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation/dist/additional-methods.min.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "22177"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"N11IyJpHTgDcSCb3AfX4VrBnpGQeem1NoNzzgcXVyCc=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-N11IyJpHTgDcSCb3AfX4VrBnpGQeem1NoNzzgcXVyCc="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation/dist/jquery.validate.6d0lkjaslc.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "52831"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5qqb5VxQ2t2a6Zx/neW5uppLLvaGn4nn0NdYp6g8Lyg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6d0lkjaslc"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery-validation/dist/jquery.validate.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-5qqb5VxQ2t2a6Zx/neW5uppLLvaGn4nn0NdYp6g8Lyg="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation/dist/jquery.validate.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "52831"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5qqb5VxQ2t2a6Zx/neW5uppLLvaGn4nn0NdYp6g8Lyg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5qqb5VxQ2t2a6Zx/neW5uppLLvaGn4nn0NdYp6g8Lyg="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation/dist/jquery.validate.min.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "24604"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6e0N+WJiVKBeTitK1GKSwPi3rbdPpLtuqaiitZjeD2w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6e0N+WJiVKBeTitK1GKSwPi3rbdPpLtuqaiitZjeD2w="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation/dist/jquery.validate.min.l1zq2mitth.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "24604"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6e0N+WJiVKBeTitK1GKSwPi3rbdPpLtuqaiitZjeD2w=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "l1zq2mitth"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery-validation/dist/jquery.validate.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6e0N+WJiVKBeTitK1GKSwPi3rbdPpLtuqaiitZjeD2w="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation/LICENSE.md",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1117"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/markdown"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"geHEkw/WGPdaHQMRq5HuNY9snliNzU/y2OW8ycnhGXw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-geHEkw/WGPdaHQMRq5HuNY9snliNzU/y2OW8ycnhGXw="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery-validation/LICENSE.x0q3zqp4vz.md",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1117"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/markdown"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"geHEkw/WGPdaHQMRq5HuNY9snliNzU/y2OW8ycnhGXw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "x0q3zqp4vz"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery-validation/LICENSE.md"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-geHEkw/WGPdaHQMRq5HuNY9snliNzU/y2OW8ycnhGXw="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery/dist/jquery.7s2n0ol71w.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "299461"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KSI/3xxCrCexCupdzQJRP1B6Iqg+2NA+X2u38cQdqq8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "7s2n0ol71w"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery/dist/jquery.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-KSI/3xxCrCexCupdzQJRP1B6Iqg+2NA+X2u38cQdqq8="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery/dist/jquery.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "299461"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"KSI/3xxCrCexCupdzQJRP1B6Iqg+2NA+X2u38cQdqq8=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-KSI/3xxCrCexCupdzQJRP1B6Iqg+2NA+X2u38cQdqq8="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery/dist/jquery.min.5pze98is44.map",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "137972"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OZVI+w57FGwS9boYCZpH1ZSpcP7pYhLu4KtIUvPlZ4I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5pze98is44"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery/dist/jquery.min.map"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-OZVI+w57FGwS9boYCZpH1ZSpcP7pYhLu4KtIUvPlZ4I="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery/dist/jquery.min.ehgnz7f14e.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "89503"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zp0HUArZHsK1JMJwdk7EyaM+eDINjTdOxADt5Ij2JRs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ehgnz7f14e"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery/dist/jquery.min.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-zp0HUArZHsK1JMJwdk7EyaM+eDINjTdOxADt5Ij2JRs="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery/dist/jquery.min.js",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "89503"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"zp0HUArZHsK1JMJwdk7EyaM+eDINjTdOxADt5Ij2JRs=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-zp0HUArZHsK1JMJwdk7EyaM+eDINjTdOxADt5Ij2JRs="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery/dist/jquery.min.map",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "137972"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OZVI+w57FGwS9boYCZpH1ZSpcP7pYhLu4KtIUvPlZ4I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-OZVI+w57FGwS9boYCZpH1ZSpcP7pYhLu4KtIUvPlZ4I="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery/LICENSE.mlv21k5csn.txt",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1117"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"hjIBkvmgxQXbNXK3B9YQ3t06RwLuQSQzC/dpvuB/lMk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "mlv21k5csn"
+        },
+        {
+          "Name": "label",
+          "Value": "lib/jquery/LICENSE.txt"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-hjIBkvmgxQXbNXK3B9YQ3t06RwLuQSQzC/dpvuB/lMk="
+        }
+      ]
+    },
+    {
+      "Route": "lib/jquery/LICENSE.txt",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1117"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/plain"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"hjIBkvmgxQXbNXK3B9YQ3t06RwLuQSQzC/dpvuB/lMk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-hjIBkvmgxQXbNXK3B9YQ3t06RwLuQSQzC/dpvuB/lMk="
+        }
+      ]
     }
   ]
 }
