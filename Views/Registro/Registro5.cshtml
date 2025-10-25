@@ -1,0 +1,277 @@
+@{
+    ViewData["Title"] = "Registro - Zooni";
+    Layout = null;
+    var mascotaNombre = ViewBag.MascotaNombre;
+    var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
+    var mascotaRaza = ViewBag.MascotaRaza?.ToString()?.ToLower() ?? "basico";
+    var rutaImagen = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --marron: #8B5E3C;
+            --verde: #3ac37d;
+            --gris-claro: #ccc;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            color: var(--marron);
+            font-size: 2.3rem;
+            margin-bottom: 0;
+            margin-top: 1rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            color: #555;
+            font-weight: 700;
+            margin-top: 0.3rem;
+            font-size: 1.1rem;
+        }
+
+        .contenedor {
+            background: #fff;
+            border-radius: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            text-align: center;
+            padding: 2rem;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .volver {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--marron);
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+        }
+
+        .volver:hover { transform: scale(1.1); color: var(--verde); }
+
+        .nombre-mascota {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #000;
+            margin-bottom: 0.4rem;
+        }
+
+        .mascota-img {
+            width: 180px;
+            height: auto;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fila {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        input, select {
+            width: 100%;
+            max-width: 320px;
+            padding: 12px;
+            border-radius: 20px;
+            border: 1.8px solid var(--gris-claro);
+            font-size: 15px;
+            text-align: center;
+            outline: none;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--verde);
+        }
+
+        .btn-principal {
+            background-color: var(--verde);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 40px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-top: 1rem;
+            width: 100%;
+            max-width: 320px;
+            font-weight: 600;
+        }
+
+        .imagen-bienvenida {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .imagen-bienvenida img {
+            width: 100%;
+            max-width: 900px;
+            object-fit: cover;
+        }
+        .mascota-img {
+        width: 200px; /* Más grande */
+        height: auto;
+        margin: 0.5rem 0 1rem 0;
+        object-fit: contain;
+        z-index: 3;
+    }
+    </style>
+</head>
+<body>
+    <h1>Zooni</h1>
+    <h2>¡Registrate!</h2>
+
+    <div class="contenedor">
+        <button class="volver" onclick="window.location.href='/Registro/Registro4'">←</button>
+
+        <div class="nombre-mascota">@mascotaNombre</div>
+        <img src="@rutaImagen" alt="Mascota" class="mascota-img" />
+
+        <p style="font-weight:600; color:#444;">¡Ya falta poco!</p>
+
+<form asp-action="Registro5" asp-controller="Registro" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="fila">
+                <select id="Pais" name="Pais" required>
+                    <option value="">País</option>
+                    <option value="Argentina">Argentina</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Uruguay">Uruguay</option>
+                </select>
+                <select id="Provincia" name="Provincia" required>
+                    <option value="">Provincia</option>
+                </select>
+            </div>
+
+            <select id="Ciudad" name="Ciudad" required>
+                <option value="">Ciudad</option>
+            </select>
+
+            <div class="fila">
+                <select id="CodigoPais" name="CodigoPais" required>
+                    <option value="">Código</option>
+                </select>
+                <input type="tel" name="Telefono" placeholder="Teléfono" required autocomplete="off" />
+            </div>
+
+            <button type="submit" class="btn-principal">Continuar</button>
+        </form>
+    </div>
+
+    <div class="imagen-bienvenida">
+        <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
+    </div>
+
+    <script>
+        const datosUbicacion = {
+            "Argentina": {
+                codigo: "+54",
+                provincias: {
+                    "Buenos Aires": ["La Plata", "Mar del Plata", "Bahía Blanca"],
+                    "Córdoba": ["Córdoba", "Villa Carlos Paz", "Río Cuarto"],
+                    "Santa Fe": ["Rosario", "Santa Fe", "Rafaela"]
+                }
+            },
+            "Chile": {
+                codigo: "+56",
+                provincias: {
+                    "Santiago": ["Santiago", "Puente Alto", "Maipú"],
+                    "Valparaíso": ["Valparaíso", "Viña del Mar", "Quilpué"],
+                    "Biobío": ["Concepción", "Talcahuano", "Los Ángeles"]
+                }
+            },
+            "Uruguay": {
+                codigo: "+598",
+                provincias: {
+                    "Montevideo": ["Montevideo"],
+                    "Canelones": ["Las Piedras", "Pando", "Santa Lucía"],
+                    "Maldonado": ["Maldonado", "Punta del Este", "San Carlos"]
+                }
+            }
+        };
+
+        const paisSelect = document.getElementById("Pais");
+        const provinciaSelect = document.getElementById("Provincia");
+        const ciudadSelect = document.getElementById("Ciudad");
+        const codigoSelect = document.getElementById("CodigoPais");
+
+        paisSelect.addEventListener("change", () => {
+            const pais = paisSelect.value;
+            provinciaSelect.innerHTML = "<option value=''>Provincia</option>";
+            ciudadSelect.innerHTML = "<option value=''>Ciudad</option>";
+            codigoSelect.innerHTML = "<option value=''>Código</option>";
+
+            if (pais && datosUbicacion[pais]) {
+                const { codigo, provincias } = datosUbicacion[pais];
+
+                // Código telefónico
+                const optCodigo = document.createElement("option");
+                optCodigo.value = codigo;
+                optCodigo.textContent = codigo;
+                codigoSelect.appendChild(optCodigo);
+                codigoSelect.value = codigo;
+
+                // Provincias
+                for (const prov in provincias) {
+                    const opt = document.createElement("option");
+                    opt.value = prov;
+                    opt.textContent = prov;
+                    provinciaSelect.appendChild(opt);
+                }
+            }
+        });
+
+        provinciaSelect.addEventListener("change", () => {
+            const pais = paisSelect.value;
+            const provincia = provinciaSelect.value;
+            ciudadSelect.innerHTML = "<option value=''>Ciudad</option>";
+
+            if (pais && provincia && datosUbicacion[pais]?.provincias[provincia]) {
+                datosUbicacion[pais].provincias[provincia].forEach(c => {
+                    const opt = document.createElement("option");
+                    opt.value = c;
+                    opt.textContent = c;
+                    ciudadSelect.appendChild(opt);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

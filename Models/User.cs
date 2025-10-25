@@ -15,14 +15,11 @@ namespace Zooni.Models
         // FK con Mail
         public int Id_Mail { get; set; }
 
-        [ForeignKey("Id_Mail")]
-        public Mail Mail { get; set; }
+        public Mail? Mail { get; set; }
 
-        [Required, StringLength(100)]
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
 
-        [Required, StringLength(100)]
-        public string Apellido { get; set; }
+        public string? Apellido { get; set; }
 
         public string? DNI { get; set; }
         public string? Telefono { get; set; }

@@ -168,29 +168,185 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-lnfSiQ17oDiywp/r2a5hZzls91yUbVV0jnScZaD\u002BWgQ="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"112814"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022lnfSiQ17oDiywp/r2a5hZzls91yUbVV0jnScZaD\u002BWgQ=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/agapornis/ave_basico.of0pjqr11k.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\agapornis\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"of0pjqr11k"},{"Name":"integrity","Value":"sha256-dFlzg89FtAkdKWV\u002BJgGEXB8hkzyi4C0xFad4oLaY2zA="},{"Name":"label","Value":"_content/Zooni/img/mascotas/aves/agapornis/ave_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1505074"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022dFlzg89FtAkdKWV\u002BJgGEXB8hkzyi4C0xFad4oLaY2zA=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:02:49 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/agapornis/ave_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\agapornis\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-dFlzg89FtAkdKWV\u002BJgGEXB8hkzyi4C0xFad4oLaY2zA="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1505074"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022dFlzg89FtAkdKWV\u002BJgGEXB8hkzyi4C0xFad4oLaY2zA=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:02:49 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/amazonas/ave_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\amazonas\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-JfrZ6rVD\u002BZUV9crEMkW7xnKiqdQfCgy3vaC9MtIGwcQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1419653"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022JfrZ6rVD\u002BZUV9crEMkW7xnKiqdQfCgy3vaC9MtIGwcQ=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:01:32 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/amazonas/ave_basico.pzqqvskd4y.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\amazonas\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"pzqqvskd4y"},{"Name":"integrity","Value":"sha256-JfrZ6rVD\u002BZUV9crEMkW7xnKiqdQfCgy3vaC9MtIGwcQ="},{"Name":"label","Value":"_content/Zooni/img/mascotas/aves/amazonas/ave_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1419653"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022JfrZ6rVD\u002BZUV9crEMkW7xnKiqdQfCgy3vaC9MtIGwcQ=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:01:32 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/Cacatúa/ave_basico.kivoim57gz.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\Cacatúa\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"kivoim57gz"},{"Name":"integrity","Value":"sha256-jC\u002B00n7EykUyVYJH90kmpGEohYHE77rLzeOOr86Gp9k="},{"Name":"label","Value":"_content/Zooni/img/mascotas/aves/Cacat\u00FAa/ave_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1289385"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022jC\u002B00n7EykUyVYJH90kmpGEohYHE77rLzeOOr86Gp9k=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 13:54:35 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/Cacatúa/ave_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\Cacatúa\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-jC\u002B00n7EykUyVYJH90kmpGEohYHE77rLzeOOr86Gp9k="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1289385"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022jC\u002B00n7EykUyVYJH90kmpGEohYHE77rLzeOOr86Gp9k=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 13:54:35 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/guacamayo/ave_basico.6l4xwu0qdl.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\guacamayo\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"6l4xwu0qdl"},{"Name":"integrity","Value":"sha256-hpIBmb8qYBHK\u002BYgZN9J32OGQgUtnGaPCmXvIZp5x3g0="},{"Name":"label","Value":"_content/Zooni/img/mascotas/aves/guacamayo/ave_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1352283"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022hpIBmb8qYBHK\u002BYgZN9J32OGQgUtnGaPCmXvIZp5x3g0=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 13:56:29 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/guacamayo/ave_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\guacamayo\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-hpIBmb8qYBHK\u002BYgZN9J32OGQgUtnGaPCmXvIZp5x3g0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1352283"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022hpIBmb8qYBHK\u002BYgZN9J32OGQgUtnGaPCmXvIZp5x3g0=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 13:56:29 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/periquito/ave_basico.5t9x085px6.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\periquito\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"5t9x085px6"},{"Name":"integrity","Value":"sha256-F6DqdbIjfLve\u002B1O4O9A\u002BdBsmG3IRUBXadpxK0RNnT1g="},{"Name":"label","Value":"_content/Zooni/img/mascotas/aves/periquito/ave_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1410544"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022F6DqdbIjfLve\u002B1O4O9A\u002BdBsmG3IRUBXadpxK0RNnT1g=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 13:58:25 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/periquito/ave_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\periquito\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-F6DqdbIjfLve\u002B1O4O9A\u002BdBsmG3IRUBXadpxK0RNnT1g="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1410544"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022F6DqdbIjfLve\u002B1O4O9A\u002BdBsmG3IRUBXadpxK0RNnT1g=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 13:58:25 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/zooni/ave_basico.eb0qpa6kkf.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\zooni\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"eb0qpa6kkf"},{"Name":"integrity","Value":"sha256-5vp6aZvn64Sre2SNuZ3vDtw2\u002B7c3hz3iq8ZPgiutS8g="},{"Name":"label","Value":"_content/Zooni/img/mascotas/aves/zooni/ave_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1451190"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00225vp6aZvn64Sre2SNuZ3vDtw2\u002B7c3hz3iq8ZPgiutS8g=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:05:05 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/aves/zooni/ave_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\aves\zooni\ave_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-5vp6aZvn64Sre2SNuZ3vDtw2\u002B7c3hz3iq8ZPgiutS8g="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1451190"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00225vp6aZvn64Sre2SNuZ3vDtw2\u002B7c3hz3iq8ZPgiutS8g=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:05:05 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/bengala/gato_basico.iw9t7veicz.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\bengala\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"iw9t7veicz"},{"Name":"integrity","Value":"sha256-noUy0Wkkzb\u002B9e28/\u002BsYpUP7cVAxAEzQkA/ngfe7RJqU="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/bengala/gato_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2092892"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022noUy0Wkkzb\u002B9e28/\u002BsYpUP7cVAxAEzQkA/ngfe7RJqU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:14:22 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/bengala/gato_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\bengala\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-noUy0Wkkzb\u002B9e28/\u002BsYpUP7cVAxAEzQkA/ngfe7RJqU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"2092892"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022noUy0Wkkzb\u002B9e28/\u002BsYpUP7cVAxAEzQkA/ngfe7RJqU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:14:22 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/bombay/gato_basico.3blx4azl0j.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\bombay\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"3blx4azl0j"},{"Name":"integrity","Value":"sha256-H0avV6rnCC4iPAU5FKzokc/xcI0raEVmUJz1aC179A4="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/bombay/gato_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2161890"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022H0avV6rnCC4iPAU5FKzokc/xcI0raEVmUJz1aC179A4=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:24:32 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/bombay/gato_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\bombay\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-H0avV6rnCC4iPAU5FKzokc/xcI0raEVmUJz1aC179A4="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"2161890"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022H0avV6rnCC4iPAU5FKzokc/xcI0raEVmUJz1aC179A4=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:24:32 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/british shorthair/gato_basico.cvqwpjeuol.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\british shorthair\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"cvqwpjeuol"},{"Name":"integrity","Value":"sha256-\u002BGojc\u002BJNpCDSaHEuMmlXyVtxJKNz7AV9K5zVG0\u002Bcf7U="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/british shorthair/gato_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2321563"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022\u002BGojc\u002BJNpCDSaHEuMmlXyVtxJKNz7AV9K5zVG0\u002Bcf7U=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:18:35 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/british shorthair/gato_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\british shorthair\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-\u002BGojc\u002BJNpCDSaHEuMmlXyVtxJKNz7AV9K5zVG0\u002Bcf7U="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"2321563"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022\u002BGojc\u002BJNpCDSaHEuMmlXyVtxJKNz7AV9K5zVG0\u002Bcf7U=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:18:35 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/esfinge/gato_basico.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\esfinge\gato_basico.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"26484"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-\u002BYYl30j6GncsG5L6TNGSss1DrBxxGZOdUfPHA3CNUvU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1927631"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022\u002BYYl30j6GncsG5L6TNGSss1DrBxxGZOdUfPHA3CNUvU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:14:42 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/esfinge/gato_basico.unk82q2x1y.png">
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/esfinge/gato_basico.tv02affxgj.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\esfinge\gato_basico.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"unk82q2x1y"},{"Name":"integrity","Value":"sha256-ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/esfinge/gato_basico.png"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"26484"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"tv02affxgj"},{"Name":"integrity","Value":"sha256-\u002BYYl30j6GncsG5L6TNGSss1DrBxxGZOdUfPHA3CNUvU="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/esfinge/gato_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1927631"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022\u002BYYl30j6GncsG5L6TNGSss1DrBxxGZOdUfPHA3CNUvU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:14:42 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/esfinge/gato_peakyblinder.7xleitxwva.png">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\esfinge\gato_peakyblinder.png'))</AssetFile>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/maine coon/gato_basico.62kc4n60ll.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\maine coon\gato_basico.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"7xleitxwva"},{"Name":"integrity","Value":"sha256-e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/esfinge/gato_peakyblinder.png"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"98134"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"62kc4n60ll"},{"Name":"integrity","Value":"sha256-cm8IgTtIQMr0pPLbxe0MrwJRLoXs3bFgytAUhj8leLI="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/maine coon/gato_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2273221"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022cm8IgTtIQMr0pPLbxe0MrwJRLoXs3bFgytAUhj8leLI=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:08:53 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/esfinge/gato_peakyblinder.png">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\esfinge\gato_peakyblinder.png'))</AssetFile>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/maine coon/gato_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\maine coon\gato_basico.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"98134"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-cm8IgTtIQMr0pPLbxe0MrwJRLoXs3bFgytAUhj8leLI="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"2273221"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022cm8IgTtIQMr0pPLbxe0MrwJRLoXs3bFgytAUhj8leLI=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:08:53 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/persa/gato_basico.oa3gpyrfvr.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\persa\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"oa3gpyrfvr"},{"Name":"integrity","Value":"sha256-UJrClcI5nZidgcGVie6KDDI2cUYB82Pgz4axy9diHtI="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/persa/gato_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1460095"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022UJrClcI5nZidgcGVie6KDDI2cUYB82Pgz4axy9diHtI=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:09:45 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/persa/gato_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\persa\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-UJrClcI5nZidgcGVie6KDDI2cUYB82Pgz4axy9diHtI="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1460095"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022UJrClcI5nZidgcGVie6KDDI2cUYB82Pgz4axy9diHtI=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:09:45 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/ragdoll/gato_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\ragdoll\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-qNvBOzSIRlm4yr/o03DNi3Jirl/DC\u002BemMgO0chJo1Pw="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1962026"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022qNvBOzSIRlm4yr/o03DNi3Jirl/DC\u002BemMgO0chJo1Pw=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:16:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/ragdoll/gato_basico.sbfz0refdk.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\ragdoll\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"sbfz0refdk"},{"Name":"integrity","Value":"sha256-qNvBOzSIRlm4yr/o03DNi3Jirl/DC\u002BemMgO0chJo1Pw="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/ragdoll/gato_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1962026"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022qNvBOzSIRlm4yr/o03DNi3Jirl/DC\u002BemMgO0chJo1Pw=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:16:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/siames/gato_basico.3chqcgx9is.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\siames\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"3chqcgx9is"},{"Name":"integrity","Value":"sha256-Q/ajOTz7h48ANJcDymWIebAMxShEb4uXKgxGLC3fn1U="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/siames/gato_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1449087"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Q/ajOTz7h48ANJcDymWIebAMxShEb4uXKgxGLC3fn1U=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:08:58 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/siames/gato_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\siames\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Q/ajOTz7h48ANJcDymWIebAMxShEb4uXKgxGLC3fn1U="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1449087"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Q/ajOTz7h48ANJcDymWIebAMxShEb4uXKgxGLC3fn1U=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:08:58 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/zooni/gato_basico.afymokictd.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\zooni\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"afymokictd"},{"Name":"integrity","Value":"sha256-OqC4\u002BC7qmvGmybolwm8Cd3Gdw5OkLdi8YrFBw4Ry5FE="},{"Name":"label","Value":"_content/Zooni/img/mascotas/gatos/zooni/gato_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1364196"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022OqC4\u002BC7qmvGmybolwm8Cd3Gdw5OkLdi8YrFBw4Ry5FE=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:31:57 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/gatos/zooni/gato_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\gatos\zooni\gato_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-OqC4\u002BC7qmvGmybolwm8Cd3Gdw5OkLdi8YrFBw4Ry5FE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1364196"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022OqC4\u002BC7qmvGmybolwm8Cd3Gdw5OkLdi8YrFBw4Ry5FE=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:31:57 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/perros/beagle/perro_basico.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\perros\beagle\perro_basico.png'))</AssetFile>
@@ -215,6 +371,18 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"vsfttvoj8x"},{"Name":"integrity","Value":"sha256-wbElt\u002BiJII7KJzrI8szgKOJ\u002BWcxO4ON/AzPJ3aRmuNs="},{"Name":"label","Value":"_content/Zooni/img/mascotas/perros/bulldog/perro_basico.png"}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1396246"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022wbElt\u002BiJII7KJzrI8szgKOJ\u002BWcxO4ON/AzPJ3aRmuNs=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/perros/Caniche/perro_basico.n4t7gq3ofr.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\perros\Caniche\perro_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"n4t7gq3ofr"},{"Name":"integrity","Value":"sha256-N3fSubCCzNNWQsY\u002BY6gHqs57yC\u002B5JsKYHGeY\u002BpFS9sg="},{"Name":"label","Value":"_content/Zooni/img/mascotas/perros/Caniche/perro_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1477523"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022N3fSubCCzNNWQsY\u002BY6gHqs57yC\u002B5JsKYHGeY\u002BpFS9sg=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/perros/Caniche/perro_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\perros\Caniche\perro_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-N3fSubCCzNNWQsY\u002BY6gHqs57yC\u002B5JsKYHGeY\u002BpFS9sg="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1477523"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022N3fSubCCzNNWQsY\u002BY6gHqs57yC\u002B5JsKYHGeY\u002BpFS9sg=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/perros/chihuahua/perro_basico.2h429iwi1b.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\perros\chihuahua\perro_basico.png'))</AssetFile>
@@ -275,18 +443,6 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ReyCpWBH2uEOC8HHk8CvFL8K2Xm\u002BF4AqCV3OtdeWSO4="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1581971"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022ReyCpWBH2uEOC8HHk8CvFL8K2Xm\u002BF4AqCV3OtdeWSO4=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/perros/poodle/perro_basico.n4t7gq3ofr.png">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\perros\poodle\perro_basico.png'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"n4t7gq3ofr"},{"Name":"integrity","Value":"sha256-N3fSubCCzNNWQsY\u002BY6gHqs57yC\u002B5JsKYHGeY\u002BpFS9sg="},{"Name":"label","Value":"_content/Zooni/img/mascotas/perros/poodle/perro_basico.png"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1477523"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022N3fSubCCzNNWQsY\u002BY6gHqs57yC\u002B5JsKYHGeY\u002BpFS9sg=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/perros/poodle/perro_basico.png">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\perros\poodle\perro_basico.png'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-N3fSubCCzNNWQsY\u002BY6gHqs57yC\u002B5JsKYHGeY\u002BpFS9sg="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1477523"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022N3fSubCCzNNWQsY\u002BY6gHqs57yC\u002B5JsKYHGeY\u002BpFS9sg=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/perros/pug/perro_basico.7vlksx3syr.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\perros\pug\perro_basico.png'))</AssetFile>
@@ -359,6 +515,114 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1543058"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/betta/pez_basico.97rfui3yir.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\betta\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"97rfui3yir"},{"Name":"integrity","Value":"sha256-dU1bky6SIYx2xzFrM\u002BGMwnk0o21/aRXM2iMuDx/TeCU="},{"Name":"label","Value":"_content/Zooni/img/mascotas/pezs/betta/pez_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1628291"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022dU1bky6SIYx2xzFrM\u002BGMwnk0o21/aRXM2iMuDx/TeCU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:23:50 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/betta/pez_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\betta\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-dU1bky6SIYx2xzFrM\u002BGMwnk0o21/aRXM2iMuDx/TeCU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1628291"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022dU1bky6SIYx2xzFrM\u002BGMwnk0o21/aRXM2iMuDx/TeCU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:23:50 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/Cíclido/pez_basico.jojjxycqlz.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\Cíclido\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"jojjxycqlz"},{"Name":"integrity","Value":"sha256-Y7OdE5zq3mU02LTIfAyqXNzuPzqyoNVoBPmdzouzVms="},{"Name":"label","Value":"_content/Zooni/img/mascotas/pezs/C\u00EDclido/pez_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1603366"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Y7OdE5zq3mU02LTIfAyqXNzuPzqyoNVoBPmdzouzVms=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:25:29 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/Cíclido/pez_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\Cíclido\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-Y7OdE5zq3mU02LTIfAyqXNzuPzqyoNVoBPmdzouzVms="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1603366"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022Y7OdE5zq3mU02LTIfAyqXNzuPzqyoNVoBPmdzouzVms=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:25:29 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/Goldfish/pez_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\Goldfish\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-hBfVJk4CSr1xGbQmx8VGL1/dCSaV5YxsQ/kABWRbOoE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1583012"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022hBfVJk4CSr1xGbQmx8VGL1/dCSaV5YxsQ/kABWRbOoE=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:27:15 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/Goldfish/pez_basico.se7s3sjgcn.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\Goldfish\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"se7s3sjgcn"},{"Name":"integrity","Value":"sha256-hBfVJk4CSr1xGbQmx8VGL1/dCSaV5YxsQ/kABWRbOoE="},{"Name":"label","Value":"_content/Zooni/img/mascotas/pezs/Goldfish/pez_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1583012"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022hBfVJk4CSr1xGbQmx8VGL1/dCSaV5YxsQ/kABWRbOoE=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:27:15 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/Guppy/pez_basico.ax8tzpd2p0.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\Guppy\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ax8tzpd2p0"},{"Name":"integrity","Value":"sha256-bilpuGCpGRYORqVRbg8\u002Bb7srIcmSW2mdm74MOuWzu0E="},{"Name":"label","Value":"_content/Zooni/img/mascotas/pezs/Guppy/pez_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1612435"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022bilpuGCpGRYORqVRbg8\u002Bb7srIcmSW2mdm74MOuWzu0E=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:28:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/Guppy/pez_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\Guppy\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-bilpuGCpGRYORqVRbg8\u002Bb7srIcmSW2mdm74MOuWzu0E="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1612435"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022bilpuGCpGRYORqVRbg8\u002Bb7srIcmSW2mdm74MOuWzu0E=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:28:43 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/Koi/pez_basico.g23rwqj6of.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\Koi\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"g23rwqj6of"},{"Name":"integrity","Value":"sha256-SMCD95n8i4Fvv2StX/aXR\u002B2q/FfNWf/gpgVMObHmZCk="},{"Name":"label","Value":"_content/Zooni/img/mascotas/pezs/Koi/pez_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1619003"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022SMCD95n8i4Fvv2StX/aXR\u002B2q/FfNWf/gpgVMObHmZCk=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:30:12 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/Koi/pez_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\Koi\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-SMCD95n8i4Fvv2StX/aXR\u002B2q/FfNWf/gpgVMObHmZCk="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1619003"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022SMCD95n8i4Fvv2StX/aXR\u002B2q/FfNWf/gpgVMObHmZCk=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:30:12 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/zooni/pez_basico.b123n8hlg5.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\zooni\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"b123n8hlg5"},{"Name":"integrity","Value":"sha256-8esLKxSVUwiRmCzJo\u002B/lJBxW9FB8WULoXGqPm0pgO\u002B0="},{"Name":"label","Value":"_content/Zooni/img/mascotas/pezs/zooni/pez_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1600558"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00228esLKxSVUwiRmCzJo\u002B/lJBxW9FB8WULoXGqPm0pgO\u002B0=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:31:32 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/pezs/zooni/pez_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\pezs\zooni\pez_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-8esLKxSVUwiRmCzJo\u002B/lJBxW9FB8WULoXGqPm0pgO\u002B0="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1600558"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00228esLKxSVUwiRmCzJo\u002B/lJBxW9FB8WULoXGqPm0pgO\u002B0=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:31:32 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/reptils/camaleón/reptil_basico.0oqpp4cck3.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\reptils\camaleón\reptil_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"0oqpp4cck3"},{"Name":"integrity","Value":"sha256-QFwtDZJzf8wZ0CECG\u002BQYfpCdcwSYeYu4Y7AhkUCBXpE="},{"Name":"label","Value":"_content/Zooni/img/mascotas/reptils/camale\u00F3n/reptil_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1338363"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022QFwtDZJzf8wZ0CECG\u002BQYfpCdcwSYeYu4Y7AhkUCBXpE=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:42:06 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/reptils/camaleón/reptil_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\reptils\camaleón\reptil_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-QFwtDZJzf8wZ0CECG\u002BQYfpCdcwSYeYu4Y7AhkUCBXpE="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1338363"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022QFwtDZJzf8wZ0CECG\u002BQYfpCdcwSYeYu4Y7AhkUCBXpE=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:42:06 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/reptils/iguana/reptil_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\reptils\iguana\reptil_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-jHFhiklAbEK7SCbBV7AJZX6N3fC3K/S3uopshM24muU="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"919019"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022jHFhiklAbEK7SCbBV7AJZX6N3fC3K/S3uopshM24muU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:37:31 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/reptils/iguana/reptil_basico.whn6e9whfs.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\reptils\iguana\reptil_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"whn6e9whfs"},{"Name":"integrity","Value":"sha256-jHFhiklAbEK7SCbBV7AJZX6N3fC3K/S3uopshM24muU="},{"Name":"label","Value":"_content/Zooni/img/mascotas/reptils/iguana/reptil_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"919019"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022jHFhiklAbEK7SCbBV7AJZX6N3fC3K/S3uopshM24muU=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:37:31 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/reptils/tortuga/reptil_basico.3dko2bjimb.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\reptils\tortuga\reptil_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"3dko2bjimb"},{"Name":"integrity","Value":"sha256-6YS1iY2x1oGRQyaV9i02psL3YQoVeS63kRyiQGgwyAQ="},{"Name":"label","Value":"_content/Zooni/img/mascotas/reptils/tortuga/reptil_basico.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"1341838"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00226YS1iY2x1oGRQyaV9i02psL3YQoVeS63kRyiQGgwyAQ=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:47:56 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/reptils/tortuga/reptil_basico.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\reptils\tortuga\reptil_basico.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-6YS1iY2x1oGRQyaV9i02psL3YQoVeS63kRyiQGgwyAQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"1341838"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00226YS1iY2x1oGRQyaV9i02psL3YQoVeS63kRyiQGgwyAQ=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 14:47:56 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Zooni/js/registro.6k7jmpnf56.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\registro.js'))</AssetFile>

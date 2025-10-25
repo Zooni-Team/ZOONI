@@ -239,20 +239,48 @@
 
         <p style="font-weight:600; color:#444;">¡Ahora ingrese tus datos!</p>
 
-        <form asp-action="Registro4" asp-controller="Registro" method="post">
-            @Html.AntiForgeryToken()
+<form asp-action="Registro4" asp-controller="Registro" method="post" onsubmit="return validarContrasena()">
+    @Html.AntiForgeryToken()
 
-            <div class="fila">
-                <input type="text" name="nombre" placeholder="Nombre" required />
-                <input type="text" name="apellido" placeholder="Apellido" required />
-            </div>
+    <div class="fila">
+        <input type="text" name="nombre" placeholder="Nombre" required autocomplete="off" />
+        <input type="text" name="apellido" placeholder="Apellido" required autocomplete="off" />
+    </div>
 
-            <input type="Mail" name="mail" placeholder="Mail" required autocomplete="off" />
-            <input type="password" name="contrasena" placeholder="Contraseña" required autocomplete="off" />
+    <input type="mail" name="mail" placeholder="Mail" required autocomplete="off" />
+    <input type="password" id="Contrasena" name="contrasena" placeholder="Contraseña" required autocomplete="off" />
+    <input type="password" id="ConfirmarContrasena" name="confirmarContrasena" placeholder="Confirmar contraseña" required autocomplete="off" />
 
-                        <button type="submit" class="btn-principal">Continuar</button>
+    <button type="submit" class="btn-principal">Continuar</button>
+</form>
 
-        </form>
+<script>
+    function validarContrasena() {
+        const pass = document.getElementById("Contrasena").value;
+        const confirm = document.getElementById("ConfirmarContrasena").value;
+
+        if (pass !== confirm) {
+            alert("Las contraseñas no coinciden. Intentá nuevamente.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
+
+<script>
+    function validarContrasena() {
+        const pass = document.getElementById("Contrasena").value;
+        const confirm = document.getElementById("ConfirmarContrasena").value;
+
+        if (pass !== confirm) {
+            alert("Las contraseñas no coinciden. Intentá nuevamente.");
+            return false;
+        }
+        return true;
+    }
+</script>
+
     </div>
 
     <div class="imagen-bienvenida">

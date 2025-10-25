@@ -1151,6 +1151,744 @@
       ]
     },
     {
+      "Route": "img/mascotas/aves/Cacatúa/ave_basico.kivoim57gz.png",
+      "AssetFile": "img/mascotas/aves/Cacatúa/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1289385"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jC+00n7EykUyVYJH90kmpGEohYHE77rLzeOOr86Gp9k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 13:54:35 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "kivoim57gz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-jC+00n7EykUyVYJH90kmpGEohYHE77rLzeOOr86Gp9k="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/aves/Cacatúa/ave_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/Cacatúa/ave_basico.png",
+      "AssetFile": "img/mascotas/aves/Cacatúa/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1289385"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jC+00n7EykUyVYJH90kmpGEohYHE77rLzeOOr86Gp9k=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 13:54:35 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-jC+00n7EykUyVYJH90kmpGEohYHE77rLzeOOr86Gp9k="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/agapornis/ave_basico.of0pjqr11k.png",
+      "AssetFile": "img/mascotas/aves/agapornis/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1505074"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dFlzg89FtAkdKWV+JgGEXB8hkzyi4C0xFad4oLaY2zA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:02:49 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "of0pjqr11k"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dFlzg89FtAkdKWV+JgGEXB8hkzyi4C0xFad4oLaY2zA="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/aves/agapornis/ave_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/agapornis/ave_basico.png",
+      "AssetFile": "img/mascotas/aves/agapornis/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1505074"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dFlzg89FtAkdKWV+JgGEXB8hkzyi4C0xFad4oLaY2zA=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:02:49 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dFlzg89FtAkdKWV+JgGEXB8hkzyi4C0xFad4oLaY2zA="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/amazonas/ave_basico.png",
+      "AssetFile": "img/mascotas/aves/amazonas/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1419653"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JfrZ6rVD+ZUV9crEMkW7xnKiqdQfCgy3vaC9MtIGwcQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:01:32 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-JfrZ6rVD+ZUV9crEMkW7xnKiqdQfCgy3vaC9MtIGwcQ="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/amazonas/ave_basico.pzqqvskd4y.png",
+      "AssetFile": "img/mascotas/aves/amazonas/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1419653"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"JfrZ6rVD+ZUV9crEMkW7xnKiqdQfCgy3vaC9MtIGwcQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:01:32 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "pzqqvskd4y"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-JfrZ6rVD+ZUV9crEMkW7xnKiqdQfCgy3vaC9MtIGwcQ="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/aves/amazonas/ave_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/guacamayo/ave_basico.6l4xwu0qdl.png",
+      "AssetFile": "img/mascotas/aves/guacamayo/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1352283"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"hpIBmb8qYBHK+YgZN9J32OGQgUtnGaPCmXvIZp5x3g0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 13:56:29 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "6l4xwu0qdl"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-hpIBmb8qYBHK+YgZN9J32OGQgUtnGaPCmXvIZp5x3g0="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/aves/guacamayo/ave_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/guacamayo/ave_basico.png",
+      "AssetFile": "img/mascotas/aves/guacamayo/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1352283"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"hpIBmb8qYBHK+YgZN9J32OGQgUtnGaPCmXvIZp5x3g0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 13:56:29 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-hpIBmb8qYBHK+YgZN9J32OGQgUtnGaPCmXvIZp5x3g0="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/periquito/ave_basico.5t9x085px6.png",
+      "AssetFile": "img/mascotas/aves/periquito/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1410544"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"F6DqdbIjfLve+1O4O9A+dBsmG3IRUBXadpxK0RNnT1g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 13:58:25 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "5t9x085px6"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-F6DqdbIjfLve+1O4O9A+dBsmG3IRUBXadpxK0RNnT1g="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/aves/periquito/ave_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/periquito/ave_basico.png",
+      "AssetFile": "img/mascotas/aves/periquito/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1410544"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"F6DqdbIjfLve+1O4O9A+dBsmG3IRUBXadpxK0RNnT1g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 13:58:25 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-F6DqdbIjfLve+1O4O9A+dBsmG3IRUBXadpxK0RNnT1g="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/zooni/ave_basico.eb0qpa6kkf.png",
+      "AssetFile": "img/mascotas/aves/zooni/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1451190"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5vp6aZvn64Sre2SNuZ3vDtw2+7c3hz3iq8ZPgiutS8g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:05:05 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "eb0qpa6kkf"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-5vp6aZvn64Sre2SNuZ3vDtw2+7c3hz3iq8ZPgiutS8g="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/aves/zooni/ave_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/aves/zooni/ave_basico.png",
+      "AssetFile": "img/mascotas/aves/zooni/ave_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1451190"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"5vp6aZvn64Sre2SNuZ3vDtw2+7c3hz3iq8ZPgiutS8g=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:05:05 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-5vp6aZvn64Sre2SNuZ3vDtw2+7c3hz3iq8ZPgiutS8g="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/bengala/gato_basico.iw9t7veicz.png",
+      "AssetFile": "img/mascotas/gatos/bengala/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2092892"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"noUy0Wkkzb+9e28/+sYpUP7cVAxAEzQkA/ngfe7RJqU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:14:22 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "iw9t7veicz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-noUy0Wkkzb+9e28/+sYpUP7cVAxAEzQkA/ngfe7RJqU="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/bengala/gato_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/bengala/gato_basico.png",
+      "AssetFile": "img/mascotas/gatos/bengala/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2092892"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"noUy0Wkkzb+9e28/+sYpUP7cVAxAEzQkA/ngfe7RJqU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:14:22 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-noUy0Wkkzb+9e28/+sYpUP7cVAxAEzQkA/ngfe7RJqU="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/bombay/gato_basico.3blx4azl0j.png",
+      "AssetFile": "img/mascotas/gatos/bombay/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2161890"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"H0avV6rnCC4iPAU5FKzokc/xcI0raEVmUJz1aC179A4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:24:32 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3blx4azl0j"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-H0avV6rnCC4iPAU5FKzokc/xcI0raEVmUJz1aC179A4="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/bombay/gato_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/bombay/gato_basico.png",
+      "AssetFile": "img/mascotas/gatos/bombay/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2161890"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"H0avV6rnCC4iPAU5FKzokc/xcI0raEVmUJz1aC179A4=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:24:32 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-H0avV6rnCC4iPAU5FKzokc/xcI0raEVmUJz1aC179A4="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/british shorthair/gato_basico.cvqwpjeuol.png",
+      "AssetFile": "img/mascotas/gatos/british shorthair/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2321563"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+Gojc+JNpCDSaHEuMmlXyVtxJKNz7AV9K5zVG0+cf7U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:18:35 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "cvqwpjeuol"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-+Gojc+JNpCDSaHEuMmlXyVtxJKNz7AV9K5zVG0+cf7U="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/british shorthair/gato_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/british shorthair/gato_basico.png",
+      "AssetFile": "img/mascotas/gatos/british shorthair/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2321563"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"+Gojc+JNpCDSaHEuMmlXyVtxJKNz7AV9K5zVG0+cf7U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:18:35 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-+Gojc+JNpCDSaHEuMmlXyVtxJKNz7AV9K5zVG0+cf7U="
+        }
+      ]
+    },
+    {
       "Route": "img/mascotas/gatos/esfinge/gato_basico.png",
       "AssetFile": "img/mascotas/gatos/esfinge/gato_basico.png",
       "Selectors": [],
@@ -1165,7 +1903,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "26484"
+          "Value": "1927631"
         },
         {
           "Name": "Content-Type",
@@ -1173,22 +1911,22 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw=\""
+          "Value": "\"+YYl30j6GncsG5L6TNGSss1DrBxxGZOdUfPHA3CNUvU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+          "Value": "Sat, 25 Oct 2025 14:14:42 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw="
+          "Value": "sha256-+YYl30j6GncsG5L6TNGSss1DrBxxGZOdUfPHA3CNUvU="
         }
       ]
     },
     {
-      "Route": "img/mascotas/gatos/esfinge/gato_basico.unk82q2x1y.png",
+      "Route": "img/mascotas/gatos/esfinge/gato_basico.tv02affxgj.png",
       "AssetFile": "img/mascotas/gatos/esfinge/gato_basico.png",
       "Selectors": [],
       "ResponseHeaders": [
@@ -1202,7 +1940,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "26484"
+          "Value": "1927631"
         },
         {
           "Name": "Content-Type",
@@ -1210,21 +1948,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw=\""
+          "Value": "\"+YYl30j6GncsG5L6TNGSss1DrBxxGZOdUfPHA3CNUvU=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+          "Value": "Sat, 25 Oct 2025 14:14:42 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "unk82q2x1y"
+          "Value": "tv02affxgj"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-ZptEfupFNG7kjyize/lLa1v/7k9sTa8RZN5bphvdnLw="
+          "Value": "sha256-+YYl30j6GncsG5L6TNGSss1DrBxxGZOdUfPHA3CNUvU="
         },
         {
           "Name": "label",
@@ -1233,8 +1971,8 @@
       ]
     },
     {
-      "Route": "img/mascotas/gatos/esfinge/gato_peakyblinder.7xleitxwva.png",
-      "AssetFile": "img/mascotas/gatos/esfinge/gato_peakyblinder.png",
+      "Route": "img/mascotas/gatos/maine coon/gato_basico.62kc4n60ll.png",
+      "AssetFile": "img/mascotas/gatos/maine coon/gato_basico.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1247,7 +1985,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "98134"
+          "Value": "2273221"
         },
         {
           "Name": "Content-Type",
@@ -1255,31 +1993,31 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk=\""
+          "Value": "\"cm8IgTtIQMr0pPLbxe0MrwJRLoXs3bFgytAUhj8leLI=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+          "Value": "Sat, 25 Oct 2025 14:08:53 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "7xleitxwva"
+          "Value": "62kc4n60ll"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk="
+          "Value": "sha256-cm8IgTtIQMr0pPLbxe0MrwJRLoXs3bFgytAUhj8leLI="
         },
         {
           "Name": "label",
-          "Value": "img/mascotas/gatos/esfinge/gato_peakyblinder.png"
+          "Value": "img/mascotas/gatos/maine coon/gato_basico.png"
         }
       ]
     },
     {
-      "Route": "img/mascotas/gatos/esfinge/gato_peakyblinder.png",
-      "AssetFile": "img/mascotas/gatos/esfinge/gato_peakyblinder.png",
+      "Route": "img/mascotas/gatos/maine coon/gato_basico.png",
+      "AssetFile": "img/mascotas/gatos/maine coon/gato_basico.png",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1292,7 +2030,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "98134"
+          "Value": "2273221"
         },
         {
           "Name": "Content-Type",
@@ -1300,7 +2038,417 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk=\""
+          "Value": "\"cm8IgTtIQMr0pPLbxe0MrwJRLoXs3bFgytAUhj8leLI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:08:53 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-cm8IgTtIQMr0pPLbxe0MrwJRLoXs3bFgytAUhj8leLI="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/persa/gato_basico.oa3gpyrfvr.png",
+      "AssetFile": "img/mascotas/gatos/persa/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1460095"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"UJrClcI5nZidgcGVie6KDDI2cUYB82Pgz4axy9diHtI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:09:45 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "oa3gpyrfvr"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-UJrClcI5nZidgcGVie6KDDI2cUYB82Pgz4axy9diHtI="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/persa/gato_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/persa/gato_basico.png",
+      "AssetFile": "img/mascotas/gatos/persa/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1460095"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"UJrClcI5nZidgcGVie6KDDI2cUYB82Pgz4axy9diHtI=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:09:45 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-UJrClcI5nZidgcGVie6KDDI2cUYB82Pgz4axy9diHtI="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/ragdoll/gato_basico.png",
+      "AssetFile": "img/mascotas/gatos/ragdoll/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1962026"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"qNvBOzSIRlm4yr/o03DNi3Jirl/DC+emMgO0chJo1Pw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:16:43 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-qNvBOzSIRlm4yr/o03DNi3Jirl/DC+emMgO0chJo1Pw="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/ragdoll/gato_basico.sbfz0refdk.png",
+      "AssetFile": "img/mascotas/gatos/ragdoll/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1962026"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"qNvBOzSIRlm4yr/o03DNi3Jirl/DC+emMgO0chJo1Pw=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:16:43 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "sbfz0refdk"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-qNvBOzSIRlm4yr/o03DNi3Jirl/DC+emMgO0chJo1Pw="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/ragdoll/gato_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/siames/gato_basico.3chqcgx9is.png",
+      "AssetFile": "img/mascotas/gatos/siames/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1449087"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q/ajOTz7h48ANJcDymWIebAMxShEb4uXKgxGLC3fn1U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:08:58 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3chqcgx9is"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Q/ajOTz7h48ANJcDymWIebAMxShEb4uXKgxGLC3fn1U="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/siames/gato_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/siames/gato_basico.png",
+      "AssetFile": "img/mascotas/gatos/siames/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1449087"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Q/ajOTz7h48ANJcDymWIebAMxShEb4uXKgxGLC3fn1U=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:08:58 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Q/ajOTz7h48ANJcDymWIebAMxShEb4uXKgxGLC3fn1U="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/zooni/gato_basico.afymokictd.png",
+      "AssetFile": "img/mascotas/gatos/zooni/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1364196"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OqC4+C7qmvGmybolwm8Cd3Gdw5OkLdi8YrFBw4Ry5FE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:31:57 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "afymokictd"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-OqC4+C7qmvGmybolwm8Cd3Gdw5OkLdi8YrFBw4Ry5FE="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/gatos/zooni/gato_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/gatos/zooni/gato_basico.png",
+      "AssetFile": "img/mascotas/gatos/zooni/gato_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1364196"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"OqC4+C7qmvGmybolwm8Cd3Gdw5OkLdi8YrFBw4Ry5FE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:31:57 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-OqC4+C7qmvGmybolwm8Cd3Gdw5OkLdi8YrFBw4Ry5FE="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/Caniche/perro_basico.n4t7gq3ofr.png",
+      "AssetFile": "img/mascotas/perros/Caniche/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1477523"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "n4t7gq3ofr"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/Caniche/perro_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/Caniche/perro_basico.png",
+      "AssetFile": "img/mascotas/perros/Caniche/perro_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1477523"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg=\""
         },
         {
           "Name": "Last-Modified",
@@ -1310,7 +2458,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-e1x8kfZX8H4bJw1Mz61VlW2ULQKlBML/NBmT3OEPUAk="
+          "Value": "sha256-N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg="
         }
       ]
     },
@@ -1889,88 +3037,6 @@
       ]
     },
     {
-      "Route": "img/mascotas/perros/poodle/perro_basico.n4t7gq3ofr.png",
-      "AssetFile": "img/mascotas/perros/poodle/perro_basico.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1477523"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "n4t7gq3ofr"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg="
-        },
-        {
-          "Name": "label",
-          "Value": "img/mascotas/perros/poodle/perro_basico.png"
-        }
-      ]
-    },
-    {
-      "Route": "img/mascotas/perros/poodle/perro_basico.png",
-      "AssetFile": "img/mascotas/perros/poodle/perro_basico.png",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=3600, must-revalidate"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "1477523"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "image/png"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Sat, 25 Oct 2025 01:56:37 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-N3fSubCCzNNWQsY+Y6gHqs57yC+5JsKYHGeY+pFS9sg="
-        }
-      ]
-    },
-    {
       "Route": "img/mascotas/perros/pug/perro_basico.7vlksx3syr.png",
       "AssetFile": "img/mascotas/perros/pug/perro_basico.png",
       "Selectors": [],
@@ -2459,6 +3525,744 @@
         {
           "Name": "integrity",
           "Value": "sha256-ZuxClgWHinLaZ6nH/aDUatb7FPXggyMJEFUH4Qkp0nI="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/Cíclido/pez_basico.jojjxycqlz.png",
+      "AssetFile": "img/mascotas/pezs/Cíclido/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1603366"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Y7OdE5zq3mU02LTIfAyqXNzuPzqyoNVoBPmdzouzVms=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:25:29 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jojjxycqlz"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Y7OdE5zq3mU02LTIfAyqXNzuPzqyoNVoBPmdzouzVms="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/pezs/Cíclido/pez_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/Cíclido/pez_basico.png",
+      "AssetFile": "img/mascotas/pezs/Cíclido/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1603366"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Y7OdE5zq3mU02LTIfAyqXNzuPzqyoNVoBPmdzouzVms=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:25:29 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Y7OdE5zq3mU02LTIfAyqXNzuPzqyoNVoBPmdzouzVms="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/Goldfish/pez_basico.png",
+      "AssetFile": "img/mascotas/pezs/Goldfish/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1583012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"hBfVJk4CSr1xGbQmx8VGL1/dCSaV5YxsQ/kABWRbOoE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:27:15 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-hBfVJk4CSr1xGbQmx8VGL1/dCSaV5YxsQ/kABWRbOoE="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/Goldfish/pez_basico.se7s3sjgcn.png",
+      "AssetFile": "img/mascotas/pezs/Goldfish/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1583012"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"hBfVJk4CSr1xGbQmx8VGL1/dCSaV5YxsQ/kABWRbOoE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:27:15 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "se7s3sjgcn"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-hBfVJk4CSr1xGbQmx8VGL1/dCSaV5YxsQ/kABWRbOoE="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/pezs/Goldfish/pez_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/Guppy/pez_basico.ax8tzpd2p0.png",
+      "AssetFile": "img/mascotas/pezs/Guppy/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1612435"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"bilpuGCpGRYORqVRbg8+b7srIcmSW2mdm74MOuWzu0E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:28:43 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ax8tzpd2p0"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-bilpuGCpGRYORqVRbg8+b7srIcmSW2mdm74MOuWzu0E="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/pezs/Guppy/pez_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/Guppy/pez_basico.png",
+      "AssetFile": "img/mascotas/pezs/Guppy/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1612435"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"bilpuGCpGRYORqVRbg8+b7srIcmSW2mdm74MOuWzu0E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:28:43 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-bilpuGCpGRYORqVRbg8+b7srIcmSW2mdm74MOuWzu0E="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/Koi/pez_basico.g23rwqj6of.png",
+      "AssetFile": "img/mascotas/pezs/Koi/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1619003"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SMCD95n8i4Fvv2StX/aXR+2q/FfNWf/gpgVMObHmZCk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:30:12 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "g23rwqj6of"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-SMCD95n8i4Fvv2StX/aXR+2q/FfNWf/gpgVMObHmZCk="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/pezs/Koi/pez_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/Koi/pez_basico.png",
+      "AssetFile": "img/mascotas/pezs/Koi/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1619003"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"SMCD95n8i4Fvv2StX/aXR+2q/FfNWf/gpgVMObHmZCk=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:30:12 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-SMCD95n8i4Fvv2StX/aXR+2q/FfNWf/gpgVMObHmZCk="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/betta/pez_basico.97rfui3yir.png",
+      "AssetFile": "img/mascotas/pezs/betta/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1628291"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dU1bky6SIYx2xzFrM+GMwnk0o21/aRXM2iMuDx/TeCU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:23:50 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "97rfui3yir"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-dU1bky6SIYx2xzFrM+GMwnk0o21/aRXM2iMuDx/TeCU="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/pezs/betta/pez_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/betta/pez_basico.png",
+      "AssetFile": "img/mascotas/pezs/betta/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1628291"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"dU1bky6SIYx2xzFrM+GMwnk0o21/aRXM2iMuDx/TeCU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:23:50 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-dU1bky6SIYx2xzFrM+GMwnk0o21/aRXM2iMuDx/TeCU="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/zooni/pez_basico.b123n8hlg5.png",
+      "AssetFile": "img/mascotas/pezs/zooni/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1600558"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"8esLKxSVUwiRmCzJo+/lJBxW9FB8WULoXGqPm0pgO+0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:31:32 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "b123n8hlg5"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-8esLKxSVUwiRmCzJo+/lJBxW9FB8WULoXGqPm0pgO+0="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/pezs/zooni/pez_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/pezs/zooni/pez_basico.png",
+      "AssetFile": "img/mascotas/pezs/zooni/pez_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1600558"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"8esLKxSVUwiRmCzJo+/lJBxW9FB8WULoXGqPm0pgO+0=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:31:32 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-8esLKxSVUwiRmCzJo+/lJBxW9FB8WULoXGqPm0pgO+0="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/reptils/camaleón/reptil_basico.0oqpp4cck3.png",
+      "AssetFile": "img/mascotas/reptils/camaleón/reptil_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1338363"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"QFwtDZJzf8wZ0CECG+QYfpCdcwSYeYu4Y7AhkUCBXpE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:42:06 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "0oqpp4cck3"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-QFwtDZJzf8wZ0CECG+QYfpCdcwSYeYu4Y7AhkUCBXpE="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/reptils/camaleón/reptil_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/reptils/camaleón/reptil_basico.png",
+      "AssetFile": "img/mascotas/reptils/camaleón/reptil_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1338363"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"QFwtDZJzf8wZ0CECG+QYfpCdcwSYeYu4Y7AhkUCBXpE=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:42:06 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-QFwtDZJzf8wZ0CECG+QYfpCdcwSYeYu4Y7AhkUCBXpE="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/reptils/iguana/reptil_basico.png",
+      "AssetFile": "img/mascotas/reptils/iguana/reptil_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "919019"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jHFhiklAbEK7SCbBV7AJZX6N3fC3K/S3uopshM24muU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:37:31 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-jHFhiklAbEK7SCbBV7AJZX6N3fC3K/S3uopshM24muU="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/reptils/iguana/reptil_basico.whn6e9whfs.png",
+      "AssetFile": "img/mascotas/reptils/iguana/reptil_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "919019"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"jHFhiklAbEK7SCbBV7AJZX6N3fC3K/S3uopshM24muU=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:37:31 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "whn6e9whfs"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-jHFhiklAbEK7SCbBV7AJZX6N3fC3K/S3uopshM24muU="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/reptils/iguana/reptil_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/reptils/tortuga/reptil_basico.3dko2bjimb.png",
+      "AssetFile": "img/mascotas/reptils/tortuga/reptil_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1341838"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6YS1iY2x1oGRQyaV9i02psL3YQoVeS63kRyiQGgwyAQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:47:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "3dko2bjimb"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-6YS1iY2x1oGRQyaV9i02psL3YQoVeS63kRyiQGgwyAQ="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/reptils/tortuga/reptil_basico.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/reptils/tortuga/reptil_basico.png",
+      "AssetFile": "img/mascotas/reptils/tortuga/reptil_basico.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1341838"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"6YS1iY2x1oGRQyaV9i02psL3YQoVeS63kRyiQGgwyAQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 14:47:56 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-6YS1iY2x1oGRQyaV9i02psL3YQoVeS63kRyiQGgwyAQ="
         }
       ]
     },
