@@ -25,48 +25,59 @@ namespace Zooni.Controllers
         }
 
         [HttpPost]
-        public IActionResult CrearUsuarioRapido(string correo, string contrasena)
+public IActionResult CrearUsuarioRapido(string correo, string contrasena)
+{
+    try
+    {
+        var existingUserId = HttpContext.Session.GetInt32("UserId");
+        if (existingUserId != null)
+            return RedirectToAction("Registro2", "Registro");
+
+        string checkQuery = "SELECT TOP 1 U.Id_User FROM [User] U INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail WHERE M.Correo = @Correo";
+        var checkParams = new Dictionary<string, object> { { "@Correo", correo } };
+        object existingId = BD.ExecuteScalar(checkQuery, checkParams);
+
+        if (existingId != null && existingId != DBNull.Value)
         {
-            try
-            {
-                // 1️⃣ Crear registro en Mail
-                string queryMail = @"
-                    INSERT INTO Mail (Correo, Contrasena, Fecha_Creacion)
-                    VALUES (@Correo, @Contrasena, SYSDATETIME());
-                    SELECT SCOPE_IDENTITY();";
-
-                var mailParams = new Dictionary<string, object>
-                {
-                    { "@Correo", correo ?? $"temp_{Guid.NewGuid()}@zooni.app" },
-                    { "@Contrasena", contrasena ?? "temp123" }
-                };
-
-                int idMail = Convert.ToInt32(BD.ExecuteScalar(queryMail, mailParams));
-
-                // 2️⃣ Crear registro en User vinculado
-                string queryUser = @"
-                    INSERT INTO [User] (Id_Mail, Nombre, Apellido, Fecha_Registro, Id_Ubicacion, Id_TipoUsuario)
-                    VALUES (@Id_Mail, 'Nuevo', 'Usuario', SYSDATETIME(), 1, 1);
-                    SELECT SCOPE_IDENTITY();";
-
-                var userParams = new Dictionary<string, object>
-                {
-                    { "@Id_Mail", idMail }
-                };
-
-                int idUser = Convert.ToInt32(BD.ExecuteScalar(queryUser, userParams));
-
-                // Guardar sesión
-                HttpContext.Session.SetInt32("UserId", idUser);
-
-                return Json(new { success = true, idUser });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("❌ Error al crear usuario rápido: " + ex.Message);
-                return Json(new { success = false, message = "Error al conectar con la base de datos." });
-            }
+            HttpContext.Session.SetInt32("UserId", Convert.ToInt32(existingId));
+            return RedirectToAction("Registro2", "Registro");
         }
+
+        string queryMail = @"
+            INSERT INTO Mail (Correo, Contrasena, Fecha_Creacion)
+            VALUES (@Correo, @Contrasena, SYSDATETIME());
+            SELECT SCOPE_IDENTITY();";
+
+        var mailParams = new Dictionary<string, object>
+        {
+            { "@Correo", correo ?? $"temp_{Guid.NewGuid()}@zooni.app" },
+            { "@Contrasena", contrasena ?? "temp123" }
+        };
+
+        int idMail = Convert.ToInt32(BD.ExecuteScalar(queryMail, mailParams));
+
+        string queryUser = @"
+            INSERT INTO [User] (Id_Mail, Nombre, Apellido, Fecha_Registro, Id_Ubicacion, Id_TipoUsuario, Estado_Usuario)
+            VALUES (@Id_Mail, 'Nuevo', 'Usuario', SYSDATETIME(), 1, 1, 1);
+            SELECT SCOPE_IDENTITY();";
+
+        var userParams = new Dictionary<string, object> { { "@Id_Mail", idMail } };
+        int idUser = Convert.ToInt32(BD.ExecuteScalar(queryUser, userParams));
+
+        HttpContext.Session.SetInt32("UserId", idUser);
+
+        // 🔥 Redirigimos al paso 2
+        return RedirectToAction("Registro2", "Registro");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error al crear usuario rápido: " + ex.Message);
+        TempData["Error"] = "Error al conectar con la base de datos.";
+        return RedirectToAction("Registro1", "Registro");
+    }
+}
+
+
 
         // =============================
         // PASO 2 - REGISTRO MASCOTA
@@ -261,6 +272,7 @@ namespace Zooni.Controllers
 
         // ✅ POST: Registro4 → Guarda datos de usuario y redirige a Registro5
         [HttpPost]
+[HttpPost]
 public IActionResult Registro4(string nombre, string apellido, string mail, string contrasena, string confirmarContrasena)
 {
     try
@@ -282,6 +294,30 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
         if (contrasena != confirmarContrasena)
         {
             TempData["Error"] = "Las contraseñas no coinciden.";
+            return RedirectToAction("Registro4");
+        }
+
+        // =====================================================
+        // 🔹 VERIFICAR SI EL MAIL YA ESTÁ REGISTRADO
+        // =====================================================
+        string checkMailQuery = @"
+            SELECT COUNT(*)
+            FROM Mail
+            WHERE Correo = @Correo
+              AND Id_Mail NOT IN (
+                  SELECT Id_Mail FROM [User] WHERE Id_User = @Id_User
+              )";
+
+        var checkParams = new Dictionary<string, object>
+        {
+            { "@Correo", mail },
+            { "@Id_User", userId.Value }
+        };
+
+        int existe = Convert.ToInt32(BD.ExecuteScalar(checkMailQuery, checkParams));
+        if (existe > 0)
+        {
+            TempData["Error"] = "Ese correo ya está registrado. Probá con otro.";
             return RedirectToAction("Registro4");
         }
 
@@ -317,7 +353,7 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
         });
 
         // =====================================================
-        // 🔹 Guardar en sesión para el paso siguiente
+        // 🔹 GUARDAR EN SESIÓN PARA EL PASO SIGUIENTE
         // =====================================================
         HttpContext.Session.SetString("UserNombre", nombre);
         HttpContext.Session.SetString("UserApellido", apellido);
@@ -325,7 +361,7 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
         HttpContext.Session.SetString("UserContrasena", contrasena);
 
         // =====================================================
-        // 🔹 Avanzar al paso final
+        // 🔹 AVANZAR AL PASO FINAL
         // =====================================================
         return RedirectToAction("Registro5");
     }
@@ -367,24 +403,24 @@ public IActionResult Registro5()
 [ValidateAntiForgeryToken]
 public IActionResult Registro5(string pais, string provincia, string ciudad, string codigoPais, string telefono)
 {
-    try
-    {
-        var userId = HttpContext.Session.GetInt32("UserId");
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId");
 
-        if (userId == null)
-        {
-            TempData["Error"] = "Sesión expirada. Iniciá nuevamente.";
-            return RedirectToAction("Registro1");
-        }
+                if (userId == null)
+                {
+                    TempData["Error"] = "Sesión expirada. Iniciá nuevamente.";
+                    return RedirectToAction("Registro1");
+                }
 
-        // Guardamos en sesión
-        HttpContext.Session.SetString("UserPais", pais);
-        HttpContext.Session.SetString("UserProvincia", provincia);
-        HttpContext.Session.SetString("UserCiudad", ciudad);
-        HttpContext.Session.SetString("UserTelefono", $"{codigoPais} {telefono}");
+                // Guardamos en sesión
+                HttpContext.Session.SetString("UserPais", pais);
+                HttpContext.Session.SetString("UserProvincia", provincia);
+                HttpContext.Session.SetString("UserCiudad", ciudad);
+                HttpContext.Session.SetString("UserTelefono", $"{codigoPais} {telefono}");
 
-        // Actualizamos el usuario
-        string query = @"
+                // Actualizamos el usuario
+                string query = @"
             UPDATE [User]
             SET Pais = @Pais,
                 Provincia = @Provincia,
@@ -392,7 +428,7 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
                 Telefono = @Telefono
             WHERE Id_User = @Id_User";
 
-        var parametros = new Dictionary<string, object>
+                var parametros = new Dictionary<string, object>
         {
             { "@Pais", pais },
             { "@Provincia", provincia },
@@ -401,23 +437,24 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
             { "@Id_User", userId.Value }
         };
 
-        BD.ExecuteNonQuery(query, parametros);
+                BD.ExecuteNonQuery(query, parametros);
 
-        // Insertamos la mascota asociada
-        string mascotaNombre = HttpContext.Session.GetString("MascotaNombre") ?? "";
-        string mascotaEspecie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
-        string mascotaRaza = HttpContext.Session.GetString("MascotaRaza") ?? "";
-        string mascotaColor = HttpContext.Session.GetString("MascotaColor") ?? "Desconocido";
-        string mascotaSexo = HttpContext.Session.GetString("MascotaSexo") ?? "No definido";
-        int mascotaEdad = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
+                // Insertamos la mascota asociada
+                string mascotaNombre = HttpContext.Session.GetString("MascotaNombre") ?? "";
+                string mascotaEspecie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
+                string mascotaRaza = HttpContext.Session.GetString("MascotaRaza") ?? "";
+                string mascotaColor = HttpContext.Session.GetString("MascotaColor") ?? "Desconocido";
+                string mascotaSexo = HttpContext.Session.GetString("MascotaSexo") ?? "No definido";
+                int mascotaEdad = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
 
-        if (!string.IsNullOrEmpty(mascotaNombre))
-        {
-            string insertMascota = @"
+                if (!string.IsNullOrEmpty(mascotaNombre))
+                {
+                    
+                    string insertMascota = @"
                 INSERT INTO Mascota (Nombre, Especie, Raza, Color, Sexo, Edad, Id_User)
                 VALUES (@Nombre, @Especie, @Raza, @Color, @Sexo, @Edad, @Id_User)";
 
-            var paramMascota = new Dictionary<string, object>
+                    var paramMascota = new Dictionary<string, object>
             {
                 { "@Nombre", mascotaNombre },
                 { "@Especie", mascotaEspecie },
@@ -428,20 +465,29 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
                 { "@Id_User", userId.Value }
             };
 
-            BD.ExecuteNonQuery(insertMascota, paramMascota);
-        }
+                    BD.ExecuteNonQuery(insertMascota, paramMascota);
+                }
 
-        TempData["Success"] = "¡Registro completado con éxito!";
-        return RedirectToAction("Login", "Auth");
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine("❌ Error en Registro5 POST: " + ex.Message);
-        TempData["Error"] = "Error al finalizar el registro.";
-        return RedirectToAction("Registro5");
-    }
+                TempData["Success"] = "¡Registro completado con éxito!";
+                return RedirectToAction("Login", "Auth");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en Registro5 POST: " + ex.Message);
+                TempData["Error"] = "Error al finalizar el registro.";
+                return RedirectToAction("Registro5");
+            }
+    
 }
+[HttpGet]
+public IActionResult VerificarMail(string mail)
+{
+    string query = "SELECT COUNT(*) FROM Mail WHERE Correo = @Correo";
+    var parametros = new Dictionary<string, object> { { "@Correo", mail } };
+    int existe = Convert.ToInt32(BD.ExecuteScalar(query, parametros));
 
+    return Json(new { existe = existe > 0 });
+}
     }
     
 }

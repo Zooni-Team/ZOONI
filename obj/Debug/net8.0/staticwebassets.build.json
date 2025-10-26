@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "UBvwgtXgPuUVrrtgOQZ0bpvBcX0IHGOUr17dNjyyC8w=",
+  "Hash": "3BR/TPX2c43A55P1eZi6ywc9u2yj4YZo4n2933cf7k8=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -288,6 +288,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\google-icon.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\icons\\hamburger.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/icons/hamburger#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "ihge1d9ur4",
+      "Integrity": "CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll+4cdi8E=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\icons\\hamburger.png"
     },
     {
       "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
@@ -834,6 +855,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perrito_confundido.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/perros/zooni/perrito_confundido#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "rjf6zj3hay",
+      "Integrity": "ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K+XI6bKQ=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\zooni\\perrito_confundido.png"
     },
     {
       "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_ballindeverdad.png",
@@ -2467,6 +2509,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-QZWRwymmKaag7llS6BVoT7pZdQbYWf0RuVm5ufR0ZRM="
+        }
+      ]
+    },
+    {
+      "Route": "img/icons/hamburger.ihge1d9ur4.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\icons\\hamburger.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9673"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll+4cdi8E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 26 Oct 2025 02:18:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ihge1d9ur4"
+        },
+        {
+          "Name": "label",
+          "Value": "img/icons/hamburger.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll+4cdi8E="
+        }
+      ]
+    },
+    {
+      "Route": "img/icons/hamburger.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\icons\\hamburger.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9673"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll+4cdi8E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 26 Oct 2025 02:18:32 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll+4cdi8E="
         }
       ]
     },
@@ -4599,6 +4723,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perrito_confundido.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perrito_confundido.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "172809"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K+XI6bKQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 22:43:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K+XI6bKQ="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perrito_confundido.rjf6zj3hay.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perrito_confundido.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "172809"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K+XI6bKQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 22:43:26 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "rjf6zj3hay"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/zooni/perrito_confundido.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K+XI6bKQ="
         }
       ]
     },

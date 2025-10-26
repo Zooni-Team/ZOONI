@@ -239,7 +239,7 @@
 
         <p style="font-weight:600; color:#444;">¡Ahora ingrese tus datos!</p>
 
-<form asp-action="Registro4" asp-controller="Registro" method="post" onsubmit="return validarContrasena()">
+<form asp-action="Registro4" asp-controller="Registro" method="post" onsubmit="return validarFormulario()">
     @Html.AntiForgeryToken()
 
     <div class="fila">
@@ -247,12 +247,50 @@
         <input type="text" name="apellido" placeholder="Apellido" required autocomplete="off" />
     </div>
 
-    <input type="mail" name="mail" placeholder="Mail" required autocomplete="off" />
+    <input type="email" id="mail" name="mail" placeholder="Mail" required autocomplete="off" onblur="verificarMail()" />
+    <p id="errorMail" style="color:red; font-weight:600; display:none;">Este correo ya está registrado.</p>
+
     <input type="password" id="Contrasena" name="contrasena" placeholder="Contraseña" required autocomplete="off" />
     <input type="password" id="ConfirmarContrasena" name="confirmarContrasena" placeholder="Confirmar contraseña" required autocomplete="off" />
 
     <button type="submit" class="btn-principal">Continuar</button>
 </form>
+
+<script>
+async function verificarMail() {
+    const mail = document.getElementById("mail").value.trim();
+    const error = document.getElementById("errorMail");
+    if (!mail) return;
+
+    const res = await fetch(`/Registro/VerificarMail?mail=${encodeURIComponent(mail)}`);
+    const data = await res.json();
+
+    if (data.existe) {
+        error.style.display = "block";
+        document.getElementById("mail").style.borderColor = "red";
+    } else {
+        error.style.display = "none";
+        document.getElementById("mail").style.borderColor = "#ccc";
+    }
+}
+
+function validarFormulario() {
+    const pass = document.getElementById("Contrasena").value;
+    const confirm = document.getElementById("ConfirmarContrasena").value;
+    const error = document.getElementById("errorMail");
+
+    if (error.style.display === "block") {
+        alert("Ese correo ya está registrado. Por favor, usá otro.");
+        return false;
+    }
+
+    if (pass !== confirm) {
+        alert("Las contraseñas no coinciden. Intentá nuevamente.");
+        return false;
+    }
+    return true;
+}
+</script>
 
 <script>
     function validarContrasena() {

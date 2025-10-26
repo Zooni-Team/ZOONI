@@ -1,8 +1,290 @@
 ﻿@{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Inicio - Zooni";
+    Layout = null;
+
+    var mascotaNombre = ViewBag.MascotaNombre;
+    var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
+    var mascotaRaza = ViewBag.MascotaRaza?.ToString()?.ToLower() ?? "basico";
+    var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+    --verde: #3ac37d;
+    --amarillo: #FFD85A;
+    --marron: #4B3B2B;
+    --blanco: #ffffff;
 }
 
-<div>
-    <h1>Index</h1>
-    <p>Bienvenidos al sitio web de NombreProyecto</p>
+/* 🌲 FONDO DE BOSQUE */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    background: url('/img/fondos/bosque.jpg') center center / cover no-repeat fixed;
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* HEADER */
+header {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    z-index: 10;
+}
+
+.menu-icon {
+    width: 38px;
+    height: 38px;
+    display: block;
+    cursor: pointer;
+    background: none;
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    transition: transform .25s ease;
+}
+.menu-icon:hover { transform: scale(1.1); }
+
+/* MENÚ LATERAL */
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 240px;
+    height: 100%;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 14px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: all .4s ease;
+    z-index: 9;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    
+}
+.menu-lateral.abierto { left: 0; }
+.menu-lateral {
+    left: -260px;
+    overflow-y: hidden;
+}
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--marron);
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    transition: all .25s ease;
+}
+.menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+
+.cerrar-menu {
+    align-self: flex-end;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    color: var(--marron);
+}
+.cerrar-menu:hover { transform: scale(1.2); }
+
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 8;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+/* CONTENIDO CENTRAL */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    padding-top: 70px;
+        backdrop-filter: blur(10px);
+
+}
+
+.mascota-nombre {
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: rgb(255, 255, 255);
+    text-shadow: 1px 2px 4px rgba(0,0,0,0.25);
+    margin-bottom: 5px;
+}
+
+.mascota-img {
+    width: 330px;
+    height: auto;
+    margin-bottom: -25px;
+    margin-top: 20px;
+    animation: flotar 3s ease-in-out infinite;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
+    transform: translateY(-10px); /* 👆 Sube ligeramente el perro */
+    
+}
+
+@@keyframes flotar {
+    0%,100% { transform: translateY(-10px); }
+    50% { transform: translateY(-18px); }
+}
+
+.panel {
+    border-radius: 24px;
+    padding: 30px 25px;
+    width: 90%;
+    max-width: 380px;
+    display: flex;
+    justify-content: center;
+}
+
+.botones {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.boton {
+    background: var(--amarillo);
+    border: none;
+    border-radius: 20px;
+    padding: 24px 0;
+    font-weight: 700;
+    font-size: 40px;
+    color: #3a2b00;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+.boton:hover { transform: scale(1.05); background: #FFC93C; }
+
+/* FOOTER */
+footer {
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+    width: 100%;
+    font-size: .9rem;
+    color: #654b34;
+    opacity: 0.8;
+}
+
+/* RESPONSIVE */
+@@media (max-width: 480px) {
+    .mascota-img { width: 260px; transform: translateY(-5px); }
+    .panel { padding: 25px 20px; }
+    .boton { font-size: 29px; padding: 22px 0; }
+}
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0; /* antes estaba en -260px */
+    transform: translateX(-100%); /* oculta fuera de pantalla */
+    width: 240px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease;
+    z-index: 999;
+    border-right: none;
+}
+
+.menu-lateral.abierto {
+    transform: translateX(0); /* entra suave */
+}
+
+</style>
+</head>
+<body>
+<header>
+    <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Comunidad">💬 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/Historial">💉 Historial</a>
+    <a href="/Calendario">📅 Calendario</a>
+    <a href="/Closet">👕 Closet</a>
+    <a href="/Perfil">👤 Perfil</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
 </div>
+
+<div class="overlay" id="overlay"></div>
+
+<main>
+@if (mascotaNombre != null)
+{
+    <div class="mascota-nombre">@mascotaNombre</div>
+    <img src="@rutaMascota" alt="Mascota" class="mascota-img" />
+    <div class="panel">
+        <div class="botones">
+            <button class="boton">🐾 Servicios</button>
+            <button class="boton">💉 Historial</button>
+            <button class="boton">📅 Calendario</button>
+            <button class="boton">👕 Closet</button>
+        </div>
+    </div>
+}
+else
+{
+    <p style="color:#4b3b2b;font-weight:500;background:rgba(255,255,255,0.8);padding:1rem 1.5rem;border-radius:16px;">No tenés mascota registrada aún 🐶</p>
+}
+</main>
+
+<footer>🐾 Zooni · Tu mascota, tu mundo.</footer>
+
+<script>
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+const abrir = document.getElementById("abrirMenu");
+const cerrar = document.getElementById("cerrarMenu");
+
+function cerrarMenu() {
+    menu.classList.remove("abierto");
+    overlay.classList.remove("activo");
+}
+abrir.addEventListener("click", () => {
+    menu.classList.add("abierto");
+    overlay.classList.add("activo");
+});
+cerrar.addEventListener("click", cerrarMenu);
+overlay.addEventListener("click", cerrarMenu);
+</script>
+</body>
+</html>

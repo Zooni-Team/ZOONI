@@ -1069,6 +1069,88 @@
       ]
     },
     {
+      "Route": "img/icons/hamburger.ihge1d9ur4.png",
+      "AssetFile": "img/icons/hamburger.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9673"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll+4cdi8E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 26 Oct 2025 02:18:32 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "ihge1d9ur4"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll+4cdi8E="
+        },
+        {
+          "Name": "label",
+          "Value": "img/icons/hamburger.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/icons/hamburger.png",
+      "AssetFile": "img/icons/hamburger.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "9673"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll+4cdi8E=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sun, 26 Oct 2025 02:18:32 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll+4cdi8E="
+        }
+      ]
+    },
+    {
       "Route": "img/mascotas-bienvenida.mlu6ganf0d.png",
       "AssetFile": "img/mascotas-bienvenida.png",
       "Selectors": [],
@@ -3197,6 +3279,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perrito_confundido.png",
+      "AssetFile": "img/mascotas/perros/zooni/perrito_confundido.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "172809"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K+XI6bKQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 22:43:26 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K+XI6bKQ="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas/perros/zooni/perrito_confundido.rjf6zj3hay.png",
+      "AssetFile": "img/mascotas/perros/zooni/perrito_confundido.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "172809"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K+XI6bKQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Sat, 25 Oct 2025 22:43:26 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "rjf6zj3hay"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K+XI6bKQ="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas/perros/zooni/perrito_confundido.png"
         }
       ]
     },

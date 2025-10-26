@@ -53,6 +53,10 @@
       "PackagePath": "staticwebassets\\img\\google-icon.png"
     },
     {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\icons\\hamburger.png",
+      "PackagePath": "staticwebassets\\img\\icons\\hamburger.png"
+    },
+    {
       "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
       "PackagePath": "staticwebassets\\img\\mascotas-bienvenida.png"
     },
@@ -155,6 +159,10 @@
     {
       "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\pug\\perro_smoking.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perrito_confundido.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\zooni\\perrito_confundido.png"
     },
     {
       "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\zooni\\wwwroot\\img\\mascotas\\perros\\zooni\\perro_ballindeverdad.png",

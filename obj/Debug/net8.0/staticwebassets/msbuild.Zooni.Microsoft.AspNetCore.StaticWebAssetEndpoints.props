@@ -156,6 +156,18 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-QZWRwymmKaag7llS6BVoT7pZdQbYWf0RuVm5ufR0ZRM="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"2892"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022QZWRwymmKaag7llS6BVoT7pZdQbYWf0RuVm5ufR0ZRM=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/icons/hamburger.ihge1d9ur4.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\icons\hamburger.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"ihge1d9ur4"},{"Name":"integrity","Value":"sha256-CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll\u002B4cdi8E="},{"Name":"label","Value":"_content/Zooni/img/icons/hamburger.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"9673"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll\u002B4cdi8E=\u0022"},{"Name":"Last-Modified","Value":"Sun, 26 Oct 2025 02:18:32 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/icons/hamburger.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\icons\hamburger.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll\u002B4cdi8E="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"9673"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022CrCj1MArvwH8mT5Fi7KCfWCMHkOLV4488oll\u002B4cdi8E=\u0022"},{"Name":"Last-Modified","Value":"Sun, 26 Oct 2025 02:18:32 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas-bienvenida.mlu6ganf0d.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas-bienvenida.png'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
@@ -467,6 +479,18 @@
       <Selectors><![CDATA[[]]]></Selectors>
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-0uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"381457"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u00220uI8n92hA5rjfr6c1DkMwNHqXPnbQlMfeH333/vkOJw=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 01:56:37 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/perros/zooni/perrito_confundido.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\perros\zooni\perrito_confundido.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K\u002BXI6bKQ="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=3600, must-revalidate"},{"Name":"Content-Length","Value":"172809"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K\u002BXI6bKQ=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 22:43:26 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/perros/zooni/perrito_confundido.rjf6zj3hay.png">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\perros\zooni\perrito_confundido.png'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"rjf6zj3hay"},{"Name":"integrity","Value":"sha256-ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K\u002BXI6bKQ="},{"Name":"label","Value":"_content/Zooni/img/mascotas/perros/zooni/perrito_confundido.png"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"172809"},{"Name":"Content-Type","Value":"image/png"},{"Name":"ETag","Value":"\u0022ycyuGkkyYOePkfcSrDv42gDwpza9f8kwz97K\u002BXI6bKQ=\u0022"},{"Name":"Last-Modified","Value":"Sat, 25 Oct 2025 22:43:26 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Zooni/img/mascotas/perros/zooni/perro_ballindeverdad.png">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\img\mascotas\perros\zooni\perro_ballindeverdad.png'))</AssetFile>

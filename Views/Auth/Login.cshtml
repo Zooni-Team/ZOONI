@@ -1,0 +1,196 @@
+@{
+    ViewData["Title"] = "Iniciar Sesión - Zooni";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --marron: #8B5E3C;
+            --verde: #3ac37d;
+            --gris: #555;
+            --gris-claro: #ccc;
+            --fondo: #FFFFFF;
+            --amarillo: #FFD85A;
+            --amarillo-hover: #FFC93C;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--fondo);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            width: 380px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: var(--marron);
+            font-weight: 700;
+            font-size: 80px;
+            margin: 10px 0;
+        }
+
+        .illustration {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            margin-top: 3px;
+            margin-bottom: 3px;
+            object-fit: contain;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h2 {
+            color: #444;
+            font-weight: 700;
+            font-size: 22px;
+            margin: 15px 0 25px 0;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        input {
+            width: 100%;
+            max-width: 320px;
+            padding: 14px 15px;
+            font-size: 15px;
+            border-radius: 18px;
+            border: 1.8px solid var(--gris-claro);
+            outline: none;
+            text-align: center;
+            transition: border 0.2s ease;
+        }
+
+        input:focus {
+            border-color: var(--amarillo);
+        }
+
+        .btn-principal {
+            display: inline-block;
+            width: 100%;
+            max-width: 320px;
+            background-color: var(--verde);
+            border: none;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #fff;
+            text-align: center;
+            padding: 14px 0;
+            cursor: pointer;
+            box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
+            margin-bottom: 4.5%;
+        }
+
+        .btn-principal:hover {
+            background-color: #2fa567;
+            transform: scale(1.02);
+        }
+
+        .divider {
+            margin: 22px 0 12px;
+            font-weight: 600;
+            color: var(--gris);
+            font-size: 15px;
+        }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-top: 10px;
+        }
+
+        .socials img {
+            width: 42px;
+            height: 42px;
+            cursor: pointer;
+            transition: transform 0.15s;
+        }
+
+        .socials img:hover {
+            transform: scale(1.1);
+        }
+
+        .error {
+            color: red;
+            font-weight: 600;
+            margin-top: 15px;
+        }
+
+        @@media (max-width: 768px) {
+            h1 { font-size: 64px; }
+            h2 { font-size: 18px; }
+            .btn-principal { font-size: 16px; }
+        }
+
+        @@media (max-width: 480px) {
+            h1 { font-size: 54px; }
+            .container { width: 90%; padding: 0 10px; }
+            input { padding: 12px; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Zooni</h1>
+
+        <!-- Imagen -->
+        <img src="~/img/mascotas-bienvenida.png" alt="Zooni mascotas" class="illustration" />
+
+        <h2>Iniciá sesión</h2>
+
+        <form method="post" asp-action="Login" asp-controller="Auth">
+            @Html.AntiForgeryToken()
+            <input type="email" name="correo" placeholder="Correo electrónico" required autocomplete="off" />
+            <input type="password" name="contrasena" placeholder="Contraseña" required autocomplete="off" />
+            <button type="submit" class="btn-principal">Ingresar</button>
+        </form>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="error">@ViewBag.Error</div>
+        }
+
+        <div class="divider">O registrate gratis</div>
+
+        <a href="/Registro/Registro2" class="btn-principal" style="background-color: var(--amarillo); color: #5b4500;">
+            Crear cuenta
+        </a>
+
+        <div class="socials">
+            <img src="~/img/google-icon.png" alt="Google" />
+            <img src="~/img/facebook-icon.png" alt="Facebook" />
+            <img src="~/img/apple-icon.png" alt="Apple" />
+        </div>
+    </div>
+</body>
+</html>
