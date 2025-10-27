@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Inicio - Zooni";
     Layout = null;
 
@@ -22,7 +22,6 @@
     --blanco: #ffffff;
 }
 
-/* 🌲 FONDO DE BOSQUE */
 html, body {
     margin: 0;
     padding: 0;
@@ -191,13 +190,12 @@ main {
 }
 .boton:hover { transform: scale(1.05); background: #FFC93C; }
 
-/* FOOTER */
 footer {
     position: absolute;
-    bottom: 10px;
+    bottom: 20px;
     text-align: center;
     width: 100%;
-    font-size: .9rem;
+    font-size: .1.2rem;
     color: #654b34;
     opacity: 0.8;
 }
@@ -230,6 +228,112 @@ footer {
 .menu-lateral.abierto {
     transform: translateX(0); /* entra suave */
 }
+.boton {
+    background: linear-gradient(180deg, var(--amarillo) 0%, #ffcb3a 100%);
+    border: 2px solid rgba(0,0,0,0.05);
+    border-radius: 24px;
+    padding: 22px 0;
+    font-weight: 700;
+    font-size: 1.8rem;
+    color: #3a2b00;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s ease, transform 0.1s ease;
+    letter-spacing: 0.5px;
+}
+
+.boton:hover {
+    background: linear-gradient(180deg, #ffd64f 0%, #ffc020 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+.boton:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2) inset;
+}
+.panel {
+    border-radius: 28px;
+    padding: 30px 25px;
+    width: 90%;
+    max-width: 400px;
+    background: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.boton {
+    width: 100%;
+    background: linear-gradient(180deg, #FFD85A 0%, #FFCA3B 100%);
+    border: 2px solid rgba(255, 213, 90, 0.6);
+    border-radius: 18px;
+    padding: 18px 0;
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #3a2b00;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.boton:hover {
+    background: linear-gradient(180deg, #FFE17C 0%, #FFD85A 100%);
+    transform: translateY(-2px);
+}
+
+.boton:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15) inset;
+}
+
+.botones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+.mascota-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.mascota-img {
+    transition: transform 0.25s ease;
+}
+
+.mascota-wrapper:hover .mascota-img {
+    transform: scale(1.05);
+}
+
+/* Corazones con salida tipo aura */
+.corazon {
+    position: absolute;
+    top: 10%; /* 💫 altura cabeza */
+    left: 50%;
+    width: 26px;
+    height: 26px;
+    background: url('/img/recursos/corazon.png') center/contain no-repeat;
+    opacity: 0;
+    animation: flotarAura 1.8s ease-out forwards;
+    pointer-events: none;
+}
+
+@@keyframes flotarAura {
+    0% {
+        transform: translate(-50%, 0) scale(0.7) rotate(0deg);
+        opacity: 0;
+    }
+    20% { opacity: 1; }
+    100% {
+        transform: translate(var(--x), -100px) scale(1.2) rotate(var(--r));
+        opacity: 0;
+    }
+}
+
 
 </style>
 </head>
@@ -241,12 +345,14 @@ footer {
 <div class="menu-lateral" id="menuLateral">
     <div class="cerrar-menu" id="cerrarMenu">✖</div>
     <a href="/Home/Index">🏠 Inicio</a>
-    <a href="/Comunidad">💬 Comunidad</a>
+    <a href="/Comunidad">👥 Comunidad</a>
     <a href="/Marketplace">🛒 Marketplace</a>
     <a href="/Historial">💉 Historial</a>
     <a href="/Calendario">📅 Calendario</a>
+    <a href="/home/ChatBot">💬 Mi Virtual Vet</a>
     <a href="/Closet">👕 Closet</a>
     <a href="/Perfil">👤 Perfil</a>
+    <a href="/Perfil">⚙️ Configuración</a>
     <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
 </div>
 
@@ -256,7 +362,9 @@ footer {
 @if (mascotaNombre != null)
 {
     <div class="mascota-nombre">@mascotaNombre</div>
+<div class="mascota-wrapper" id="mascotaWrapper">
     <img src="@rutaMascota" alt="Mascota" class="mascota-img" />
+</div>
     <div class="panel">
         <div class="botones">
             <button class="boton">🐾 Servicios</button>
@@ -291,5 +399,33 @@ abrir.addEventListener("click", () => {
 cerrar.addEventListener("click", cerrarMenu);
 overlay.addEventListener("click", cerrarMenu);
 </script>
+<script>
+const mascotaWrapper = document.getElementById("mascotaWrapper");
+
+function crearCorazones() {
+    for (let i = 0; i < 6; i++) {
+        const corazon = document.createElement("div");
+        corazon.classList.add("corazon");
+
+        // valores personalizados de dirección y rotación
+        const direccion = Math.random() < 0.5 ? -1 : 1;
+        const desplazamientoX = direccion * (40 + Math.random() * 30); // 40–70px
+        const rotacion = direccion * (15 + Math.random() * 15); // 15–30° hacia un lado
+
+        corazon.style.setProperty("--x", `${desplazamientoX}px`);
+        corazon.style.setProperty("--r", `${rotacion}deg`);
+        corazon.style.animationDelay = `${i * 0.12}s`;
+
+        mascotaWrapper.appendChild(corazon);
+        setTimeout(() => corazon.remove(), 1800);
+    }
+}
+
+mascotaWrapper.addEventListener("mouseenter", crearCorazones);
+</script>
+
+
+
+
 </body>
 </html>
