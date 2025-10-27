@@ -1,0 +1,38 @@
+[
+  {
+    "especie": "perro",
+    "raza": "labrador retriever",
+    "edadMin": 0,
+    "edadMax": 24,
+    "pesoMin": 0,
+    "pesoMax": 30,
+    "texto": "Tu cachorro labrador necesita 3 comidas diarias ricas en proteína y paseos cortos frecuentes 🐕."
+  },
+  {
+    "especie": "perro",
+    "raza": "labrador retriever",
+    "edadMin": 24,
+    "edadMax": 120,
+    "pesoMin": 25,
+    "pesoMax": 45,
+    "texto": "Los labradores adultos se benefician de caminatas largas y juegos acuáticos para fortalecer músculos y evitar sobrepeso 💪💦."
+  },
+  {
+    "especie": "gato",
+    "raza": "siames",
+    "edadMin": 0,
+    "edadMax": 180,
+    "pesoMin": 2,
+    "pesoMax": 6,
+    "texto": "Los siameses aman la compañía, asegurate de dedicarle tiempo diario y mantener juguetes interactivos 🧶."
+  },
+  {
+    "especie": "general",
+    "raza": "general",
+    "edadMin": 0,
+    "edadMax": 999,
+    "pesoMin": 0,
+    "pesoMax": 999,
+    "texto": "Recordá realizar chequeos veterinarios al menos una vez al año y mantener al día las vacunas 💉."
+  }
+]

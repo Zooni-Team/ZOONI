@@ -157,14 +157,13 @@
             cursor: pointer;
         }
 
-        
-.edad-texto {
-    font-weight: 600;
-    color: var(--marron);
-    margin-top: 0.3rem;
-    font-size: 0.95rem;
-    text-align: center;
-}
+        .edad-texto, .peso-texto {
+            font-weight: 600;
+            color: var(--marron);
+            margin-top: 0.3rem;
+            font-size: 0.95rem;
+            text-align: center;
+        }
 
         .btn-principal {
             background-color: var(--verde);
@@ -222,31 +221,31 @@
                 font-size: 24px;
             }
         }
-        .edad-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 320px;
-    margin-top: 0.8rem;
-}
 
-.edad-container label {
-    color: var(--marron);
-    font-weight: 600;
-    margin-bottom: 0.4rem;
-    font-size: 1rem;
-    text-align: center;
-}
+        .edad-container, .peso-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 320px;
+            margin-top: 0.8rem;
+        }
 
-.edad-container input[type="range"] {
-    width: 80%;
-    margin: 0.5rem auto;
-    display: block;
-    accent-color: var(--amarillo);
-}
+        .edad-container label, .peso-container label {
+            color: var(--marron);
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            font-size: 1rem;
+            text-align: center;
+        }
 
+        .edad-container input[type="range"], .peso-container input[type="range"] {
+            width: 80%;
+            margin: 0.5rem auto;
+            display: block;
+            accent-color: var(--amarillo);
+        }
 
     </style>
 </head>
@@ -276,9 +275,11 @@
                 <option value="">Seleccioná una opción</option>
             </select>
 
-            <select id="Color" name="Color" required>
-                <option value="">Seleccioná una opción</option>
-            </select>
+            <div class="peso-container">
+                <label for="Peso">Peso (kg)</label>
+                <input type="range" id="Peso" name="Peso" min="0" max="50" step="0.1" value="5" />
+                <div class="peso-texto" id="pesoTexto">5 kg</div>
+            </div>
 
             <div class="edad-container">
                 <label for="Edad">Edad</label>
@@ -294,8 +295,9 @@
         <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
     </div>
 
-    <script>
+   <script>
     const especie = "@especie";
+
     const razasPorEspecie = {
         perro: ["Labrador Retriever", "Golden Retriever", "Bulldog", "Beagle", "Caniche", "Chihuahua", "Pug", "Dálmata", "Husky Siberiano", "Cocker Spaniel", "Otra raza"],
         gato: ["Persa", "Siames", "Maine Coon", "Bengala", "Ragdoll", "British Shorthair", "Bombay", "Esfinge", "Otra raza"],
@@ -305,8 +307,7 @@
         reptil: ["Iguana", "Camaleón", "Tortuga", "Gecko", "Otra raza"]
     };
 
-    const coloresComunes = ["Negro", "Blanco", "Marrón", "Gris", "Dorado", "Crema", "Naranja", "Atigrado", "Manchado", "Otra"];
-
+    const razaSelect = document.getElementById("Raza");
     function llenarSelect(select, opciones) {
         select.innerHTML = "<option value=''>Seleccioná una opción</option>";
         opciones.forEach(op => {
@@ -316,34 +317,52 @@
             select.appendChild(opt);
         });
     }
-
-    const razaSelect = document.getElementById("Raza");
-    const colorSelect = document.getElementById("Color");
     llenarSelect(razaSelect, razasPorEspecie[especie] || razasPorEspecie.perro);
-    llenarSelect(colorSelect, coloresComunes);
 
-    // 🧠 Cuando se envía el formulario, si la raza es "Otra raza", se guarda como "Zooni" internamente
-    const form = document.querySelector("form");
-    form.addEventListener("submit", () => {
-        if (razaSelect.value === "Otra raza") {
-            const hiddenInput = document.createElement("input");
-            hiddenInput.type = "hidden";
-            hiddenInput.name = "Raza";
-            hiddenInput.value = "Zooni";
-            form.appendChild(hiddenInput);
+    // ⚖️ PESO dinámico
+    const pesoSlider = document.getElementById("Peso");
+    const pesoTexto = document.getElementById("pesoTexto");
+    const rangoPorEspeciePeso = {
+        perro: [0, 80],
+        gato: [0, 15],
+        conejo: [0, 5],
+        ave: [0, 3],
+        pez: [0, 2],
+        reptil: [0, 20]
+    };
+    const rangoPeso = rangoPorEspeciePeso[especie] || [0, 50];
+    pesoSlider.min = rangoPeso[0];
+    pesoSlider.max = rangoPeso[1];
+    pesoSlider.value = (rangoPeso[1] / 5).toFixed(1);
+    pesoTexto.textContent = pesoSlider.value + " kg";
 
-            // Y evitamos que el <select> sobreescriba el valor
-            razaSelect.disabled = true;
-        }
+    pesoSlider.addEventListener("input", () => {
+        pesoTexto.textContent = pesoSlider.value + " kg";
     });
 
-    // 🎚️ Slider de edad
-    const slider = document.getElementById("Edad");
-    const texto = document.getElementById("edadTexto");
+    // 🕒 EDAD dinámica según especie
+    const edadSlider = document.getElementById("Edad");
+    const edadTexto = document.getElementById("edadTexto");
 
-    slider.addEventListener("input", () => {
-        const meses = parseInt(slider.value);
-        texto.textContent = meses < 12
+    // Edad máxima por especie (en meses)
+    const rangoPorEspecieEdad = {
+        perro: 240,   // 20 años
+        gato: 240,    // 20 años
+        conejo: 144,  // 12 años
+        ave: 600,     // 50 años
+        pez: 120,     // 10 años
+        reptil: 720   // 60 años
+    };
+
+    const edadMax = rangoPorEspecieEdad[especie] || 240;
+    edadSlider.max = edadMax;
+    edadSlider.value = edadMax / 20;
+
+    edadTexto.textContent = "0 meses";
+
+    edadSlider.addEventListener("input", () => {
+        const meses = parseInt(edadSlider.value);
+        edadTexto.textContent = meses < 12
             ? `${meses} ${meses === 1 ? "mes" : "meses"}`
             : `${(meses / 12).toFixed(1)} ${(meses / 12 === 1) ? "año" : "años"}`;
     });

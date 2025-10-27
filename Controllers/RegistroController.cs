@@ -252,7 +252,7 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
                     return RedirectToAction("Registro1");
                 }
 
-                if (string.IsNullOrEmpty(model.Raza) || string.IsNullOrEmpty(model.Color) || string.IsNullOrEmpty(model.Sexo))
+                if (string.IsNullOrEmpty(model.Raza) || string.IsNullOrEmpty(model.Sexo))
                 {
                     TempData["Error"] = "Completá todos los datos antes de continuar.";
                     return RedirectToAction("Registro3");
@@ -263,7 +263,7 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
             UPDATE Mascota
             SET Sexo = @Sexo,
                 Raza = @Raza,
-                Color = @Color,
+                Peso = @Peso,
                 Edad = @Edad
             WHERE Id_Mascota = @Id_Mascota";
 
@@ -271,7 +271,7 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
         {
             { "@Sexo", model.Sexo ?? "" },
             { "@Raza", model.Raza ?? "" },
-            { "@Color", model.Color ?? "" },
+            { "@Peso", model.Peso},
             { "@Edad", model.Edad },
             { "@Id_Mascota", mascotaId.Value }
         };
@@ -281,7 +281,7 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
                 // ✅ Guardamos los datos en sesión
                 HttpContext.Session.SetString("MascotaSexo", model.Sexo ?? "");
                 HttpContext.Session.SetString("MascotaRaza", model.Raza ?? "");
-                HttpContext.Session.SetString("MascotaColor", model.Color ?? "");
+HttpContext.Session.SetString("MascotaPeso", model.Peso.ToString());
                 HttpContext.Session.SetInt32("MascotaEdad", model.Edad);
 
                 // 🔥 Vamos al paso 4
@@ -303,7 +303,7 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
             var mascotaNombre = HttpContext.Session.GetString("MascotaNombre");
             var mascotaEspecie = HttpContext.Session.GetString("MascotaEspecie");
             var mascotaRaza = HttpContext.Session.GetString("MascotaRaza");
-            var mascotaColor = HttpContext.Session.GetString("MascotaColor");
+            var mascotaPeso = HttpContext.Session.GetInt32("MascotaPeso");
             var mascotaSexo = HttpContext.Session.GetString("MascotaSexo");
             var mascotaEdad = HttpContext.Session.GetInt32("MascotaEdad");
 
@@ -316,7 +316,7 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
             ViewBag.MascotaNombre = mascotaNombre;
             ViewBag.MascotaEspecie = mascotaEspecie;
             ViewBag.MascotaRaza = mascotaRaza;
-            ViewBag.MascotaColor = mascotaColor;
+            ViewBag.MascotaPeso = mascotaPeso;
             ViewBag.MascotaSexo = mascotaSexo;
             ViewBag.MascotaEdad = mascotaEdad;
 
@@ -498,7 +498,7 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
                 string mascotaNombre = HttpContext.Session.GetString("MascotaNombre") ?? "";
                 string mascotaEspecie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
                 string mascotaRaza = HttpContext.Session.GetString("MascotaRaza") ?? "";
-                string mascotaColor = HttpContext.Session.GetString("MascotaColor") ?? "Desconocido";
+decimal mascotaPeso = decimal.TryParse(HttpContext.Session.GetString("MascotaPeso"), out var p) ? p : 0;
                 string mascotaSexo = HttpContext.Session.GetString("MascotaSexo") ?? "No definido";
                 int mascotaEdad = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
 
@@ -506,15 +506,15 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
                 {
                     
                     string insertMascota = @"
-                INSERT INTO Mascota (Nombre, Especie, Raza, Color, Sexo, Edad, Id_User)
-                VALUES (@Nombre, @Especie, @Raza, @Color, @Sexo, @Edad, @Id_User)";
+                INSERT INTO Mascota (Nombre, Especie, Raza, Peso, Sexo, Edad, Id_User)
+                VALUES (@Nombre, @Especie, @Raza, @Peso, @Sexo, @Edad, @Id_User)";
 
                     var paramMascota = new Dictionary<string, object>
             {
                 { "@Nombre", mascotaNombre },
                 { "@Especie", mascotaEspecie },
                 { "@Raza", mascotaRaza },
-                { "@Color", mascotaColor },
+                { "@Peso", mascotaPeso },
                 { "@Sexo", mascotaSexo },
                 { "@Edad", mascotaEdad },
                 { "@Id_User", userId.Value }

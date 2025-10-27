@@ -1,0 +1,347 @@
+@{
+    ViewData["Title"] = "Ficha Médica - Zooni";
+    Layout = null;
+
+    var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
+    var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
+    var mascotaRaza = ViewBag.MascotaRaza?.ToString() ?? "Desconocida";
+    var mascotaEdadMeses = Convert.ToInt32(ViewBag.MascotaEdad ?? 0);
+    var mascotaPeso = ViewBag.MascotaPeso ?? 0;
+    var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
+
+    int años = mascotaEdadMeses / 12;
+    int meses = mascotaEdadMeses % 12;
+    string edadFormateada = $"{(años > 0 ? $"{años} año{(años > 1 ? "s" : "")}" : "")}{(meses > 0 ? $" y {meses} mes{(meses > 1 ? "es" : "")}" : "")}";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+    --verde: #39b77c;
+    --amarillo: #FFD85A;
+    --marron: #3c2a1b;
+    --fondo: #f9f9f8;
+}
+
+/* General */
+html, body {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    background: var(--fondo) url('/img/fondos/consultorio.jpg') center/cover fixed no-repeat;
+    font-family: 'Poppins', sans-serif;
+    color: var(--marron);
+    display: flex; justify-content: center; align-items: flex-start;
+    overflow-x: hidden;
+}
+
+/* Header y menú */
+header { position: fixed; top: 15px; left: 20px; z-index: 10; }
+.menu-icon { width: 38px; cursor: pointer; transition: transform .25s ease; }
+.menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 240px;
+    height: 100%;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 14px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: all .4s ease;
+    z-index: 9;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    
+}
+.menu-lateral.abierto { left: 0; }
+.menu-lateral {
+    left: -260px;
+    overflow-y: hidden;
+}
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--marron);
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    transition: all .25s ease;
+}
+.menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+.cerrar-menu { align-self: flex-end; font-size: 1.6rem; cursor: pointer; color: var(--marron); margin-bottom: 1.2rem; }
+.overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.25); opacity: 0; pointer-events: none;
+    transition: opacity .3s ease; z-index: 8;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+/* Ficha */
+main {
+    margin-top: 80px;
+    width: 100%;
+    display: flex; flex-direction: column;
+    align-items: center;
+    padding-bottom: 60px;
+}
+
+.ficha-card {
+    background: rgba(255,255,255,0.95);
+    border-radius: 28px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    width: 90%; max-width: 430px;
+    padding: 2rem 1.6rem;
+    margin-bottom: 25px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+}
+
+.ficha-card h2 {
+    font-weight: 700;
+    color: var(--marron);
+    margin-bottom: 6px;
+    font-size: 1.9rem;
+}
+
+.mascota-img {
+    width: 200px;
+    height: auto;
+    margin: 14px 0 16px;
+    animation: flotar 3s ease-in-out infinite;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
+}
+@@keyframes flotar { 0%,100%{transform:translateY(-8px);}50%{transform:translateY(-14px);} }
+
+.dato {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    border-radius: 14px;
+    margin: 8px 0;
+    padding: 12px 16px;
+    font-weight: 500;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.dato span {
+    font-weight: 600;
+    color: var(--marron);
+}
+
+/* Botones de historial */
+.historial {
+    width: 90%; max-width: 430px;
+    display: flex; flex-direction: column;
+    gap: 12px;
+}
+.btn-historial {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    border-radius: 14px;
+    padding: 16px 18px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    font-weight: 600;
+    color: var(--marron);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1.05rem;
+}
+.btn-historial:hover {
+    background: var(--amarillo);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.btn-historial i {
+    font-style: normal;
+    font-weight: bold;
+}
+
+/* Consejos */
+.consejos-panel {
+    margin-top: 24px;
+    width: 90%; max-width: 450px;
+    background: rgba(255,255,255,0.97);
+    border-radius: 24px;
+    padding: 1.6rem;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+}
+.consejos-panel h3 {
+    color: var(--marron);
+    font-weight: 700;
+    font-size: 1.35rem;
+    margin-bottom: 12px;
+}
+.consejo {
+    background: #fff6cf;
+    border-left: 5px solid var(--amarillo);
+    padding: 10px 14px;
+    margin: 8px 0;
+    border-radius: 8px;
+    font-weight: 500;
+    color: #3c2a00;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    line-height: 1.45;
+}
+
+@@media (max-width: 480px) {
+    .ficha-card, .consejos-panel { padding: 1.2rem; }
+    .mascota-img { width: 160px; }
+}
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 240px;
+    height: 100%;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 14px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: all .4s ease;
+    z-index: 9;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    
+}
+.menu-lateral.abierto { left: 0; }
+.menu-lateral {
+    left: -260px;
+    overflow-y: hidden;
+}
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--marron);
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    transition: all .25s ease;
+}
+.menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 240px;
+    height: 100%;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(16px);
+    box-shadow: 4px 0 18px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    z-index: 9999; /* 🔥 asegura que esté por encima */
+}
+
+/* Cuando el menú se abre */
+.menu-lateral.abierto {
+    transform: translateX(0);
+}
+7
+</style>
+</head>
+
+<body>
+<header>
+    <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/home/FichaMedica">💉 Ficha médica</a>
+    <a href="/Calendario">📅 Calendario</a>
+    <a href="/home/ChatBot">💬 Mi Virtual Vet</a>
+    <a href="/Closet">👕 Closet</a>
+    <a href="/Perfil">👤 Perfil</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<main>
+    <div class="ficha-card">
+        <h2>@mascotaNombre</h2>
+        <img src="@rutaMascota" alt="Mascota" class="mascota-img" />
+        <div class="dato">🐾 <span>Especie:</span> @mascotaEspecie</div>
+        <div class="dato">📜 <span>Raza:</span> @mascotaRaza</div>
+        <div class="dato">⚖️ <span>Peso:</span> @mascotaPeso kg</div>
+        <div class="dato">🎂 <span>Edad:</span> @edadFormateada</div>
+    </div>
+
+    <div class="historial">
+        <button class="btn-historial" onclick="location.href='/Home/FichaConsultas'">📋 Consultas <i>›</i></button>
+        <button class="btn-historial" onclick="location.href='/Home/FichaVacunas'">💉 Vacunas <i>›</i></button>
+        <button class="btn-historial" onclick="location.href='/Home/FichaTratamientos'">💊 Tratamientos <i>›</i></button>
+        <button class="btn-historial" onclick="location.href='/Home/FichaOtros'">📁 Consejos y curiosidades <i>›</i></button>
+    </div>
+
+    
+</main>
+
+<script>
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+document.getElementById("abrirMenu").onclick = () => { menu.classList.add("abierto"); overlay.classList.add("activo"); };
+document.getElementById("cerrarMenu").onclick = cerrar;
+overlay.onclick = cerrar;
+function cerrar(){ menu.classList.remove("abierto"); overlay.classList.remove("activo"); }
+
+const especie = "@mascotaEspecie";
+const raza = "@mascotaRaza".toLowerCase();
+const edad = parseInt("@mascotaEdadMeses");
+const peso = parseFloat("@mascotaPeso");
+
+fetch("/data/consejos.json")
+.then(r => r.json())
+.then(data => {
+    const div = document.getElementById("listaConsejos");
+    const filtrados = data.filter(c =>
+        (c.especie === especie || c.especie === "general") &&
+        (c.raza === raza || c.raza === "general") &&
+        edad >= c.edadMin && edad <= c.edadMax &&
+        peso >= c.pesoMin && peso <= c.pesoMax
+    );
+    if (filtrados.length === 0) {
+        div.innerHTML = "<p class='consejo'>No hay consejos específicos, pero recordá mantener controles regulares 🩺</p>";
+    } else {
+        filtrados.slice(0, 4).forEach(c => {
+            const p = document.createElement('div');
+            p.className = 'consejo';
+            p.textContent = c.texto;
+            div.appendChild(p);
+        });
+    }
+});
+</script>
+</body>
+</html>

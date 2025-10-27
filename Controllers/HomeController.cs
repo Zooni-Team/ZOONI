@@ -53,5 +53,44 @@ namespace Zooni.Controllers
                 return RedirectToAction("Login", "Auth");
             }
         }
+        [HttpGet]
+public IActionResult FichaMedica()
+{
+    try
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return RedirectToAction("Login", "Auth");
+
+        // 🔹 Traemos datos de la mascota actual
+        string queryMascota = @"
+            SELECT TOP 1 Nombre, Especie, Raza, Edad, Peso
+            FROM Mascota
+            WHERE Id_User = @UserId
+            ORDER BY Id_Mascota DESC";
+
+        var param = new Dictionary<string, object> { { "@UserId", userId.Value } };
+        var dt = BD.ExecuteQuery(queryMascota, param);
+
+        if (dt.Rows.Count > 0)
+        {
+            var m = dt.Rows[0];
+            ViewBag.MascotaNombre = m["Nombre"].ToString();
+            ViewBag.MascotaEspecie = m["Especie"].ToString();
+            ViewBag.MascotaRaza = m["Raza"].ToString();
+            ViewBag.MascotaEdad = m["Edad"].ToString();
+            ViewBag.MascotaPeso = m["Peso"].ToString();
+        }
+
+        return View("FichaMedica");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error en FichaMedica: " + ex.Message);
+        return RedirectToAction("Index");
+    }
+}
+
+        
     }
 }
