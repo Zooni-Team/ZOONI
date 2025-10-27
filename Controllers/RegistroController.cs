@@ -23,6 +23,61 @@ namespace Zooni.Controllers
 
             return View();
         }
+[HttpPost]
+[Route("Registro/CrearUsuarioDesdeLogin")]
+public IActionResult CrearUsuarioDesdeLogin(string correo, string contrasena)
+{
+    try
+    {
+        // Si ya existe, lo trae y sigue
+        string checkQuery = "SELECT TOP 1 U.Id_User FROM [User] U INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail WHERE M.Correo = @Correo";
+        var checkParams = new Dictionary<string, object> { { "@Correo", correo } };
+        object existingId = BD.ExecuteScalar(checkQuery, checkParams);
+
+        int idUser;
+
+        if (existingId != null && existingId != DBNull.Value)
+        {
+            idUser = Convert.ToInt32(existingId);
+        }
+        else
+        {
+            // Crea mail
+            string queryMail = @"
+                INSERT INTO Mail (Correo, Contrasena, Fecha_Creacion)
+                VALUES (@Correo, @Contrasena, SYSDATETIME());
+                SELECT SCOPE_IDENTITY();";
+
+            var mailParams = new Dictionary<string, object>
+            {
+                { "@Correo", correo },
+                { "@Contrasena", contrasena ?? "zooni@123" }
+            };
+
+            int idMail = Convert.ToInt32(BD.ExecuteScalar(queryMail, mailParams));
+
+            // Crea usuario con datos mínimos
+            string queryUser = @"
+                INSERT INTO [User] (Id_Mail, Nombre, Apellido, Fecha_Registro, Id_Ubicacion, Id_TipoUsuario)
+                VALUES (@Id_Mail, 'Nuevo', 'Usuario', SYSDATETIME(), 1, 1);
+                SELECT SCOPE_IDENTITY();";
+
+            var userParams = new Dictionary<string, object> { { "@Id_Mail", idMail } };
+            idUser = Convert.ToInt32(BD.ExecuteScalar(queryUser, userParams));
+        }
+
+        HttpContext.Session.SetInt32("UserId", idUser);
+
+        // ✅ Ir directo al paso 2
+        return RedirectToAction("Registro2", "Registro");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error CrearUsuarioDesdeLogin: " + ex.Message);
+        TempData["Error"] = "No se pudo crear el usuario.";
+        return RedirectToAction("Login", "Auth");
+    }
+}
 
         [HttpPost]
 public IActionResult CrearUsuarioRapido(string correo, string contrasena)

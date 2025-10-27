@@ -182,7 +182,7 @@
 
         <div class="divider">O registrate gratis</div>
 
-        <a href="/Registro/Registro2" class="btn-principal" style="background-color: var(--amarillo); color: #5b4500;">
+        <a href="/Registro/Registro2" class="btn-principal" style="background-color: var(--amarillo); color: #5b4500;" id="crearCuentaBtn">
             Crear cuenta
         </a>
 
@@ -192,5 +192,34 @@
             <img src="~/img/apple-icon.png" alt="Apple" />
         </div>
     </div>
+    <script>
+document.getElementById("crearCuentaBtn").addEventListener("click", async (e) => {
+    e.preventDefault();
+    try {
+        const correoTemp = `temp_${Date.now()}@@zooni.app`;
+        const response = await fetch("/Registro/CrearUsuarioDesdeLogin", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+                correo: correoTemp,
+                contrasena: "zooni@123"
+            })
+        });
+
+        if (response.redirected) {
+            // Si el backend devuelve un redirect, lo seguimos
+            window.location.href = response.url;
+        } else if (response.ok) {
+            window.location.href = "/Registro/Registro2";
+        } else {
+            alert("❌ Error al crear la cuenta.");
+        }
+    } catch (err) {
+        console.error("❌ Error:", err);
+        alert("Error de conexión con el servidor.");
+    }
+});
+</script>
+
 </body>
 </html>
