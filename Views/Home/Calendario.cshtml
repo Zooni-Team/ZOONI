@@ -1,0 +1,360 @@
+@using Zooni.Models
+@model Calendario
+@{
+    ViewData["Title"] = "Calendario - Zooni";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+    --verde: #3ac37d;
+    --amarillo: #FFD85A;
+    --marron: #4B3B2B;
+    --rosado: #ffb7b7;
+    --celeste: #b6e3ff;
+    --verde-claro: #bdf5d7;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+    color: var(--marron);
+    overflow-x: hidden;
+}
+
+/* HEADER */
+header {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    z-index: 10;
+}
+.menu-icon {
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    transition: transform .25s ease;
+}
+.menu-icon:hover { transform: scale(1.1); }
+
+/* MENÚ LATERAL */
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 240px;
+    height: 100%;
+    background: rgba(255,255,255,0.96);
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease;
+    z-index: 999;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+.menu-lateral.abierto { transform: translateX(0); }
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--marron);
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    transition: all .25s ease;
+}
+.menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+.cerrar-menu {
+    align-self: flex-end;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    color: var(--marron);
+}
+.cerrar-menu:hover { transform: scale(1.2); }
+
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 998;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+/* CONTENIDO */
+main {
+    width: 100%;
+    max-width: 600px;
+    margin: 100px auto 120px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+.titulo {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 1px 2px 4px rgba(0,0,0,0.35);
+    margin-bottom: 30px;
+}
+
+/* TARJETAS */
+.evento {
+    background: rgba(255,255,255,0.9);
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform .2s ease, background .2s ease;
+    cursor: grab;
+    position: relative;
+}
+.evento:active { cursor: grabbing; transform: scale(1.02); }
+.evento h3 { margin: 0; font-size: 1.3rem; font-weight: 700; }
+.evento .tipo { font-size: .95rem; opacity: .85; }
+.evento .fecha { color: #555; font-size: .9rem; margin-top: 4px; }
+.evento .descripcion { margin-top: 8px; font-size: .95rem; }
+
+.evento.vacuna { border-left: 7px solid var(--rosado); background: #fff2f2; }
+.evento.paseo { border-left: 7px solid var(--verde); background: #eafff1; }
+.evento.consulta { border-left: 7px solid var(--celeste); background: #f1faff; }
+.evento.otro { border-left: 7px solid var(--amarillo); background: #fffbe8; }
+
+/* BOTONES DE ACCIÓN */
+.acciones {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    display: flex;
+    gap: 8px;
+}
+.acciones button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: transform .2s;
+}
+.acciones button:hover { transform: scale(1.2); }
+.btn-edit { color: var(--verde); }
+.btn-del { color: crimson; }
+
+/* BOTÓN flotante */
+.boton-agregar {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: var(--verde);
+    color: white;
+    font-size: 2rem;
+    border: none;
+    border-radius: 50%;
+    width: 58px;
+    height: 58px;
+    cursor: pointer;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content {
+    background: white;
+    border-radius: 18px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+}
+.modal-content h2 { color: var(--verde); margin-bottom: 10px; }
+.modal-content input, .modal-content textarea, .modal-content select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+}
+.modal-content button {
+    background: var(--verde);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+/* RESPONSIVE */
+@@media (max-width: 480px) {
+    .titulo { font-size: 1.6rem; }
+    .evento { padding: 14px 16px; }
+    .boton-agregar { width: 50px; height: 50px; font-size: 1.6rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/home/FichaMedica">💉 Ficha médica</a>
+    <a href="/home/Calendario" style="background:var(--amarillo);">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 Mi Virtual Vet</a>
+    <a href="/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<main>
+    <div class="titulo">Calendario de Cuidados 🐾</div>
+
+    <div id="eventContainer">
+        @if (Model?.Eventos?.Count > 0)
+        {
+            foreach (var ev in Model.Eventos.OrderBy(e => e.Fecha))
+            {
+                var clase = ev.Tipo?.ToLower() switch
+                {
+                    "vacuna" => "vacuna",
+                    "paseo" => "paseo",
+                    "consulta" => "consulta",
+                    _ => "otro"
+                };
+                <div class="evento @clase" draggable="true" data-id="@ev.Id_Evento">
+                    <div class="acciones">
+                        <button class="btn-edit" onclick="editarEvento(@ev.Id_Evento, '@ev.Titulo', '@ev.Descripcion', '@ev.Tipo', '@ev.Fecha.ToString("yyyy-MM-ddTHH:mm")')">✏️</button>
+                        <button class="btn-del" onclick="eliminarEvento(@ev.Id_Evento)">🗑️</button>
+                    </div>
+                    <h3>@ev.Titulo</h3>
+                    <div class="tipo">🐾 @ev.Tipo</div>
+                    <div class="fecha">@ev.Fecha.ToString("dd/MM/yyyy HH:mm")</div>
+                    <div class="descripcion">@ev.Descripcion</div>
+                </div>
+            }
+        }
+        else
+        {
+            <p style="text-align:center; color:#fff; text-shadow:1px 2px 3px rgba(0,0,0,0.5); margin-top:40px;">No tenés eventos aún 😴<br>¡Agregá tu primer recordatorio!</p>
+        }
+    </div>
+</main>
+
+<button class="boton-agregar" onclick="abrirModal()">＋</button>
+
+<div id="modal" class="modal">
+  <div class="modal-content">
+    <h2 id="modalTitulo">Nuevo evento</h2>
+    <form id="formEvento" method="post" action="/Home/CrearEvento">
+        <input type="hidden" name="Id_Evento" id="Id_Evento" />
+        <input type="text" name="Titulo" id="Titulo" placeholder="Título del evento" required />
+        <textarea name="Descripcion" id="Descripcion" placeholder="Descripción opcional"></textarea>
+        <input type="datetime-local" name="Fecha" id="Fecha" required />
+        <select name="Tipo" id="Tipo" required>
+            <option value="Vacuna">💉 Vacuna</option>
+            <option value="Paseo">🐕 Paseo</option>
+            <option value="Consulta">🏥 Consulta</option>
+            <option value="Otro">🗓️ Otro</option>
+        </select>
+        <button type="submit">Guardar</button>
+        <button type="button" onclick="cerrarModal()" style="background:#ccc;color:#333;margin-left:10px;">Cancelar</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// Menú lateral
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+document.getElementById("abrirMenu").onclick = () => { menu.classList.add("abierto"); overlay.classList.add("activo"); };
+document.getElementById("cerrarMenu").onclick = () => { menu.classList.remove("abierto"); overlay.classList.remove("activo"); };
+overlay.onclick = () => { menu.classList.remove("abierto"); overlay.classList.remove("activo"); };
+
+// Modal Crear / Editar
+function abrirModal(){ document.getElementById('modal').style.display='flex'; }
+function cerrarModal(){ document.getElementById('modal').style.display='none'; limpiarFormulario(); }
+
+function editarEvento(id, titulo, desc, tipo, fecha) {
+    document.getElementById('modalTitulo').innerText = "Editar evento";
+    document.getElementById('Id_Evento').value = id;
+    document.getElementById('Titulo').value = titulo;
+    document.getElementById('Descripcion').value = desc;
+    document.getElementById('Tipo').value = tipo;
+    document.getElementById('Fecha').value = fecha;
+    abrirModal();
+}
+
+function limpiarFormulario() {
+    document.getElementById('formEvento').reset();
+    document.getElementById('Id_Evento').value = "";
+    document.getElementById('modalTitulo').innerText = "Nuevo evento";
+}
+
+// Eliminar evento
+function eliminarEvento(id) {
+    if (confirm("¿Seguro que querés eliminar este evento? 🗑️")) {
+        fetch(`/Home/EliminarEvento/${id}`, { method: 'POST' })
+            .then(() => location.reload());
+    }
+}
+
+// Drag & Drop para reordenar
+const container = document.getElementById('eventContainer');
+let dragged;
+
+container.addEventListener('dragstart', e => {
+    dragged = e.target;
+    e.target.style.opacity = .5;
+});
+
+container.addEventListener('dragend', e => {
+    e.target.style.opacity = "";
+});
+
+container.addEventListener('dragover', e => {
+    e.preventDefault();
+    const target = e.target.closest('.evento');
+    if (target && target !== dragged) {
+        const rect = target.getBoundingClientRect();
+        const next = (e.clientY - rect.top) / rect.height > 0.5;
+        container.insertBefore(dragged, next ? target.nextSibling : target);
+    }
+});
+</script>
+</body>
+</html>

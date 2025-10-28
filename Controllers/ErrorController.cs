@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kani.Controllers
+namespace Zooni.Controllers
 {
     public class ErrorController : Controller
     {

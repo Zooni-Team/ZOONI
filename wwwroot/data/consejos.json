@@ -268,7 +268,282 @@
     "especie": "gato",
     "raza": "British Shorthair",
     "texto": "En el Reino Unido, se lo considera símbolo de calma y elegancia real 👑."
+  },
+
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "Las iguanas aman el sol ☀️. Dales al menos 2 horas diarias de luz natural o una lámpara UVB para mantener sus huesos fuertes."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "Evita manipularla justo después de comer 🍃. Puede estresarse y tener problemas digestivos."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "A las iguanas les encanta escalar 🧗‍♂️. Agregá ramas seguras o plataformas en su terrario."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "Son animales territoriales 💚. Si tenés más de una, mantenelas separadas para evitar peleas."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "Una dieta variada con hojas verdes, frutas y verduras frescas hará que su color brille 🌈."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "Los camaleones cambian de color por emociones o temperatura, no solo por camuflaje 🎨."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "No los acaricies demasiado 🖐️. Prefieren la observación a la manipulación directa."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "Un camaleón feliz tiene ojos activos 👀. Si los mantiene cerrados de día, puede estar enfermo."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "Necesita humedad constante 💧. Pulverizá el terrario dos veces al día."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "Colocá ramas finas en varios niveles 🌿. Les gusta explorar en altura."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "Los geckos leopardo son nocturnos 🌙. Evitá luces intensas en su hábitat de noche."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "Su piel se renueva completamente cada pocas semanas 🧖‍♂️. Asegurate de que tenga buena humedad para mudar bien."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "No les des insectos grandes 🪳. Siempre ofrecé presas más pequeñas que el ancho de su cabeza."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "Los geckos almacenan grasa en su cola 🍑. Una cola gruesa indica buena salud."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "Evita el sustrato de arena 🏜️. Pueden ingerirlo y sufrir obstrucciones internas."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "Las tortugas necesitan un área seca y otra con agua 🏝️. Les gusta alternar entre sol y baño."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "El caparazón es parte de su columna vertebral 🦴. ¡Nunca lo toques con fuerza!"
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "Son muy longevas ⏳. Pueden vivir más de 50 años si se cuidan bien."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "Dales una dieta rica en calcio y baja en proteínas 🍃 para evitar deformidades en el caparazón."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "Nunca las alimentes solo con lechuga 🥬. Necesitan variedad para obtener todos los nutrientes."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Dragón Barbudo",
+    "texto": "El dragón barbudo ama tomar el sol ☀️. Dales luz UVB diaria para prevenir enfermedades óseas."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Dragón Barbudo",
+    "texto": "Son sociables y curiosos 👋. Podés interactuar con ellos suavemente a diario."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Dragón Barbudo",
+    "texto": "Les encanta cavar 🪴. Un sustrato blando les permite comportarse naturalmente."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Dragón Barbudo",
+    "texto": "No uses piedras afiladas 🪨. Podrían lastimarse las patas o el abdomen."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Dragón Barbudo",
+    "texto": "Un dragón feliz cierra los ojos cuando lo acariciás 💚."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Serpiente del maíz",
+    "texto": "Las serpientes del maíz son ideales para principiantes 🐍. Son dóciles y fáciles de cuidar."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Serpiente del maíz",
+    "texto": "Les gusta esconderse 🕳️. Agregá cuevas o troncos en su terrario."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Serpiente del maíz",
+    "texto": "Comen ratones pequeños 🐭. Alimentalas solo una vez por semana."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Serpiente del maíz",
+    "texto": "No las toques justo después de comer 🚫. Pueden regurgitar por estrés."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Serpiente del maíz",
+    "texto": "Cuando mudan de piel, sus ojos se ven opacos 👁️. Es normal y dura pocos días."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "Las boas necesitan terrarios amplios 🏞️. Son animales activos y fuertes."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "No alimentes a tu boa con presas vivas ⚠️. Podrían herirla durante el ataque."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "Controlá la temperatura: 30 °C en el punto cálido y 25 °C en el frío 🌡️."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "Les gusta trepar 🪵. Colocá ramas fuertes dentro del terrario."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "Son excelentes nadadoras 💦. Podés ofrecerles una pequeña tina para refrescarse."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón pantera",
+    "texto": "Los machos suelen tener colores más brillantes 🌈. No los juntes: son muy territoriales."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón pantera",
+    "texto": "Sus ojos pueden moverse de forma independiente 👀. Observan todo a la vez."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón pantera",
+    "texto": "Les gusta la lluvia artificial 💧. Usá un rociador automático para simularla."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón pantera",
+    "texto": "Evita los reflejos en el vidrio ⚠️. Pueden confundirlos con otros camaleones y estresarse."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón pantera",
+    "texto": "Un camaleón relajado tiene la piel de tonos suaves 🌿. Colores oscuros pueden indicar estrés."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga acuática",
+    "texto": "Las tortugas acuáticas necesitan un filtro potente 💦. El agua limpia evita enfermedades."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga acuática",
+    "texto": "Secá su caparazón cada tanto con una toalla suave 🧼 para evitar hongos."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga acuática",
+    "texto": "Les encanta tomar el sol sobre una piedra 🪨. Colocá una lámpara de calor dirigida."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga acuática",
+    "texto": "No uses agua del grifo con cloro 🚫. Dejala reposar 24 h antes de colocarla."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga acuática",
+    "texto": "Las tortugas reconocen a su cuidador 👋. Se acercarán cuando te vean."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Crestado",
+    "texto": "Los geckos crestados no tienen párpados 👁️. Limpian sus ojos con la lengua."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Crestado",
+    "texto": "Prefieren temperaturas templadas 🌤️. Más de 30 °C puede ser peligroso."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Crestado",
+    "texto": "Les gusta saltar 🦘. Evitá superficies altas donde puedan caerse."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Crestado",
+    "texto": "Son insectívoros 🍽️. Dales grillos o papillas de frutas especializadas."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Crestado",
+    "texto": "Pueden regenerar la cola si la pierden, pero no igual que la original 🌀."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "Los varanos son muy inteligentes 🧠. Reconocen rutinas y hasta a sus cuidadores."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "Necesitan mucho espacio 🏞️. No son aptos para departamentos pequeños."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "Pueden aprender a caminar con arnés 😎. Con paciencia, se acostumbran a paseos cortos."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "Evita manipularlos cuando están comiendo 🍗. Son muy protectores de su alimento."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "Su mordida es fuerte ⚡. Mantené respeto y contacto controlado."
   }
-
-
+  
 ]

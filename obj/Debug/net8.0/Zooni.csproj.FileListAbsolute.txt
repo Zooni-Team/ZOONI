@@ -1084,3 +1084,12 @@ C:\Users\knk\Downloads\ZOONI\ZOONITEJURO\asdasd\zooniporfin\zooni\obj\Debug\net8
 C:\Users\knk\Downloads\ZOONI\ZOONITEJURO\asdasd\zooniporfin\zooni\obj\Debug\net8.0\Zooni.pdb
 C:\Users\knk\Downloads\ZOONI\ZOONITEJURO\asdasd\zooniporfin\zooni\obj\Debug\net8.0\Zooni.genruntimeconfig.cache
 C:\Users\knk\Downloads\ZOONI\ZOONITEJURO\asdasd\zooniporfin\zooni\obj\Debug\net8.0\ref\Zooni.dll
+C:\Users\49092919\zooni\bin\Debug\net8.0\Azure.AI.OpenAI.dll
+C:\Users\49092919\zooni\bin\Debug\net8.0\Microsoft.Bcl.HashCode.dll
+C:\Users\49092919\zooni\bin\Debug\net8.0\Microsoft.SemanticKernel.dll
+C:\Users\49092919\zooni\bin\Debug\net8.0\Microsoft.SemanticKernel.Abstractions.dll
+C:\Users\49092919\zooni\bin\Debug\net8.0\Microsoft.SemanticKernel.Connectors.AzureOpenAI.dll
+C:\Users\49092919\zooni\bin\Debug\net8.0\Microsoft.SemanticKernel.Connectors.Google.dll
+C:\Users\49092919\zooni\bin\Debug\net8.0\Microsoft.SemanticKernel.Connectors.OpenAI.dll
+C:\Users\49092919\zooni\bin\Debug\net8.0\Microsoft.SemanticKernel.Core.dll
+C:\Users\49092919\zooni\bin\Debug\net8.0\OpenAI.dll
