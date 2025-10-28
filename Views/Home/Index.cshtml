@@ -28,7 +28,7 @@ html, body {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    background: url('/img/fondos/bosque.jpg') center center / cover no-repeat fixed;
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
     font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
@@ -127,7 +127,6 @@ main {
     width: 100%;
     box-sizing: border-box;
     padding-top: 70px;
-        backdrop-filter: blur(10px);
 
 }
 
@@ -148,7 +147,7 @@ main {
     width: 330px;
     height: auto;
     margin-bottom: -25px;
-    margin-top: 20px;
+    margin-top: 60px;
     animation: flotar 3s ease-in-out infinite;
     filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
     transform: translateY(-10px); /* 👆 Sube ligeramente el perro */
@@ -174,6 +173,7 @@ main {
     flex-direction: column;
     gap: 20px;
     width: 100%;
+    margin-top: 2%;
 }
 
 .boton {
@@ -258,9 +258,6 @@ footer {
     padding: 30px 25px;
     width: 90%;
     max-width: 400px;
-    background: rgba(255, 255, 255, 0.75);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    backdrop-filter: blur(10px);
     display: flex;
     justify-content: center;
     margin-top: 10px;
@@ -303,6 +300,7 @@ footer {
 
 .mascota-img {
     transition: transform 0.25s ease;
+    margin-bottom: -10%;
 }
 
 .mascota-wrapper:hover .mascota-img {
@@ -349,7 +347,7 @@ footer {
     <a href="/Marketplace">🛒 Marketplace</a>
     <a href="/home/FichaMedica">💉 Ficha médica</a>
     <a href="/Calendario">📅 Calendario</a>
-    <a href="/home/ChatBot">💬 Mi Virtual Vet</a>
+    <a href="/Chat/ChatZooni">💬 Mi Virtual Vet</a>
     <a href="/Closet">👕 Closet</a>
     <a href="/Perfil">👤 Perfil</a>
     <a href="/Perfil">⚙️ Configuración</a>

@@ -70,7 +70,15 @@
               "target": "Package",
               "version": "[9.0.10, )"
             },
-            "NewtonSoft.json": {
+            "Microsoft.SemanticKernel": {
+              "target": "Package",
+              "version": "[1.21.0, )"
+            },
+            "Microsoft.SemanticKernel.Connectors.Google": {
+              "target": "Package",
+              "version": "[1.21.1-alpha, )"
+            },
+            "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.4, )"
             }

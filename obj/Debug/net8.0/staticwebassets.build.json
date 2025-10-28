@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DJPC+Tn0JjUYuKUVYyBjRUGRPJrCUlEoa10V+TZZvH0=",
+  "Hash": "CfAXuvZJePRDzqfRvZs9VjsaW5/qfvEudazBj94lGyw=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -73,8 +73,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "w796vvmrs5",
-      "Integrity": "1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY=",
+      "Fingerprint": "td4kbv9jl0",
+      "Integrity": "z5UiVHQAvujc5a4fdnwqTcUWJ8uh0VNZjmnSOpKCxMM=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\data\\consejos.json"
@@ -288,6 +288,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\facebook-icon.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\img\\fondos\\bosque.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/fondos/bosque#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "jsryzadhn2",
+      "Integrity": "Mzy55dwx66pWKr+T73vF4ZusFKyzzABZp5ZwB/GZ/cg=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\fondos\\bosque.png"
     },
     {
       "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\img\\google-icon.png",
@@ -1663,7 +1684,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1091"
+          "Value": "8880"
         },
         {
           "Name": "Content-Type",
@@ -1671,11 +1692,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY=\""
+          "Value": "\"z5UiVHQAvujc5a4fdnwqTcUWJ8uh0VNZjmnSOpKCxMM=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 27 Oct 2025 23:32:54 GMT"
+          "Value": "Tue, 28 Oct 2025 01:15:28 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1685,12 +1706,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY="
+          "Value": "sha256-z5UiVHQAvujc5a4fdnwqTcUWJ8uh0VNZjmnSOpKCxMM="
         }
       ]
     },
     {
-      "Route": "data/consejos.w796vvmrs5.json",
+      "Route": "data/consejos.td4kbv9jl0.json",
       "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\data\\consejos.json",
       "Selectors": [],
       "ResponseHeaders": [
@@ -1700,7 +1721,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1091"
+          "Value": "8880"
         },
         {
           "Name": "Content-Type",
@@ -1708,11 +1729,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY=\""
+          "Value": "\"z5UiVHQAvujc5a4fdnwqTcUWJ8uh0VNZjmnSOpKCxMM=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 27 Oct 2025 23:32:54 GMT"
+          "Value": "Tue, 28 Oct 2025 01:15:28 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1722,7 +1743,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "w796vvmrs5"
+          "Value": "td4kbv9jl0"
         },
         {
           "Name": "label",
@@ -1730,7 +1751,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY="
+          "Value": "sha256-z5UiVHQAvujc5a4fdnwqTcUWJ8uh0VNZjmnSOpKCxMM="
         }
       ]
     },
@@ -2551,6 +2572,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-tAmOBrlVyQeBA/IL+qxRKtKmy6KcijC487SXSee8JOI="
+        }
+      ]
+    },
+    {
+      "Route": "img/fondos/bosque.jsryzadhn2.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\img\\fondos\\bosque.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1690825"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Mzy55dwx66pWKr+T73vF4ZusFKyzzABZp5ZwB/GZ/cg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 28 Oct 2025 02:22:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jsryzadhn2"
+        },
+        {
+          "Name": "label",
+          "Value": "img/fondos/bosque.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Mzy55dwx66pWKr+T73vF4ZusFKyzzABZp5ZwB/GZ/cg="
+        }
+      ]
+    },
+    {
+      "Route": "img/fondos/bosque.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\img\\fondos\\bosque.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1690825"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Mzy55dwx66pWKr+T73vF4ZusFKyzzABZp5ZwB/GZ/cg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 28 Oct 2025 02:22:12 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Mzy55dwx66pWKr+T73vF4ZusFKyzzABZp5ZwB/GZ/cg="
         }
       ]
     },

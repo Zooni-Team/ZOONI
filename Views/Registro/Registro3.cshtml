@@ -298,6 +298,7 @@
    <script>
     const especie = "@especie";
 
+    // 🐾 Razas por especie
     const razasPorEspecie = {
         perro: ["Labrador Retriever", "Golden Retriever", "Bulldog", "Beagle", "Caniche", "Chihuahua", "Pug", "Dálmata", "Husky Siberiano", "Cocker Spaniel", "Otra raza"],
         gato: ["Persa", "Siames", "Maine Coon", "Bengala", "Ragdoll", "British Shorthair", "Bombay", "Esfinge", "Otra raza"],
@@ -307,6 +308,7 @@
         reptil: ["Iguana", "Camaleón", "Tortuga", "Gecko", "Otra raza"]
     };
 
+    // 🦴 Select dinámico de razas
     const razaSelect = document.getElementById("Raza");
     function llenarSelect(select, opciones) {
         select.innerHTML = "<option value=''>Seleccioná una opción</option>";
@@ -344,10 +346,9 @@
     const edadSlider = document.getElementById("Edad");
     const edadTexto = document.getElementById("edadTexto");
 
-    // Edad máxima por especie (en meses)
     const rangoPorEspecieEdad = {
         perro: 240,   // 20 años
-        gato: 240,    // 20 años
+        gato: 240,
         conejo: 144,  // 12 años
         ave: 600,     // 50 años
         pez: 120,     // 10 años
@@ -357,7 +358,6 @@
     const edadMax = rangoPorEspecieEdad[especie] || 240;
     edadSlider.max = edadMax;
     edadSlider.value = edadMax / 20;
-
     edadTexto.textContent = "0 meses";
 
     edadSlider.addEventListener("input", () => {
@@ -366,7 +366,15 @@
             ? `${meses} ${meses === 1 ? "mes" : "meses"}`
             : `${(meses / 12).toFixed(1)} ${(meses / 12 === 1) ? "año" : "años"}`;
     });
+
+    // ✅ FIX: Normalizar peso decimal antes de enviar el form
+    const form = document.querySelector("form");
+    form.addEventListener("submit", () => {
+        const peso = parseFloat(pesoSlider.value.replace(",", "."));
+        pesoSlider.value = peso.toFixed(1); // evita 314 kg por 31.4 kg
+    });
 </script>
+
 
 </body>
 </html>

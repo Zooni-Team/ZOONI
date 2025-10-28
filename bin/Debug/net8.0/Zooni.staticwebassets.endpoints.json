@@ -181,7 +181,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1091"
+          "Value": "8880"
         },
         {
           "Name": "Content-Type",
@@ -189,22 +189,22 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY=\""
+          "Value": "\"z5UiVHQAvujc5a4fdnwqTcUWJ8uh0VNZjmnSOpKCxMM=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 27 Oct 2025 23:32:54 GMT"
+          "Value": "Tue, 28 Oct 2025 01:15:28 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY="
+          "Value": "sha256-z5UiVHQAvujc5a4fdnwqTcUWJ8uh0VNZjmnSOpKCxMM="
         }
       ]
     },
     {
-      "Route": "data/consejos.w796vvmrs5.json",
+      "Route": "data/consejos.td4kbv9jl0.json",
       "AssetFile": "data/consejos.json",
       "Selectors": [],
       "ResponseHeaders": [
@@ -218,7 +218,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1091"
+          "Value": "8880"
         },
         {
           "Name": "Content-Type",
@@ -226,21 +226,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY=\""
+          "Value": "\"z5UiVHQAvujc5a4fdnwqTcUWJ8uh0VNZjmnSOpKCxMM=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Mon, 27 Oct 2025 23:32:54 GMT"
+          "Value": "Tue, 28 Oct 2025 01:15:28 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "w796vvmrs5"
+          "Value": "td4kbv9jl0"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY="
+          "Value": "sha256-z5UiVHQAvujc5a4fdnwqTcUWJ8uh0VNZjmnSOpKCxMM="
         },
         {
           "Name": "label",
@@ -1065,6 +1065,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-tAmOBrlVyQeBA/IL+qxRKtKmy6KcijC487SXSee8JOI="
+        }
+      ]
+    },
+    {
+      "Route": "img/fondos/bosque.jsryzadhn2.png",
+      "AssetFile": "img/fondos/bosque.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1690825"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Mzy55dwx66pWKr+T73vF4ZusFKyzzABZp5ZwB/GZ/cg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 28 Oct 2025 02:22:12 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "jsryzadhn2"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-Mzy55dwx66pWKr+T73vF4ZusFKyzzABZp5ZwB/GZ/cg="
+        },
+        {
+          "Name": "label",
+          "Value": "img/fondos/bosque.png"
+        }
+      ]
+    },
+    {
+      "Route": "img/fondos/bosque.png",
+      "AssetFile": "img/fondos/bosque.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1690825"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"Mzy55dwx66pWKr+T73vF4ZusFKyzzABZp5ZwB/GZ/cg=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 28 Oct 2025 02:22:12 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-Mzy55dwx66pWKr+T73vF4ZusFKyzzABZp5ZwB/GZ/cg="
         }
       ]
     },
