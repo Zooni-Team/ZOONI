@@ -167,6 +167,88 @@
       ]
     },
     {
+      "Route": "data/consejos.json",
+      "AssetFile": "data/consejos.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1091"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 27 Oct 2025 23:32:54 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY="
+        }
+      ]
+    },
+    {
+      "Route": "data/consejos.w796vvmrs5.json",
+      "AssetFile": "data/consejos.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1091"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 27 Oct 2025 23:32:54 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w796vvmrs5"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY="
+        },
+        {
+          "Name": "label",
+          "Value": "data/consejos.json"
+        }
+      ]
+    },
+    {
       "Route": "favicon.61n19gt1b8.ico",
       "AssetFile": "favicon.ico",
       "Selectors": [],
@@ -4427,6 +4509,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-6YS1iY2x1oGRQyaV9i02psL3YQoVeS63kRyiQGgwyAQ="
+        }
+      ]
+    },
+    {
+      "Route": "img/recursos/corazon.png",
+      "AssetFile": "img/recursos/corazon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "32057"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WVuHc94LhSm5JfnCN+UxHHzs115Pi8SNmwTT5e2h1vM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 27 Oct 2025 23:38:25 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WVuHc94LhSm5JfnCN+UxHHzs115Pi8SNmwTT5e2h1vM="
+        }
+      ]
+    },
+    {
+      "Route": "img/recursos/corazon.zhiswu4rgd.png",
+      "AssetFile": "img/recursos/corazon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "32057"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WVuHc94LhSm5JfnCN+UxHHzs115Pi8SNmwTT5e2h1vM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 27 Oct 2025 23:38:25 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zhiswu4rgd"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WVuHc94LhSm5JfnCN+UxHHzs115Pi8SNmwTT5e2h1vM="
+        },
+        {
+          "Name": "label",
+          "Value": "img/recursos/corazon.png"
         }
       ]
     },

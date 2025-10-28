@@ -1,0 +1,842 @@
+@{
+    ViewData["Title"] = "Curiosidades - Zooni";
+    Layout = null;
+
+    var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
+    var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
+    var mascotaRaza = ViewBag.MascotaRaza?.ToString() ?? "Desconocida";
+    var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --verde: #3ac37d;
+  --amarillo: #FFD85A;
+  --marron: #4B3B2B;
+  --sombra: rgba(0, 0, 0, 0.15);
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/img/fondos/consultorio.jpg') center/cover no-repeat fixed;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+  color: var(--marron);
+}
+
+/* ====== MENÚ ====== */
+header { position: fixed; top: 15px; left: 20px; z-index: 10; }
+.menu-icon { width: 38px; cursor: pointer; transition: transform .25s ease; }
+.menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(-101%);
+  width: 240px;
+  height: 100%;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(14px);
+  box-shadow: 4px 0 18px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 1.2rem;
+  gap: 1rem;
+  transition: transform 0.35s ease;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  z-index: 999;
+}
+.menu-lateral.abierto { transform: translateX(0); }
+.menu-lateral a {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--marron);
+  font-size: 1.1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  transition: all .25s ease;
+}
+.menu-lateral a:hover {
+  background: var(--amarillo);
+  color: #3c2a00;
+}
+.cerrar-menu {
+  align-self: flex-end;
+  font-size: 1.6rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  color: var(--marron);
+}
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.25);
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 8;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+/* ====== CONTENIDO ====== */
+main {
+  margin-top: 90px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 80px;
+}
+
+/* ====== CARTAS ====== */
+#contenedor-cartas {
+  position: relative;
+  width: 90%;
+  max-width: 420px;
+  height: 400px;
+  perspective: 1000px;
+}
+
+.carta {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 24px;
+  box-shadow: 0 8px 20px var(--sombra);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform;
+  cursor: grab;
+  backdrop-filter: blur(10px);
+}
+
+.carta img {
+  width: 140px;
+  margin-bottom: 15px;
+  animation: flotar 3s ease-in-out infinite;
+}
+
+.carta h2 {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--marron);
+  margin-bottom: 10px;
+}
+
+.carta p {
+  background: #fff9e0;
+  border-radius: 14px;
+  padding: 0.9rem 1rem;
+  font-size: 1rem;
+  color: #3a2a1b;
+  line-height: 1.4;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+}
+
+/* ====== ICONOS DE SWIPE ====== */
+.reaccion {
+  position: absolute;
+  font-size: 3rem;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.reaccion.like {
+  color: var(--verde);
+  top: 50%; left: 20%;
+  transform: rotate(-20deg);
+}
+.reaccion.nope {
+  color: red;
+  top: 50%; right: 20%;
+  transform: rotate(20deg);
+}
+
+@@keyframes flotar {
+  0%,100% { transform: translateY(-8px); }
+  50% { transform: translateY(-14px); }
+}
+
+@@media (max-width: 480px) {
+  .carta { height: 360px; }
+}
+:root {
+  --verde: #3ac37d;
+  --amarillo: #FFD85A;
+  --marron: #4B3B2B;
+  --sombra: rgba(0, 0, 0, 0.15);
+}
+
+/* ====== BASE ====== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/img/fondos/consultorio.jpg') center/cover no-repeat fixed;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+  color: var(--marron);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ====== MENU ====== */
+header { position: fixed; top: 15px; left: 20px; z-index: 10; }
+.menu-icon { width: 38px; cursor: pointer; transition: transform .25s ease; }
+.menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral {
+  position: fixed;
+  top: 0; left: 0;
+  transform: translateX(-101%);
+  width: 240px;
+  height: 100%;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(14px);
+  box-shadow: 4px 0 18px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 1.2rem;
+  gap: 1rem;
+  transition: transform 0.35s ease;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  z-index: 999;
+}
+.menu-lateral.abierto { transform: translateX(0); }
+.menu-lateral a {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--marron);
+  font-size: 1.1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  transition: all .25s ease;
+}
+.menu-lateral a:hover { background: var(--amarillo); color: #3c2a00; }
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.25);
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 8;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+/* ====== CONTENIDO ====== */
+main {
+  margin-top: 90px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 80px;
+}
+
+/* ====== CARTAS SWIPE ====== */
+#contenedor-cartas {
+  position: relative;
+  width: 90%;
+  max-width: 420px;
+  height: 480px;
+  perspective: 1200px;
+  touch-action: pan-y;
+}
+
+.carta {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  box-shadow: 0 10px 24px var(--sombra);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.8rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform;
+  cursor: grab;
+  backdrop-filter: blur(10px);
+  touch-action: none;
+  overflow: hidden;
+}
+
+.carta img {
+  width: 150px;
+  margin-bottom: 20px;
+  animation: flotar 3s ease-in-out infinite;
+}
+
+.carta h2 {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: var(--marron);
+  margin-bottom: 12px;
+}
+
+.carta p {
+  background: #fff9e0;
+  border-radius: 16px;
+  padding: 1rem 1.3rem;
+  font-size: 1.05rem;
+  color: #3a2a1b;
+  line-height: 1.5;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+  max-height: 230px;
+  overflow-y: auto;
+}
+
+/* ====== REACCIONES ====== */
+.reaccion {
+  position: absolute;
+  font-size: 3rem;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.reaccion.like {
+  color: var(--verde);
+  top: 45%;
+  left: 20%;
+  transform: rotate(-20deg);
+}
+.reaccion.nope {
+  color: red;
+  top: 45%;
+  right: 20%;
+  transform: rotate(20deg);
+}
+
+@@keyframes flotar {
+  0%,100% { transform: translateY(-8px); }
+  50% { transform: translateY(-14px); }
+}
+
+/* ====== MEDIA QUERIES ====== */
+@@media (max-width: 768px) {
+  #contenedor-cartas {
+    max-width: 350px;
+    height: 440px;
+  }
+  .carta img {
+    width: 130px;
+    margin-bottom: 16px;
+  }
+  .carta p {
+    font-size: 0.95rem;
+    padding: 0.9rem 1rem;
+  }
+}
+
+@@media (max-width: 540px) {
+  #contenedor-cartas {
+    width: 95%;
+    max-width: 330px;
+    height: 420px;
+  }
+  .carta {
+    padding: 1.3rem;
+    border-radius: 22px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  }
+  .carta h2 { font-size: 1.2rem; }
+  .carta p { font-size: 0.95rem; }
+  .carta img { width: 110px; }
+}
+
+@@media (max-width: 400px) {
+  #contenedor-cartas {
+    width: 100%;
+    height: 390px;
+  }
+  .carta {
+    padding: 1.2rem;
+  }
+  .carta p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+}
+:root {
+  --verde: #3ac37d;
+  --amarillo: #FFD85A;
+  --marron: #4B3B2B;
+  --sombra: rgba(0, 0, 0, 0.18);
+}
+
+/* ====== BASE ====== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background: url('/img/fondos/consultorio.jpg') center/cover no-repeat fixed;
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow-x: hidden;
+  color: var(--marron);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ====== MENÚ ====== */
+header { position: fixed; top: 15px; left: 20px; z-index: 10; }
+.menu-icon { width: 38px; cursor: pointer; transition: transform .25s ease; }
+.menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral {
+  position: fixed;
+  top: 0; left: 0;
+  transform: translateX(-101%);
+  width: 240px;
+  height: 100%;
+  background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(14px);
+  box-shadow: 4px 0 18px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 1.2rem;
+  gap: 1rem;
+  transition: transform 0.35s ease;
+  border-top-right-radius: 18px;
+  border-bottom-right-radius: 18px;
+  z-index: 999;
+}
+.menu-lateral.abierto { transform: translateX(0); }
+.menu-lateral a {
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--marron);
+  font-size: 1.1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
+  transition: all .25s ease;
+}
+.menu-lateral a:hover { background: var(--amarillo); color: #3c2a00; }
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.25);
+  opacity: 0; pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 8;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+/* ====== CONTENIDO ====== */
+main {
+  margin-top: 90px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 80px;
+}
+
+/* ====== CARTAS SWIPE ====== */
+#contenedor-cartas {
+  position: relative;
+  width: 92%;
+  max-width: 420px;
+  height: 80vh;
+  perspective: 1200px;
+  touch-action: pan-y;
+}
+
+.carta {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 65%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 28px;
+  box-shadow: 0 12px 28px var(--sombra);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 2rem 1.5rem 1.8rem;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  will-change: transform;
+  cursor: grab;
+  backdrop-filter: blur(10px);
+  touch-action: none;
+  overflow-y: auto;
+}
+
+.carta img {
+  width: 100px;
+  margin-top: 12px;
+  margin-bottom: 10px;
+  animation: flotar 3s ease-in-out infinite;
+}
+
+.carta h2 {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--marron);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.carta p {
+  background: #fff9e0;
+  border-radius: 18px;
+  padding: 1.1rem 1.3rem;
+  font-size: 1.5rem;
+  color: #3a2a1b;
+  line-height: 1.6;
+  box-shadow: inset 0 0 8px rgba(0,0,0,0.05);
+  overflow-y: auto;
+  flex-grow: 1;
+  width: 100%;
+  text-align: left;
+}
+
+/* ====== SWIPE ICONS ====== */
+.reaccion {
+  position: absolute;
+  font-size: 3rem;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+.reaccion.like {
+  color: var(--verde);
+  top: 50%;
+  left: 20%;
+  transform: rotate(-20deg);
+}
+.reaccion.nope {
+  color: red;
+  top: 50%;
+  right: 20%;
+  transform: rotate(20deg);
+}
+
+/* ====== ANIMACIONES ====== */
+@@keyframes flotar {
+  0%,100% { transform: translateY(-8px); }
+  50% { transform: translateY(-14px); }
+}
+
+/* ====== RESPONSIVE ====== */
+@@media (max-width: 768px) {
+  #contenedor-cartas {
+    width: 94%;
+    height: 82vh;
+    max-width: 380px;
+  }
+  .carta {
+    border-radius: 22px;
+    padding: 1.8rem 1.2rem;
+  }
+  .carta h2 { font-size: 1.35rem; }
+  .carta p { font-size: 1.05rem; }
+}
+
+@@media (max-width: 480px) {
+  #contenedor-cartas {
+    width: 96%;
+    height: 86vh;
+    max-width: 360px;
+  }
+  .carta {
+    border-radius: 20px;
+    padding: 1.6rem 1rem;
+  }
+  .carta img { width: 90px; }
+  .carta h2 { font-size: 1.3rem; margin-top: 4px; }
+  .carta p { font-size: 1rem; line-height: 1.55; }
+}
+
+@@media (max-width: 380px) {
+  #contenedor-cartas {
+    width: 98%;
+    height: 88vh;
+    max-width: 330px;
+  }
+  .carta {
+    border-radius: 18px;
+    padding: 1.4rem 0.9rem;
+  }
+  .carta h2 { font-size: 1.15rem; }
+  .carta p { font-size: 1rem; }
+}
+/* ====== ESTILO BASE ====== */
+main {
+  margin-top: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  padding: 20px;
+}
+
+/* ====== CONTENEDOR ====== */
+#contenedor-cartas {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* ====== CARTA ====== */
+.carta {
+  background: #fffdf9;
+  border-radius: 30px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1.6rem;
+  width: 90%;
+  max-width: 400px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(6px);
+}
+
+.carta:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.15);
+}
+
+.carta img {
+  width: 2rem;
+  margin-bottom: 12px;
+  animation: flotar 3s ease-in-out infinite;
+}
+
+.carta h2 {
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: var(--marron);
+  margin-bottom: 12px;
+}
+
+.carta p {
+  background: #fff7dd;
+  border-radius: 20px;
+  padding: 1.2rem 1.4rem;
+  font-size: 1.2rem;
+  color: #3a2a1b;
+  line-height: 1.7;
+  width: 100%;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+}
+
+/* ====== ANIMACIÓN ====== */
+@@keyframes flotar {
+  0%, 100% { transform: translateY(-5px); }
+  50% { transform: translateY(-12px); }
+}
+
+/* ====== RESPONSIVE ====== */
+@@media (max-width: 768px) {
+  main { margin-top: 70px; }
+  .carta {
+    width: 92%;
+    padding: 1.8rem 1.3rem;
+    border-radius: 26px;
+  }
+  .carta img { width: 110px; }
+  .carta h2 { font-size: 2rem; }
+  .carta p { font-size: 1.5rem; }
+}
+
+@@media (max-width: 480px) {
+  main { margin-top: 60px; }
+  .carta {
+    width: 94%;
+    padding: 1.5rem 1.1rem;
+    border-radius: 24px;
+  }
+  .carta img { width: 170px; }
+  .carta h2 { font-size: 2rem; }
+  .carta p {
+    font-size: 1.5rem;
+    line-height: 1.6;
+  }
+}
+
+</style>
+</head>
+<body>
+<header>
+  <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+  <div class="cerrar-menu" id="cerrarMenu">✖</div>
+  <a href="/Home/Index">🏠 Inicio</a>
+  <a href="/Comunidad">👥 Comunidad</a>
+  <a href="/Marketplace">🛒 Marketplace</a>
+  <a href="/Home/FichaMedica">💉 Ficha médica</a>
+  <a href="/Calendario">📅 Calendario</a>
+  <a href="/Home/ChatBot">💬 Mi Virtual Vet</a>
+  <a href="/Closet">👕 Closet</a>
+  <a href="/Perfil">👤 Perfil</a>
+  <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<main>
+  <h2 style="color:#4b3b2b;">Curiosidades de @mascotaRaza 🐾</h2>
+  <div id="contenedor-cartas">
+    <!-- Las cartas se cargan dinámicamente -->
+  </div>
+</main>
+
+<script>
+// Menú hamburguesa
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+document.getElementById("abrirMenu").onclick = () => { menu.classList.add("abierto"); overlay.classList.add("activo"); };
+document.getElementById("cerrarMenu").onclick = cerrar;
+overlay.onclick = cerrar;
+function cerrar(){ menu.classList.remove("abierto"); overlay.classList.remove("activo"); }
+
+// Variables de mascota
+const especie = "@mascotaEspecie";
+const raza = "@mascotaRaza".toLowerCase();
+let curiosidades = [];
+
+// Cargar datos
+fetch("/data/consejos.json")
+  .then(r => r.json())
+  .then(data => {
+    fetch("/data/consejos.json")
+  .then(r => r.json())
+  .then(data => {
+    curiosidades = data.filter(c =>
+      (c.especie === especie || c.especie === "general") &&
+      (c.raza.toLowerCase() === raza || c.raza === "general")
+    );
+
+    if (curiosidades.length === 0)
+      curiosidades = [{ texto: "No hay curiosidades específicas, pero recordá cuidar su bienestar todos los días 🐶" }];
+
+    mostrarCartas();
+  });
+    if (curiosidades.length === 0)
+      curiosidades = [{ texto: "No hay curiosidades específicas, pero recordá cuidar su bienestar todos los días 🐶" }];
+    mostrarCartas();
+  });
+
+function mostrarCartas() {
+  const contenedor = document.getElementById("contenedor-cartas");
+  contenedor.innerHTML = "";
+  curiosidades.forEach((c, i) => {
+    const carta = document.createElement("div");
+    carta.className = "carta";
+    carta.innerHTML = `
+      <img src="${"@rutaMascota"}" alt="Mascota" />
+      <h2>${c.titulo || "Dato curioso"}</h2>
+      <p>${c.texto}</p>
+      <div class="reaccion like">💚</div>
+      <div class="reaccion nope">❌</div>
+    `;
+    carta.style.zIndex = curiosidades.length - i;
+    contenedor.appendChild(carta);
+  });
+  activarSwipe();
+}
+
+// Lógica de swipe estilo Tinder
+function activarSwipe() {
+  const cartas = document.querySelectorAll(".carta");
+  cartas.forEach(carta => {
+    let startX, startY, currentX, currentY, moviendo = false;
+
+    const like = carta.querySelector(".like");
+    const nope = carta.querySelector(".nope");
+
+    carta.addEventListener("mousedown", start);
+    carta.addEventListener("touchstart", start);
+
+    function start(e) {
+      moviendo = true;
+      startX = e.touches ? e.touches[0].clientX : e.clientX;
+      startY = e.touches ? e.touches[0].clientY : e.clientY;
+      carta.style.transition = "none";
+    }
+
+    window.addEventListener("mousemove", move);
+    window.addEventListener("touchmove", move);
+    window.addEventListener("mouseup", end);
+    window.addEventListener("touchend", end);
+
+    function move(e) {
+      if (!moviendo) return;
+      currentX = e.touches ? e.touches[0].clientX : e.clientX;
+      currentY = e.touches ? e.touches[0].clientY : e.clientY;
+      const dx = currentX - startX;
+      const dy = currentY - startY;
+      const rot = dx / 15;
+      carta.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg)`;
+      like.style.opacity = dx > 100 ? 1 : 0;
+      nope.style.opacity = dx < -100 ? 1 : 0;
+    }
+
+    function end() {
+      if (!moviendo) return;
+      moviendo = false;
+      carta.style.transition = "all 0.3s ease";
+      const dx = currentX - startX;
+      if (dx > 120) swipe("right");
+      else if (dx < -120) swipe("left");
+      else carta.style.transform = "";
+    }
+
+    function swipe(direccion) {
+      carta.style.transform = `translate(${direccion === "right" ? 1000 : -1000}px, 0) rotate(${direccion === "right" ? 45 : -45}deg)`;
+      setTimeout(() => carta.remove(), 300);
+    }
+  });
+}
+</script>
+</body>
+</html>

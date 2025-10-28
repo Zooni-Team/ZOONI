@@ -1,38 +1,274 @@
 [
   {
     "especie": "perro",
-    "raza": "labrador retriever",
+    "raza": "Labrador Retriever",
     "edadMin": 0,
     "edadMax": 24,
-    "pesoMin": 0,
-    "pesoMax": 30,
-    "texto": "Tu cachorro labrador necesita 3 comidas diarias ricas en proteína y paseos cortos frecuentes 🐕."
+    "pesoMin": 5,
+    "pesoMax": 25,
+    "texto": "Tu cachorro labrador ama el agua 💦. Dejalo jugar con chorritos o mini piscinas para fortalecer sus músculos y divertirse."
   },
   {
     "especie": "perro",
-    "raza": "labrador retriever",
+    "raza": "Labrador Retriever",
     "edadMin": 24,
     "edadMax": 120,
     "pesoMin": 25,
-    "pesoMax": 45,
-    "texto": "Los labradores adultos se benefician de caminatas largas y juegos acuáticos para fortalecer músculos y evitar sobrepeso 💪💦."
+    "pesoMax": 40,
+    "texto": "Un labrador adulto necesita caminatas largas y estímulos mentales: escondé snacks y dejalo usar su olfato 🐕‍🦺."
+  },
+  {
+    "especie": "perro",
+    "raza": "Golden Retriever",
+    "edadMin": 0,
+    "edadMax": 18,
+    "pesoMin": 4,
+    "pesoMax": 20,
+    "texto": "Los golden bebés son sensibles 💛. Reforzá su confianza con caricias suaves y juegos tranquilos."
+  },
+  {
+    "especie": "perro",
+    "raza": "Golden Retriever",
+    "edadMin": 24,
+    "edadMax": 120,
+    "pesoMin": 25,
+    "pesoMax": 40,
+    "texto": "Un golden adulto brilla con paseos al aire libre 🌳. Llevá una pelota y disfrutá su entusiasmo contagioso."
+  },
+  {
+    "especie": "perro",
+    "raza": "Bulldog",
+    "edadMin": 0,
+    "edadMax": 36,
+    "pesoMin": 6,
+    "pesoMax": 20,
+    "texto": "Los bulldogs respiran con dificultad 😴. Evitá el calor y las carreras largas: prefieren siestas cortas y mimos."
+  },
+  {
+    "especie": "perro",
+    "raza": "Beagle",
+    "edadMin": 6,
+    "edadMax": 72,
+    "pesoMin": 8,
+    "pesoMax": 14,
+    "texto": "Los beagles adoran seguir rastros 🕵️‍♂️. Un paseo con olores nuevos es su mejor gimnasio mental."
+  },
+  {
+    "especie": "perro",
+    "raza": "Caniche",
+    "edadMin": 12,
+    "edadMax": 120,
+    "pesoMin": 3,
+    "pesoMax": 7,
+    "texto": "El caniche es ultra inteligente 🧠. Enseñale trucos nuevos y se sentirá feliz y estimulado."
+  },
+  {
+    "especie": "perro",
+    "raza": "Chihuahua",
+    "edadMin": 0,
+    "edadMax": 180,
+    "pesoMin": 1,
+    "pesoMax": 3,
+    "texto": "Los chihuahuas tienen corazón gigante 💓. Aunque pequeños, necesitan rutinas claras y juegos suaves."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pug",
+    "edadMin": 12,
+    "edadMax": 120,
+    "pesoMin": 5,
+    "pesoMax": 9,
+    "texto": "El pug ronca como campeón 💤. Mantené su peso controlado para cuidar su respiración."
+  },
+  {
+    "especie": "perro",
+    "raza": "Husky Siberiano",
+    "edadMin": 24,
+    "edadMax": 180,
+    "pesoMin": 18,
+    "pesoMax": 30,
+    "texto": "El husky ama el frío ❄️. Si hace calor, evitá ejercicios intensos: preferí horarios frescos y sombra."
   },
   {
     "especie": "gato",
-    "raza": "siames",
+    "raza": "Persa",
     "edadMin": 0,
-    "edadMax": 180,
+    "edadMax": 36,
     "pesoMin": 2,
-    "pesoMax": 6,
-    "texto": "Los siameses aman la compañía, asegurate de dedicarle tiempo diario y mantener juguetes interactivos 🧶."
+    "pesoMax": 5,
+    "texto": "El gato persa adora la calma 💤. Peinalo seguido para evitar nudos y reforzar el vínculo."
   },
   {
-    "especie": "general",
-    "raza": "general",
+    "especie": "gato",
+    "raza": "Siames",
+    "edadMin": 12,
+    "edadMax": 180,
+    "pesoMin": 3,
+    "pesoMax": 6,
+    "texto": "Los siameses son charlatanes 🗣️. Respondéles cuando maúllan, así se sienten comprendidos."
+  },
+  {
+    "especie": "gato",
+    "raza": "Maine Coon",
+    "edadMin": 24,
+    "edadMax": 180,
+    "pesoMin": 6,
+    "pesoMax": 10,
+    "texto": "El maine coon es un gigante amable 🦁. Necesita espacio para trepar y rascar sin límites."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bengala",
     "edadMin": 0,
-    "edadMax": 999,
-    "pesoMin": 0,
-    "pesoMax": 999,
-    "texto": "Recordá realizar chequeos veterinarios al menos una vez al año y mantener al día las vacunas 💉."
+    "edadMax": 72,
+    "pesoMin": 4,
+    "pesoMax": 8,
+    "texto": "El bengala es un atleta nato 🏃‍♂️. Poné estanterías o rascadores altos para liberar su energía."
+  },
+  {
+    "especie": "gato",
+    "raza": "Ragdoll",
+    "edadMin": 12,
+    "edadMax": 180,
+    "pesoMin": 4,
+    "pesoMax": 8,
+    "texto": "El ragdoll ama los brazos 🤍. No lo ignores si te sigue por la casa: solo quiere amor."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "edadMin": 0,
+    "edadMax": 6,
+    "pesoMin": 1,
+    "pesoMax": 2.5,
+    "texto": "Tu british bebé parece una nubecita azul 🍼. En esta etapa necesita alimento rico en proteínas para crecer fuerte y redondito."
+  },
+  
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "El British Shorthair tiene origen romano 🇬🇧🐱. Sus antepasados llegaron con las legiones a Inglaterra hace más de 2.000 años."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Su pelaje es tan denso que parece de peluche 🧸. ¡Cada pelo tiene una textura diferente para protegerlo del frío!"
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Es una de las razas más pacientes del mundo felino 😌. Ideal para familias tranquilas y hogares con niños."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "El color más famoso es el 'azul británico' 🩵, pero existen más de 100 variantes de color reconocidas."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Sus ojos grandes y redondos reflejan su humor. Cuanto más brillan, más activo está ✨."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "No maúlla demasiado. Es un gato conversador solo cuando tiene algo importante que decir 😺📢."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Le encanta observar desde lejos como un pequeño filósofo 🧐. No es perezoso: está contemplando el universo."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Su ronroneo es bajito y profundo, casi terapéutico 💆‍♀️. Escucharlo puede reducir el estrés humano."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Es un gato muy leal: no se pega a cualquiera. Si te elige, es para siempre ❤️."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Prefiere estar cerca, pero sin que lo abraces mucho. Respeta su burbuja personal 🫧."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Su cuerpo robusto y su cara redonda inspiraron el diseño del Gato de Cheshire de 'Alicia en el País de las Maravillas' 😼🎩."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "No suele trepar tanto como otros gatos. Prefiere los muebles bajos y los lugares firmes 🪑."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Le gusta la rutina. Si le cambiás el plato de lugar, te va a mirar como diciendo: '¿Y esto por qué?' 🙀"
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Puede convivir con perros sin drama 🐶. Su calma natural lo hace un gran compañero de otras especies."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Es propenso al sobrepeso, así que los snacks deben ser con moderación ⚖️."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "A pesar de su aspecto serio, ama jugar con cañas y pelotitas 🧶. Le gusta cazar, pero con elegancia."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Sus bigotes son su GPS personal 🗺️. Si se los cortás, puede perder el sentido de la orientación."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Suelen dormir hasta 16 horas al día 😴. ¡Pero cuando despiertan, son pura curiosidad!"
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Su cola gruesa y redondeada sirve como contrapeso cuando corre o gira bruscamente 🌀."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Tienen una esperanza de vida de entre 12 y 20 años, ¡una amistad de largo plazo! 🕰️"
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Su carácter independiente lo hace perfecto para personas que trabajan mucho 💻. No se ofende por tu ausencia (demasiado)."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Ama los lugares cálidos ☀️. Si desaparece, revisá arriba del router o cerca del radiador."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "A diferencia de muchos gatos, tolera bastante bien el agua 🚿, aunque no siempre lo admite."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Su ronroneo aumenta si lo acariciás en la frente o debajo del mentón 😽."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "En el Reino Unido, se lo considera símbolo de calma y elegancia real 👑."
   }
+
+
 ]

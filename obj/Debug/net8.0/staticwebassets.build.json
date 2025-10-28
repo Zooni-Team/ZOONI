@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GwlQMG2xjU4H5i5++z0R7TwxKomTgrVWssydytQRspQ=",
+  "Hash": "DJPC+Tn0JjUYuKUVYyBjRUGRPJrCUlEoa10V+TZZvH0=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -57,6 +57,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\data\\consejos.json",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "data/consejos#[.{fingerprint}]?.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "w796vvmrs5",
+      "Integrity": "1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\data\\consejos.json"
     },
     {
       "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\favicon.ico",
@@ -1151,6 +1172,27 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\tortuga\\reptil_basico.png"
     },
     {
+      "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\img\\recursos\\corazon.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/recursos/corazon#[.{fingerprint}]?.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "zhiswu4rgd",
+      "Integrity": "WVuHc94LhSm5JfnCN+UxHHzs115Pi8SNmwTT5e2h1vM=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\recursos\\corazon.png"
+    },
+    {
       "Identity": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\js\\registro.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
@@ -1607,6 +1649,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-iqhpOBG1/Br7hvXFOGW6aoriLrZkTuiT2EVQ8JyUuhY="
+        }
+      ]
+    },
+    {
+      "Route": "data/consejos.json",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\data\\consejos.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1091"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 27 Oct 2025 23:32:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY="
+        }
+      ]
+    },
+    {
+      "Route": "data/consejos.w796vvmrs5.json",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\data\\consejos.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "1091"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 27 Oct 2025 23:32:54 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "w796vvmrs5"
+        },
+        {
+          "Name": "label",
+          "Value": "data/consejos.json"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-1BCLGyGei6PtRAQv1NByXVnsPXe+IUzL2U7765+OamY="
         }
       ]
     },
@@ -5871,6 +5995,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-6YS1iY2x1oGRQyaV9i02psL3YQoVeS63kRyiQGgwyAQ="
+        }
+      ]
+    },
+    {
+      "Route": "img/recursos/corazon.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\img\\recursos\\corazon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "32057"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WVuHc94LhSm5JfnCN+UxHHzs115Pi8SNmwTT5e2h1vM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 27 Oct 2025 23:38:25 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=3600, must-revalidate"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-WVuHc94LhSm5JfnCN+UxHHzs115Pi8SNmwTT5e2h1vM="
+        }
+      ]
+    },
+    {
+      "Route": "img/recursos/corazon.zhiswu4rgd.png",
+      "AssetFile": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\img\\recursos\\corazon.png",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "32057"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "image/png"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"WVuHc94LhSm5JfnCN+UxHHzs115Pi8SNmwTT5e2h1vM=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Mon, 27 Oct 2025 23:38:25 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "zhiswu4rgd"
+        },
+        {
+          "Name": "label",
+          "Value": "img/recursos/corazon.png"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-WVuHc94LhSm5JfnCN+UxHHzs115Pi8SNmwTT5e2h1vM="
         }
       ]
     },

@@ -9,6 +9,10 @@
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\data\\consejos.json",
+      "PackagePath": "staticwebassets\\data\\consejos.json"
+    },
+    {
       "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
@@ -215,6 +219,10 @@
     {
       "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\img\\mascotas\\reptils\\tortuga\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\tortuga\\reptil_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\img\\recursos\\corazon.png",
+      "PackagePath": "staticwebassets\\img\\recursos\\corazon.png"
     },
     {
       "Id": "C:\\Users\\knk\\Downloads\\ZOONI\\ZOONITEJURO\\asdasd\\zooniporfin\\zooni\\wwwroot\\js\\registro.js",

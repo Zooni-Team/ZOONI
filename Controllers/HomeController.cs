@@ -90,6 +90,57 @@ public IActionResult FichaMedica()
         return RedirectToAction("Index");
     }
 }
+[HttpGet]
+public IActionResult FichaOtros()
+{
+    try
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+        {
+            TempData["Error"] = "Iniciá sesión para ver esta sección.";
+            return RedirectToAction("Login", "Auth");
+        }
+
+        var param = new Dictionary<string, object> { { "@UserId", userId.Value } };
+        string queryMascota = @"
+            SELECT TOP 1 
+                Nombre, Especie, Raza, Peso, Edad
+            FROM Mascota
+            WHERE Id_User = @UserId
+            ORDER BY Id_Mascota DESC";
+
+        DataTable dt = BD.ExecuteQuery(queryMascota, param);
+
+        if (dt.Rows.Count == 0)
+        {
+            TempData["Error"] = "No se encontró ninguna mascota asociada.";
+            return RedirectToAction("Registro2", "Registro");
+        }
+
+        var mascota = dt.Rows[0];
+
+        // 🧠 Convertimos edad a meses y formateamos peso
+        int edadMeses = mascota["Edad"] != DBNull.Value ? Convert.ToInt32(mascota["Edad"]) : 0;
+        double peso = 0;
+        double.TryParse(mascota["Peso"]?.ToString(), out peso);
+
+        // ✅ Cargar datos en ViewBag
+        ViewBag.MascotaNombre = mascota["Nombre"].ToString();
+        ViewBag.MascotaEspecie = mascota["Especie"].ToString();
+        ViewBag.MascotaRaza = mascota["Raza"].ToString();
+        ViewBag.MascotaPeso = peso;
+        ViewBag.MascotaEdad = edadMeses;
+
+        return View("FichaOtros");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error en FichaOtros: " + ex.Message);
+        TempData["Error"] = "Ocurrió un problema al cargar la ficha.";
+        return RedirectToAction("Index");
+    }
+}
 
         
     }
