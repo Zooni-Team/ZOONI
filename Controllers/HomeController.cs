@@ -244,6 +244,148 @@ public IActionResult EliminarEvento(int id)
     BD.ExecuteNonQuery(query, param);
     return Ok();
 }
+public IActionResult Error404(int? code = null)
+{
+    Response.StatusCode = 404;
+    ViewData["CodigoError"] = code ?? 404;
+    return View("~/Views/Shared/Error404.cshtml");
+}
+// =============================
+// 💉 FICHA DE VACUNAS
+// =============================
+[HttpGet]
+public IActionResult FichaVacunas()
+{
+    try
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return RedirectToAction("Login", "Auth");
+
+        // 🔹 Obtener mascota del usuario
+        string queryMascota = @"
+            SELECT TOP 1 Id_Mascota, Nombre, Especie, Raza, Edad, Peso
+            FROM Mascota
+            WHERE Id_User = @UserId
+            ORDER BY Id_Mascota DESC";
+
+        var paramMascota = new Dictionary<string, object> { { "@UserId", userId.Value } };
+        var dtMascota = BD.ExecuteQuery(queryMascota, paramMascota);
+
+        if (dtMascota.Rows.Count == 0)
+        {
+            TempData["Error"] = "No se encontró ninguna mascota asociada.";
+            return RedirectToAction("Registro2", "Registro");
+        }
+
+        var m = dtMascota.Rows[0];
+        int idMascota = Convert.ToInt32(m["Id_Mascota"]);
+
+        ViewBag.MascotaNombre = m["Nombre"].ToString();
+        ViewBag.MascotaEspecie = m["Especie"].ToString();
+        ViewBag.MascotaRaza = m["Raza"].ToString();
+        ViewBag.MascotaPeso = m["Peso"].ToString();
+        ViewBag.MascotaEdad = m["Edad"].ToString();
+
+        // 🔹 Obtener vacunas asociadas
+        string queryVacunas = @"
+            SELECT Id_Vacuna, Nombre, Fecha_Aplicacion, Proxima_Dosis, Veterinario
+            FROM Vacuna
+            WHERE Id_Mascota = @Id_Mascota
+            ORDER BY Proxima_Dosis ASC";
+
+        var paramVac = new Dictionary<string, object> { { "@Id_Mascota", idMascota } };
+        var dtVac = BD.ExecuteQuery(queryVacunas, paramVac);
+
+        List<Vacuna> vacunas = new List<Vacuna>();
+        foreach (System.Data.DataRow row in dtVac.Rows)
+        {
+            vacunas.Add(new Vacuna
+            {
+                Id_Vacuna = Convert.ToInt32(row["Id_Vacuna"]),
+                Id_Mascota = idMascota,
+                Nombre = row["Nombre"].ToString(),
+                Fecha_Aplicacion = Convert.ToDateTime(row["Fecha_Aplicacion"]),
+                Proxima_Dosis = row["Proxima_Dosis"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(row["Proxima_Dosis"]),
+                Veterinario = row["Veterinario"] == DBNull.Value ? "" : row["Veterinario"].ToString()
+            });
+        }
+
+        return View("FichaVacunas", vacunas);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error en FichaVacunas: " + ex.Message);
+        TempData["Error"] = "Error al cargar la ficha de vacunas.";
+        return RedirectToAction("Index");
+    }
+}
+
+// =============================
+// ➕ AÑADIR VACUNA
+// =============================
+[HttpPost]
+[ValidateAntiForgeryToken]
+[Route("Home/AgregarVacuna")]
+public IActionResult AgregarVacuna(Vacuna model)
+{
+    try
+    {
+        if (model == null || model.Id_Mascota <= 0 || string.IsNullOrWhiteSpace(model.Nombre))
+        {
+            TempData["Error"] = "Datos inválidos para registrar la vacuna.";
+            return RedirectToAction("FichaVacunas");
+        }
+
+        string query = @"
+            INSERT INTO Vacuna 
+            (Id_Mascota, Nombre, Fecha_Aplicacion, Proxima_Dosis, Veterinario, Aplicada)
+            VALUES 
+            (@Id_Mascota, @Nombre, @Fecha_Aplicacion, @Proxima_Dosis, @Veterinario, @Aplicada);";
+
+        var parametros = new Dictionary<string, object>
+        {
+            { "@Id_Mascota", model.Id_Mascota },
+            { "@Nombre", model.Nombre.Trim() },
+            { "@Fecha_Aplicacion", model.Fecha_Aplicacion },
+            { "@Proxima_Dosis", model.Proxima_Dosis == DateTime.MinValue ? (object)DBNull.Value : model.Proxima_Dosis },
+            { "@Veterinario", string.IsNullOrWhiteSpace(model.Veterinario) ? (object)DBNull.Value : model.Veterinario.Trim() },
+            { "@Aplicada", model.Aplicada }
+        };
+
+        BD.ExecuteNonQuery(query, parametros);
+        TempData["Exito"] = "Vacuna agregada correctamente 💉";
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error al agregar vacuna: " + ex.Message);
+        TempData["Error"] = "Error al registrar la vacuna.";
+    }
+
+    return RedirectToAction("FichaVacunas");
+}
+
+// =============================
+// ❌ ELIMINAR VACUNA
+// =============================
+[HttpPost]
+[Route("Home/EliminarVacuna/{id}")]
+public IActionResult EliminarVacuna(int id)
+{
+    try
+    {
+        string query = "DELETE FROM Vacuna WHERE Id_Vacuna = @Id";
+        BD.ExecuteNonQuery(query, new Dictionary<string, object> { { "@Id", id } });
+        TempData["Exito"] = "Vacuna eliminada correctamente 🩹";
+        return RedirectToAction("FichaVacunas");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error al eliminar vacuna: " + ex.Message);
+        TempData["Error"] = "Error al eliminar la vacuna.";
+        return RedirectToAction("FichaVacunas");
+    }
+}
 
     }
 }

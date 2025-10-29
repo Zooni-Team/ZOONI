@@ -6,7 +6,8 @@
     var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
     var mascotaRaza = ViewBag.MascotaRaza?.ToString() ?? "Desconocida";
     var mascotaEdadMeses = Convert.ToInt32(ViewBag.MascotaEdad ?? 0);
-    var mascotaPeso = ViewBag.MascotaPeso ?? 0;
+var mascotaPeso = Convert.ToDecimal(ViewBag.MascotaPeso ?? 0);
+var pesoFormateado = mascotaPeso.ToString("0.##").Replace('.', ',');
     var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
 
     int años = mascotaEdadMeses / 12;
@@ -125,9 +126,11 @@ main {
 }
 @@keyframes flotar { 0%,100%{transform:translateY(-8px);}50%{transform:translateY(-14px);} }
 
+
+/* DATOS ALINEADOS */
 .dato {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 40px 110px 1fr; /* icono - etiqueta - valor */
     align-items: center;
     background: #fff;
     border-radius: 14px;
@@ -135,18 +138,24 @@ main {
     padding: 12px 16px;
     font-weight: 500;
     box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    text-align: left;
+}
+.dato .icono {
+    font-size: 1.1rem;
+    text-align: center;
 }
 .dato span {
     font-weight: 600;
     color: var(--marron);
 }
 
+
 /* Botones de historial */
 .historial {
     width: 90%; max-width: 430px;
     display: flex; flex-direction: column;
-    gap: 12px;
-}
+    gap: 12px;}
+
 .btn-historial {
     display: flex;
     align-items: center;
@@ -294,7 +303,7 @@ main {
         <img src="@rutaMascota" alt="Mascota" class="mascota-img" />
         <div class="dato">🐾 <span>Especie:</span> @mascotaEspecie</div>
         <div class="dato">📜 <span>Raza:</span> @mascotaRaza</div>
-        <div class="dato">⚖️ <span>Peso:</span> @mascotaPeso kg</div>
+<div class="dato">⚖️ <span>Peso:</span> @pesoFormateado kg</div>
         <div class="dato">🎂 <span>Edad:</span> @edadFormateada</div>
     </div>
 

@@ -171,13 +171,17 @@ public IActionResult Registro2(Mascota model)
 
         // 🧮 Normalizamos el peso: si viene en gramos, lo pasamos a kg
         decimal pesoNormalizado = 0;
-        try
-        {
-            pesoNormalizado = Convert.ToDecimal(model.Peso);
-            if (pesoNormalizado > 100) pesoNormalizado = pesoNormalizado / 1000;
-            pesoNormalizado = Math.Round(pesoNormalizado, 2);
-        }
-        catch { pesoNormalizado = 0; }
+try
+{
+    string pesoInput = Request.Form["Peso"].ToString().Replace(',', '.');
+    if (!decimal.TryParse(pesoInput, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoNormalizado))
+        pesoNormalizado = 0;
+    pesoNormalizado = Math.Round(pesoNormalizado, 2);
+}
+catch
+{
+    pesoNormalizado = 0;
+}
 
         string query = @"
             INSERT INTO Mascota 
@@ -267,14 +271,20 @@ public IActionResult Registro3(Mascota model)
         }
 
         // 🧮 Normalizamos nuevamente el peso antes de actualizar
-        decimal pesoNormalizado = 0;
-        try
-        {
-            pesoNormalizado = Convert.ToDecimal(model.Peso);
-            if (pesoNormalizado > 100) pesoNormalizado = pesoNormalizado / 1000;
-            pesoNormalizado = Math.Round(pesoNormalizado, 2);
-        }
-        catch { pesoNormalizado = 0; }
+        // 🧮 Normalizamos nuevamente el peso antes de actualizar
+decimal pesoNormalizado = 0;
+try
+{
+    string pesoInput = Request.Form["Peso"].ToString().Replace(',', '.');
+    if (!decimal.TryParse(pesoInput, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoNormalizado))
+        pesoNormalizado = 0;
+    pesoNormalizado = Math.Round(pesoNormalizado, 2);
+}
+catch
+{
+    pesoNormalizado = 0;
+}
+
 
         string query = @"
             UPDATE Mascota

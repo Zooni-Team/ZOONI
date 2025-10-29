@@ -1,0 +1,373 @@
+@using Zooni.Models
+@model List<Vacuna>
+@{
+    ViewData["Title"] = "Ficha de Vacunas - Zooni";
+    Layout = null;
+
+    var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
+    var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
+    var mascotaRaza = ViewBag.MascotaRaza ?? "Desconocida";
+    var mascotaPeso = ViewBag.MascotaPeso ?? "0";
+    var mascotaEdad = ViewBag.MascotaEdad ?? 0;
+    var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
+
+    int años = Convert.ToInt32(mascotaEdad) / 12;
+    int meses = Convert.ToInt32(mascotaEdad) % 12;
+    string edadFormateada = $"{años} años y {meses} meses";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+    --verde: #39b77c;
+    --amarillo: #FFD85A;
+    --rojo: #ff6767;
+    --celeste: #c6f1ff;
+    --marron: #3c2a1b;
+    --blanco: #fff;
+    --fondo: #fffaf4;
+}
+
+/* GENERAL */
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: var(--fondo);
+    color: var(--marron);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+}
+
+/* FICHA SUPERIOR */
+.ficha-top {
+    background: var(--blanco);
+    width: 90%;
+    max-width: 430px;
+    margin-top: 20px;
+    border-radius: 24px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    text-align: center;
+    padding: 1.6rem;
+    backdrop-filter: blur(8px);
+}
+
+.ficha-top img {
+    width: 140px;
+    height: auto;
+    animation: flotar 3s ease-in-out infinite;
+    filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
+}
+@@keyframes flotar { 0%,100%{transform:translateY(-5px);}50%{transform:translateY(5px);} }
+
+.ficha-top h2 {
+    font-weight: 700;
+    color: var(--marron);
+    font-size: 1.8rem;
+    margin-bottom: 0.2rem;
+}
+
+.ficha-top .info {
+    font-size: 0.95rem;
+    line-height: 1.4;
+}
+.ficha-top .peso, .ficha-top .raza, .ficha-top .edad {
+    margin: 3px 0;
+}
+
+/* LISTA DE VACUNAS */
+.vacunas-card {
+    background: rgba(255,255,255,0.96);
+    width: 90%;
+    max-width: 450px;
+    margin-top: 18px;
+    border-radius: 24px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    padding: 1.4rem;
+}
+
+.vacunas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+.vacunas-header h3 {
+    font-weight: 700;
+    color: var(--marron);
+    font-size: 1.4rem;
+}
+.vacunas-header button {
+    background: var(--verde);
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.vacunas-header button:hover { background: #2fa567; transform: scale(1.05); }
+
+/* TARJETA DE VACUNA */
+.vacuna-item {
+    background: var(--blanco);
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    margin-bottom: 10px;
+    padding: 12px 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color .3s ease, transform .2s;
+}
+.vacuna-item:hover { transform: translateY(-2px); }
+
+.vacuna-info { display: flex; flex-direction: column; gap: 4px; }
+.vacuna-nombre { font-weight: 600; font-size: 1rem; color: var(--marron); }
+.vacuna-fecha { font-size: 0.9rem; color: #666; }
+
+.vacuna-botones { display: flex; gap: 6px; align-items: center; }
+.btn-eliminar {
+    border: none;
+    cursor: pointer;
+    padding: 7px 9px;
+    border-radius: 8px;
+    background: var(--rojo);
+    color: white;
+    transition: 0.2s ease;
+}
+.btn-eliminar:hover { background: #ff5252; }
+
+/* COLORES DE ALERTA */
+.vacuna-verde { background-color: #d4f7e2 !important; }
+.vacuna-amarilla { background-color: #fff9d0 !important; }
+.vacuna-roja { background-color: #ffd0d0 !important; }
+
+/* MODAL */
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+.modal.activo { display: flex; }
+.modal-content {
+    background: white;
+    padding: 1.8rem;
+    border-radius: 18px;
+    box-shadow: 0 5px 14px rgba(0,0,0,0.3);
+    width: 90%;
+    max-width: 360px;
+    text-align: center;
+}
+.modal-content input, .modal-content button {
+    margin-top: 10px;
+    width: 80%;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+}
+.modal-content button {
+    background: var(--verde);
+    color: white;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+}
+.modal-content button:hover { background: #2fa567; }
+</style>
+</head>
+
+<body>
+<div class="ficha-top">
+    <img src="@rutaMascota" alt="Mascota" />
+    <h2>@mascotaNombre</h2>
+    <div class="info">
+        <div class="edad">Edad: @edadFormateada</div>
+        <div class="peso">Peso: @mascotaPeso kg</div>
+        <div class="raza">Raza: @mascotaRaza</div>
+    </div>
+</div>
+
+<div class="vacunas-card">
+    <div class="vacunas-header">
+        <h3>Vacunas</h3>
+        <button id="btnAgregar">➕ Añadir</button>
+    </div>
+
+    <div id="listaVacunas"></div>
+</div>
+
+<!-- MODAL NUEVA VACUNA -->
+<div class="modal" id="modalVacuna">
+    <div class="modal-content">
+        <h3>Agregar vacuna</h3>
+        <input type="text" id="nombreVacuna" placeholder="Nombre de vacuna" />
+        <label>Fecha de aplicación:</label>
+        <input type="date" id="fechaAplicacion" />
+        <label>Próxima dosis (opcional):</label>
+        <input type="date" id="proximaDosis" />
+        <input type="text" id="veterinario" placeholder="Veterinario" />
+        <button id="guardarVacuna">Guardar</button>
+    </div>
+</div>
+
+<script>
+const lista = document.getElementById("listaVacunas");
+const modal = document.getElementById("modalVacuna");
+const btnAgregar = document.getElementById("btnAgregar");
+const btnGuardar = document.getElementById("guardarVacuna");
+
+let vacunas = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model));
+
+function diasRestantes(fecha) {
+    if (!fecha) return 999;
+    const hoy = new Date();
+    const f = new Date(fecha);
+    return Math.ceil((f - hoy) / (1000*60*60*24));
+}
+
+function renderVacunas() {
+    lista.innerHTML = "";
+    if (vacunas.length === 0) {
+        lista.innerHTML = "<p style='text-align:center;color:#777;'>No hay vacunas registradas 💉</p>";
+        return;
+    }
+    vacunas.forEach(v => {
+        const dias = diasRestantes(v.proxima_Dosis);
+        let clase = "vacuna-verde";
+        if (dias < 7) clase = "vacuna-roja";
+        else if (dias < 30) clase = "vacuna-amarilla";
+
+        const div = document.createElement("div");
+        div.className = `vacuna-item ${clase}`;
+        div.innerHTML = `
+            <div class="vacuna-info">
+                <div class="vacuna-nombre">${v.nombre}</div>
+                <div class="vacuna-fecha">Aplicada: ${new Date(v.fecha_Aplicacion).toLocaleDateString()}</div>
+                <div class="vacuna-fecha">Próxima dosis: ${v.proxima_Dosis ? new Date(v.proxima_Dosis).toLocaleDateString() : "—"}</div>
+                <div class="vacuna-vet">Veterinario: ${v.veterinario || "Sin registro"}</div>
+                <div class="vacuna-dias">${dias > 0 ? `Faltan ${dias} días` : `⚠️ Vencida hace ${Math.abs(dias)} días`}</div>
+            </div>
+            <div class="vacuna-botones">
+                <form method="post" action="/Home/EliminarVacuna/${v.id_Vacuna}">
+                    <button type="submit" class="btn-eliminar">🗑️</button>
+                </form>
+            </div>
+        `;
+        lista.appendChild(div);
+    });
+}
+
+btnAgregar.onclick = () => modal.classList.add("activo");
+
+btnGuardar.onclick = () => {
+    const nombre = document.getElementById("nombreVacuna").value;
+    const fechaAplicacion = document.getElementById("fechaAplicacion").value;
+    const proxima = document.getElementById("proximaDosis").value;
+    const vet = document.getElementById("veterinario").value;
+
+    if (!nombre || !fechaAplicacion) {
+        alert("Completá al menos el nombre y la fecha de aplicación 🩺");
+        return;
+    }
+
+    const form = document.createElement("form");
+    form.method = "post";
+    form.action = "/Home/AgregarVacuna";
+    form.innerHTML = `
+    <input type="hidden" name="Nombre" value="${nombre}">
+    <input type="hidden" name="Fecha_Aplicacion" value="${fechaAplicacion}">
+    <input type="hidden" name="Proxima_Dosis" value="${proxima}">
+    <input type="hidden" name="Veterinario" value="${vet}">
+    <input type="hidden" name="Id_Mascota" value="${vacunas[0]?.id_Mascota || 1}">
+    <input type="hidden" name="Aplicada" value="1">
+`;
+
+    document.body.appendChild(form);
+    form.submit();
+};
+
+renderVacunas();
+// 🔹 Datos actuales
+const especie = "@mascotaEspecie".toLowerCase();
+const raza = "@mascotaRaza".toLowerCase();
+const edadMeses = parseInt("@mascotaEdad") || 0;
+
+// 🔹 Cargar esquema de vacunación ideal
+// 🔹 Cargar esquema de vacunación ideal
+fetch("/data/vacunas.json")
+  .then(r => r.json())
+  .then(data => {
+      const ficha = data.find(v =>
+          v.especie === especie && (v.raza === raza || v.raza === "general")
+      );
+
+      if (!ficha) {
+          lista.innerHTML += "<p style='text-align:center;color:#999;'>No hay calendario de vacunación disponible para esta especie 🩺</p>";
+          return;
+      }
+
+      const wrapper = document.createElement("div");
+      wrapper.innerHTML = "<h3 style='margin-top:1.4rem;color:#3c2a1b;'>🗓️ Calendario sugerido</h3>";
+
+      ficha.vacunas.forEach(vac => {
+          // Buscar si ya existe en la BD
+          const vacunaBD = vacunas.find(x => x.nombre.toLowerCase() === vac.nombre.toLowerCase());
+          const aplicada = vacunaBD ? vacunaBD.aplicada : false;
+          const proxima = vac.frecuenciaMeses ? `Cada ${vac.frecuenciaMeses / 12} año(s)` : "Una vez";
+          const edadOK = edadMeses >= vac.edadMinMeses;
+
+          // Definir color visual
+          let bgColor = "#eee";
+          if (aplicada) bgColor = "#d4f7e2"; // verde
+          else if (vacunaBD && !aplicada) bgColor = "#fff9d0"; // amarilla
+          else if (edadOK) bgColor = "#fff9d0"; // amarilla (ya debería aplicarse)
+
+          const div = document.createElement("div");
+          div.className = "vacuna-item";
+          div.style.display = "flex";
+          div.style.alignItems = "center";
+          div.style.justifyContent = "space-between";
+          div.style.background = bgColor;
+          div.innerHTML = `
+              <div style="display:flex;align-items:center;gap:10px;">
+                  <div class="check" style="
+                      width:22px;height:22px;border-radius:50%;
+                      border:2px solid ${aplicada ? 'green' : vacunaBD ? '#a67c00' : '#ccc'};
+                      background:${aplicada ? 'green' : 'transparent'};
+                      display:flex;align-items:center;justify-content:center;
+                      color:white;font-weight:bold;">
+                      ${aplicada ? '✓' : ''}
+                  </div>
+                  <div style="font-weight:600;">${vac.nombre}</div>
+              </div>
+              <div style="font-size:0.9rem;text-align:right;">
+                  ${aplicada 
+                      ? `<span style='color:green;'>Aplicada</span>` 
+                      : vacunaBD 
+                        ? `<span style='color:#a67c00;'>Pendiente</span>` 
+                        : `<span style='color:#666;'>Aún no corresponde</span>`}
+                  <br><span style="font-size:0.8rem;color:#555;">${proxima}</span>
+              </div>
+          `;
+          wrapper.appendChild(div);
+      });
+      lista.appendChild(wrapper);
+  });
+
+</script>
+</body>
+</html>

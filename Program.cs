@@ -27,15 +27,16 @@ builder.Services.AddSingleton<Kernel>(provider =>
 
     var kernelBuilder = Kernel.CreateBuilder();
 
-    #pragma warning disable SKEXP0070
+#pragma warning disable SKEXP0070
     kernelBuilder.AddGoogleAIGeminiChatCompletion(modelId: modelId, apiKey: apiKey);
-    #pragma warning restore SKEXP0070
+#pragma warning restore SKEXP0070
 
     return kernelBuilder.Build();
 });
 
 var app = builder.Build();
 
+// ⚠️ Manejo de errores personalizados
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -46,9 +47,11 @@ else
     app.UseDeveloperExceptionPage();
 }
 
+// 🧭 Middleware para páginas de error específicas
+app.UseStatusCodePagesWithReExecute("/Home/Error404", "?code={0}");
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseSession();
 app.UseRouting();
 app.UseAuthorization();
