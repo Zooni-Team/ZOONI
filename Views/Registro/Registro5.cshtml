@@ -201,31 +201,194 @@
 
     <script>
         const datosUbicacion = {
-            "Argentina": {
-                codigo: "+54",
-                provincias: {
-                    "Buenos Aires": ["La Plata", "Mar del Plata", "Bahía Blanca"],
-                    "Córdoba": ["Córdoba", "Villa Carlos Paz", "Río Cuarto"],
-                    "Santa Fe": ["Rosario", "Santa Fe", "Rafaela"]
-                }
-            },
-            "Chile": {
-                codigo: "+56",
-                provincias: {
-                    "Santiago": ["Santiago", "Puente Alto", "Maipú"],
-                    "Valparaíso": ["Valparaíso", "Viña del Mar", "Quilpué"],
-                    "Biobío": ["Concepción", "Talcahuano", "Los Ángeles"]
-                }
-            },
-            "Uruguay": {
-                codigo: "+598",
-                provincias: {
-                    "Montevideo": ["Montevideo"],
-                    "Canelones": ["Las Piedras", "Pando", "Santa Lucía"],
-                    "Maldonado": ["Maldonado", "Punta del Este", "San Carlos"]
-                }
-            }
-        };
+    "Argentina": {
+        codigo: "+54",
+        provincias: {
+            "Ciudad Autónoma de Buenos Aires": [
+                "Palermo", "Recoleta", "Belgrano", "San Telmo", "Caballito", 
+                "Villa Urquiza", "Almagro", "Puerto Madero", "La Boca", "Chacarita", 
+                "Parque Patricios", "Coghlan", "Villa Crespo", "Balvanera", "Flores"
+            ],
+            "Buenos Aires": [
+                "La Plata", "Mar del Plata", "Bahía Blanca", "Tigre", "San Isidro",
+                "Quilmes", "Morón", "Lanús", "Avellaneda", "Lomas de Zamora",
+                "Vicente López", "San Fernando", "Ezeiza", "San Nicolás", "Campana"
+            ],
+            "Córdoba": [
+                "Córdoba", "Villa Carlos Paz", "Río Cuarto", "Alta Gracia", "Villa María",
+                "Jesús María", "La Falda", "Cosquín", "Río Tercero", "Capilla del Monte"
+            ],
+            "Santa Fe": [
+                "Rosario", "Santa Fe", "Rafaela", "Venado Tuerto", "Reconquista",
+                "Esperanza", "Santo Tomé", "Villa Gobernador Gálvez", "Casilda", "Firmat"
+            ],
+            "Mendoza": [
+                "Mendoza", "Godoy Cruz", "San Rafael", "Luján de Cuyo", "Malargüe",
+                "Guaymallén", "Tunuyán", "Las Heras", "San Martín", "Rivadavia"
+            ],
+            "Tucumán": [
+                "San Miguel de Tucumán", "Yerba Buena", "Tafí Viejo", "Concepción",
+                "Banda del Río Salí", "Aguilares", "Monteros", "Lules", "Trancas", "Simoca"
+            ]
+        }
+    },
+    "Chile": {
+        codigo: "+56",
+        provincias: {
+            "Región Metropolitana de Santiago": [
+                "Santiago Centro", "Las Condes", "Providencia", "La Florida", "Ñuñoa",
+                "Puente Alto", "Maipú", "La Reina", "Vitacura", "San Bernardo"
+            ],
+            "Valparaíso": [
+                "Valparaíso", "Viña del Mar", "Quilpué", "Concón", "San Antonio",
+                "Quillota", "Limache", "La Calera", "Los Andes", "Casablanca"
+            ],
+            "Biobío": [
+                "Concepción", "Talcahuano", "Los Ángeles", "Chillán", "Coronel",
+                "Lota", "Penco", "Tomé", "Yumbel", "Curanilahue"
+            ],
+            "Antofagasta": [
+                "Antofagasta", "Calama", "Tocopilla", "Mejillones", "María Elena"
+            ],
+            "Los Lagos": [
+                "Puerto Montt", "Osorno", "Castro", "Ancud", "Frutillar", "Puerto Varas"
+            ]
+        }
+    },
+    "Uruguay": {
+        codigo: "+598",
+        provincias: {
+            "Montevideo": [
+                "Ciudad Vieja", "Pocitos", "Carrasco", "Buceo", "Cordón", 
+                "Centro", "Malvín", "Parque Rodó", "La Blanqueada", "Tres Cruces"
+            ],
+            "Canelones": [
+                "Canelones", "Las Piedras", "Pando", "Santa Lucía", "Atlántida",
+                "Toledo", "Sauce", "Progreso", "Ciudad de la Costa", "La Paz"
+            ],
+            "Maldonado": [
+                "Maldonado", "Punta del Este", "San Carlos", "Pan de Azúcar",
+                "Aiguá", "Piriápolis", "Gregorio Aznárez", "Solanas", "El Tesoro"
+            ],
+            "Colonia": [
+                "Colonia del Sacramento", "Nueva Palmira", "Carmelo",
+                "Rosario", "Juan Lacaze", "Tarariras", "Ombúes de Lavalle"
+            ],
+            "Salto": [
+                "Salto", "Daymán", "Constitución", "San Antonio", "Palomas"
+            ]
+        }
+    },
+    "Brasil": {
+        codigo: "+55",
+        provincias: {
+            "Distrito Federal (Brasilia)": [
+                "Asa Norte", "Asa Sul", "Lago Norte", "Lago Sul", "Taguatinga",
+                "Ceilândia", "Sobradinho", "Guará", "Cruzeiro", "Samambaia"
+            ],
+            "São Paulo": [
+                "São Paulo", "Campinas", "Santos", "Guarulhos", "Sorocaba",
+                "Osasco", "São Bernardo do Campo", "São Caetano", "Jundiaí", "Mogi das Cruzes"
+            ],
+            "Rio de Janeiro": [
+                "Rio de Janeiro", "Niterói", "Petrópolis", "Cabo Frio", "Angra dos Reis",
+                "Volta Redonda", "Duque de Caxias", "Nova Iguaçu", "Campos dos Goytacazes"
+            ],
+            "Bahia": [
+                "Salvador", "Feira de Santana", "Ilhéus", "Porto Seguro", "Vitória da Conquista"
+            ],
+            "Paraná": [
+                "Curitiba", "Londrina", "Maringá", "Ponta Grossa", "Foz do Iguaçu"
+            ]
+        }
+    },
+    "Paraguay": {
+        codigo: "+595",
+        provincias: {
+            "Asunción": [
+                "Centro Histórico", "Recoleta", "Trinidad", "San Roque", "La Catedral",
+                "Mburucuyá", "Las Lomas", "Santa María", "Ykua Satî", "Mariscal López"
+            ],
+            "Central": [
+                "Luque", "San Lorenzo", "Fernando de la Mora", "Capiatá", "Itauguá",
+                "Ñemby", "Lambaré", "Mariano Roque Alonso", "Areguá", "Villeta"
+            ],
+            "Alto Paraná": [
+                "Ciudad del Este", "Presidente Franco", "Hernandarias", "Minga Guazú", "Santa Rita"
+            ],
+            "Itapúa": [
+                "Encarnación", "Hohenau", "Obligado", "Bella Vista", "San Pedro del Paraná"
+            ]
+        }
+    },
+    "Perú": {
+        codigo: "+51",
+        provincias: {
+            "Lima Metropolitana": [
+                "Miraflores", "Callao", "San Isidro", "Barranco", "Chorrillos",
+                "Surco", "San Miguel", "Pueblo Libre", "Magdalena del Mar", "Los Olivos"
+            ],
+            "Cusco": [
+                "Cusco", "Urubamba", "Pisac", "Ollantaytambo", "Calca", "San Jerónimo"
+            ],
+            "Arequipa": [
+                "Arequipa", "Camaná", "Mollendo", "Chivay", "Yanahuara", "Cayma"
+            ],
+            "La Libertad": [
+                "Trujillo", "Huanchaco", "Pacasmayo", "Chepén", "Virú", "El Porvenir"
+            ],
+            "Piura": [
+                "Piura", "Sullana", "Talara", "Paita", "Sechura", "Catacaos"
+            ]
+        }
+    },
+    "Colombia": {
+        codigo: "+57",
+        provincias: {
+            "Bogotá D.C.": [
+                "Chapinero", "Usaquén", "Teusaquillo", "Suba", "Fontibón",
+                "Engativá", "Kennedy", "Santa Fe", "Bosa", "San Cristóbal"
+            ],
+            "Antioquia": [
+                "Medellín", "Bello", "Envigado", "Rionegro", "Itagüí",
+                "Sabaneta", "Copacabana", "La Estrella", "Girardota", "Marinilla"
+            ],
+            "Valle del Cauca": [
+                "Cali", "Palmira", "Buenaventura", "Tuluá", "Yumbo", "Buga", "Jamundí"
+            ],
+            "Atlántico": [
+                "Barranquilla", "Soledad", "Puerto Colombia", "Galapa", "Malambo"
+            ],
+            "Santander": [
+                "Bucaramanga", "Floridablanca", "Giron", "Piedecuesta", "Lebrija"
+            ]
+        }
+    },
+    "España": {
+        codigo: "+34",
+        provincias: {
+            "Madrid (Comunidad de Madrid)": [
+                "Madrid", "Alcalá de Henares", "Getafe", "Leganés", "Móstoles",
+                "Fuenlabrada", "Torrejón de Ardoz", "Pozuelo de Alarcón", "Alcobendas", "Parla"
+            ],
+            "Cataluña": [
+                "Barcelona", "Girona", "Tarragona", "Lleida", "Badalona",
+                "Hospitalet de Llobregat", "Sabadell", "Terrassa"
+            ],
+            "Andalucía": [
+                "Sevilla", "Granada", "Córdoba", "Málaga", "Cádiz",
+                "Almería", "Huelva", "Jaén"
+            ],
+            "Galicia": [
+                "Santiago de Compostela", "Vigo", "A Coruña", "Ourense", "Pontevedra"
+            ],
+            "Valencia (Comunidad Valenciana)": [
+                "Valencia", "Alicante", "Castellón", "Elche", "Gandía"
+            ]
+        }
+    }
+};
+
 
         const paisSelect = document.getElementById("Pais");
         const provinciaSelect = document.getElementById("Provincia");
