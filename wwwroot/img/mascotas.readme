@@ -1,0 +1,98 @@
+🐶 Perros
+Raza	Estado	Carpeta
+✅ Labrador Retriever	✔️ Hecha	/perros/labrador retriever/
+✅ Golden Retriever	✔️ Hecha	/perros/golden retriever/
+✅ Bulldog	✔️ Hecha	/perros/bulldog/
+✅ Beagle	✔️ Hecha	/perros/beagle/
+✅ Caniche	✔️ Hecha	/perros/caniche/
+✅ Chihuahua	✔️ Hecha	/perros/chihuahua/
+✅ Pug	✔️ Hecha	/perros/pug/
+✅ Dálmata	✔️ Hecha	/perros/dálmata/
+✅ Husky Siberiano	✔️ Hecha	/perros/husky siberiano/
+✅ Cocker Spaniel	✔️ Hecha	/perros/cocker spaniel/
+✅ Pastor Alemán	✔️ Hecha	/perros/pastor alemán/
+⚙️ Salchicha	⬜ Pendiente	/perros/salchicha/
+⚙️ Border Collie	⬜ Pendiente	/perros/border collie/
+⚙️ Rottweiler	⬜ Pendiente	/perros/rottweiler/
+⚙️ Boxer	⬜ Pendiente	/perros/boxer/
+⚙️ Shih Tzu	⬜ Pendiente	/perros/shih tzu/
+⚙️ Doberman	⬜ Pendiente	/perros/doberman/
+⚙️ Jack Russell Terrier	⬜ Pendiente	/perros/jack russell terrier/
+⚙️ Pitbull	⬜ Pendiente	/perros/pitbull/
+⚙️ Yorkshire Terrier	⬜ Pendiente	/perros/yorkshire terrier/
+⚙️ Maltés	⬜ Pendiente	/perros/maltés/
+⚙️ Schnauzer	⬜ Pendiente	/perros/schnauzer/
+⚙️ Akita Inu	⬜ Pendiente	/perros/akita inu/
+⚙️ San Bernardo	⬜ Pendiente	/perros/san bernardo/
+⚙️ Pomerania	⬜ Pendiente	/perros/pomerania/
+⚙️ Weimaraner	⬜ Pendiente	/perros/weimaraner/
+⚙️ Basset Hound	⬜ Pendiente	/perros/basset hound/
+⚙️ Galgo	⬜ Pendiente	/perros/galgo/
+⚙️ Samoyedo	⬜ Pendiente	/perros/samoyedo/
+✅ Otra raza	✔️ Hecha	/perros/otra raza/
+
+🐱 Gatos
+Raza	Estado	Carpeta
+✅ Bengala	✔️ Hecha	/gatos/bengala/
+✅ Bombay	✔️ Hecha	/gatos/bombay/
+✅ British Shorthair	✔️ Hecha	/gatos/british shorthair/
+✅ Esfinge	✔️ Hecha	/gatos/esfinge/
+✅ Maine Coon	✔️ Hecha	/gatos/maine coon/
+✅ Persa	✔️ Hecha	/gatos/persa/
+✅ Ragdoll	✔️ Hecha	/gatos/ragdoll/
+✅ Siames	✔️ Hecha	/gatos/siames/
+⚙️ Angora Turco	⬜ Pendiente	/gatos/angora turco/
+⚙️ Siberiano	⬜ Pendiente	/gatos/siberiano/
+⚙️ Abisinio	⬜ Pendiente	/gatos/abisinio/
+⚙️ Azul Ruso	⬜ Pendiente	/gatos/azul ruso/
+⚙️ Scottish Fold	⬜ Pendiente	/gatos/scottish fold/
+⚙️ Bosque de Noruega	⬜ Pendiente	/gatos/bosque de noruega/
+⚙️ Birmano	⬜ Pendiente	/gatos/birmano/
+⚙️ Oriental de Pelo Corto	⬜ Pendiente	/gatos/oriental de pelo corto/
+⚙️ Himalayo	⬜ Pendiente	/gatos/himalayo/
+⚙️ Savannah	⬜ Pendiente	/gatos/savannah/
+⚙️ Cornish Rex	⬜ Pendiente	/gatos/cornish rex/
+✅ Otra raza	✔️ Hecha /gatos/otra raza/
+
+🐰 Conejos
+Raza	Estado	Carpeta
+✅ Angora	✔️ Hecha	/conejos/angora/
+✅ Belier	✔️ Hecha	/conejos/belier/
+✅ Cabeza de León	✔️ Hecha	/conejos/cabeza de león/
+✅ Mini Lop	✔️ Hecha	/conejos/mini lop/
+✅ Rex	✔️ Hecha	/conejos/rex/
+✅ Otra raza	✔️ Hecha	/conejos/otra raza/
+
+🕊️ Aves
+Raza	Estado	Carpeta
+✅ Agapornis	✔️ Hecha	/aves/agapornis/
+✅ Amazonas	✔️ Hecha	/aves/amazonas/
+✅ Cacatúa	✔️ Hecha	/aves/cacatúa/
+✅ Guacamayo	✔️ Hecha	/aves/guacamayo/
+✅ Periquito	✔️ Hecha	/aves/periquito/
+✅ Otra raza	✔️ Hecha	/aves/otra raza/
+
+🐠 Peces
+Raza	Estado	Carpeta
+✅ Betta	✔️ Hecha	/pez/betta/
+✅ Cíclido	✔️ Hecha	/pez/cíclido/
+✅ Goldfish	✔️ Hecha	/pez/goldfish/
+✅ Guppy	✔️ Hecha	/pez/guppy/
+✅ Koi	✔️ Hecha	/pez/koi/
+✅ Otra raza	✔️ Hecha	/pez/otra raza/
+
+🦎 Reptiles
+Raza	Estado	Carpeta
+✅ Camaleón	✔️ Hecha	/reptiles/camaleon/
+✅ Iguana	✔️ Hecha	/reptiles/iguana/
+✅ Tortuga	⬜ Pendiente	/reptiles/tortuga/
+⚙️ Gecko	⬜ Pendiente	/reptiles/gecko/
+⚙️ Boa	⬜ Pendiente	/reptiles/boa/
+⚙️ Serpiente del maíz	⬜ Pendiente	/reptiles/serpiente del maíz/
+⚙️ Camaleón pantera	⬜ Pendiente	/reptiles/camaleón pantera/
+⚙️ Tortuga acuática	⬜ Pendiente	/reptiles/tortuga acuática/
+⚙️ Gecko crestado	⬜ Pendiente	/reptiles/gecko crestado/
+⚙️ Varano	⬜ Pendiente	/reptiles/varano/
+⚙️ Dragón Barbudo	⬜ Pendiente	/reptiles/dragón barbudo/
+⚙️ Gecko Leopardo	⬜ Pendiente	/reptiles/gecko leopardo/
+⚙️ Otra raza	⬜ Pendiente	/reptiles/otra raza/

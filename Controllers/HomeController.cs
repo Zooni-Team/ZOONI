@@ -253,51 +253,51 @@ public IActionResult Error404(int? code = null)
 // =============================
 // 💉 FICHA DE VACUNAS
 // =============================
+// =============================
+// 💉 FICHA DE VACUNAS
+// =============================
+// =============================
+// 💉 FICHA DE VACUNAS
+// =============================
 [HttpGet]
 public IActionResult FichaVacunas()
 {
     try
     {
         var userId = HttpContext.Session.GetInt32("UserId");
-        if (userId == null)
-            return RedirectToAction("Login", "Auth");
+        if (userId == null) return RedirectToAction("Login", "Auth");
 
-        // 🔹 Obtener mascota del usuario
         string queryMascota = @"
             SELECT TOP 1 Id_Mascota, Nombre, Especie, Raza, Edad, Peso
             FROM Mascota
             WHERE Id_User = @UserId
             ORDER BY Id_Mascota DESC";
 
-        var paramMascota = new Dictionary<string, object> { { "@UserId", userId.Value } };
-        var dtMascota = BD.ExecuteQuery(queryMascota, paramMascota);
-
-        if (dtMascota.Rows.Count == 0)
-        {
+        var p = new Dictionary<string, object> { { "@UserId", userId.Value } };
+        var dtMascota = BD.ExecuteQuery(queryMascota, p);
+        if (dtMascota.Rows.Count == 0) {
             TempData["Error"] = "No se encontró ninguna mascota asociada.";
             return RedirectToAction("Registro2", "Registro");
         }
 
         var m = dtMascota.Rows[0];
         int idMascota = Convert.ToInt32(m["Id_Mascota"]);
-
+        ViewBag.IdMascota     = idMascota; // ✅ lo usamos en la view
         ViewBag.MascotaNombre = m["Nombre"].ToString();
-        ViewBag.MascotaEspecie = m["Especie"].ToString();
-        ViewBag.MascotaRaza = m["Raza"].ToString();
-        ViewBag.MascotaPeso = m["Peso"].ToString();
-        ViewBag.MascotaEdad = m["Edad"].ToString();
+        ViewBag.MascotaEspecie= m["Especie"].ToString();
+        ViewBag.MascotaRaza   = m["Raza"].ToString();
+        ViewBag.MascotaPeso   = m["Peso"].ToString();
+        ViewBag.MascotaEdad   = m["Edad"].ToString();
 
-        // 🔹 Obtener vacunas asociadas
         string queryVacunas = @"
-            SELECT Id_Vacuna, Nombre, Fecha_Aplicacion, Proxima_Dosis, Veterinario
+            SELECT Id_Vacuna, Nombre, Fecha_Aplicacion, Proxima_Dosis, Veterinario, Aplicada
             FROM Vacuna
             WHERE Id_Mascota = @Id_Mascota
             ORDER BY Proxima_Dosis ASC";
 
-        var paramVac = new Dictionary<string, object> { { "@Id_Mascota", idMascota } };
-        var dtVac = BD.ExecuteQuery(queryVacunas, paramVac);
+        var dtVac = BD.ExecuteQuery(queryVacunas, new Dictionary<string, object> { { "@Id_Mascota", idMascota } });
 
-        List<Vacuna> vacunas = new List<Vacuna>();
+        var vacunas = new List<Vacuna>();
         foreach (System.Data.DataRow row in dtVac.Rows)
         {
             vacunas.Add(new Vacuna
@@ -305,9 +305,10 @@ public IActionResult FichaVacunas()
                 Id_Vacuna = Convert.ToInt32(row["Id_Vacuna"]),
                 Id_Mascota = idMascota,
                 Nombre = row["Nombre"].ToString(),
-                Fecha_Aplicacion = Convert.ToDateTime(row["Fecha_Aplicacion"]),
+                Fecha_Aplicacion = row["Fecha_Aplicacion"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(row["Fecha_Aplicacion"]),
                 Proxima_Dosis = row["Proxima_Dosis"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(row["Proxima_Dosis"]),
-                Veterinario = row["Veterinario"] == DBNull.Value ? "" : row["Veterinario"].ToString()
+                Veterinario = row["Veterinario"] == DBNull.Value ? "" : row["Veterinario"].ToString(),
+                Aplicada = row["Aplicada"] != DBNull.Value && Convert.ToBoolean(row["Aplicada"])
             });
         }
 
@@ -322,46 +323,103 @@ public IActionResult FichaVacunas()
 }
 
 // =============================
-// ➕ AÑADIR VACUNA
+// ✅ MARCAR/UPSERT VACUNA DEFAULT
 // =============================
 [HttpPost]
-[ValidateAntiForgeryToken]
-[Route("Home/AgregarVacuna")]
+public IActionResult MarcarVacuna(int idMascota, string nombre)
+{
+    try
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null) return RedirectToAction("Login", "Auth");
+        if (idMascota <= 0 || string.IsNullOrWhiteSpace(nombre))
+        {
+            TempData["Error"] = "Datos inválidos para marcar vacuna.";
+            return RedirectToAction("FichaVacunas");
+        }
+
+        // UPDATE por nombre (case-insensitive) para esa mascota
+        string update = @"
+            UPDATE Vacuna
+            SET Aplicada = 1, Fecha_Aplicacion = ISNULL(Fecha_Aplicacion, SYSDATETIME())
+            WHERE Id_Mascota = @M
+              AND LOWER(Nombre) = LOWER(@N);";
+
+        int rows = BD.ExecuteNonQuery(update, new Dictionary<string, object> {
+            { "@M", idMascota }, { "@N", nombre }
+        });
+
+        if (rows == 0)
+        {
+            // INSERT si no existe
+            string insert = @"
+                INSERT INTO Vacuna (Id_Mascota, Nombre, Fecha_Aplicacion, Proxima_Dosis, Veterinario, Aplicada)
+                VALUES (@M, @N, SYSDATETIME(), NULL, NULL, 1);";
+            BD.ExecuteNonQuery(insert, new Dictionary<string, object> {
+                { "@M", idMascota }, { "@N", nombre }
+            });
+        }
+
+        TempData["Exito"] = "Vacuna marcada como aplicada ✅";
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error en MarcarVacuna: " + ex.Message);
+        TempData["Error"] = "No se pudo marcar la vacuna.";
+    }
+    return RedirectToAction("FichaVacunas");
+}
+
+// =============================
+// ➕ AÑADIR VACUNA MANUAL
+// =============================
+[HttpPost]
 public IActionResult AgregarVacuna(Vacuna model)
 {
     try
     {
-        if (model == null || model.Id_Mascota <= 0 || string.IsNullOrWhiteSpace(model.Nombre))
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null) return RedirectToAction("Login", "Auth");
+
+        if (model.Id_Mascota <= 0)
         {
-            TempData["Error"] = "Datos inválidos para registrar la vacuna.";
+            string q = "SELECT TOP 1 Id_Mascota FROM Mascota WHERE Id_User = @U ORDER BY Id_Mascota DESC";
+            object idMasc = BD.ExecuteScalar(q, new Dictionary<string, object> { { "@U", userId.Value } });
+            if (idMasc == null || idMasc == DBNull.Value)
+            {
+                TempData["Error"] = "No se encontró mascota asociada.";
+                return RedirectToAction("FichaVacunas");
+            }
+            model.Id_Mascota = Convert.ToInt32(idMasc);
+        }
+
+        if (string.IsNullOrWhiteSpace(model.Nombre))
+        {
+            TempData["Error"] = "Ingresá el nombre de la vacuna.";
             return RedirectToAction("FichaVacunas");
         }
 
         string query = @"
-            INSERT INTO Vacuna 
-            (Id_Mascota, Nombre, Fecha_Aplicacion, Proxima_Dosis, Veterinario, Aplicada)
-            VALUES 
-            (@Id_Mascota, @Nombre, @Fecha_Aplicacion, @Proxima_Dosis, @Veterinario, @Aplicada);";
+            INSERT INTO Vacuna (Id_Mascota, Nombre, Fecha_Aplicacion, Proxima_Dosis, Veterinario, Aplicada)
+            VALUES (@Id_Mascota, @Nombre, @Fecha_Aplicacion, @Proxima_Dosis, @Veterinario, @Aplicada);";
 
-        var parametros = new Dictionary<string, object>
+        BD.ExecuteNonQuery(query, new Dictionary<string, object>
         {
             { "@Id_Mascota", model.Id_Mascota },
             { "@Nombre", model.Nombre.Trim() },
-            { "@Fecha_Aplicacion", model.Fecha_Aplicacion },
-            { "@Proxima_Dosis", model.Proxima_Dosis == DateTime.MinValue ? (object)DBNull.Value : model.Proxima_Dosis },
+            { "@Fecha_Aplicacion", model.Fecha_Aplicacion == DateTime.MinValue ? (object)DBNull.Value : model.Fecha_Aplicacion },
+            { "@Proxima_Dosis", model.Proxima_Dosis == null ? (object)DBNull.Value : model.Proxima_Dosis },
             { "@Veterinario", string.IsNullOrWhiteSpace(model.Veterinario) ? (object)DBNull.Value : model.Veterinario.Trim() },
             { "@Aplicada", model.Aplicada }
-        };
+        });
 
-        BD.ExecuteNonQuery(query, parametros);
-        TempData["Exito"] = "Vacuna agregada correctamente 💉";
+        TempData["Exito"] = "Vacuna agregada 💉";
     }
     catch (Exception ex)
     {
         Console.WriteLine("❌ Error al agregar vacuna: " + ex.Message);
-        TempData["Error"] = "Error al registrar la vacuna.";
+        TempData["Error"] = "No se pudo registrar la vacuna.";
     }
-
     return RedirectToAction("FichaVacunas");
 }
 
@@ -369,7 +427,6 @@ public IActionResult AgregarVacuna(Vacuna model)
 // ❌ ELIMINAR VACUNA
 // =============================
 [HttpPost]
-[Route("Home/EliminarVacuna/{id}")]
 public IActionResult EliminarVacuna(int id)
 {
     try
@@ -385,6 +442,40 @@ public IActionResult EliminarVacuna(int id)
         TempData["Error"] = "Error al eliminar la vacuna.";
         return RedirectToAction("FichaVacunas");
     }
+}
+
+[HttpPost]
+public IActionResult EditarVacuna(Vacuna model)
+{
+    try
+    {
+        string query = @"
+            UPDATE Vacuna
+            SET Nombre = @Nombre,
+                Fecha_Aplicacion = @Fecha_Aplicacion,
+                Proxima_Dosis = @Proxima_Dosis,
+                Veterinario = @Veterinario
+            WHERE Id_Vacuna = @Id_Vacuna";
+
+        var parametros = new Dictionary<string, object>
+        {
+            { "@Id_Vacuna", model.Id_Vacuna },
+            { "@Nombre", model.Nombre.Trim() },
+            { "@Fecha_Aplicacion", model.Fecha_Aplicacion },
+            { "@Proxima_Dosis", model.Proxima_Dosis ?? (object)DBNull.Value },
+            { "@Veterinario", string.IsNullOrWhiteSpace(model.Veterinario) ? (object)DBNull.Value : model.Veterinario.Trim() }
+        };
+
+        BD.ExecuteNonQuery(query, parametros);
+        TempData["Exito"] = "Vacuna actualizada correctamente 🩺";
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error al editar vacuna: " + ex.Message);
+        TempData["Error"] = "No se pudo actualizar la vacuna.";
+    }
+
+    return RedirectToAction("FichaVacunas");
 }
 
     }
