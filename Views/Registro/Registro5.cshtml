@@ -145,7 +145,7 @@
             object-fit: cover;
         }
         .mascota-img {
-        width: 200px; /* Más grande */
+        width: 200px;
         height: auto;
         margin: 0.5rem 0 1rem 0;
         object-fit: contain;
@@ -404,14 +404,12 @@
             if (pais && datosUbicacion[pais]) {
                 const { codigo, provincias } = datosUbicacion[pais];
 
-                // Código telefónico
                 const optCodigo = document.createElement("option");
                 optCodigo.value = codigo;
                 optCodigo.textContent = codigo;
                 codigoSelect.appendChild(optCodigo);
                 codigoSelect.value = codigo;
 
-                // Provincias
                 for (const prov in provincias) {
                     const opt = document.createElement("option");
                     opt.value = prov;
@@ -438,3 +436,6 @@
     </script>
 </body>
 </html>
+<!-- © 2025 Zooni Team
+Licensed under CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
+No se permite la modificación o uso comercial de este código. -->

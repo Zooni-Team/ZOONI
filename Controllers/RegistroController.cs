@@ -7,14 +7,11 @@ namespace Zooni.Controllers
 {
     public class RegistroController : Controller
     {
-        // =============================
-        // PASO 1 - REGISTRO USUARIO
-        // =============================
+
         [HttpGet]
         [Route("Registro/Registro1")]
         public IActionResult Registro1()
         {
-            // Si ya hay usuario en sesión, salteamos el paso
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId != null)
             {
@@ -29,7 +26,6 @@ public IActionResult CrearUsuarioDesdeLogin(string correo, string contrasena)
 {
     try
     {
-        // Si ya existe, lo trae y sigue
         string checkQuery = "SELECT TOP 1 U.Id_User FROM [User] U INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail WHERE M.Correo = @Correo";
         var checkParams = new Dictionary<string, object> { { "@Correo", correo } };
         object existingId = BD.ExecuteScalar(checkQuery, checkParams);
@@ -42,7 +38,6 @@ public IActionResult CrearUsuarioDesdeLogin(string correo, string contrasena)
         }
         else
         {
-            // Crea mail
             string queryMail = @"
                 INSERT INTO Mail (Correo, Contrasena, Fecha_Creacion)
                 VALUES (@Correo, @Contrasena, SYSDATETIME());
@@ -56,7 +51,6 @@ public IActionResult CrearUsuarioDesdeLogin(string correo, string contrasena)
 
             int idMail = Convert.ToInt32(BD.ExecuteScalar(queryMail, mailParams));
 
-            // Crea usuario con datos mínimos
             string queryUser = @"
                 INSERT INTO [User] (Id_Mail, Nombre, Apellido, Fecha_Registro, Id_Ubicacion, Id_TipoUsuario)
                 VALUES (@Id_Mail, 'Nuevo', 'Usuario', SYSDATETIME(), 1, 1);
@@ -68,7 +62,6 @@ public IActionResult CrearUsuarioDesdeLogin(string correo, string contrasena)
 
         HttpContext.Session.SetInt32("UserId", idUser);
 
-        // ✅ Ir directo al paso 2
         return RedirectToAction("Registro2", "Registro");
     }
     catch (Exception ex)
@@ -121,7 +114,6 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
 
         HttpContext.Session.SetInt32("UserId", idUser);
 
-        // 🔥 Redirigimos al paso 2
         return RedirectToAction("Registro2", "Registro");
     }
     catch (Exception ex)
@@ -131,12 +123,6 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
         return RedirectToAction("Registro1", "Registro");
     }
 }
-
-
-
-        // =============================
-        // PASO 2 - REGISTRO MASCOTA
-        // =============================
         [HttpGet]
 public IActionResult Registro2()
 {
@@ -169,7 +155,6 @@ public IActionResult Registro2(Mascota model)
             return View(model);
         }
 
-        // 🧮 Normalizamos el peso: si viene en gramos, lo pasamos a kg
         decimal pesoNormalizado = 0;
 try
 {
@@ -215,7 +200,6 @@ catch
 
         int idMascota = Convert.ToInt32(idMascotaObj);
 
-        // 💾 Guardamos en sesión
         HttpContext.Session.SetInt32("MascotaId", idMascota);
         HttpContext.Session.SetString("MascotaNombre", model.Nombre ?? "MiMascota");
         HttpContext.Session.SetString("MascotaEspecie", model.Especie ?? "Desconocida");
@@ -270,8 +254,6 @@ public IActionResult Registro3(Mascota model)
             return RedirectToAction("Registro3");
         }
 
-        // 🧮 Normalizamos nuevamente el peso antes de actualizar
-        // 🧮 Normalizamos nuevamente el peso antes de actualizar
 decimal pesoNormalizado = 0;
 try
 {
@@ -305,7 +287,6 @@ catch
 
         BD.ExecuteNonQuery(query, parametros);
 
-        // 💾 Actualizamos sesión
         HttpContext.Session.SetString("MascotaSexo", model.Sexo ?? "");
         HttpContext.Session.SetString("MascotaRaza", model.Raza ?? "");
         HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString("F2"));
@@ -321,9 +302,6 @@ catch
     }
 }
 
-
-        // ✅ MOSTRAR la vista Registro4
-        // ✅ GET: Registro4 (formulario de datos del usuario)
         [HttpGet]
         public IActionResult Registro4()
         {
@@ -350,9 +328,6 @@ catch
             return View();
         }
 
-
-
-        // ✅ POST: Registro4 → Guarda datos de usuario y redirige a Registro5
         [HttpPost]
 [HttpPost]
 public IActionResult Registro4(string nombre, string apellido, string mail, string contrasena, string confirmarContrasena)
@@ -379,9 +354,6 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             return RedirectToAction("Registro4");
         }
 
-        // =====================================================
-        // 🔹 VERIFICAR SI EL MAIL YA ESTÁ REGISTRADO
-        // =====================================================
         string checkMailQuery = @"
             SELECT COUNT(*)
             FROM Mail
@@ -403,9 +375,6 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             return RedirectToAction("Registro4");
         }
 
-        // =====================================================
-        // 🔹 ACTUALIZAR DATOS DEL USUARIO Y MAIL EN BD
-        // =====================================================
         string updateUserQuery = @"
             UPDATE [User]
             SET Nombre = @Nombre,
@@ -434,17 +403,11 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             { "@Id_User", userId.Value }
         });
 
-        // =====================================================
-        // 🔹 GUARDAR EN SESIÓN PARA EL PASO SIGUIENTE
-        // =====================================================
         HttpContext.Session.SetString("UserNombre", nombre);
         HttpContext.Session.SetString("UserApellido", apellido);
         HttpContext.Session.SetString("UserMail", mail);
         HttpContext.Session.SetString("UserContrasena", contrasena);
 
-        // =====================================================
-        // 🔹 AVANZAR AL PASO FINAL
-        // =====================================================
         return RedirectToAction("Registro5");
     }
     catch (Exception ex)
@@ -495,13 +458,11 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
                     return RedirectToAction("Registro1");
                 }
 
-                // Guardamos en sesión
                 HttpContext.Session.SetString("UserPais", pais);
                 HttpContext.Session.SetString("UserProvincia", provincia);
                 HttpContext.Session.SetString("UserCiudad", ciudad);
                 HttpContext.Session.SetString("UserTelefono", $"{codigoPais} {telefono}");
 
-                // Actualizamos el usuario
                 string query = @"
             UPDATE [User]
             SET Pais = @Pais,
@@ -521,7 +482,6 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
 
                 BD.ExecuteNonQuery(query, parametros);
 
-                // Insertamos la mascota asociada
                 string mascotaNombre = HttpContext.Session.GetString("MascotaNombre") ?? "";
                 string mascotaEspecie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
                 string mascotaRaza = HttpContext.Session.GetString("MascotaRaza") ?? "";

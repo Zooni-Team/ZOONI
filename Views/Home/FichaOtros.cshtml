@@ -36,7 +36,6 @@ html, body {
   color: var(--marron);
 }
 
-/* ====== MENÚ ====== */
 header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 .menu-icon { width: 38px; cursor: pointer; transition: transform .25s ease; }
 .menu-icon:hover { transform: scale(1.1); }
@@ -92,7 +91,6 @@ header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 }
 .overlay.activo { opacity: 1; pointer-events: auto; }
 
-/* ====== CONTENIDO ====== */
 main {
   margin-top: 90px;
   width: 100%;
@@ -103,7 +101,6 @@ main {
   padding-bottom: 80px;
 }
 
-/* ====== CARTAS ====== */
 #contenedor-cartas {
   position: relative;
   width: 90%;
@@ -153,7 +150,6 @@ main {
   box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
 }
 
-/* ====== ICONOS DE SWIPE ====== */
 .reaccion {
   position: absolute;
   font-size: 3rem;
@@ -188,7 +184,6 @@ main {
   --sombra: rgba(0, 0, 0, 0.15);
 }
 
-/* ====== BASE ====== */
 html, body {
   margin: 0;
   padding: 0;
@@ -205,7 +200,6 @@ html, body {
   user-select: none;
 }
 
-/* ====== MENU ====== */
 header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 .menu-icon { width: 38px; cursor: pointer; transition: transform .25s ease; }
 .menu-icon:hover { transform: scale(1.1); }
@@ -251,7 +245,6 @@ header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 }
 .overlay.activo { opacity: 1; pointer-events: auto; }
 
-/* ====== CONTENIDO ====== */
 main {
   margin-top: 90px;
   width: 100%;
@@ -262,7 +255,6 @@ main {
   padding-bottom: 80px;
 }
 
-/* ====== CARTAS SWIPE ====== */
 #contenedor-cartas {
   position: relative;
   width: 90%;
@@ -317,7 +309,6 @@ main {
   overflow-y: auto;
 }
 
-/* ====== REACCIONES ====== */
 .reaccion {
   position: absolute;
   font-size: 3rem;
@@ -344,7 +335,6 @@ main {
   50% { transform: translateY(-14px); }
 }
 
-/* ====== MEDIA QUERIES ====== */
 @@media (max-width: 768px) {
   #contenedor-cartas {
     max-width: 350px;
@@ -396,7 +386,6 @@ main {
   --sombra: rgba(0, 0, 0, 0.18);
 }
 
-/* ====== BASE ====== */
 html, body {
   margin: 0;
   padding: 0;
@@ -413,7 +402,6 @@ html, body {
   user-select: none;
 }
 
-/* ====== MENÚ ====== */
 header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 .menu-icon { width: 38px; cursor: pointer; transition: transform .25s ease; }
 .menu-icon:hover { transform: scale(1.1); }
@@ -459,7 +447,6 @@ header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 }
 .overlay.activo { opacity: 1; pointer-events: auto; }
 
-/* ====== CONTENIDO ====== */
 main {
   margin-top: 90px;
   width: 100%;
@@ -470,7 +457,6 @@ main {
   padding-bottom: 80px;
 }
 
-/* ====== CARTAS SWIPE ====== */
 #contenedor-cartas {
   position: relative;
   width: 92%;
@@ -530,7 +516,6 @@ main {
   text-align: left;
 }
 
-/* ====== SWIPE ICONS ====== */
 .reaccion {
   position: absolute;
   font-size: 3rem;
@@ -552,13 +537,11 @@ main {
   transform: rotate(20deg);
 }
 
-/* ====== ANIMACIONES ====== */
 @@keyframes flotar {
   0%,100% { transform: translateY(-8px); }
   50% { transform: translateY(-14px); }
 }
 
-/* ====== RESPONSIVE ====== */
 @@media (max-width: 768px) {
   #contenedor-cartas {
     width: 94%;
@@ -601,7 +584,6 @@ main {
   .carta h2 { font-size: 1.15rem; }
   .carta p { font-size: 1rem; }
 }
-/* ====== ESTILO BASE ====== */
 main {
   margin-top: 80px;
   width: 100%;
@@ -613,7 +595,6 @@ main {
   padding: 20px;
 }
 
-/* ====== CONTENEDOR ====== */
 #contenedor-cartas {
   width: 100%;
   max-width: 420px;
@@ -623,7 +604,6 @@ main {
   flex-direction: column;
 }
 
-/* ====== CARTA ====== */
 .carta {
   background: #fffdf9;
   border-radius: 30px;
@@ -667,13 +647,11 @@ main {
   box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
 }
 
-/* ====== ANIMACIÓN ====== */
 @@keyframes flotar {
   0%, 100% { transform: translateY(-5px); }
   50% { transform: translateY(-12px); }
 }
 
-/* ====== RESPONSIVE ====== */
 @@media (max-width: 768px) {
   main { margin-top: 70px; }
   .carta {
@@ -727,12 +705,10 @@ main {
 <main>
   <h2 style="color:#4b3b2b;">Curiosidades de @mascotaRaza 🐾</h2>
   <div id="contenedor-cartas">
-    <!-- Las cartas se cargan dinámicamente -->
   </div>
 </main>
 
 <script>
-// Menú hamburguesa
 const menu = document.getElementById("menuLateral");
 const overlay = document.getElementById("overlay");
 document.getElementById("abrirMenu").onclick = () => { menu.classList.add("abierto"); overlay.classList.add("activo"); };
@@ -740,12 +716,10 @@ document.getElementById("cerrarMenu").onclick = cerrar;
 overlay.onclick = cerrar;
 function cerrar(){ menu.classList.remove("abierto"); overlay.classList.remove("activo"); }
 
-// Variables de mascota
 const especie = "@mascotaEspecie";
 const raza = "@mascotaRaza".toLowerCase();
 let curiosidades = [];
 
-// Cargar datos
 fetch("/data/consejos.json")
   .then(r => r.json())
   .then(data => {
@@ -786,7 +760,6 @@ function mostrarCartas() {
   activarSwipe();
 }
 
-// Lógica de swipe estilo Tinder
 function activarSwipe() {
   const cartas = document.querySelectorAll(".carta");
   cartas.forEach(carta => {
@@ -841,3 +814,6 @@ function activarSwipe() {
 </script>
 </body>
 </html>
+<!-- © 2025 Zooni Team
+Licensed under CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
+No se permite la modificación o uso comercial de este código. -->

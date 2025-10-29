@@ -3,7 +3,7 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using System.Data;
 using System.Text.Json;
-using Zooni.Models; // Importa tus modelos y acceso a BD
+using Zooni.Models; 
 
 namespace Zooni.Controllers
 {
@@ -18,15 +18,12 @@ namespace Zooni.Controllers
             _chatService = _kernel.GetRequiredService<IChatCompletionService>();
         }
 
-        // ============================
-        // ✅ GET: /Chat/ChatZooni
-        // ============================
+
         [HttpGet]
         public IActionResult ChatZooni()
         {
             try
             {
-                // 🧠 Verificamos usuario logueado
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (userId == null)
                 {
@@ -34,7 +31,6 @@ namespace Zooni.Controllers
                     return RedirectToAction("Login", "Auth");
                 }
 
-                // 🐾 Traemos la mascota más reciente del usuario desde la BD
                 string query = @"
                     SELECT TOP 1 
                         Nombre, Especie, Raza, Peso, Edad, Sexo
@@ -57,7 +53,6 @@ namespace Zooni.Controllers
 
                 var mascota = dt.Rows[0];
 
-                // 📦 Pasamos los datos reales a la vista
                 ViewBag.Nombre = mascota["Nombre"].ToString();
                 ViewBag.Especie = mascota["Especie"].ToString();
                 ViewBag.Raza = mascota["Raza"].ToString();
@@ -76,9 +71,6 @@ namespace Zooni.Controllers
             }
         }
 
-        // ============================
-        // ✅ POST: /Chat/EnviarMensaje
-        // ============================
         [HttpPost]
         public async Task<IActionResult> EnviarMensaje(
             string especie, string raza, string edad, string peso,

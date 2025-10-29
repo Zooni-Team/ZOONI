@@ -168,12 +168,10 @@
     <div class="container">
         <h1>Zooni</h1>
 
-        <!-- Imagen -->
         <img src="~/img/mascotas-bienvenida.png" alt="Zooni mascotas" class="illustration" />
 
         <h2>¡Bienvenido a Zooni!</h2>
 
-        <!-- ✅ Crear cuenta rápida -->
         <button id="crearCuentaBtn" type="button" class="btn-principal">Crear cuenta</button>
 
         <script>
@@ -186,7 +184,7 @@
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: new URLSearchParams({
                     correo: correoTemp,
-                    contrasena: "zooni@@123" // ← escapado correctamente
+                    contrasena: "zooni@@123" 
                 })
             });
             if (response.ok) window.location.href = "/Registro/Registro2";
@@ -199,7 +197,6 @@
 </script>
 
 
-        <!-- 🐾 Formulario de inicio de sesión -->
         <div class="divider">O iniciá sesión</div>
 
         <form action="/Account/Login" method="post">
@@ -216,3 +213,6 @@
     </div>
 </body>
 </html>
+<!-- © 2025 Zooni Team
+Licensed under CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
+No se permite la modificación o uso comercial de este código. -->

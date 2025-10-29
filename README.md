@@ -107,13 +107,6 @@ Zooni no solo digitaliza, **humaniza**: cada mascota tiene una historia y la app
 
 ---
 
-## 🐶 Demo Visual
-
-![Zooni Mascota](https://github.com/user-attachments/assets/69924974-655b-4a5b-afb9-c888982d7896)
-*La mascota de Zooni, elegante y lista para revolucionar el petcare.*
-
----
-
 ## 💜 Plus Zooni (nuestro sello)
 
 - **Pasaporte de Mascota:** ficha médica portable con QR para viajes y emergencias.  
@@ -124,8 +117,10 @@ Zooni no solo digitaliza, **humaniza**: cada mascota tiene una historia y la app
 
 ## 📜 Licencia
 
-Proyecto bajo **MIT License**.  
-Podés usarlo, adaptarlo y mejorarlo con atribución al equipo original.
+Este proyecto está bajo la licencia **Creative Commons Attribution–NoDerivatives 4.0 International (CC BY-ND 4.0)**.  
+Podés compartirlo y utilizarlo con atribución, **pero no está permitido modificarlo ni crear versiones derivadas.**
+
+📘 Más información: [https://creativecommons.org/licenses/by-nd/4.0/](https://creativecommons.org/licenses/by-nd/4.0/)
 
 ---
 

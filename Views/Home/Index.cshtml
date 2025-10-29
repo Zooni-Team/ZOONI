@@ -35,7 +35,6 @@ html, body {
     align-items: center;
 }
 
-/* HEADER */
 header {
     position: fixed;
     top: 15px;
@@ -57,7 +56,6 @@ header {
 }
 .menu-icon:hover { transform: scale(1.1); }
 
-/* MENÚ LATERAL */
 .menu-lateral {
     position: fixed;
     top: 0;
@@ -116,7 +114,6 @@ header {
 }
 .overlay.activo { opacity: 1; pointer-events: auto; }
 
-/* CONTENIDO CENTRAL */
 main {
     display: flex;
     flex-direction: column;
@@ -150,7 +147,7 @@ main {
     margin-top: 60px;
     animation: flotar 3s ease-in-out infinite;
     filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
-    transform: translateY(-10px); /* 👆 Sube ligeramente el perro */
+    transform: translateY(-10px);
     
 }
 
@@ -200,7 +197,6 @@ footer {
     opacity: 0.8;
 }
 
-/* RESPONSIVE */
 @@media (max-width: 480px) {
     .mascota-img { width: 260px; transform: translateY(-5px); }
     .panel { padding: 25px 20px; }
@@ -209,8 +205,8 @@ footer {
 .menu-lateral {
     position: fixed;
     top: 0;
-    left: 0; /* antes estaba en -260px */
-    transform: translateX(-100%); /* oculta fuera de pantalla */
+    left: 0; 
+    transform: translateX(-100%);
     width: 240px;
     height: 100%;
     background: rgba(255, 255, 255, 0.97);
@@ -226,7 +222,7 @@ footer {
 }
 
 .menu-lateral.abierto {
-    transform: translateX(0); /* entra suave */
+    transform: translateX(0); 
 }
 .boton {
     background: linear-gradient(180deg, var(--amarillo) 0%, #ffcb3a 100%);
@@ -307,10 +303,9 @@ footer {
     transform: scale(1.05);
 }
 
-/* Corazones con salida tipo aura */
 .corazon {
     position: absolute;
-    top: 10%; /* 💫 altura cabeza */
+    top: 10%; 
     left: 50%;
     width: 26px;
     height: 26px;
@@ -405,10 +400,9 @@ function crearCorazones() {
         const corazon = document.createElement("div");
         corazon.classList.add("corazon");
 
-        // valores personalizados de dirección y rotación
         const direccion = Math.random() < 0.5 ? -1 : 1;
-        const desplazamientoX = direccion * (40 + Math.random() * 30); // 40–70px
-        const rotacion = direccion * (15 + Math.random() * 15); // 15–30° hacia un lado
+        const desplazamientoX = direccion * (40 + Math.random() * 30); 
+        const rotacion = direccion * (15 + Math.random() * 15); 
 
         corazon.style.setProperty("--x", `${desplazamientoX}px`);
         corazon.style.setProperty("--r", `${rotacion}deg`);
@@ -427,3 +421,6 @@ mascotaWrapper.addEventListener("mouseenter", crearCorazones);
 
 </body>
 </html>
+<!-- © 2025 Zooni Team
+Licensed under CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
+No se permite la modificación o uso comercial de este código. -->

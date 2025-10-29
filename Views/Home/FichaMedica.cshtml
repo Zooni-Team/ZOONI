@@ -29,7 +29,6 @@ var pesoFormateado = mascotaPeso.ToString("0.##").Replace('.', ',');
     --fondo: #f9f9f8;
 }
 
-/* General */
 html, body {
     margin: 0; padding: 0;
     width: 100%; height: 100%;
@@ -40,7 +39,6 @@ html, body {
     overflow-x: hidden;
 }
 
-/* Header y menú */
 header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 .menu-icon { width: 38px; cursor: pointer; transition: transform .25s ease; }
 .menu-icon:hover { transform: scale(1.1); }
@@ -90,7 +88,6 @@ header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 }
 .overlay.activo { opacity: 1; pointer-events: auto; }
 
-/* Ficha */
 main {
     margin-top: 80px;
     width: 100%;
@@ -127,10 +124,9 @@ main {
 @@keyframes flotar { 0%,100%{transform:translateY(-8px);}50%{transform:translateY(-14px);} }
 
 
-/* DATOS ALINEADOS */
 .dato {
     display: grid;
-    grid-template-columns: 40px 110px 1fr; /* icono - etiqueta - valor */
+    grid-template-columns: 40px 110px 1fr; 
     align-items: center;
     background: #fff;
     border-radius: 14px;
@@ -150,7 +146,6 @@ main {
 }
 
 
-/* Botones de historial */
 .historial {
     width: 90%; max-width: 430px;
     display: flex; flex-direction: column;
@@ -181,7 +176,6 @@ main {
     font-weight: bold;
 }
 
-/* Consejos */
 .consejos-panel {
     margin-top: 24px;
     width: 90%; max-width: 450px;
@@ -266,10 +260,9 @@ main {
     transition: transform 0.35s ease;
     border-top-right-radius: 18px;
     border-bottom-right-radius: 18px;
-    z-index: 9999; /* 🔥 asegura que esté por encima */
+    z-index: 9999; 
 }
 
-/* Cuando el menú se abre */
 .menu-lateral.abierto {
     transform: translateX(0);
 }
@@ -354,3 +347,6 @@ fetch("/data/consejos.json")
 </script>
 </body>
 </html>
+<!-- © 2025 Zooni Team
+Licensed under CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
+No se permite la modificación o uso comercial de este código. -->

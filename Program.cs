@@ -14,7 +14,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-// 🔧 Kernel + Gemini
+// Kernel + Gemini
 builder.Services.AddSingleton<Kernel>(provider =>
 {
     var config = new ConfigurationBuilder()
@@ -36,7 +36,6 @@ builder.Services.AddSingleton<Kernel>(provider =>
 
 var app = builder.Build();
 
-// ⚠️ Manejo de errores personalizados
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -47,7 +46,6 @@ else
     app.UseDeveloperExceptionPage();
 }
 
-// 🧭 Middleware para páginas de error específicas
 app.UseStatusCodePagesWithReExecute("/Home/Error404", "?code={0}");
 
 app.UseHttpsRedirection();

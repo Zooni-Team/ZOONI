@@ -34,7 +34,6 @@ html, body {
     overflow-x: hidden;
 }
 
-/* HEADER */
 header {
     position: fixed;
     top: 15px;
@@ -49,7 +48,6 @@ header {
 }
 .menu-icon:hover { transform: scale(1.1); }
 
-/* MENÚ LATERAL */
 .menu-lateral {
     position: fixed;
     top: 0;
@@ -103,7 +101,6 @@ header {
 }
 .overlay.activo { opacity: 1; pointer-events: auto; }
 
-/* CONTENIDO */
 main {
     width: 100%;
     max-width: 600px;
@@ -120,7 +117,6 @@ main {
     margin-bottom: 30px;
 }
 
-/* TARJETAS */
 .evento {
     background: rgba(255,255,255,0.9);
     border-radius: 18px;
@@ -142,7 +138,6 @@ main {
 .evento.consulta { border-left: 7px solid var(--celeste); background: #f1faff; }
 .evento.otro { border-left: 7px solid var(--amarillo); background: #fffbe8; }
 
-/* BOTONES DE ACCIÓN */
 .acciones {
     position: absolute;
     top: 10px;
@@ -161,7 +156,6 @@ main {
 .btn-edit { color: var(--verde); }
 .btn-del { color: crimson; }
 
-/* BOTÓN flotante */
 .boton-agregar {
     position: fixed;
     bottom: 25px;
@@ -177,7 +171,6 @@ main {
     box-shadow: 0 5px 10px rgba(0,0,0,0.2);
 }
 
-/* MODAL */
 .modal {
     display: none;
     position: fixed;
@@ -212,7 +205,6 @@ main {
     cursor: pointer;
 }
 
-/* RESPONSIVE */
 @@media (max-width: 480px) {
     .titulo { font-size: 1.6rem; }
     .evento { padding: 14px 16px; }
@@ -298,14 +290,12 @@ main {
 </div>
 
 <script>
-// Menú lateral
 const menu = document.getElementById("menuLateral");
 const overlay = document.getElementById("overlay");
 document.getElementById("abrirMenu").onclick = () => { menu.classList.add("abierto"); overlay.classList.add("activo"); };
 document.getElementById("cerrarMenu").onclick = () => { menu.classList.remove("abierto"); overlay.classList.remove("activo"); };
 overlay.onclick = () => { menu.classList.remove("abierto"); overlay.classList.remove("activo"); };
 
-// Modal Crear / Editar
 function abrirModal(){ document.getElementById('modal').style.display='flex'; }
 function cerrarModal(){ document.getElementById('modal').style.display='none'; limpiarFormulario(); }
 
@@ -325,7 +315,6 @@ function limpiarFormulario() {
     document.getElementById('modalTitulo').innerText = "Nuevo evento";
 }
 
-// Eliminar evento
 function eliminarEvento(id) {
     if (confirm("¿Seguro que querés eliminar este evento? 🗑️")) {
         fetch(`/Home/EliminarEvento/${id}`, { method: 'POST' })
@@ -333,7 +322,6 @@ function eliminarEvento(id) {
     }
 }
 
-// Drag & Drop para reordenar
 const container = document.getElementById('eventContainer');
 let dragged;
 
@@ -358,3 +346,6 @@ container.addEventListener('dragover', e => {
 </script>
 </body>
 </html>
+<!-- © 2025 Zooni Team
+Licensed under CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
+No se permite la modificación o uso comercial de este código. -->

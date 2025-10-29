@@ -71,7 +71,7 @@ body{margin:0;font-family:'Poppins',sans-serif;background:var(--fondo);color:var
 
 .modal-botones {
   display: flex;
-  justify-content: flex-end; /* 👉 botones alineados a la derecha */
+  justify-content: flex-end; 
   gap: 10px;
   width: 90%;
   margin-top: 1.2rem;
@@ -91,17 +91,17 @@ body{margin:0;font-family:'Poppins',sans-serif;background:var(--fondo);color:var
 .btn-guardar {
   background: var(--verde);
   color: white;
-  order: 1; /* Guardar a la izquierda */
+  order: 1; 
 }
 .btn-guardar:hover { background: #2fa567; }
 
 .btn-cancelar {
-  background: #5c5c5c; /* gris oscuro más visible */
+  background: #5c5c5c;
   color: white;
-  order: 2; /* Cancelar a la derecha */
+  order: 2; 
 }
 .btn-cancelar:hover {
-  background: #444; /* un poco más oscuro al hover */
+  background: #444; 
 }
 .modal {
   position: fixed;
@@ -203,7 +203,6 @@ body{margin:0;font-family:'Poppins',sans-serif;background:var(--fondo);color:var
 .btn-cancelar:hover {
   background: #444;
 }
-/* ========== MENÚ HAMBURGER ========== */
 header {
   position: fixed;
   top: 15px;
@@ -290,7 +289,6 @@ header {
 .btn-editar:hover {
   background: #3899e4;
 }
-/* --- AJUSTE DE CALENDARIO SUGERIDO --- */
 .vacuna-calendario {
   display: flex;
   justify-content: space-between;
@@ -513,21 +511,18 @@ function renderVacunas() {
     lista.appendChild(div);
   });
 
-  // 🔹 Asignamos eventos a los botones de editar
   document.querySelectorAll(".btn-editar").forEach(btn => {
     btn.addEventListener("click", e => {
       const id = e.currentTarget.dataset.id;
       const vacuna = vacunas.find(x => x.id_Vacuna == id);
       if (!vacuna) return;
 
-      // Rellenar modal con datos actuales
       modal.classList.add("activo");
       document.getElementById("nombreVacuna").value = vacuna.nombre;
       document.getElementById("fechaAplicacion").value = vacuna.fecha_Aplicacion ? vacuna.fecha_Aplicacion.split("T")[0] : "";
       document.getElementById("proximaDosis").value = vacuna.proxima_Dosis ? vacuna.proxima_Dosis.split("T")[0] : "";
       document.getElementById("veterinario").value = vacuna.veterinario || "";
 
-      // Cambiar botón Guardar → Actualizar
       const btnGuardar = document.getElementById("guardarVacuna");
       btnGuardar.textContent = "Actualizar";
       btnGuardar.onclick = () => {
@@ -538,7 +533,7 @@ function renderVacunas() {
 
         const form = document.createElement("form");
         form.method = "post";
-        form.action = "/Home/EditarVacuna"; // ✅ Nueva acción que agregás al controller
+        form.action = "/Home/EditarVacuna"; 
         form.innerHTML = `
           <input name="__RequestVerificationToken" type="hidden" value="${document.querySelector('input[name=__RequestVerificationToken]').value}">
           <input type="hidden" name="Id_Vacuna" value="${id}">
@@ -556,7 +551,6 @@ function renderVacunas() {
 
 
 btnAgregar.onclick = ()=> modal.classList.add("activo");
-// 🔹 Botón Cancelar → cierra el modal y limpia campos
 const btnCancelar = document.getElementById("cancelarVacuna");
 if (btnCancelar) {
   btnCancelar.onclick = () => {
@@ -716,3 +710,6 @@ overlay.addEventListener("click", cerrarMenu);
 
 </body>
 </html>
+<!-- © 2025 Zooni Team
+Licensed under CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
+No se permite la modificación o uso comercial de este código. -->

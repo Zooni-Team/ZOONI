@@ -62,7 +62,6 @@ namespace Zooni.Controllers
                 if (userId == null)
                     return RedirectToAction("Login", "Auth");
 
-                // 🔹 Traemos datos de la mascota actual
                 string queryMascota = @"
             SELECT TOP 1 Nombre, Especie, Raza, Edad, Peso
             FROM Mascota
@@ -120,12 +119,10 @@ namespace Zooni.Controllers
 
                 var mascota = dt.Rows[0];
 
-                // 🧠 Convertimos edad a meses y formateamos peso
                 int edadMeses = mascota["Edad"] != DBNull.Value ? Convert.ToInt32(mascota["Edad"]) : 0;
                 double peso = 0;
                 double.TryParse(mascota["Peso"]?.ToString(), out peso);
 
-                // ✅ Cargar datos en ViewBag
                 ViewBag.MascotaNombre = mascota["Nombre"].ToString();
                 ViewBag.MascotaEspecie = mascota["Especie"].ToString();
                 ViewBag.MascotaRaza = mascota["Raza"].ToString();
@@ -193,14 +190,12 @@ namespace Zooni.Controllers
 
             ev.Id_User = idUser.Value;
 
-            // 🔹 Validar fecha
             if (ev.Fecha == default(DateTime) || ev.Fecha < new DateTime(1753, 1, 1))
             {
                 TempData["ErrorCalendario"] = "Seleccioná una fecha válida para el evento 🕒";
                 return RedirectToAction("Calendario");
             }
 
-            // 🔹 Buscar calendario activo
             string queryCal = "SELECT TOP 1 Id_Calendario FROM Calendario WHERE Id_User = @Id_User AND Activo = 1";
             var paramCal = new Dictionary<string, object> { { "@Id_User", idUser.Value } };
             object idCal = BD.ExecuteScalar(queryCal, paramCal);
@@ -213,7 +208,6 @@ namespace Zooni.Controllers
                 idCal = BD.ExecuteScalar(crearCal, paramCal);
             }
 
-            // 🔹 Insert evento
             string queryInsert = @"
         INSERT INTO CalendarioEvento (Id_Calendario, Id_User, Id_Mascota, Titulo, Descripcion, Fecha, Tipo)
         VALUES (@Id_Calendario, @Id_User, @Id_Mascota, @Titulo, @Descripcion, @Fecha, @Tipo);";
@@ -250,15 +244,7 @@ public IActionResult Error404(int? code = null)
     ViewData["CodigoError"] = code ?? 404;
     return View("~/Views/Shared/Error404.cshtml");
 }
-// =============================
-// 💉 FICHA DE VACUNAS
-// =============================
-// =============================
-// 💉 FICHA DE VACUNAS
-// =============================
-// =============================
-// 💉 FICHA DE VACUNAS
-// =============================
+
 [HttpGet]
 public IActionResult FichaVacunas()
 {
@@ -322,9 +308,7 @@ public IActionResult FichaVacunas()
     }
 }
 
-// =============================
-// ✅ MARCAR/UPSERT VACUNA DEFAULT
-// =============================
+
 [HttpPost]
 public IActionResult MarcarVacuna(int idMascota, string nombre)
 {
@@ -338,7 +322,6 @@ public IActionResult MarcarVacuna(int idMascota, string nombre)
             return RedirectToAction("FichaVacunas");
         }
 
-        // UPDATE por nombre (case-insensitive) para esa mascota
         string update = @"
             UPDATE Vacuna
             SET Aplicada = 1, Fecha_Aplicacion = ISNULL(Fecha_Aplicacion, SYSDATETIME())
@@ -351,7 +334,6 @@ public IActionResult MarcarVacuna(int idMascota, string nombre)
 
         if (rows == 0)
         {
-            // INSERT si no existe
             string insert = @"
                 INSERT INTO Vacuna (Id_Mascota, Nombre, Fecha_Aplicacion, Proxima_Dosis, Veterinario, Aplicada)
                 VALUES (@M, @N, SYSDATETIME(), NULL, NULL, 1);";
@@ -370,9 +352,7 @@ public IActionResult MarcarVacuna(int idMascota, string nombre)
     return RedirectToAction("FichaVacunas");
 }
 
-// =============================
-// ➕ AÑADIR VACUNA MANUAL
-// =============================
+
 [HttpPost]
 public IActionResult AgregarVacuna(Vacuna model)
 {
@@ -423,9 +403,7 @@ public IActionResult AgregarVacuna(Vacuna model)
     return RedirectToAction("FichaVacunas");
 }
 
-// =============================
-// ❌ ELIMINAR VACUNA
-// =============================
+
 [HttpPost]
 public IActionResult EliminarVacuna(int id)
 {
