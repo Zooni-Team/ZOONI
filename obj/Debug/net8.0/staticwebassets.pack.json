@@ -21,10 +21,6 @@
       "PackagePath": "staticwebassets\\data\\vacunas.json"
     },
     {
-      "Id": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.readme",
-      "PackagePath": "staticwebassets\\data\\vacunas.readme"
-    },
-    {
       "Id": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },

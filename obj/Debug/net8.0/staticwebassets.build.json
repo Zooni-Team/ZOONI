@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "gWiVMgFz0TVanT5OI2V4w+3+xQ/rn/3O+sjZfUWZVWI=",
+  "Hash": "PQ2HR7dqd+WQovv9fL8nvOR0DCrgUYYLe6ilqRA71Lg=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -115,32 +115,11 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "wgr720li2p",
-      "Integrity": "MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ=",
+      "Fingerprint": "q4bd6l4nr9",
+      "Integrity": "ZkxKUnR13tOp8wq9JaH+egdEFoKJ3xFsIrcneZy08o8=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\data\\vacunas.json"
-    },
-    {
-      "Identity": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.readme",
-      "SourceId": "Zooni",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\",
-      "BasePath": "_content/Zooni",
-      "RelativePath": "data/vacunas#[.{fingerprint}]?.readme",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "Fingerprint": "4409ey6etn",
-      "Integrity": "LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y=",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\data\\vacunas.readme"
     },
     {
       "Identity": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\favicon.ico",
@@ -2090,51 +2069,6 @@
       ]
     },
     {
-      "Route": "data/vacunas.4409ey6etn.readme",
-      "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.readme",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2494"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "application/octet-stream"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 23:13:15 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "4409ey6etn"
-        },
-        {
-          "Name": "label",
-          "Value": "data/vacunas.readme"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y="
-        }
-      ]
-    },
-    {
       "Route": "data/vacunas.json",
       "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.json",
       "Selectors": [],
@@ -2145,7 +2079,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8178"
+          "Value": "8636"
         },
         {
           "Name": "Content-Type",
@@ -2153,11 +2087,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ=\""
+          "Value": "\"ZkxKUnR13tOp8wq9JaH+egdEFoKJ3xFsIrcneZy08o8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 23:01:34 GMT"
+          "Value": "Thu, 30 Oct 2025 02:27:48 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2167,49 +2101,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ="
+          "Value": "sha256-ZkxKUnR13tOp8wq9JaH+egdEFoKJ3xFsIrcneZy08o8="
         }
       ]
     },
     {
-      "Route": "data/vacunas.readme",
-      "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.readme",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2494"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "application/octet-stream"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 23:13:15 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y="
-        }
-      ]
-    },
-    {
-      "Route": "data/vacunas.wgr720li2p.json",
+      "Route": "data/vacunas.q4bd6l4nr9.json",
       "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.json",
       "Selectors": [],
       "ResponseHeaders": [
@@ -2219,7 +2116,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8178"
+          "Value": "8636"
         },
         {
           "Name": "Content-Type",
@@ -2227,11 +2124,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ=\""
+          "Value": "\"ZkxKUnR13tOp8wq9JaH+egdEFoKJ3xFsIrcneZy08o8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 23:01:34 GMT"
+          "Value": "Thu, 30 Oct 2025 02:27:48 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2241,7 +2138,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "wgr720li2p"
+          "Value": "q4bd6l4nr9"
         },
         {
           "Name": "label",
@@ -2249,7 +2146,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ="
+          "Value": "sha256-ZkxKUnR13tOp8wq9JaH+egdEFoKJ3xFsIrcneZy08o8="
         }
       ]
     },

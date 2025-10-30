@@ -331,51 +331,6 @@
       ]
     },
     {
-      "Route": "data/vacunas.4409ey6etn.readme",
-      "AssetFile": "data/vacunas.readme",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2494"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "application/octet-stream"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 23:13:15 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "4409ey6etn"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y="
-        },
-        {
-          "Name": "label",
-          "Value": "data/vacunas.readme"
-        }
-      ]
-    },
-    {
       "Route": "data/vacunas.json",
       "AssetFile": "data/vacunas.json",
       "Selectors": [],
@@ -390,7 +345,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8178"
+          "Value": "8636"
         },
         {
           "Name": "Content-Type",
@@ -398,59 +353,22 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ=\""
+          "Value": "\"ZkxKUnR13tOp8wq9JaH+egdEFoKJ3xFsIrcneZy08o8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 23:01:34 GMT"
+          "Value": "Thu, 30 Oct 2025 02:27:48 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ="
+          "Value": "sha256-ZkxKUnR13tOp8wq9JaH+egdEFoKJ3xFsIrcneZy08o8="
         }
       ]
     },
     {
-      "Route": "data/vacunas.readme",
-      "AssetFile": "data/vacunas.readme",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "no-cache"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "2494"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "application/octet-stream"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 23:13:15 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "integrity",
-          "Value": "sha256-LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y="
-        }
-      ]
-    },
-    {
-      "Route": "data/vacunas.wgr720li2p.json",
+      "Route": "data/vacunas.q4bd6l4nr9.json",
       "AssetFile": "data/vacunas.json",
       "Selectors": [],
       "ResponseHeaders": [
@@ -464,7 +382,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "8178"
+          "Value": "8636"
         },
         {
           "Name": "Content-Type",
@@ -472,21 +390,21 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ=\""
+          "Value": "\"ZkxKUnR13tOp8wq9JaH+egdEFoKJ3xFsIrcneZy08o8=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 23:01:34 GMT"
+          "Value": "Thu, 30 Oct 2025 02:27:48 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "wgr720li2p"
+          "Value": "q4bd6l4nr9"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ="
+          "Value": "sha256-ZkxKUnR13tOp8wq9JaH+egdEFoKJ3xFsIrcneZy08o8="
         },
         {
           "Name": "label",

@@ -48,29 +48,17 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2970"},{"Name":"Content-Type","Value":"application/octet-stream"},{"Name":"ETag","Value":"\u0022ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904=\u0022"},{"Name":"Last-Modified","Value":"Wed, 29 Oct 2025 23:13:44 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Zooni/data/vacunas.4409ey6etn.readme">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\data\vacunas.readme'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"4409ey6etn"},{"Name":"integrity","Value":"sha256-LCHOiq02jtajIgEH\u002BdZ4Af9chqD2ZDWyFdF2QkISf3Y="},{"Name":"label","Value":"_content/Zooni/data/vacunas.readme"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"2494"},{"Name":"Content-Type","Value":"application/octet-stream"},{"Name":"ETag","Value":"\u0022LCHOiq02jtajIgEH\u002BdZ4Af9chqD2ZDWyFdF2QkISf3Y=\u0022"},{"Name":"Last-Modified","Value":"Wed, 29 Oct 2025 23:13:15 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Zooni/data/vacunas.json">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\data\vacunas.json'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG\u002Bgvyr4eEFCQ="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"8178"},{"Name":"Content-Type","Value":"application/json"},{"Name":"ETag","Value":"\u0022MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG\u002Bgvyr4eEFCQ=\u0022"},{"Name":"Last-Modified","Value":"Wed, 29 Oct 2025 23:01:34 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-ZkxKUnR13tOp8wq9JaH\u002BegdEFoKJ3xFsIrcneZy08o8="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"8636"},{"Name":"Content-Type","Value":"application/json"},{"Name":"ETag","Value":"\u0022ZkxKUnR13tOp8wq9JaH\u002BegdEFoKJ3xFsIrcneZy08o8=\u0022"},{"Name":"Last-Modified","Value":"Thu, 30 Oct 2025 02:27:48 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Zooni/data/vacunas.readme">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\data\vacunas.readme'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-LCHOiq02jtajIgEH\u002BdZ4Af9chqD2ZDWyFdF2QkISf3Y="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"2494"},{"Name":"Content-Type","Value":"application/octet-stream"},{"Name":"ETag","Value":"\u0022LCHOiq02jtajIgEH\u002BdZ4Af9chqD2ZDWyFdF2QkISf3Y=\u0022"},{"Name":"Last-Modified","Value":"Wed, 29 Oct 2025 23:13:15 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/Zooni/data/vacunas.wgr720li2p.json">
+    <StaticWebAssetEndpoint Include="_content/Zooni/data/vacunas.q4bd6l4nr9.json">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\data\vacunas.json'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"wgr720li2p"},{"Name":"integrity","Value":"sha256-MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG\u002Bgvyr4eEFCQ="},{"Name":"label","Value":"_content/Zooni/data/vacunas.json"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"8178"},{"Name":"Content-Type","Value":"application/json"},{"Name":"ETag","Value":"\u0022MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG\u002Bgvyr4eEFCQ=\u0022"},{"Name":"Last-Modified","Value":"Wed, 29 Oct 2025 23:01:34 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"q4bd6l4nr9"},{"Name":"integrity","Value":"sha256-ZkxKUnR13tOp8wq9JaH\u002BegdEFoKJ3xFsIrcneZy08o8="},{"Name":"label","Value":"_content/Zooni/data/vacunas.json"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"8636"},{"Name":"Content-Type","Value":"application/json"},{"Name":"ETag","Value":"\u0022ZkxKUnR13tOp8wq9JaH\u002BegdEFoKJ3xFsIrcneZy08o8=\u0022"},{"Name":"Last-Modified","Value":"Thu, 30 Oct 2025 02:27:48 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/Zooni/favicon.61n19gt1b8.ico">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.ico'))</AssetFile>
