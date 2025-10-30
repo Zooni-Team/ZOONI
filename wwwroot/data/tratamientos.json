@@ -166,5 +166,424 @@
       { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 },
       { "nombre": "Chequeo Dermatológico", "edadMinMeses": 12, "frecuenciaMeses": 12 }
     ]
+  },{
+    "especie": "gato",
+    "raza": "Persa",
+    "vacunas": [
+      { "nombre": "Chequeo Ocular (lagrimeo y úlceras)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Respiratorio (vías superiores)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Cepillado y Revisión de Pelaje", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Sedentarismo", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Siames",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiológico (miocardiopatías)", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Oftalmológico", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Evaluación Conductual", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Maine Coon",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiológico (miocardiopatía hipertrófica)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Articular (displasia de cadera)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Revisión de Pelaje (muda estacional)", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Bengala",
+    "vacunas": [
+      { "nombre": "Chequeo Dermatológico (alergias cutáneas)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiorrespiratorio", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Actividad", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Ragdoll",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiológico (miocardiopatía hipertrófica)", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Renal y Hepático", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Evaluación del Estrés", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "vacunas": [
+      { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardíaco (hipertrofia)", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Oftalmológico", "edadMinMeses": 12, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Bombay",
+    "vacunas": [
+      { "nombre": "Chequeo Respiratorio (narinas y flujo nasal)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Siberiano",
+    "vacunas": [
+      { "nombre": "Chequeo Articular", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiaco", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Revisión de Pelaje", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Renal", "edadMinMeses": 36, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Nutrición", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Scottish Fold",
+    "vacunas": [
+      { "nombre": "Chequeo Articular (osteocondrodisplasia)", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Auditivo", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Renal y Hepático", "edadMinMeses": 24, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Dálmata",
+    "vacunas": [
+      { "nombre": "Chequeo Auditivo (sordera congénita)", "edadMinMeses": 3, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico (alergias cutáneas)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Urinario (formación de cálculos)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso y Actividad", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Cocker Spaniel",
+    "vacunas": [
+      { "nombre": "Chequeo Otológico (infecciones en orejas)", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Ocular (cataratas y glaucoma)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Pastor Alemán",
+    "vacunas": [
+      { "nombre": "Chequeo Articular (cadera y codos)", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiaco", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico (piel seca)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Oftalmológico", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Salchicha",
+    "vacunas": [
+      { "nombre": "Chequeo Vertebral (columna y discos)", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiaco", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Desparasitación Interna y Externa", "edadMinMeses": 3, "frecuenciaMeses": 3 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Border Collie",
+    "vacunas": [
+      { "nombre": "Chequeo Neurológico (epilepsia idiopática)", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Ocular (anomalía del ojo del collie)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiaco", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso y Actividad", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Boxer",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiológico (miocardiopatía arritmogénica)", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Oncológico (tumores de piel)", "edadMinMeses": 36, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso y Actividad", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Articular", "edadMinMeses": 12, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Shih Tzu",
+    "vacunas": [
+      { "nombre": "Chequeo Ocular (úlceras corneales)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Respiratorio (narinas estrechas)", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dermatológico (alergias y picazón)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Doberman",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiológico (miocardiopatía dilatada)", "edadMinMeses": 18, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Articular", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Jack Russell Terrier",
+    "vacunas": [
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Otológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Actividad", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Pitbull",
+    "vacunas": [
+      { "nombre": "Chequeo Articular y Muscular", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico (alergias)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso y Actividad Física", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Maltés",
+    "vacunas": [
+      { "nombre": "Chequeo Ocular (lagrimeo excesivo)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental (pérdida temprana de piezas)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dermatológico", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiaco", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Schnauzer",
+    "vacunas": [
+      { "nombre": "Chequeo Pancreático (hiperlipidemia)", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico (foliculitis)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Oftalmológico", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Ejercicio", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Akita Inu",
+    "vacunas": [
+      { "nombre": "Chequeo Dermatológico (alergias y pérdida de pelo)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Articular", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Oftalmológico", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "San Bernardo",
+    "vacunas": [
+      { "nombre": "Chequeo Articular (displasia de cadera y codos)", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiaco", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Oftalmológico (entropión)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Nutrición", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dermatológico (pliegues y humedad)", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Pomerania",
+    "vacunas": [
+      { "nombre": "Chequeo Dental (pérdida temprana de piezas)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Respiratorio (colapso traqueal)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico (pérdida de pelo tipo alopecia X)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 12, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Weimaraner",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Articular (cadera y codos)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Ocular (entropión, distiquiasis)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Actividad", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Basset Hound",
+    "vacunas": [
+      { "nombre": "Chequeo Otológico (orejas largas propensas a infección)", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Oftalmológico (entropión)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Articular", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Galgo",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiaco (por ritmo alto de entrenamiento)", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Articular", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dermatológico (piel fina y sensible)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Hematológico (anemia deportiva)", "edadMinMeses": 24, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "perro",
+    "raza": "Samoyedo",
+    "vacunas": [
+      { "nombre": "Chequeo Dermatológico (dermatitis y piel seca)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Articular (displasia de cadera)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Oftalmológico", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Pelaje", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+   {
+    "especie": "gato",
+    "raza": "Esfinge",
+    "vacunas": [
+      { "nombre": "Chequeo Dermatológico (piel sin pelo y sequedad)", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Cardiológico (miocardiopatía hipertrófica)", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Temperatura y Exposición Solar", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Oftalmológico", "edadMinMeses": 12, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Angora Turco",
+    "vacunas": [
+      { "nombre": "Chequeo Auditivo (riesgo de sordera en pelaje blanco)", "edadMinMeses": 3, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Cepillado y Control de Pelaje Largo", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Abisinio",
+    "vacunas": [
+      { "nombre": "Chequeo Cardíaco y de Presión", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Renal (amiloidosis)", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso y Actividad", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Oftalmológico (degeneración retiniana)", "edadMinMeses": 12, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Azul Ruso",
+    "vacunas": [
+      { "nombre": "Chequeo Renal (predisposición a insuficiencia)", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Bosque de Noruega",
+    "vacunas": [
+      { "nombre": "Chequeo Articular (displasia de cadera)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiológico (miocardiopatía)", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Revisión de Pelaje y Nudos", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Alimentación", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Birmano",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiológico (miocardiopatía hipertrófica)", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Oftalmológico (problemas lagrimales)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Oriental de Pelo Corto",
+    "vacunas": [
+      { "nombre": "Chequeo Dental (predisposición a gingivitis)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiaco", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dermatológico", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Estrés", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Himalayo",
+    "vacunas": [
+      { "nombre": "Chequeo Ocular (úlceras corneales y epífora)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Respiratorio (nariz chata)", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Cepillado y Control de Pelaje", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Savannah",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiológico (alta energía y ritmo cardíaco)", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Renal y Hepático", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 12, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso y Ejercicio", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Oftalmológico", "edadMinMeses": 12, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "gato",
+    "raza": "Cornish Rex",
+    "vacunas": [
+      { "nombre": "Chequeo Dermatológico (piel fina y sensible)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiológico (miocardiopatías hereditarias)", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Temperatura (evitar frío excesivo)", "edadMinMeses": 3, "frecuenciaMeses": 6 }
+    ]
   }
 ]

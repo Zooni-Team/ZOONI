@@ -306,7 +306,7 @@ public IActionResult Registro4(string modo = "")
 {
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null)
-    {
+    {//SEBASTIAN CALVIÑO ESTUVO AQUI JIJI
         TempData["Error"] = "Sesión expirada. Volvé a iniciar sesión 🐾";
         return RedirectToAction("Registro1");
     }
@@ -366,39 +366,37 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             return RedirectToAction("Registro4");
         }
 
-        // 🧠 Validar que el mail no esté usado por otro usuario
-        string checkMailQuery = @"
-            SELECT COUNT(*)
-            FROM Mail
-            WHERE Correo = @Correo
-              AND Id_Mail NOT IN (
-                  SELECT Id_Mail FROM [User] WHERE Id_User = @Id_User
-              )";
+        // 💌 Verificar si ya existe un usuario con el mismo mail
+        string checkQuery = @"
+            SELECT COUNT(*) 
+            FROM Mail M 
+            INNER JOIN [User] U ON U.Id_Mail = M.Id_Mail
+            WHERE LOWER(M.Correo) = LOWER(@Correo)
+              AND U.Id_User <> @Id_User;";
 
-        var checkParams = new Dictionary<string, object>
+        int existe = Convert.ToInt32(BD.ExecuteScalar(checkQuery, new Dictionary<string, object>
         {
-            { "@Correo", mail },
+            { "@Correo", mail.Trim().ToLower() },
             { "@Id_User", userId.Value }
-        };
+        }));
 
-        int existe = Convert.ToInt32(BD.ExecuteScalar(checkMailQuery, checkParams));
         if (existe > 0)
-{
-    ViewBag.Error = "Ese correo ya está registrado. Probá con otro.";
-    ViewBag.Nombre = nombre;
-    ViewBag.Apellido = apellido;
-    ViewBag.Mail = mail;
-    ViewBag.Modo = modo;
-    return View("Registro4");
-}
+        {
+            // ⚠️ Mostrar error en la misma vista sin romper flujo
+            ViewBag.Error = "Este correo ya está registrado 🐾. Iniciá sesión o usá otro.";
+            ViewBag.Nombre = nombre;
+            ViewBag.Apellido = apellido;
+            ViewBag.Mail = mail;
+            ViewBag.Modo = modo;
+            return View("Registro4");
+        }
 
-
-        // ✅ Actualizamos nombre y apellido
+        // ✅ Actualizar datos personales
         string updateUserQuery = @"
             UPDATE [User]
             SET Nombre = @Nombre,
                 Apellido = @Apellido
-            WHERE Id_User = @Id_User";
+            WHERE Id_User = @Id_User;";
 
         BD.ExecuteNonQuery(updateUserQuery, new Dictionary<string, object>
         {
@@ -407,14 +405,14 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             { "@Id_User", userId.Value }
         });
 
-        // ✅ Actualizamos correo y contraseña
+        // ✅ Actualizar correo y contraseña
         string updateMailQuery = @"
             UPDATE M
             SET M.Correo = @Correo,
                 M.Contrasena = @Contrasena
             FROM Mail M
             INNER JOIN [User] U ON M.Id_Mail = U.Id_Mail
-            WHERE U.Id_User = @Id_User";
+            WHERE U.Id_User = @Id_User;";
 
         BD.ExecuteNonQuery(updateMailQuery, new Dictionary<string, object>
         {
@@ -423,7 +421,7 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             { "@Id_User", userId.Value }
         });
 
-        // 🟢 Guardamos en sesión para los siguientes pasos
+        // 🟢 Guardar en sesión
         HttpContext.Session.SetString("UserNombre", nombre);
         HttpContext.Session.SetString("UserApellido", apellido);
         HttpContext.Session.SetString("UserMail", mail);
@@ -431,6 +429,7 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
 
         Console.WriteLine($"✅ Registro4 (POST): usuario {nombre} {apellido}, mail {mail}");
 
+        TempData["Exito"] = "Datos guardados correctamente 🦮";
         return RedirectToAction("Registro5", "Registro");
     }
     catch (Exception ex)
@@ -440,6 +439,7 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
         return RedirectToAction("Registro4");
     }
 }
+
 
 
 [HttpGet]

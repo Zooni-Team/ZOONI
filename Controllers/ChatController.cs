@@ -122,10 +122,11 @@ namespace Zooni.Controllers
                 chatHistory.AddAssistantMessage(respuesta);
 
                 HttpContext.Session.SetString("ZooniHistory", JsonSerializer.Serialize(chatHistory));
-                return Json(new { respuesta });
+                return Json(new { respuesta }); 
             }
             catch (Exception ex)
             {
+                //CHEBI ESTUVO AQUI
                 Console.WriteLine("❌ Error EnviarMensaje: " + ex.Message);
                 return Json(new { respuesta = $"❌ Error de conexión con Gemini: {ex.Message}" });
             }
