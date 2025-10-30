@@ -233,19 +233,18 @@ main {
 <header>
     <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
 </header>
-
 <div class="menu-lateral" id="menuLateral">
     <div class="cerrar-menu" id="cerrarMenu">✖</div>
-    <a href="/Home/Index">Inicio</a>
-    <a href="/Comunidad">Comunidad</a>
-    <a href="/Marketplace">Marketplace</a>
-    <a href="/home/FichaMedica">Ficha médica</a>
-    <a href="/home/calendario">Calendario</a>
-    <a href="/Chat/ChatZooni">Asistente Virtual</a>
-    <a href="/Closet">Closet</a>
-    <a href="/Home/Perfil">Perfil</a>
-    <a href="/Home/configuracion">Configuración</a>
-    <a href="/Auth/Logout" style="color:red;">Cerrar sesión</a>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/home/FichaMedica">💉 Ficha médica</a>
+    <a href="/home/calendario">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 Mi Virtual Vet</a>
+    <a href="/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Home/configuracion">⚙️ Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
 </div>
 
 <div class="overlay" id="overlay"></div>
@@ -372,6 +371,31 @@ function actualizarColoresUrgencia() {
 }
 actualizarColoresUrgencia();
 setInterval(actualizarColoresUrgencia, 86400000); // cada día
+// ======= CONFIRMACIÓN DE FECHAS PASADAS =======
+const formEvento = document.getElementById("formEvento");
+if (formEvento) {
+    formEvento.addEventListener("submit", (e) => {
+        const fechaInput = document.getElementById("Fecha");
+        const fechaValor = fechaInput.value;
+        if (!fechaValor) return;
+
+        const hoy = new Date();
+        const fechaEvento = new Date(fechaValor);
+
+        // Normalizar para comparar solo fechas (sin horas)
+        hoy.setHours(0,0,0,0);
+        fechaEvento.setHours(0,0,0,0);
+
+        if (fechaEvento < hoy) {
+            const confirmar = confirm("⚠️ Estás agregando un evento en una fecha anterior. ¿Querés continuar?");
+            if (!confirmar) {
+                e.preventDefault(); // cancela el envío
+                return false;
+            }
+        }
+    });
+}
+
 </script>
 </body>
 </html>

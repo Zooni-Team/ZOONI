@@ -567,20 +567,33 @@
     const proxima = document.getElementById("proximaDosis").value;
     const vet = document.getElementById("veterinario").value.trim();
 
-    if(!nombre || !fechaAplicacion){ alert("Completá nombre y fecha de aplicación"); return; }
+    if(!nombre || !fechaAplicacion){
+        alert("Completá nombre y fecha de aplicación");
+        return;
+    }
+
+    // 🔹 Validar fecha anterior
+    const hoy = new Date();
+    const fechaVacuna = new Date(fechaAplicacion);
+    if (fechaVacuna < hoy.setHours(0,0,0,0)) {
+        const confirmar = confirm("⚠️ Estás registrando una vacuna en una fecha anterior. ¿Querés continuar?");
+        if (!confirmar) return;
+    }
 
     const form=document.createElement("form");
-    form.method="post";
-    form.action="/Home/AgregarVacuna";
-    form.innerHTML=`
-        <input name="__RequestVerificationToken" type="hidden" value="${document.querySelector('input[name=__RequestVerificationToken]').value}">
-        <input type="hidden" name="Nombre" value="${nombre}">
-        <input type="hidden" name="Fecha_Aplicacion" value="${fechaAplicacion}">
-        <input type="hidden" name="Proxima_Dosis" value="${proxima}">
-        <input type="hidden" name="Veterinario" value="${vet}">
-        <input type="hidden" name="Id_Mascota" value="${(vacunas[0]?.id_Mascota)||1}">
-        <input type="hidden" name="Aplicada" value="1">
-    `;
+
+form.method="post";
+form.action="/Home/AgregarVacuna";
+form.innerHTML=`
+    <input name="__RequestVerificationToken" type="hidden" value="${document.querySelector('input[name=__RequestVerificationToken]').value}">
+    <input type="hidden" name="Nombre" value="${nombre}">
+    <input type="hidden" name="Fecha_Aplicacion" value="${fechaAplicacion}">
+    <input type="hidden" name="Proxima_Dosis" value="${proxima}">
+    <input type="hidden" name="Veterinario" value="${vet}">
+    <input type="hidden" name="Id_Mascota" value="@ViewBag.IdMascota">
+    <input type="hidden" name="Aplicada" value="1">
+`;
+
     document.body.appendChild(form);
     form.submit();
     };

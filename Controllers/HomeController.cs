@@ -31,19 +31,25 @@ namespace Zooni.Controllers
 
         // 🔹 Método para setear los ViewBag básicos de mascota
         private void CargarViewBagMascota(DataRow mascota)
-        {
-            if (mascota == null)
-            {
-                ViewBag.MascotaNombre = null;
-                return;
-            }
+{
+    if (mascota == null)
+    {
+        ViewBag.MascotaNombre = null;
+        return;
+    }
 
-            ViewBag.MascotaNombre = mascota["Nombre"].ToString();
-            ViewBag.MascotaEspecie = mascota["Especie"].ToString();
-            ViewBag.MascotaRaza = mascota["Raza"].ToString();
-            ViewBag.MascotaEdad = mascota["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(mascota["Edad"]);
-            ViewBag.MascotaPeso = mascota["Peso"] == DBNull.Value ? 0 : Convert.ToDecimal(mascota["Peso"]);
-        }
+    ViewBag.MascotaNombre = mascota["Nombre"].ToString();
+    ViewBag.MascotaEspecie = mascota["Especie"].ToString();
+    ViewBag.MascotaRaza = mascota["Raza"].ToString();
+    ViewBag.MascotaEdad = mascota["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(mascota["Edad"]);
+    ViewBag.MascotaPeso = mascota["Peso"] == DBNull.Value ? 0 : Convert.ToDecimal(mascota["Peso"]);
+
+    // 🟢 NUEVO: agregar la foto si existe
+    ViewBag.MascotaFoto = mascota.Table.Columns.Contains("Foto") && mascota["Foto"] != DBNull.Value
+        ? mascota["Foto"].ToString()
+        : "";
+}
+
 
         [HttpGet]
         public IActionResult Index()
@@ -332,17 +338,18 @@ namespace Zooni.Controllers
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (userId == null) return RedirectToAction("Login", "Auth");
 
-                if (model.Id_Mascota <= 0)
-                {
-                    string q = "SELECT TOP 1 Id_Mascota FROM Mascota WHERE Id_User = @U ORDER BY Id_Mascota DESC";
-                    object idMasc = BD.ExecuteScalar(q, new Dictionary<string, object> { { "@U", userId.Value } });
-                    if (idMasc == null || idMasc == DBNull.Value)
-                    {
-                        TempData["Error"] = "No se encontró mascota asociada.";
-                        return RedirectToAction("FichaVacunas");
-                    }
-                    model.Id_Mascota = Convert.ToInt32(idMasc);
-                }
+               if (model.Id_Mascota <= 0)
+{
+    string q = "SELECT TOP 1 Id_Mascota FROM Mascota WHERE Id_User = @U ORDER BY Id_Mascota DESC";
+    object idMasc = BD.ExecuteScalar(q, new Dictionary<string, object> { { "@U", userId.Value } });
+    if (idMasc == null || idMasc == DBNull.Value)
+    {
+        TempData["Error"] = "No se encontró mascota asociada.";
+        return RedirectToAction("FichaVacunas");
+    }
+    model.Id_Mascota = Convert.ToInt32(idMasc);
+}
+
 
                 if (string.IsNullOrWhiteSpace(model.Nombre))
                 {

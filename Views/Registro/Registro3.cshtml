@@ -246,6 +246,35 @@
             display: block;
             accent-color: var(--amarillo);
         }
+        .foto-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1.2rem;
+    gap: 0.6rem;
+}
+
+.foto-label {
+    color: var(--marron);
+    font-weight: 600;
+    font-size: 1.05rem;
+}
+
+.btn-secundario {
+    background-color: #ffd85a;
+    color: #5b4500;
+    border: none;
+    border-radius: 25px;
+    padding: 10px 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.btn-secundario:hover {
+    background-color: #ffc93c;
+}
+
 
     </style>
 </head>
@@ -286,6 +315,53 @@
                 <input type="range" id="Edad" name="Edad" min="0" max="240" value="0" />
                 <div class="edad-texto" id="edadTexto">0 meses</div>
             </div>
+<div class="foto-container">
+    <label for="fotoMascota" class="foto-label">📸 Sacale una foto a tu mascota</label>
+    <video id="video" autoplay playsinline style="display:none;"></video>
+    <canvas id="canvas" style="display:none;"></canvas>
+    <button type="button" id="btnIniciarCamara" class="btn-secundario">Abrir cámara</button>
+    <button type="button" id="btnTomarFoto" class="btn-principal" style="display:none;">Tomar foto</button>
+    <img id="fotoPreview" alt="Foto de mascota" style="max-width:150px; margin-top:10px; border-radius:15px; display:none;" />
+    <input type="hidden" name="Foto" id="fotoBase64" />
+</div>
+
+<script>
+const video = document.getElementById('video');
+const canvas = document.getElementById('canvas');
+const fotoBase64 = document.getElementById('fotoBase64');
+const btnIniciarCamara = document.getElementById('btnIniciarCamara');
+const btnTomarFoto = document.getElementById('btnTomarFoto');
+const preview = document.getElementById('fotoPreview');
+
+btnIniciarCamara.addEventListener('click', async () => {
+    try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        video.srcObject = stream;
+        video.style.display = 'block';
+        btnTomarFoto.style.display = 'inline-block';
+        btnIniciarCamara.style.display = 'none';
+    } catch (err) {
+        alert('No se pudo acceder a la cámara 😿');
+    }
+});
+
+btnTomarFoto.addEventListener('click', () => {
+    const context = canvas.getContext('2d');
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const dataURL = canvas.toDataURL('image/png');
+    fotoBase64.value = dataURL;
+    preview.src = dataURL;
+    preview.style.display = 'block';
+    video.style.display = 'none';
+    btnTomarFoto.style.display = 'none';
+    const stream = video.srcObject;
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+    }
+});
+</script>
 
             <button type="submit" class="btn-principal">Continuar</button>
         </form>

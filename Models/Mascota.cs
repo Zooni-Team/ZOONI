@@ -39,8 +39,6 @@ namespace Zooni.Models
 
         [StringLength(50)]
         public string Chip { get; set; }
-
-        [StringLength(255)]
         public string Foto { get; set; }
 
         public bool Estado { get; set; } = true;

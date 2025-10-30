@@ -262,9 +262,10 @@ public IActionResult Registro3Post(Mascota model, string modo = "")
         pesoNormalizado = Math.Round(pesoNormalizado, 2);
 
         string query = @"
-            UPDATE Mascota
-            SET Sexo=@Sexo, Raza=@Raza, Peso=@Peso, Edad=@Edad
-            WHERE Id_Mascota=@Id_Mascota";
+    UPDATE Mascota
+    SET Sexo=@Sexo, Raza=@Raza, Peso=@Peso, Edad=@Edad, Foto=@Foto
+    WHERE Id_Mascota=@Id_Mascota";
+
 
         BD.ExecuteNonQuery(query, new Dictionary<string, object>
         {
@@ -272,6 +273,7 @@ public IActionResult Registro3Post(Mascota model, string modo = "")
             { "@Raza", model.Raza ?? "" },
             { "@Peso", pesoNormalizado },
             { "@Edad", model.Edad },
+            { "@Foto", model.Foto ?? "" },
             { "@Id_Mascota", mascotaId.Value }
         });
 

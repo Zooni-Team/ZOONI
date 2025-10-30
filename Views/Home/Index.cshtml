@@ -356,7 +356,13 @@ footer {
 {
     <div class="mascota-nombre">@mascotaNombre</div>
 <div class="mascota-wrapper" id="mascotaWrapper">
-    <img src="@rutaMascota" alt="Mascota" class="mascota-img" />
+   <img src="@(string.IsNullOrEmpty(ViewBag.MascotaFoto) 
+    ? $"/img/mascotas/{ViewBag.MascotaEspecie}s/{ViewBag.MascotaRaza}/{ViewBag.MascotaEspecie}_basico.png" 
+    : ViewBag.MascotaFoto)" 
+alt="@ViewBag.MascotaNombre" 
+class="mascota-img" />
+>
+
 </div>
     <div class="panel">
         <div class="botones">
