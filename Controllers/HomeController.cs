@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc;
 using Zooni.Models;
 using System.Data;
 using System.Collections.Generic;
@@ -653,5 +653,87 @@ Fecha_Nacimiento = row["Fecha_Nacimiento"] == DBNull.Value
                 return RedirectToAction("Configuracion");
             }
         }
+        [HttpGet]
+public IActionResult FichaTratamientos()
+{
+    try
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return RedirectToAction("Login", "Auth");
+
+        // 🔹 Obtener la mascota activa o la última registrada
+        var mascota = ObtenerMascotaActiva(userId.Value);
+        if (mascota == null)
+        {
+            TempData["Error"] = "No se encontró ninguna mascota asociada.";
+            return RedirectToAction("Registro2", "Registro");
+        }
+
+        int idMascota = Convert.ToInt32(mascota["Id_Mascota"]);
+        CargarViewBagMascota(mascota);
+        ViewBag.IdMascota = idMascota;
+
+        // 🔹 Obtener los tratamientos asociados a esa mascota
+        string qTrat = @"
+            SELECT Id_Tratamiento, Nombre, Fecha_Inicio, Proximo_Control, Veterinario
+            FROM Tratamiento
+            WHERE Id_Mascota = @Id
+            ORDER BY Fecha_Inicio DESC";
+
+        var pTrat = new Dictionary<string, object> { { "@Id", idMascota } };
+        var dtTrat = BD.ExecuteQuery(qTrat, pTrat);
+
+        var tratamientos = new List<Tratamiento>();
+        foreach (DataRow row in dtTrat.Rows)
+        {
+            tratamientos.Add(new Tratamiento
+            {
+                Id_Tratamiento = Convert.ToInt32(row["Id_Tratamiento"]),
+                Id_Mascota = idMascota,
+                Nombre = row["Nombre"].ToString(),
+                Fecha_Inicio = row["Fecha_Inicio"] == DBNull.Value ? DateTime.MinValue : Convert.ToDateTime(row["Fecha_Inicio"]),
+                Proximo_Control = row["Proximo_Control"] == DBNull.Value ? (DateTime?)null : Convert.ToDateTime(row["Proximo_Control"]),
+                Veterinario = row["Veterinario"] == DBNull.Value ? "" : row["Veterinario"].ToString()
+            });
+        }
+
+        return View("FichaTratamientos", tratamientos);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error en FichaTratamientos: " + ex.Message);
+        TempData["Error"] = "No se pudo cargar la ficha de tratamientos.";
+        return RedirectToAction("Index");
+    }
+}
+
+
+[HttpPost]
+public IActionResult AgregarTratamiento(Tratamiento t)
+{
+    if (t == null || t.Id_Mascota <= 0) return RedirectToAction("FichaTratamientos");
+    string q = @"INSERT INTO Tratamiento (Id_Mascota, Nombre, Fecha_Inicio, Proximo_Control, Veterinario)
+                 VALUES (@Id_Mascota,@Nombre,@Fecha_Inicio,@Proximo_Control,@Veterinario)";
+    var p = new Dictionary<string, object> {
+        {"@Id_Mascota", t.Id_Mascota},
+        {"@Nombre", t.Nombre},
+        {"@Fecha_Inicio", t.Fecha_Inicio},
+        {"@Proximo_Control", t.Proximo_Control},
+        {"@Veterinario", t.Veterinario}
+    };
+    BD.ExecuteNonQuery(q, p);
+    return RedirectToAction("FichaTratamientos");
+}
+
+[HttpPost]
+public IActionResult EliminarTratamiento(int id)
+{
+    string q = "DELETE FROM Tratamiento WHERE Id_Tratamiento=@id";
+    var p = new Dictionary<string, object> { { "@id", id } };
+    BD.ExecuteNonQuery(q, p);
+    return RedirectToAction("FichaTratamientos");
+}
+
     }
 }

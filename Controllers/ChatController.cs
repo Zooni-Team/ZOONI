@@ -3,7 +3,7 @@ using Microsoft.SemanticKernel;
 using Microsoft.SemanticKernel.ChatCompletion;
 using System.Data;
 using System.Text.Json;
-using Zooni.Models; 
+using Zooni.Models;
 
 namespace Zooni.Controllers
 {
@@ -56,7 +56,9 @@ namespace Zooni.Controllers
                 ViewBag.Nombre = mascota["Nombre"].ToString();
                 ViewBag.Especie = mascota["Especie"].ToString();
                 ViewBag.Raza = mascota["Raza"].ToString();
-                ViewBag.Peso = mascota["Peso"]?.ToString() ?? "0";
+                var pesoDecimal = Convert.ToDecimal(mascota["Peso"] ?? 0);
+                ViewBag.Peso = pesoDecimal.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture);
+                ViewBag.PesoFormateado = pesoDecimal.ToString("0.##").Replace('.', ',');
                 ViewBag.Edad = mascota["Edad"]?.ToString() ?? "0";
                 ViewBag.Sexo = mascota["Sexo"]?.ToString() ?? "No definido";
                 ViewBag.InfoMedica = "Historial médico cargado automáticamente.";

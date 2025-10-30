@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\data\\consejos.readme"
     },
     {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\data\\tratamientos.json",
+      "PackagePath": "staticwebassets\\data\\tratamientos.json"
+    },
+    {
       "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\data\\vacunas.json",
       "PackagePath": "staticwebassets\\data\\vacunas.json"
     },
@@ -165,12 +169,76 @@
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\siames\\gato_basico.png"
     },
     {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Akita Inu\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Akita Inu\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Basset Hound\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Basset Hound\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Border Collie\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Border Collie\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Boxer\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Boxer\\perro_basico.png"
+    },
+    {
       "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Caniche\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Caniche\\perro_basico.png"
     },
     {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Doberman\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Doberman\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Jack Russell\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Jack Russell\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Maltés\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Maltés\\perro_basico.png"
+    },
+    {
       "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Pastor Alemán\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Pastor Alemán\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Pitbull\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Pitbull\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Pomerania\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Pomerania\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Rottweiler\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Rottweiler\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Salchicha\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Salchicha\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\San Bernardo\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\San Bernardo\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Schnauzer\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Schnauzer\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Shih Tzu\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Shih Tzu\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Weimaraner\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Weimaraner\\perro_basico.png"
+    },
+    {
+      "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Yorkshire Terrier\\perro_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Yorkshire Terrier\\perro_basico.png"
     },
     {
       "Id": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png",

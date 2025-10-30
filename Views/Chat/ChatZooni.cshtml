@@ -329,24 +329,24 @@ h1
         <div class="mascota-info">
             <strong>@ViewBag.Nombre</strong><br>
             <small>@ViewBag.Raza (@ViewBag.Especie)</small><br>
-            🕒 @ViewBag.Edad meses • ⚖️ @ViewBag.Peso kg • @ViewBag.Sexo
+🕒 @ViewBag.Edad meses • ⚖️ Peso: @(ViewBag.PesoFormateado ?? ViewBag.Peso) kg • @ViewBag.Sexo
         </div>
     </div>
 
     <div id="chatBox"></div>
 
-    <form id="chatForm">
-        <input type="hidden" id="especie" value="@ViewBag.Especie" />
-        <input type="hidden" id="raza" value="@ViewBag.Raza" />
-        <input type="hidden" id="edad" value="@ViewBag.Edad" />
-        <input type="hidden" id="peso" value="@ViewBag.Peso" />
-        <input type="hidden" id="infoMedica" value="@ViewBag.InfoMedica" />
+        <form id="chatForm">
+            <input type="hidden" id="especie" value="@ViewBag.Especie" />
+            <input type="hidden" id="raza" value="@ViewBag.Raza" />
+            <input type="hidden" id="edad" value="@ViewBag.Edad" />
+            <input type="hidden" id="peso" value="@ViewBag.Peso" />
+            <input type="hidden" id="infoMedica" value="@ViewBag.InfoMedica" />
 
-        <textarea id="mensaje" placeholder="Escribí tu mensaje para ZooniVet..." required></textarea>
-        <button type="submit">Enviar 🩺</button>
-        <button type="button" id="reiniciar">Reiniciar 🔄</button>
-        <p id="status">💬 Esperando mensaje...</p>
-    </form>
+            <textarea id="mensaje" placeholder="Escribí tu mensaje para ZooniVet..." required></textarea>
+            <button type="submit">Enviar 🩺</button>
+            <button type="button" id="reiniciar">Reiniciar 🔄</button>
+            <p id="status">💬 Esperando mensaje...</p>
+        </form>
 </main>
 
 <script>

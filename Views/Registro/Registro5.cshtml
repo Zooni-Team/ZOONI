@@ -433,6 +433,32 @@
                 });
             }
         });
+        // ✅ Prefijo automático en teléfono según país
+const telefonoInput = document.querySelector('input[name="Telefono"]');
+const codigoPaisSelect = document.getElementById("CodigoPais");
+
+paisSelect.addEventListener("change", () => {
+    const pais = paisSelect.value;
+    if (pais && datosUbicacion[pais]) {
+        const codigo = datosUbicacion[pais].codigo;
+        telefonoInput.value = codigo + " ";
+        telefonoInput.focus();
+    } else {
+        telefonoInput.value = "";
+    }
+});
+
+// ✅ Si cambia el código manualmente, se sincroniza con el input
+codigoPaisSelect.addEventListener("change", () => {
+    const codigo = codigoPaisSelect.value;
+    if (codigo) {
+        if (!telefonoInput.value.startsWith(codigo)) {
+            telefonoInput.value = codigo + " ";
+        }
+        telefonoInput.focus();
+    }
+});
+
     </script>
 </body>
 </html>
