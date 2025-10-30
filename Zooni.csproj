@@ -9,6 +9,8 @@
   <ItemGroup>
     <!-- Paquetes base -->
     <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="itext.bouncy-castle-adapter" Version="9.3.0" />
+    <PackageReference Include="itext7" Version="9.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.3.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="6.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.10" />

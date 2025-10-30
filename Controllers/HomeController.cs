@@ -3,7 +3,12 @@ using Zooni.Models;
 using System.Data;
 using System.Collections.Generic;
 using System;
-
+using System.IO;
+using iText.Kernel.Pdf;
+using iText.Layout;
+using iText.Layout.Element;
+using iText.Layout.Properties;
+using iText.IO.Image;
 namespace Zooni.Controllers
 {
     public class HomeController : Controller
@@ -733,6 +738,121 @@ public IActionResult EliminarTratamiento(int id)
     var p = new Dictionary<string, object> { { "@id", id } };
     BD.ExecuteNonQuery(q, p);
     return RedirectToAction("FichaTratamientos");
+}
+[HttpGet]
+public IActionResult DescargarPDF()
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    // 🐾 Obtenemos la mascota activa o la última
+    var mascota = ObtenerMascotaActiva(userId.Value);
+    if (mascota == null)
+        return Content("No se encontró ninguna mascota para generar el PDF");
+
+    int idMascota = Convert.ToInt32(mascota["Id_Mascota"]);
+    string nombre = mascota["Nombre"].ToString();
+    string especie = mascota["Especie"].ToString();
+    string raza = mascota["Raza"].ToString();
+    string peso = $"{Convert.ToDecimal(mascota["Peso"]):0.##} kg";
+    int edadMeses = Convert.ToInt32(mascota["Edad"]);
+    int años = edadMeses / 12;
+    int meses = edadMeses % 12;
+    string edad = $"{(años > 0 ? $"{años} año{(años > 1 ? "s" : "")}" : "")}{(meses > 0 ? $" y {meses} mes{(meses > 1 ? "es" : "")}" : "")}";
+    string foto = mascota.Table.Columns.Contains("Foto") && mascota["Foto"] != DBNull.Value
+        ? mascota["Foto"].ToString()
+        : "/img/mascotas/default.png";
+
+    // 📄 Crear PDF en memoria
+    using var memory = new MemoryStream();
+    var writer = new PdfWriter(memory);
+    var pdf = new PdfDocument(writer);
+    var doc = new Document(pdf);
+
+    // 🧾 Encabezado
+    doc.Add(new Paragraph("Ficha Médica – Zooni 🦮")
+        .SetTextAlignment(TextAlignment.CENTER)
+        .SetFontSize(22)
+        .SetFont(iText.Kernel.Font.PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA_BOLD)));
+
+    doc.Add(new Paragraph($"Fecha de emisión: {DateTime.Now:dd/MM/yyyy}")
+        .SetTextAlignment(TextAlignment.RIGHT)
+        .SetFontSize(10));
+
+    // 📸 Foto
+    string rutaCompleta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", foto.TrimStart('/'));
+    if (System.IO.File.Exists(rutaCompleta))
+    {
+        var img = new Image(ImageDataFactory.Create(rutaCompleta))
+            .ScaleAbsolute(120, 120)
+            .SetHorizontalAlignment(HorizontalAlignment.CENTER)
+            .SetMarginTop(10)
+            .SetMarginBottom(15);
+        doc.Add(img);
+    }
+
+    // 📘 Datos principales
+    Table tabla = new Table(2).UseAllAvailableWidth();
+    tabla.AddCell("Nombre").AddCell(nombre);
+    tabla.AddCell("Especie").AddCell(especie);
+    tabla.AddCell("Raza").AddCell(raza);
+    tabla.AddCell("Peso").AddCell(peso);
+    tabla.AddCell("Edad").AddCell(edad);
+    doc.Add(tabla);
+
+    // 💉 Vacunas
+    string qVacunas = @"
+        SELECT TOP 5 Nombre, Fecha_Aplicacion 
+        FROM Vacuna 
+        WHERE Id_Mascota = @Id
+        ORDER BY Fecha_Aplicacion DESC";
+    var vacunas = BD.ExecuteQuery(qVacunas, new Dictionary<string, object> { { "@Id", idMascota } });
+
+    doc.Add(new Paragraph("\n💉 Vacunas registradas")
+        .SetFontSize(14)
+        .SetFont(iText.Kernel.Font.PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA_BOLD)));
+
+    if (vacunas.Rows.Count == 0)
+        doc.Add(new Paragraph("Sin vacunas registradas."));
+    else
+        foreach (DataRow v in vacunas.Rows)
+            doc.Add(new Paragraph($"{v["Nombre"]}: {Convert.ToDateTime(v["Fecha_Aplicacion"]):dd/MM/yyyy}").SetFontSize(11));
+
+    // 💊 Tratamientos
+    string qTrat = @"
+        SELECT TOP 5 Nombre, Fecha_Inicio, Proximo_Control, Veterinario
+        FROM Tratamiento
+        WHERE Id_Mascota = @Id
+        ORDER BY Fecha_Inicio DESC";
+    var tratamientos = BD.ExecuteQuery(qTrat, new Dictionary<string, object> { { "@Id", idMascota } });
+
+    doc.Add(new Paragraph("\n💊 Tratamientos en curso")
+        .SetFontSize(14)
+        .SetFont(iText.Kernel.Font.PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA_BOLD)));
+
+    if (tratamientos.Rows.Count == 0)
+        doc.Add(new Paragraph("Sin tratamientos activos."));
+    else
+    {
+        foreach (DataRow t in tratamientos.Rows)
+        {
+            string inicio = t["Fecha_Inicio"] == DBNull.Value ? "—" : Convert.ToDateTime(t["Fecha_Inicio"]).ToString("dd/MM/yyyy");
+            string proximo = t["Proximo_Control"] == DBNull.Value ? "—" : Convert.ToDateTime(t["Proximo_Control"]).ToString("dd/MM/yyyy");
+            string vet = t["Veterinario"] == DBNull.Value ? "" : $" ({t["Veterinario"]})";
+
+            doc.Add(new Paragraph($"{t["Nombre"]}: {inicio} → {proximo}{vet}").SetFontSize(11));
+        }
+    }
+
+    // 🐾 Cierre
+    doc.Add(new Paragraph("\n— Fin del informe —")
+        .SetTextAlignment(TextAlignment.CENTER)
+        .SetFontSize(10)
+        .SetFont(iText.Kernel.Font.PdfFontFactory.CreateFont(iText.IO.Font.Constants.StandardFonts.HELVETICA_OBLIQUE)));
+
+    doc.Close();
+    return File(memory.ToArray(), "application/pdf", $"{nombre}_FichaMedica_Zooni.pdf");
 }
 
     }

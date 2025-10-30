@@ -544,6 +544,1952 @@
     "especie": "reptil",
     "raza": "Varano",
     "texto": "Su mordida es fuerte ⚡. Mantené respeto y contacto controlado."
+  },
+  {
+    "especie": "perro",
+    "raza": "Beagle",
+    "texto": "El beagle necesita retos mentales 🧩. Escondé snacks por la casa para estimular su olfato."
+  },
+  {
+    "especie": "perro",
+    "raza": "Beagle",
+    "texto": "Adoran la compañía 👨‍👩‍👧‍👦. No los dejes solos por mucho tiempo o pueden ponerse traviesos."
+  },
+  {
+    "especie": "perro",
+    "raza": "Beagle",
+    "texto": "Su olfato es increíble 👃. Practicá juegos de rastreo para mantenerlo feliz."
+  },
+  {
+    "especie": "perro",
+    "raza": "Beagle",
+    "texto": "Controlá las calorías ⚖️. Les encanta comer, pero son propensos al sobrepeso."
+  },
+  {
+    "especie": "perro",
+    "raza": "Beagle",
+    "texto": "Son cazadores natos 🐾. Llevá correa fuerte, pueden seguir un olor sin mirar atrás."
+  },
+  {
+    "especie": "perro",
+    "raza": "Beagle",
+    "texto": "El paseo diario es sagrado 🚶‍♂️. Si no descargan energía, buscan travesuras."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Caniche",
+    "texto": "El caniche ama aprender 🧠. Usá refuerzos positivos y va a sorprenderte."
+  },
+  {
+    "especie": "perro",
+    "raza": "Caniche",
+    "texto": "Cepillalo seguido 💈. Su pelo rizado se enreda fácil y necesita mantenimiento."
+  },
+  {
+    "especie": "perro",
+    "raza": "Caniche",
+    "texto": "Son sensibles a los gritos 😔. Usá tono suave, responden mejor al cariño."
+  },
+  {
+    "especie": "perro",
+    "raza": "Caniche",
+    "texto": "Les encanta el agua 💦. Si podés, dejalo nadar: es ejercicio y diversión pura."
+  },
+  {
+    "especie": "perro",
+    "raza": "Caniche",
+    "texto": "Súmale juguetes de ingenio 🧩. Así evitás que se aburra o ladre por ansiedad."
+  },
+  {
+    "especie": "perro",
+    "raza": "Caniche",
+    "texto": "Son longevos ❤️. Mantené chequeos regulares para disfrutarlo muchos años."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Chihuahua",
+    "texto": "El chihuahua se cree gigante 😎. Socializalo desde cachorro para evitar celos."
+  },
+  {
+    "especie": "perro",
+    "raza": "Chihuahua",
+    "texto": "Evitalo en el frío 🧣. Su cuerpo pequeño necesita abrigo en invierno."
+  },
+  {
+    "especie": "perro",
+    "raza": "Chihuahua",
+    "texto": "Le gusta estar con vos 👩‍🦰. No lo mimes de más, también necesita independencia."
+  },
+  {
+    "especie": "perro",
+    "raza": "Chihuahua",
+    "texto": "Tiene mucha energía ⚡. Un paseo corto diario lo mantiene equilibrado."
+  },
+  {
+    "especie": "perro",
+    "raza": "Chihuahua",
+    "texto": "Ojo con los saltos 🚫. Sus patas son frágiles, no lo dejes subir y bajar de lugares altos."
+  },
+  {
+    "especie": "perro",
+    "raza": "Chihuahua",
+    "texto": "Es un gran guardián 💬. Te avisará de todo, aunque sea una mosca."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Pug",
+    "texto": "El pug adora la rutina 🕐. Evitá cambios bruscos en horarios de comida o paseo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pug",
+    "texto": "Limpiale los pliegues de la cara 🧴. Evitás irritaciones e infecciones."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pug",
+    "texto": "Controlá el calor ☀️. Su nariz corta lo hace sensible a altas temperaturas."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pug",
+    "texto": "El juego suave es ideal 🎾. No necesita correr maratones, pero sí diversión."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pug",
+    "texto": "Dale alimento ligero 🥗. Ganar peso le afecta la respiración."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pug",
+    "texto": "Le encanta estar cerca tuyo ❤️. Son perros de compañía por excelencia."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Husky Siberiano",
+    "texto": "El husky ama correr 🏃‍♂️. Si puede arrastrar algo, será feliz: instinto de trineo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Husky Siberiano",
+    "texto": "Su pelaje necesita cepillado constante 🧽. En muda, hacelo diario."
+  },
+  {
+    "especie": "perro",
+    "raza": "Husky Siberiano",
+    "texto": "Cuidado con el calor ☀️. Usá paseos al amanecer o atardecer."
+  },
+  {
+    "especie": "perro",
+    "raza": "Husky Siberiano",
+    "texto": "Les encanta aullar 🎶. No es rebeldía, es comunicación."
+  },
+  {
+    "especie": "perro",
+    "raza": "Husky Siberiano",
+    "texto": "Son escapistas profesionales 🕳️. Cercos altos y seguros, por favor."
+  },
+  {
+    "especie": "perro",
+    "raza": "Husky Siberiano",
+    "texto": "Son perros de manada 🐺. No los dejes solos muchas horas."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Cocker Spaniel",
+    "texto": "Los cocker son sensibles al tono de voz 💞. El cariño los motiva más que la corrección."
+  },
+  {
+    "especie": "perro",
+    "raza": "Cocker Spaniel",
+    "texto": "Revisá sus orejas largas 👂. Pueden acumular humedad y causar infecciones."
+  },
+  {
+    "especie": "perro",
+    "raza": "Cocker Spaniel",
+    "texto": "Aman el agua 💦. Si pueden chapotear, estarán felices."
+  },
+  {
+    "especie": "perro",
+    "raza": "Cocker Spaniel",
+    "texto": "Son juguetones por naturaleza 🎾. Dedicale tiempo diario a juegos suaves."
+  },
+  {
+    "especie": "perro",
+    "raza": "Cocker Spaniel",
+    "texto": "Cepillá su pelo cada dos días 🪮. Así evitás nudos y mantiene brillo natural."
+  },
+  {
+    "especie": "perro",
+    "raza": "Cocker Spaniel",
+    "texto": "Necesitan compañía 👨‍👩‍👧‍👦. Son perros familiares que no disfrutan la soledad."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Pastor Alemán",
+    "texto": "El pastor alemán es un atleta 🦴. Combiná ejercicio físico y mental diario."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pastor Alemán",
+    "texto": "Le encanta tener tareas 👮‍♂️. Entrenalo con objetivos simples y claros."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pastor Alemán",
+    "texto": "Protector nato 💪. Socializalo bien para equilibrar confianza y calma."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pastor Alemán",
+    "texto": "Su pelaje doble necesita cepillado semanal 🧴."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pastor Alemán",
+    "texto": "Son leales hasta el final ❤️. Requieren tiempo y vínculo, no solo ejercicio."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pastor Alemán",
+    "texto": "Evitalo en pisos resbaladizos 🦵. Sus caderas son sensibles a lesiones."
+  },
+  {
+    "especie": "perro",
+    "raza": "Salchicha",
+    "texto": "El salchicha es valiente y curioso 🐾. Le encanta explorar cada rincón de la casa."
+  },
+  {
+    "especie": "perro",
+    "raza": "Salchicha",
+    "texto": "Sus patitas cortas no impiden grandes aventuras 💪. Evitá que salte desde alto para cuidar su espalda."
+  },
+  {
+    "especie": "perro",
+    "raza": "Salchicha",
+    "texto": "Le gusta acurrucarse bajo mantas 💤. Siempre busca el lugar más cálido del hogar."
+  },
+  {
+    "especie": "perro",
+    "raza": "Salchicha",
+    "texto": "Necesita paseos cortos pero frecuentes 🚶. El exceso de peso puede dañar su columna."
+  },
+  {
+    "especie": "perro",
+    "raza": "Salchicha",
+    "texto": "Es testarudo pero dulce ❤️. Usá paciencia y premios para enseñarle."
+  },
+  {
+    "especie": "perro",
+    "raza": "Salchicha",
+    "texto": "Tiene espíritu cazador 🦴. Los juegos de rastreo lo vuelven loco de felicidad."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Border Collie",
+    "texto": "El border collie es el Einstein de los perros 🧠. Necesita desafíos mentales diarios."
+  },
+  {
+    "especie": "perro",
+    "raza": "Border Collie",
+    "texto": "Si no tiene trabajo, se inventa uno 😂. Mantenelo ocupado con juegos o entrenamiento."
+  },
+  {
+    "especie": "perro",
+    "raza": "Border Collie",
+    "texto": "Tiene energía infinita ⚡. Ideal para personas activas o deportistas."
+  },
+  {
+    "especie": "perro",
+    "raza": "Border Collie",
+    "texto": "Ama los espacios amplios 🌳. Un parque o campo lo hace feliz."
+  },
+  {
+    "especie": "perro",
+    "raza": "Border Collie",
+    "texto": "Necesita cariño tanto como ejercicio ❤️. Es muy sensible emocionalmente."
+  },
+  {
+    "especie": "perro",
+    "raza": "Border Collie",
+    "texto": "Podés enseñarle trucos complejos 🎯. Aprende más rápido que vos."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Rottweiler",
+    "texto": "El rottweiler es fuerte pero noble 💪❤️. Con cariño y límites claros, es un guardián confiable."
+  },
+  {
+    "especie": "perro",
+    "raza": "Rottweiler",
+    "texto": "Necesita socialización temprana 👋. Así será un perro equilibrado y tranquilo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Rottweiler",
+    "texto": "Evitalo en ejercicios forzados siendo cachorro 🦵. Su crecimiento óseo necesita cuidado."
+  },
+  {
+    "especie": "perro",
+    "raza": "Rottweiler",
+    "texto": "Adora el agua 💦. Si puede nadar, te lo va a agradecer."
+  },
+  {
+    "especie": "perro",
+    "raza": "Rottweiler",
+    "texto": "Su mirada impone respeto 😎, pero es un tierno con su familia."
+  },
+  {
+    "especie": "perro",
+    "raza": "Rottweiler",
+    "texto": "El ejercicio regular mantiene su mente calma 🧘."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Boxer",
+    "texto": "El bóxer es pura energía 🤪. Necesita juegos diarios para liberar entusiasmo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Boxer",
+    "texto": "Su carácter alegre lo hace excelente con niños 👧🧒."
+  },
+  {
+    "especie": "perro",
+    "raza": "Boxer",
+    "texto": "No tolera bien el calor ☀️. Asegurá agua fresca y sombra."
+  },
+  {
+    "especie": "perro",
+    "raza": "Boxer",
+    "texto": "Es muy protector 🛡️. Socializalo para evitar sobreprotección."
+  },
+  {
+    "especie": "perro",
+    "raza": "Boxer",
+    "texto": "Le gusta estar en familia 🏠. No soporta estar solo mucho tiempo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Boxer",
+    "texto": "Siempre joven de espíritu 🐶. Aunque pasen los años, seguirá jugando igual."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Shih Tzu",
+    "texto": "El shih tzu es un perro de compañía nato 💕. Ama estar a tu lado todo el día."
+  },
+  {
+    "especie": "perro",
+    "raza": "Shih Tzu",
+    "texto": "Su pelo largo requiere cepillado diario 🪮. Convertilo en un momento de conexión."
+  },
+  {
+    "especie": "perro",
+    "raza": "Shih Tzu",
+    "texto": "Es valiente pero pacífico ☯️. Ideal para espacios pequeños."
+  },
+  {
+    "especie": "perro",
+    "raza": "Shih Tzu",
+    "texto": "Cuidá sus ojos 👁️. Son grandes y sensibles al polvo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Shih Tzu",
+    "texto": "Aman las rutinas 🕰️. Horarios regulares lo hacen sentir seguro."
+  },
+  {
+    "especie": "perro",
+    "raza": "Shih Tzu",
+    "texto": "Evitalo en el calor extremo ☀️. Son braquicéfalos y pueden sofocarse fácil."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Doberman",
+    "texto": "El doberman combina fuerza e inteligencia ⚡. Entrenalo con firmeza y respeto."
+  },
+  {
+    "especie": "perro",
+    "raza": "Doberman",
+    "texto": "Necesita contacto humano constante 🤝. No es perro para dejar solo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Doberman",
+    "texto": "Se aburre fácil 🧩. Cambiá las rutinas de entrenamiento seguido."
+  },
+  {
+    "especie": "perro",
+    "raza": "Doberman",
+    "texto": "Es atlético 🏃. Ideal para correr, hacer agility o caminatas largas."
+  },
+  {
+    "especie": "perro",
+    "raza": "Doberman",
+    "texto": "Con su familia, es un dulce total ❤️. Su reputación no le hace justicia."
+  },
+  {
+    "especie": "perro",
+    "raza": "Doberman",
+    "texto": "Le gusta aprender rápido 🎯. Los comandos claros lo hacen brillar."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Jack Russell Terrier",
+    "texto": "El jack russell es pura chispa ⚡. Si no gasta energía, te redecorará la casa 😂."
+  },
+  {
+    "especie": "perro",
+    "raza": "Jack Russell Terrier",
+    "texto": "Le encanta cavar 🕳️. No lo retes, es instinto de cazador."
+  },
+  {
+    "especie": "perro",
+    "raza": "Jack Russell Terrier",
+    "texto": "Ideal para deportes caninos 🏅. Tiene agilidad y reflejos de atleta."
+  },
+  {
+    "especie": "perro",
+    "raza": "Jack Russell Terrier",
+    "texto": "Son muy inteligentes 🧠. Usá juegos de pensamiento para mantenerlo entretenido."
+  },
+  {
+    "especie": "perro",
+    "raza": "Jack Russell Terrier",
+    "texto": "Adora perseguir pelotas 🎾. Es su cardio favorito."
+  },
+  {
+    "especie": "perro",
+    "raza": "Jack Russell Terrier",
+    "texto": "Pequeño pero valiente 💪. No mide tamaño, mide corazón."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Pitbull",
+    "texto": "El pitbull es fuerte y sensible a la vez ❤️. Requiere dueño firme y amoroso."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pitbull",
+    "texto": "Necesita actividad física intensa 🏋️. Caminatas largas o juegos de cuerda son ideales."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pitbull",
+    "texto": "Socializalo desde chico 👋. Así se lleva bien con personas y otros perros."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pitbull",
+    "texto": "Tiene energía explosiva ⚡. No es perro de sillón, necesita movimiento."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pitbull",
+    "texto": "Dale desafíos mentales 🎯. Le encanta resolver y complacer."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pitbull",
+    "texto": "A pesar de su fama, es extremadamente leal y cariñoso 💕."
+  },
+  {
+    "especie": "perro",
+    "raza": "Yorkshire Terrier",
+    "texto": "El yorkshire es pequeño pero con alma de león 🦁. Valiente y siempre listo para jugar."
+  },
+  {
+    "especie": "perro",
+    "raza": "Yorkshire Terrier",
+    "texto": "Su pelo largo necesita cepillado diario 🪮. Podés usar un lazo suave para despejar su vista."
+  },
+  {
+    "especie": "perro",
+    "raza": "Yorkshire Terrier",
+    "texto": "Es un excelente compañero de departamentos 🏙️. Le basta con paseos cortos y cariño."
+  },
+  {
+    "especie": "perro",
+    "raza": "Yorkshire Terrier",
+    "texto": "No lo subestimes por su tamaño 😏. Tiene energía para rato."
+  },
+  {
+    "especie": "perro",
+    "raza": "Yorkshire Terrier",
+    "texto": "Evitalo en el frío ❄️. Abrigalo bien en invierno."
+  },
+  {
+    "especie": "perro",
+    "raza": "Yorkshire Terrier",
+    "texto": "Es un perro de compañía por excelencia ❤️. Siempre quiere estar cerca de vos."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Maltés",
+    "texto": "El maltés es una nube con patas ☁️. Suave, tierno y siempre alegre."
+  },
+  {
+    "especie": "perro",
+    "raza": "Maltés",
+    "texto": "Necesita peinado diario 🪮. Su pelo fino se enreda con facilidad."
+  },
+  {
+    "especie": "perro",
+    "raza": "Maltés",
+    "texto": "Ama la atención humana 💞. No le gusta pasar desapercibido."
+  },
+  {
+    "especie": "perro",
+    "raza": "Maltés",
+    "texto": "Es ideal para espacios pequeños 🏠. Paseos cortos y juego bastan para hacerlo feliz."
+  },
+  {
+    "especie": "perro",
+    "raza": "Maltés",
+    "texto": "Evitalo en humedad constante 🚫. Su piel es sensible."
+  },
+  {
+    "especie": "perro",
+    "raza": "Maltés",
+    "texto": "Su energía es contagiosa ⚡. Perfecto para levantar el ánimo del hogar."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Schnauzer",
+    "texto": "El schnauzer es inteligente y protector 🧠🛡️. Aprende rápido y cuida con amor."
+  },
+  {
+    "especie": "perro",
+    "raza": "Schnauzer",
+    "texto": "Sus cejas y barba necesitan recorte regular ✂️. Mantiene su look impecable."
+  },
+  {
+    "especie": "perro",
+    "raza": "Schnauzer",
+    "texto": "Adora los juegos de agilidad 🏃. Su mente activa pide acción."
+  },
+  {
+    "especie": "perro",
+    "raza": "Schnauzer",
+    "texto": "Es sociable si se acostumbra desde cachorro 👶🐶."
+  },
+  {
+    "especie": "perro",
+    "raza": "Schnauzer",
+    "texto": "Ladra para avisar, no por nervios 😅. Escuchalo, solo te informa."
+  },
+  {
+    "especie": "perro",
+    "raza": "Schnauzer",
+    "texto": "Le encanta estar con su familia 👨‍👩‍👧‍👦. No es feliz solo mucho tiempo."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Akita Inu",
+    "texto": "El akita es leal hasta el final ❤️. Su devoción es legendaria."
+  },
+  {
+    "especie": "perro",
+    "raza": "Akita Inu",
+    "texto": "Necesita liderazgo calmado 🧘. No responde a gritos, sino al respeto."
+  },
+  {
+    "especie": "perro",
+    "raza": "Akita Inu",
+    "texto": "Es reservado con extraños 🐾. Pero dulce con quienes ama."
+  },
+  {
+    "especie": "perro",
+    "raza": "Akita Inu",
+    "texto": "Cepillá su doble manto en época de muda 🧴."
+  },
+  {
+    "especie": "perro",
+    "raza": "Akita Inu",
+    "texto": "Le gusta la calma y la rutina 🌙."
+  },
+  {
+    "especie": "perro",
+    "raza": "Akita Inu",
+    "texto": "Respeta mucho el espacio personal 🙇. Es un perro de honor."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "San Bernardo",
+    "texto": "El san bernardo es un gigante amable 🐻. Paciente y cariñoso."
+  },
+  {
+    "especie": "perro",
+    "raza": "San Bernardo",
+    "texto": "Evitalo en calor extremo ☀️. Prefiere lugares frescos."
+  },
+  {
+    "especie": "perro",
+    "raza": "San Bernardo",
+    "texto": "Come mucho 🍖. Vigilá su dieta para evitar sobrepeso."
+  },
+  {
+    "especie": "perro",
+    "raza": "San Bernardo",
+    "texto": "Le gusta estar con su familia 👨‍👩‍👧‍👦. No lo dejes aislado."
+  },
+  {
+    "especie": "perro",
+    "raza": "San Bernardo",
+    "texto": "Babea bastante 😅. Tené una toalla a mano."
+  },
+  {
+    "especie": "perro",
+    "raza": "San Bernardo",
+    "texto": "Pese a su tamaño, es muy sensible 💕."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Pomerania",
+    "texto": "El pomerania es una bolita de energía ☀️. Siempre listo para jugar."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pomerania",
+    "texto": "Cepillalo seguido 🪮. Su pelo necesita amor constante."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pomerania",
+    "texto": "Aunque chiquito, es guardián nato 🔔."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pomerania",
+    "texto": "Le encanta sentirse parte de todo 👑."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pomerania",
+    "texto": "Evitalo en calor extremo ☀️. Su pelaje denso lo sofoca rápido."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pomerania",
+    "texto": "Ideal para departamentos 🏙️, pero necesita paseos diarios."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Weimaraner",
+    "texto": "El weimaraner es elegante y atlético 🏃. Ama correr y explorar."
+  },
+  {
+    "especie": "perro",
+    "raza": "Weimaraner",
+    "texto": "Muy dependiente de su humano 🐾. No le gusta estar solo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Weimaraner",
+    "texto": "Necesita entrenamiento constante 🎯. Aprende rápido y disfruta desafíos."
+  },
+  {
+    "especie": "perro",
+    "raza": "Weimaraner",
+    "texto": "Su pelaje corto brilla si lo cepillás semanalmente ✨."
+  },
+  {
+    "especie": "perro",
+    "raza": "Weimaraner",
+    "texto": "Ideal para actividades al aire libre 🌳. Ama acompañarte en todo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Weimaraner",
+    "texto": "Es un perro sensible ❤️. Reacciona fuerte a los cambios de humor."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Basset Hound",
+    "texto": "El basset tiene olfato legendario 👃. Le encanta seguir rastros."
+  },
+  {
+    "especie": "perro",
+    "raza": "Basset Hound",
+    "texto": "Sus orejas largas deben limpiarse seguido 🧼."
+  },
+  {
+    "especie": "perro",
+    "raza": "Basset Hound",
+    "texto": "Es tranquilo pero obstinado 😌. Usá paciencia en el entrenamiento."
+  },
+  {
+    "especie": "perro",
+    "raza": "Basset Hound",
+    "texto": "Adora dormir mucho 💤. No es perezoso, es un experto en relajación."
+  },
+  {
+    "especie": "perro",
+    "raza": "Basset Hound",
+    "texto": "Evitalo en escaleras 🚫. Su espalda es delicada."
+  },
+  {
+    "especie": "perro",
+    "raza": "Basset Hound",
+    "texto": "Ama estar en familia 👨‍👩‍👧‍👦."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Galgo",
+    "texto": "El galgo es pura elegancia 🏁. Corre rápido, pero en casa es un sofá-lover."
+  },
+  {
+    "especie": "perro",
+    "raza": "Galgo",
+    "texto": "Tiene piel fina 🩶. Evitá frío y superficies ásperas."
+  },
+  {
+    "especie": "perro",
+    "raza": "Galgo",
+    "texto": "Le encanta dormir acurrucado 💤. Necesita su mantita."
+  },
+  {
+    "especie": "perro",
+    "raza": "Galgo",
+    "texto": "A pesar de su velocidad, es tranquilo 🧘."
+  },
+  {
+    "especie": "perro",
+    "raza": "Galgo",
+    "texto": "Son extremadamente cariñosos 💕. Aman la compañía humana."
+  },
+  {
+    "especie": "perro",
+    "raza": "Galgo",
+    "texto": "Disfruta del sol 🌞, pero con cuidado de no sobrecalentarse."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Samoyedo",
+    "texto": "El samoyedo parece una nube sonriente ☁️😄. Es juguetón y amoroso."
+  },
+  {
+    "especie": "perro",
+    "raza": "Samoyedo",
+    "texto": "Necesita cepillado constante 🪮. Su pelaje es una alfombra blanca viva."
+  },
+  {
+    "especie": "perro",
+    "raza": "Samoyedo",
+    "texto": "Ama el frío ❄️. Ideal para climas frescos."
+  },
+  {
+    "especie": "perro",
+    "raza": "Samoyedo",
+    "texto": "Sonríe todo el tiempo 😁. Su expresión natural alegra a cualquiera."
+  },
+  {
+    "especie": "perro",
+    "raza": "Samoyedo",
+    "texto": "Le encanta la vida familiar 👨‍👩‍👧‍👦. Es un perro de grupo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Samoyedo",
+    "texto": "Evitalo en calor extremo ☀️. Sufre mucho por su pelo denso."
+  },
+  {
+    "especie": "gato",
+    "raza": "Persa",
+    "texto": "El persa adora la tranquilidad 💤. Evitá ruidos fuertes y cambios bruscos en su entorno."
+  },
+  {
+    "especie": "gato",
+    "raza": "Persa",
+    "texto": "Peinalo a diario 🪮. Su pelaje largo se enreda con facilidad."
+  },
+  {
+    "especie": "gato",
+    "raza": "Persa",
+    "texto": "Limpiale los ojitos con frecuencia 👁️. Son propensos a lagrimear mucho."
+  },
+  {
+    "especie": "gato",
+    "raza": "Persa",
+    "texto": "Le gusta dormir en superficies suaves 🛏️. Regalale una camita mullida."
+  },
+  {
+    "especie": "gato",
+    "raza": "Persa",
+    "texto": "Evitalo en calor extremo ☀️. Su abundante pelo lo sofoca rápido."
+  },
+  {
+    "especie": "gato",
+    "raza": "Persa",
+    "texto": "Es un gato de rutinas 🕰️. Le gusta comer y jugar siempre a la misma hora."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Siames",
+    "texto": "El siamés es un gran conversador 🗣️. Respondéle cuando maúlle, se sentirá comprendido."
+  },
+  {
+    "especie": "gato",
+    "raza": "Siames",
+    "texto": "Busca atención constante 💞. No lo ignores o te lo hará saber."
+  },
+  {
+    "especie": "gato",
+    "raza": "Siames",
+    "texto": "Es curioso y ágil 🧗. Dale lugares altos para explorar."
+  },
+  {
+    "especie": "gato",
+    "raza": "Siames",
+    "texto": "Se apega a una persona 💕. Es el gato más 'perruno' que vas a conocer."
+  },
+  {
+    "especie": "gato",
+    "raza": "Siames",
+    "texto": "No le gusta la soledad 🚫. Mantenelo acompañado o entretenido."
+  },
+  {
+    "especie": "gato",
+    "raza": "Siames",
+    "texto": "Le encanta el calor ☀️. Buscará los rayos de sol para dormir."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Maine Coon",
+    "texto": "El maine coon es un gigante gentil 🦁. Sociable y cariñoso, ideal para familias."
+  },
+  {
+    "especie": "gato",
+    "raza": "Maine Coon",
+    "texto": "Le encanta el agua 💧. No te sorprendas si mete las patas en el bebedero."
+  },
+  {
+    "especie": "gato",
+    "raza": "Maine Coon",
+    "texto": "Necesita cepillado frecuente 🪮. Su pelo largo se enreda rápido."
+  },
+  {
+    "especie": "gato",
+    "raza": "Maine Coon",
+    "texto": "Es un gato muy activo 🎾. Jugar es su manera de decir 'te quiero'."
+  },
+  {
+    "especie": "gato",
+    "raza": "Maine Coon",
+    "texto": "Adora las alturas 🪜. Proveele rascadores altos o repisas."
+  },
+  {
+    "especie": "gato",
+    "raza": "Maine Coon",
+    "texto": "Tiene un maullido suave y encantador 🎶. No lo subestimes, sabe comunicarse bien."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Bengala",
+    "texto": "El bengala tiene alma salvaje 🌿. Necesita espacio para correr y trepar."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bengala",
+    "texto": "Le fascina el agua 💦. Un bebedero tipo fuente lo vuelve loco."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bengala",
+    "texto": "Es hiperactivo ⚡. Juegos de caza y pelotas lo mantienen feliz."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bengala",
+    "texto": "Tiene fuerte instinto explorador 🧭. Asegurá ventanas y balcones."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bengala",
+    "texto": "Su pelaje moteado requiere poco mantenimiento ✨. Bastan cepillados semanales."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bengala",
+    "texto": "Es curioso y sociable 🐾. Se lleva bien con perros y otros gatos si lo socializás bien."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Ragdoll",
+    "texto": "El ragdoll es un gato zen 😌. Se relaja tanto que parece un peluche cuando lo alzás."
+  },
+  {
+    "especie": "gato",
+    "raza": "Ragdoll",
+    "texto": "Ama los brazos 🤍. Si te sigue por toda la casa, solo quiere cariño."
+  },
+  {
+    "especie": "gato",
+    "raza": "Ragdoll",
+    "texto": "Tiene carácter tranquilo 🧘. Ideal para ambientes pacíficos."
+  },
+  {
+    "especie": "gato",
+    "raza": "Ragdoll",
+    "texto": "No le gustan los ruidos fuertes 🔊. Cuida su entorno del estrés."
+  },
+  {
+    "especie": "gato",
+    "raza": "Ragdoll",
+    "texto": "Es muy sociable 💕. Se lleva bien con niños y otras mascotas."
+  },
+  {
+    "especie": "gato",
+    "raza": "Ragdoll",
+    "texto": "Tiene ojos azules intensos 💎. Evitá exposición directa al sol prolongada."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "El british es un gato independiente pero afectuoso 🐾."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Su cuerpo robusto necesita ejercicio suave 🧘. Juguetes de caza son ideales."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Prefiere rutinas fijas 🕰️. Cambios constantes lo alteran."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Ama observar el entorno desde un rincón 🪟. Dale su espacio propio."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "No tolera bien el calor ☀️. Mantenelo fresco en verano."
+  },
+  {
+    "especie": "gato",
+    "raza": "British Shorthair",
+    "texto": "Es poco maullador 😺. Comunica más con la mirada que con sonidos."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Bombay",
+    "texto": "El bombay parece una mini pantera 🖤. Brillante, ágil y elegante."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bombay",
+    "texto": "Su pelaje necesita solo caricias y cepillado ocasional ✨."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bombay",
+    "texto": "Le encanta el contacto visual 👀. Es un gato muy expresivo."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bombay",
+    "texto": "Adora el calor ☀️. Siempre busca un rayo de sol para dormir."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bombay",
+    "texto": "Es curioso y sociable 👋. Perfecto para hogares con otras mascotas."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bombay",
+    "texto": "Tiene una voz suave y dulce 🎵. Usa maullidos cortos para comunicarse."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Siberiano",
+    "texto": "El siberiano ama trepar 🌲. Su fuerza y agilidad lo convierten en un acróbata natural."
+  },
+  {
+    "especie": "gato",
+    "raza": "Siberiano",
+    "texto": "Tiene pelaje resistente al agua 💦. Ideal para climas fríos."
+  },
+  {
+    "especie": "gato",
+    "raza": "Siberiano",
+    "texto": "Necesita cepillado frecuente 🪮. Evitá que se formen nudos en la base."
+  },
+  {
+    "especie": "gato",
+    "raza": "Siberiano",
+    "texto": "Es cariñoso y valiente ❤️. Se adapta bien a distintos ambientes."
+  },
+  {
+    "especie": "gato",
+    "raza": "Siberiano",
+    "texto": "Le gusta estar acompañado 👨‍👩‍👧‍👦. No es un gato solitario."
+  },
+  {
+    "especie": "gato",
+    "raza": "Siberiano",
+    "texto": "Su ronroneo es profundo y relajante 💆."
+  },
+  {
+    "especie": "gato",
+    "raza": "Abisinio",
+    "texto": "El abisinio es un atleta elegante 🏃‍♂️. Le encanta trepar y explorar cada rincón."
+  },
+  {
+    "especie": "gato",
+    "raza": "Abisinio",
+    "texto": "Tiene pelaje corto y suave ✨. Un cepillado semanal basta para mantenerlo perfecto."
+  },
+  {
+    "especie": "gato",
+    "raza": "Abisinio",
+    "texto": "Es muy sociable 😺. No le gusta pasar mucho tiempo solo."
+  },
+  {
+    "especie": "gato",
+    "raza": "Abisinio",
+    "texto": "Necesita estímulos mentales 🧩. Juguetes de inteligencia lo fascinan."
+  },
+  {
+    "especie": "gato",
+    "raza": "Abisinio",
+    "texto": "Es curioso y valiente 💪. Observá bien, porque se mete en todos lados."
+  },
+  {
+    "especie": "gato",
+    "raza": "Abisinio",
+    "texto": "Adora la compañía humana 🤍. Te seguirá como una sombra afectuosa."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Azul Ruso",
+    "texto": "El azul ruso es refinado y silencioso 🕊️. Ama los espacios tranquilos."
+  },
+  {
+    "especie": "gato",
+    "raza": "Azul Ruso",
+    "texto": "Su pelaje plateado reluce con luz natural ✨. Cepillalo una vez por semana."
+  },
+  {
+    "especie": "gato",
+    "raza": "Azul Ruso",
+    "texto": "Es muy leal ❤️. Tiende a apegarse a una sola persona."
+  },
+  {
+    "especie": "gato",
+    "raza": "Azul Ruso",
+    "texto": "Le gusta la calma 🧘. Evitá ambientes ruidosos o caóticos."
+  },
+  {
+    "especie": "gato",
+    "raza": "Azul Ruso",
+    "texto": "No le gustan los extraños 🚪. Necesita tiempo para confiar."
+  },
+  {
+    "especie": "gato",
+    "raza": "Azul Ruso",
+    "texto": "Tiene mirada hipnótica 👁️. Su color verde intenso enamora."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Scottish Fold",
+    "texto": "El scottish fold es un gato dulce y tranquilo 😺. Su mirada tierna derrite corazones."
+  },
+  {
+    "especie": "gato",
+    "raza": "Scottish Fold",
+    "texto": "Sus orejitas plegadas son su sello 👂. No las toques demasiado."
+  },
+  {
+    "especie": "gato",
+    "raza": "Scottish Fold",
+    "texto": "Es curioso y sociable 🐾. Le gusta estar donde pasa la acción."
+  },
+  {
+    "especie": "gato",
+    "raza": "Scottish Fold",
+    "texto": "Evitalo en superficies altas 🚫. No todos los fold tienen buen equilibrio."
+  },
+  {
+    "especie": "gato",
+    "raza": "Scottish Fold",
+    "texto": "Le encanta dormir enrollado 💤. Buscá una camita mullida."
+  },
+  {
+    "especie": "gato",
+    "raza": "Scottish Fold",
+    "texto": "Es un gato silencioso pero observador 👀."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Bosque de Noruega",
+    "texto": "El bosque de noruega parece salido de un cuento ❄️. Majestuoso y cariñoso."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bosque de Noruega",
+    "texto": "Su pelo espeso lo protege del frío 🧣. Cepillalo seguido para evitar nudos."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bosque de Noruega",
+    "texto": "Le encanta escalar 🌲. Ofrecele árboles o estanterías para trepar."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bosque de Noruega",
+    "texto": "Es sociable pero independiente ⚖️. Respeta sus momentos de soledad."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bosque de Noruega",
+    "texto": "Tiene mirada profunda 💚. Transmite calma y seguridad."
+  },
+  {
+    "especie": "gato",
+    "raza": "Bosque de Noruega",
+    "texto": "Ama el aire fresco 🍃. Disfruta mirar por la ventana o salir a balcones seguros."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Birmano",
+    "texto": "El birmano combina dulzura y elegancia 🤍. Su pelaje sedoso es inconfundible."
+  },
+  {
+    "especie": "gato",
+    "raza": "Birmano",
+    "texto": "Le encanta la compañía humana 👩‍🦰. Es el compañero perfecto para días tranquilos."
+  },
+  {
+    "especie": "gato",
+    "raza": "Birmano",
+    "texto": "Tiene ojos azules hipnóticos 💎. Evitá exponerlo al sol directo mucho tiempo."
+  },
+  {
+    "especie": "gato",
+    "raza": "Birmano",
+    "texto": "Es juguetón en su justa medida 🎾. Nunca pierde su elegancia."
+  },
+  {
+    "especie": "gato",
+    "raza": "Birmano",
+    "texto": "Se adapta muy bien a casas pequeñas 🏠."
+  },
+  {
+    "especie": "gato",
+    "raza": "Birmano",
+    "texto": "No le gusta estar solo 🐾. Prefiere tener compañía constante."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Oriental de Pelo Corto",
+    "texto": "El oriental de pelo corto es extrovertido y parlanchín 🗣️. Le gusta ser el centro de atención."
+  },
+  {
+    "especie": "gato",
+    "raza": "Oriental de Pelo Corto",
+    "texto": "Su cuerpo delgado es puro músculo 💪. Dale espacio para moverse."
+  },
+  {
+    "especie": "gato",
+    "raza": "Oriental de Pelo Corto",
+    "texto": "Tiene un maullido fuerte y expresivo 🎤."
+  },
+  {
+    "especie": "gato",
+    "raza": "Oriental de Pelo Corto",
+    "texto": "Le encanta dormir contigo 💤. No soporta la soledad."
+  },
+  {
+    "especie": "gato",
+    "raza": "Oriental de Pelo Corto",
+    "texto": "Es leal como un perro 🐕. Te seguirá a todos lados."
+  },
+  {
+    "especie": "gato",
+    "raza": "Oriental de Pelo Corto",
+    "texto": "Su pelo corto casi no suelta ✨. Ideal para alérgicos leves."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Himalayo",
+    "texto": "El himalayo combina lo mejor del persa y el siamés 🌸. Sereno y adorable."
+  },
+  {
+    "especie": "gato",
+    "raza": "Himalayo",
+    "texto": "Necesita cepillado diario 🪮. Su pelo largo requiere constancia."
+  },
+  {
+    "especie": "gato",
+    "raza": "Himalayo",
+    "texto": "Sus ojos azules intensos 💙 son un imán de ternura."
+  },
+  {
+    "especie": "gato",
+    "raza": "Himalayo",
+    "texto": "Prefiere ambientes tranquilos 🕯️."
+  },
+  {
+    "especie": "gato",
+    "raza": "Himalayo",
+    "texto": "Es sociable pero reservado 🐾."
+  },
+  {
+    "especie": "gato",
+    "raza": "Himalayo",
+    "texto": "Disfruta dormir en superficies suaves 🛏️."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Savannah",
+    "texto": "El savannah es un mini felino salvaje 🌍. Ágil, curioso y muy inteligente."
+  },
+  {
+    "especie": "gato",
+    "raza": "Savannah",
+    "texto": "Le gusta saltar alto 🦘. Asegurá repisas y muebles estables."
+  },
+  {
+    "especie": "gato",
+    "raza": "Savannah",
+    "texto": "Se apega fuerte a su humano ❤️. Necesita tiempo de calidad."
+  },
+  {
+    "especie": "gato",
+    "raza": "Savannah",
+    "texto": "Adora el agua 💦. Dejalo jugar bajo el chorro, ¡le encanta!"
+  },
+  {
+    "especie": "gato",
+    "raza": "Savannah",
+    "texto": "Necesita estímulos constantes 🎯. No lo dejes aburrirse."
+  },
+  {
+    "especie": "gato",
+    "raza": "Savannah",
+    "texto": "Come mucho 🍗. Requiere dieta rica en proteínas."
+  },
+
+  {
+    "especie": "gato",
+    "raza": "Cornish Rex",
+    "texto": "El cornish rex tiene pelo rizado y suave 🌀. Parece de terciopelo."
+  },
+  {
+    "especie": "gato",
+    "raza": "Cornish Rex",
+    "texto": "Es hiperactivo y divertido 😂. Ideal para familias dinámicas."
+  },
+  {
+    "especie": "gato",
+    "raza": "Cornish Rex",
+    "texto": "Le encanta trepar y explorar 🧗."
+  },
+  {
+    "especie": "gato",
+    "raza": "Cornish Rex",
+    "texto": "No tolera bien el frío ❄️. Abrigalo en invierno."
+  },
+  {
+    "especie": "gato",
+    "raza": "Cornish Rex",
+    "texto": "Es muy sociable 😺. Siempre quiere estar en el medio de todo."
+  },
+  {
+    "especie": "gato",
+    "raza": "Cornish Rex",
+    "texto": "Tiene un ronroneo fuerte y feliz 🎵."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Mini Lop",
+    "texto": "El mini lop es pura ternura 🩵. Le encanta que lo acaricien en la frente."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Mini Lop",
+    "texto": "Necesita espacio para saltar 🐇. No lo dejes todo el día en la jaula."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Mini Lop",
+    "texto": "Come heno todo el día 🌾. Es clave para su digestión y dientes."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Mini Lop",
+    "texto": "Evitalo en calor extremo ☀️. Su pelaje retiene mucha temperatura."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Mini Lop",
+    "texto": "Son muy sociables 👋. Les gusta tener otro conejo como amigo."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Mini Lop",
+    "texto": "Podés enseñarle trucos simples 🎯. Son más inteligentes de lo que creés."
+  },
+
+  {
+    "especie": "conejo",
+    "raza": "Angora",
+    "texto": "El angora parece una nube 🐰☁️. Su pelo largo necesita cepillado diario."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Angora",
+    "texto": "Evitalo en climas cálidos 🥵. Su pelaje denso lo hace sensible al calor."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Angora",
+    "texto": "Dale juguetes de masticar 🦷. Así mantiene sus dientes sanos."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Angora",
+    "texto": "Le gusta la calma 🌿. No lo expongas a ruidos o movimientos bruscos."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Angora",
+    "texto": "Es un conejo afectuoso 🤍. Le encanta acurrucarse en tu falda."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Angora",
+    "texto": "Supervisá que no ingiera mucho pelo al acicalarse 🧼."
+  },
+
+  {
+    "especie": "conejo",
+    "raza": "Rex",
+    "texto": "El rex tiene pelo de terciopelo 🪶. Es suave y corto, ideal para acariciar."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Rex",
+    "texto": "Le gusta la interacción humana 👋. Pasá tiempo jugando con él."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Rex",
+    "texto": "Evitalo en superficies resbaladizas 🚫. Sus patas pueden lastimarse."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Rex",
+    "texto": "Es curioso y valiente 🐾. Explorará cada rincón que le permitas."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Rex",
+    "texto": "Come mucho heno 🌾. Es su alimento principal."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Rex",
+    "texto": "Le gusta tener escondites 🏡. Un tubo o caja lo hará sentir seguro."
+  },
+
+  {
+    "especie": "conejo",
+    "raza": "Belier",
+    "texto": "El belier es famoso por sus orejas caídas 🐰. ¡Y por su carácter dulce!"
+  },
+  {
+    "especie": "conejo",
+    "raza": "Belier",
+    "texto": "Son muy sociables 🤍. Les gusta estar acompañados."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Belier",
+    "texto": "No le gusta que lo levanten mucho 🚫. Preferí acariciarlo en el suelo."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Belier",
+    "texto": "Sus orejas deben limpiarse seguido 👂. Pueden acumular humedad."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Belier",
+    "texto": "Comé heno, verduras y agua fresca 🥬💧. Mantiene su salud perfecta."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Belier",
+    "texto": "Le encanta descansar estirado 💤. ¡Parece un peluche derretido!"
+  },
+
+  {
+    "especie": "conejo",
+    "raza": "Cabeza de León",
+    "texto": "El cabeza de león tiene una melena adorable 🦁. Cepillala con cariño cada semana."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Cabeza de León",
+    "texto": "Es juguetón y curioso ⚡. Necesita espacio para saltar y explorar."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Cabeza de León",
+    "texto": "Le gusta vivir en pareja 🐇🐇. Son más felices con compañía."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Cabeza de León",
+    "texto": "Evitalo en ambientes ruidosos 🔇."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Cabeza de León",
+    "texto": "Come mucho heno 🌾 y un poco de fruta 🍎 de vez en cuando."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Cabeza de León",
+    "texto": "Podés enseñarle a usar bandeja sanitaria 🧼. Son muy limpios."
+  },
+
+  {
+    "especie": "ave",
+    "raza": "Cacatúa",
+    "texto": "La cacatúa es sociable y expresiva 🗣️. Le encanta imitar sonidos y voces."
+  },
+  {
+    "especie": "ave",
+    "raza": "Cacatúa",
+    "texto": "Necesita tiempo fuera de la jaula ✈️. Es curiosa y juguetona."
+  },
+  {
+    "especie": "ave",
+    "raza": "Cacatúa",
+    "texto": "Le encanta el contacto humano 🤍. Pero respeta sus tiempos de descanso."
+  },
+  {
+    "especie": "ave",
+    "raza": "Cacatúa",
+    "texto": "Dale juguetes coloridos 🎨. Evitás que se aburra."
+  },
+  {
+    "especie": "ave",
+    "raza": "Cacatúa",
+    "texto": "No la dejes sola mucho tiempo 😢. Puede deprimirse fácilmente."
+  },
+  {
+    "especie": "ave",
+    "raza": "Cacatúa",
+    "texto": "Le encanta bañarse 💦. Pulverizala con agua tibia de vez en cuando."
+  },
+
+  {
+    "especie": "ave",
+    "raza": "Guacamayo",
+    "texto": "El guacamayo es colorido y ruidoso 🌈🔊. Le encanta ser el centro de atención."
+  },
+  {
+    "especie": "ave",
+    "raza": "Guacamayo",
+    "texto": "Necesita volar o moverse mucho ✈️. Asegurá un espacio amplio."
+  },
+  {
+    "especie": "ave",
+    "raza": "Guacamayo",
+    "texto": "Come frutas frescas todos los días 🍎🍌."
+  },
+  {
+    "especie": "ave",
+    "raza": "Guacamayo",
+    "texto": "Le encanta escuchar música 🎵. Puede aprender a seguir el ritmo."
+  },
+  {
+    "especie": "ave",
+    "raza": "Guacamayo",
+    "texto": "Sus plumas necesitan sol directo ☀️. Ayuda a mantener colores brillantes."
+  },
+  {
+    "especie": "ave",
+    "raza": "Guacamayo",
+    "texto": "Son aves de pareja 💞. Siempre buscan compañía."
+  },
+
+  {
+    "especie": "ave",
+    "raza": "Periquito",
+    "texto": "El periquito es alegre y sociable 🐥. Le encanta cantar por la mañana."
+  },
+  {
+    "especie": "ave",
+    "raza": "Periquito",
+    "texto": "Dale un compañero 🐦. Son más felices en pareja."
+  },
+  {
+    "especie": "ave",
+    "raza": "Periquito",
+    "texto": "Les gusta tener espejos y campanitas 🔔."
+  },
+  {
+    "especie": "ave",
+    "raza": "Periquito",
+    "texto": "Limpiales el agua y comida todos los días 💧🍽️."
+  },
+  {
+    "especie": "ave",
+    "raza": "Periquito",
+    "texto": "Evitalo en corrientes de aire 🌬️. Son sensibles al frío."
+  },
+  {
+    "especie": "ave",
+    "raza": "Periquito",
+    "texto": "Podés enseñarles palabras simples 🗣️. Son excelentes imitadores."
+  },
+
+  {
+    "especie": "ave",
+    "raza": "Amazonas",
+    "texto": "El loro Amazonas es muy inteligente 🧠. Aprende trucos y palabras fácilmente."
+  },
+  {
+    "especie": "ave",
+    "raza": "Amazonas",
+    "texto": "Necesita interacción diaria 👋. No lo dejes solo mucho tiempo."
+  },
+  {
+    "especie": "ave",
+    "raza": "Amazonas",
+    "texto": "Le encantan los alimentos variados 🍓🌽."
+  },
+  {
+    "especie": "ave",
+    "raza": "Amazonas",
+    "texto": "Requiere baños frecuentes 💦. Ayuda a mantener sus plumas sanas."
+  },
+  {
+    "especie": "ave",
+    "raza": "Amazonas",
+    "texto": "Puede vivir más de 40 años ⏳. ¡Compromiso de por vida!"
+  },
+  {
+    "especie": "ave",
+    "raza": "Amazonas",
+    "texto": "Les encanta la música 🎶. Pueden bailar si los animás."
+  },
+
+  {
+    "especie": "ave",
+    "raza": "Agapornis",
+    "texto": "Los agapornis son inseparables 💞. Siempre necesitan pareja o mucha atención."
+  },
+  {
+    "especie": "ave",
+    "raza": "Agapornis",
+    "texto": "Son juguetones 🎾. Les encanta morder objetos coloridos."
+  },
+  {
+    "especie": "ave",
+    "raza": "Agapornis",
+    "texto": "Limpá su jaula a menudo 🧼. Son muy limpios."
+  },
+  {
+    "especie": "ave",
+    "raza": "Agapornis",
+    "texto": "Necesitan luz natural ☀️. Mejora su ánimo y salud."
+  },
+  {
+    "especie": "ave",
+    "raza": "Agapornis",
+    "texto": "Dales ramas naturales 🌿 para desgastar su pico."
+  },
+  {
+    "especie": "ave",
+    "raza": "Agapornis",
+    "texto": "No los dejes solos demasiado tiempo 😢. Son sensibles al abandono."
+  },
+  {
+    "especie": "pez",
+    "raza": "Betta",
+    "texto": "El betta es un pez solitario 🐟. No lo mezcles con otros machos, son muy territoriales."
+  },
+  {
+    "especie": "pez",
+    "raza": "Betta",
+    "texto": "Le encanta el agua tibia 🌡️. Mantenela entre 25 y 28 °C."
+  },
+  {
+    "especie": "pez",
+    "raza": "Betta",
+    "texto": "No necesita filtro potente 💨. Prefiere aguas tranquilas."
+  },
+  {
+    "especie": "pez",
+    "raza": "Betta",
+    "texto": "Podés enseñarle a seguir tu dedo 👉. Son más inteligentes de lo que parecen."
+  },
+  {
+    "especie": "pez",
+    "raza": "Betta",
+    "texto": "No llenes su pecera hasta el borde 🚫. Necesita respirar aire de la superficie."
+  },
+  {
+    "especie": "pez",
+    "raza": "Betta",
+    "texto": "Evitalo con peces de aletas largas 🐠. Tiende a confundirlos con rivales."
+  },
+
+  {
+    "especie": "pez",
+    "raza": "Goldfish",
+    "texto": "El goldfish necesita espacio 🏞️. Nada de peceras redondas: mínimo 40 L por pez."
+  },
+  {
+    "especie": "pez",
+    "raza": "Goldfish",
+    "texto": "Come poco pero seguido 🍽️. Su sistema digestivo es delicado."
+  },
+  {
+    "especie": "pez",
+    "raza": "Goldfish",
+    "texto": "El agua debe estar limpia 💧. Cambiá un 30 % cada semana."
+  },
+  {
+    "especie": "pez",
+    "raza": "Goldfish",
+    "texto": "Les gusta estar en grupo 👨‍👩‍👦‍👦. Son peces sociables."
+  },
+  {
+    "especie": "pez",
+    "raza": "Goldfish",
+    "texto": "Prefiere agua fría (20–23 °C) ❄️."
+  },
+  {
+    "especie": "pez",
+    "raza": "Goldfish",
+    "texto": "Crecen más de lo que pensás 🐡. No los subestimes por su tamaño inicial."
+  },
+
+  {
+    "especie": "pez",
+    "raza": "Guppy",
+    "texto": "Los guppys son peces coloridos y resistentes 🌈. Perfectos para principiantes."
+  },
+  {
+    "especie": "pez",
+    "raza": "Guppy",
+    "texto": "Reproducen muy rápido 🍼. Separá machos y hembras si no querés criarlos."
+  },
+  {
+    "especie": "pez",
+    "raza": "Guppy",
+    "texto": "Les gusta nadar en grupo 🐠🐠🐠."
+  },
+  {
+    "especie": "pez",
+    "raza": "Guppy",
+    "texto": "Prefieren agua tibia (24–28 °C) 🌡️."
+  },
+  {
+    "especie": "pez",
+    "raza": "Guppy",
+    "texto": "Son omnívoros 🍽️. Variá entre escamas, vegetales y artemia."
+  },
+  {
+    "especie": "pez",
+    "raza": "Guppy",
+    "texto": "No los sobrealimentes 🚫. Mejor varias comidas pequeñas al día."
+  },
+
+  {
+    "especie": "pez",
+    "raza": "Cíclido",
+    "texto": "Los cíclidos son territoriales ⚔️. Evitá mezclarlos con especies tranquilas."
+  },
+  {
+    "especie": "pez",
+    "raza": "Cíclido",
+    "texto": "Prefieren acuarios grandes 🏝️. Les gusta tener su propio territorio."
+  },
+  {
+    "especie": "pez",
+    "raza": "Cíclido",
+    "texto": "Cuidá el pH del agua ⚗️. Les gusta entre 7 y 8 según la especie."
+  },
+  {
+    "especie": "pez",
+    "raza": "Cíclido",
+    "texto": "Son padres dedicados 👨‍👩‍👧. Protegen sus crías ferozmente."
+  },
+  {
+    "especie": "pez",
+    "raza": "Cíclido",
+    "texto": "Les gusta esconderse entre rocas 🪨."
+  },
+  {
+    "especie": "pez",
+    "raza": "Cíclido",
+    "texto": "Varía su dieta con proteína y vegetales 🍤🥦."
+  },
+
+  {
+    "especie": "pez",
+    "raza": "Koi",
+    "texto": "El koi simboliza suerte y prosperidad 🧧. Son peces pacíficos y longevos."
+  },
+  {
+    "especie": "pez",
+    "raza": "Koi",
+    "texto": "Viven mejor en estanques amplios 🌳. Necesitan al menos 500 L por pez."
+  },
+  {
+    "especie": "pez",
+    "raza": "Koi",
+    "texto": "Aman el agua limpia 💦. Filtración constante es clave."
+  },
+  {
+    "especie": "pez",
+    "raza": "Koi",
+    "texto": "Pueden reconocer a su cuidador 👋. Se acercan cuando te ven."
+  },
+  {
+    "especie": "pez",
+    "raza": "Koi",
+    "texto": "Comen en superficie 🍽️. Usá alimento flotante."
+  },
+  {
+    "especie": "pez",
+    "raza": "Koi",
+    "texto": "Hibernan en invierno ❄️. No los sobrealimentes con frío."
+  },
+
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "La iguana necesita luz UVB ☀️. Es vital para metabolizar calcio."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "Comé vegetales verdes 🥬. Nada de carne o insectos."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "Sube a ramas altas 🌴. Amará un terrario vertical."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "Bañala con agua tibia 💧. Ayuda a hidratar su piel."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "Evitalo con otras iguanas 🚫. Son muy territoriales."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "texto": "Cambia su dieta según la edad 🍃. Los jóvenes comen más frutas."
+  },
+
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "El camaleón cambia de color según su humor 🎨."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "Prefiere humedad constante 💦. Pulverizá su terrario dos veces al día."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "Sus ojos se mueven de forma independiente 👀."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "Necesita ramas finas para escalar 🌿."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "No lo manipules seguido 🙅. Se estresa fácil."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "texto": "Comé insectos vivos 🪳. Asegurate que estén bien alimentados antes."
+  },
+
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "Las tortugas necesitan sol diario ☀️. Fortalece su caparazón."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "Dales agua limpia 💧. Les gusta nadar y beber en el mismo lugar."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "No las alimentes solo con lechuga 🥬. Necesitan variedad."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "Su caparazón no es una 'armadura': siente presión 🦴."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "Les gusta tomar sol en piedras 🪨."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "texto": "Pueden vivir décadas ⏳. ¡Son compromiso a largo plazo!"
+  },
+
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "El gecko leopardo es nocturno 🌙. No necesita luz UVB fuerte."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "Come grillos y gusanos 🪳. No insectos grandes."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "Almacena grasa en su cola 🍑. Si está gruesa, está sano."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "Evita el sustrato de arena 🚫. Puede causarle obstrucción."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "Le gusta esconderse 🕳️. Agregá cuevas o refugios."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "texto": "Cambia de piel cada pocas semanas 🧖. Necesita humedad para hacerlo bien."
+  },
+
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "La boa es fuerte y tranquila 🐍. Manipulala con respeto."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "Prefiere temperatura cálida (28–32 °C) 🌡️."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "Dale ramas para trepar 🪵."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "No la alimentes con presas vivas 🚫. Usá alimento descongelado."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "Son excelentes nadadoras 💦."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "texto": "No las toques justo después de comer 🍗. Pueden regurgitar por estrés."
+  },
+
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "El varano es un reptil curioso y listo 🧠. Reconoce a su cuidador."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "Necesita mucho espacio 🏞️. Son activos y fuertes."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "Puede aprender rutinas y paseos con arnés 😎."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "No lo molestes mientras come 🍖. Se pone territorial."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "Le gusta escarbar 🪴. Agregá sustrato profundo."
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "texto": "Su mordida es poderosa ⚡. Respetá su espacio."
   }
   
 ]

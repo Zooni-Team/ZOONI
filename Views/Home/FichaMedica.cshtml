@@ -289,6 +289,8 @@ main {
     <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
 </div>
 
+
+
 <div class="overlay" id="overlay"></div>
 
 <main>
@@ -300,6 +302,16 @@ main {
 <div class="dato">⚖️ <span>Peso:</span> @pesoFormateado kg</div>
         <div class="dato">🎂 <span>Edad:</span> @edadFormateada</div>
     </div>
+<div style="margin-top: 10px; text-align:center;">
+    <button id="btnDescargarPDF" 
+        style="background: var(--verde); color: white; border: none; 
+               border-radius: 12px; padding: 10px 20px; 
+               font-weight: 600; cursor: pointer; 
+               font-family: 'Poppins', sans-serif; 
+               box-shadow: 0 3px 6px rgba(0,0,0,0.2);">
+        📄 Descargar PDF
+    </button>
+</div>
 
     <div class="historial">
         <button class="btn-historial" onclick="location.href='/Home/FichaConsultas'">📋 Veterinarios <i>›</i></button>
@@ -346,6 +358,17 @@ fetch("/data/consejos.json")
     }
 });
 </script>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const botonPDF = document.getElementById("btnDescargarPDF");
+    if (botonPDF) {
+        botonPDF.addEventListener("click", () => {
+            window.location.href = "/Home/DescargarPDF";
+        });
+    }
+});
+</script>
+
 </body>
 </html>
 <!-- © 2025 Zooni Team
