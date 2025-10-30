@@ -4,7 +4,6 @@
     ViewData["Title"] = "Calendario - Zooni";
     Layout = null;
 }
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -17,10 +16,12 @@
 :root {
     --verde: #3ac37d;
     --amarillo: #FFD85A;
-    --marron: #4B3B2B;
-    --rosado: #ffb7b7;
-    --celeste: #b6e3ff;
-    --verde-claro: #bdf5d7;
+    --rojo: #e14a4a;
+    --marron: #3a2a1b;
+    --gris: #2c2c2c;
+    --blanco: #ffffff;
+    --overlay: rgba(0, 0, 0, 0.45);
+    --gradiente: linear-gradient(160deg, #e9f9f0 0%, #c6ebd1 100%);
 }
 
 html, body {
@@ -29,8 +30,8 @@ html, body {
     width: 100%;
     height: 100%;
     font-family: 'Poppins', sans-serif;
-    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
-    color: var(--marron);
+    background: var(--gradiente);
+    color: var(--gris);
     overflow-x: hidden;
 }
 
@@ -41,8 +42,8 @@ header {
     z-index: 10;
 }
 .menu-icon {
-    width: 38px;
-    height: 38px;
+    width: 36px;
+    height: 36px;
     cursor: pointer;
     transition: transform .25s ease;
 }
@@ -53,10 +54,9 @@ header {
     top: 0;
     left: 0;
     transform: translateX(-100%);
-    width: 240px;
+    width: 250px;
     height: 100%;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(12px);
+    background: #fff;
     box-shadow: 4px 0 12px rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
@@ -64,37 +64,30 @@ header {
     gap: 1rem;
     transition: transform 0.35s ease;
     z-index: 999;
-    border-top-right-radius: 18px;
-    border-bottom-right-radius: 18px;
 }
 .menu-lateral.abierto { transform: translateX(0); }
 .menu-lateral a {
     text-decoration: none;
     font-weight: 600;
-    color: var(--marron);
-    font-size: 1.1rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 12px;
+    color: var(--gris);
+    font-size: 1.05rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
     transition: all .25s ease;
 }
-.menu-lateral a:hover {
-    background: var(--amarillo);
-    color: #3c2a00;
-}
+.menu-lateral a:hover { background: var(--verde); color: #fff; }
+
 .cerrar-menu {
     align-self: flex-end;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
     cursor: pointer;
     margin-bottom: 1.5rem;
-    color: var(--marron);
 }
-.cerrar-menu:hover { transform: scale(1.2); }
-
 .overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.25);
+    background: var(--overlay);
     opacity: 0; pointer-events: none;
     transition: opacity .3s ease;
     z-index: 998;
@@ -103,7 +96,7 @@ header {
 
 main {
     width: 100%;
-    max-width: 600px;
+    max-width: 700px;
     margin: 100px auto 120px auto;
     padding: 0 20px;
     box-sizing: border-box;
@@ -112,31 +105,44 @@ main {
     text-align: center;
     font-size: 2rem;
     font-weight: 700;
-    color: #fff;
-    text-shadow: 1px 2px 4px rgba(0,0,0,0.35);
+    color: var(--gris);
     margin-bottom: 30px;
 }
 
 .evento {
-    background: rgba(255,255,255,0.9);
-    border-radius: 18px;
+    background: #ffffff;
+    border-radius: 12px;
     padding: 18px 20px;
     margin-bottom: 16px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-    transition: transform .2s ease, background .2s ease;
-    cursor: grab;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    transition: all .3s ease;
     position: relative;
 }
-.evento:active { cursor: grabbing; transform: scale(1.02); }
-.evento h3 { margin: 0; font-size: 1.3rem; font-weight: 700; }
-.evento .tipo { font-size: .95rem; opacity: .85; }
-.evento .fecha { color: #555; font-size: .9rem; margin-top: 4px; }
-.evento .descripcion { margin-top: 8px; font-size: .95rem; }
-
-.evento.vacuna { border-left: 7px solid var(--rosado); background: #fff2f2; }
-.evento.paseo { border-left: 7px solid var(--verde); background: #eafff1; }
-.evento.consulta { border-left: 7px solid var(--celeste); background: #f1faff; }
-.evento.otro { border-left: 7px solid var(--amarillo); background: #fffbe8; }
+.evento h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--gris);
+}
+.evento .tipo {
+    font-size: .9rem;
+    color: var(--verde);
+    margin-top: 5px;
+}
+.evento .fecha {
+    color: #666;
+    font-size: .9rem;
+    margin-top: 4px;
+}
+.evento .descripcion {
+    margin-top: 8px;
+    font-size: .95rem;
+    color: #444;
+}
+.evento.vacuna { border-left: 6px solid #ff7070; }
+.evento.paseo { border-left: 6px solid #3ac37d; }
+.evento.consulta { border-left: 6px solid #49a7ff; }
+.evento.otro { border-left: 6px solid #ffd85a; }
 
 .acciones {
     position: absolute;
@@ -149,12 +155,12 @@ main {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 1.1rem;
-    transition: transform .2s;
+    font-size: 1rem;
+    color: #666;
+    transition: transform .2s, color .2s;
 }
-.acciones button:hover { transform: scale(1.2); }
-.btn-edit { color: var(--verde); }
-.btn-del { color: crimson; }
+.btn-edit:hover { transform: scale(1.2); color: var(--verde); }
+.btn-del:hover { transform: scale(1.2); color: crimson; }
 
 .boton-agregar {
     position: fixed;
@@ -168,42 +174,52 @@ main {
     width: 58px;
     height: 58px;
     cursor: pointer;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,0.25);
+    transition: background .3s ease;
 }
+.boton-agregar:hover { background: #2fa66a; }
 
 .modal {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.3);
+    background: rgba(0,0,0,0.4);
     justify-content: center;
     align-items: center;
     z-index: 1000;
 }
 .modal-content {
-    background: white;
-    border-radius: 18px;
+    background: #ffffff;
+    border-radius: 14px;
     padding: 20px;
     width: 90%;
     max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
 }
-.modal-content h2 { color: var(--verde); margin-bottom: 10px; }
+.modal-content h2 {
+    color: var(--verde);
+    margin-bottom: 14px;
+    font-size: 1.4rem;
+}
 .modal-content input, .modal-content textarea, .modal-content select {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
+    padding: 10px;
+    margin-bottom: 12px;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-family: inherit;
+    font-size: 0.95rem;
 }
 .modal-content button {
     background: var(--verde);
     color: white;
     border: none;
-    padding: 8px 14px;
+    padding: 9px 14px;
     border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
 }
+.modal-content button:hover { background: #2fa66a; }
 
 @@media (max-width: 480px) {
     .titulo { font-size: 1.6rem; }
@@ -212,30 +228,30 @@ main {
 }
 </style>
 </head>
-<body>
 
+<body>
 <header>
     <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
 </header>
 
 <div class="menu-lateral" id="menuLateral">
     <div class="cerrar-menu" id="cerrarMenu">✖</div>
-    <a href="/Home/Index">🏠 Inicio</a>
-    <a href="/Comunidad">👥 Comunidad</a>
-    <a href="/Marketplace">🛒 Marketplace</a>
-    <a href="/home/FichaMedica">💉 Ficha médica</a>
-    <a href="/home/calendario">📅 Calendario</a>
-    <a href="/Chat/ChatZooni">💬 Mi Virtual Vet</a>
-    <a href="/Closet">👕 Closet</a>
-    <a href="/Home/Perfil">👤 Perfil</a>
-    <a href="/Home/configuracion">⚙️ Configuración</a>
-    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+    <a href="/Home/Index">Inicio</a>
+    <a href="/Comunidad">Comunidad</a>
+    <a href="/Marketplace">Marketplace</a>
+    <a href="/home/FichaMedica">Ficha médica</a>
+    <a href="/home/calendario">Calendario</a>
+    <a href="/Chat/ChatZooni">Asistente Virtual</a>
+    <a href="/Closet">Closet</a>
+    <a href="/Home/Perfil">Perfil</a>
+    <a href="/Home/configuracion">Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">Cerrar sesión</a>
 </div>
 
 <div class="overlay" id="overlay"></div>
 
 <main>
-    <div class="titulo">Calendario de Cuidados 🐾</div>
+    <div class="titulo">Calendario de Cuidados</div>
 
     <div id="eventContainer">
         @if (Model?.Eventos?.Count > 0)
@@ -249,13 +265,16 @@ main {
                     "consulta" => "consulta",
                     _ => "otro"
                 };
-                <div class="evento @clase" draggable="true" data-id="@ev.Id_Evento">
+                <div class="evento @clase" 
+                     draggable="true" 
+                     data-id="@ev.Id_Evento" 
+                     data-fecha="@ev.Fecha.ToString("yyyy-MM-ddTHH:mm")">
                     <div class="acciones">
                         <button class="btn-edit" onclick="editarEvento(@ev.Id_Evento, '@ev.Titulo', '@ev.Descripcion', '@ev.Tipo', '@ev.Fecha.ToString("yyyy-MM-ddTHH:mm")')">✏️</button>
                         <button class="btn-del" onclick="eliminarEvento(@ev.Id_Evento)">🗑️</button>
                     </div>
                     <h3>@ev.Titulo</h3>
-                    <div class="tipo">🐾 @ev.Tipo</div>
+                    <div class="tipo">@ev.Tipo</div>
                     <div class="fecha">@ev.Fecha.ToString("dd/MM/yyyy HH:mm")</div>
                     <div class="descripcion">@ev.Descripcion</div>
                 </div>
@@ -263,7 +282,7 @@ main {
         }
         else
         {
-            <p style="text-align:center; color:#fff; text-shadow:1px 2px 3px rgba(0,0,0,0.5); margin-top:40px;">No tenés eventos aún 😴<br>¡Agregá tu primer recordatorio!</p>
+            <p style="text-align:center; color:#333; font-weight:500; margin-top:40px;">No hay eventos programados.</p>
         }
     </div>
 </main>
@@ -279,10 +298,10 @@ main {
         <textarea name="Descripcion" id="Descripcion" placeholder="Descripción opcional"></textarea>
         <input type="datetime-local" name="Fecha" id="Fecha" required />
         <select name="Tipo" id="Tipo" required>
-            <option value="Vacuna">💉 Vacuna</option>
-            <option value="Paseo">🐕 Paseo</option>
-            <option value="Consulta">🏥 Consulta</option>
-            <option value="Otro">🗓️ Otro</option>
+            <option value="Vacuna">Vacuna</option>
+            <option value="Paseo">Paseo</option>
+            <option value="Consulta">Consulta</option>
+            <option value="Otro">Otro</option>
         </select>
         <button type="submit">Guardar</button>
         <button type="button" onclick="cerrarModal()" style="background:#ccc;color:#333;margin-left:10px;">Cancelar</button>
@@ -291,12 +310,14 @@ main {
 </div>
 
 <script>
+// ======= MENÚ =======
 const menu = document.getElementById("menuLateral");
 const overlay = document.getElementById("overlay");
 document.getElementById("abrirMenu").onclick = () => { menu.classList.add("abierto"); overlay.classList.add("activo"); };
 document.getElementById("cerrarMenu").onclick = () => { menu.classList.remove("abierto"); overlay.classList.remove("activo"); };
 overlay.onclick = () => { menu.classList.remove("abierto"); overlay.classList.remove("activo"); };
 
+// ======= MODAL =======
 function abrirModal(){ document.getElementById('modal').style.display='flex'; }
 function cerrarModal(){ document.getElementById('modal').style.display='none'; limpiarFormulario(); }
 
@@ -317,36 +338,40 @@ function limpiarFormulario() {
 }
 
 function eliminarEvento(id) {
-    if (confirm("¿Seguro que querés eliminar este evento? 🗑️")) {
+    if (confirm("¿Seguro que querés eliminar este evento?")) {
         fetch(`/Home/EliminarEvento/${id}`, { method: 'POST' })
             .then(() => location.reload());
     }
 }
 
-const container = document.getElementById('eventContainer');
-let dragged;
+// ======= COLOR SEGÚN URGENCIA =======
+function actualizarColoresUrgencia() {
+    const eventos = document.querySelectorAll('.evento');
+    const hoy = new Date();
 
-container.addEventListener('dragstart', e => {
-    dragged = e.target;
-    e.target.style.opacity = .5;
-});
+    eventos.forEach(ev => {
+        const fechaEv = new Date(ev.dataset.fecha);
+        const diasRestantes = Math.ceil((fechaEv - hoy) / (1000 * 60 * 60 * 24));
+        const total = 30; // escala de 30 días
+        const progreso = Math.max(0, Math.min(1, 1 - diasRestantes / total));
 
-container.addEventListener('dragend', e => {
-    e.target.style.opacity = "";
-});
+        // Interpolación de color (verde → amarillo → rojo)
+        const r = Math.floor(58 + progreso * (225 - 58));
+        const g = Math.floor(195 - progreso * 145);
+        const b = Math.floor(125 - progreso * 70);
+        ev.style.borderLeftColor = `rgb(${r},${g},${b})`;
 
-container.addEventListener('dragover', e => {
-    e.preventDefault();
-    const target = e.target.closest('.evento');
-    if (target && target !== dragged) {
-        const rect = target.getBoundingClientRect();
-        const next = (e.clientY - rect.top) / rect.height > 0.5;
-        container.insertBefore(dragged, next ? target.nextSibling : target);
-    }
-});
+        if (diasRestantes <= 3) {
+            ev.style.background = "rgba(255,230,230,0.9)";
+        } else if (diasRestantes <= 7) {
+            ev.style.background = "rgba(255,247,230,0.9)";
+        } else {
+            ev.style.background = "rgba(255,255,255,0.9)";
+        }
+    });
+}
+actualizarColoresUrgencia();
+setInterval(actualizarColoresUrgencia, 86400000); // cada día
 </script>
 </body>
 </html>
-<!-- © 2025 Zooni Team
-Licensed under CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
-No se permite la modificación o uso comercial de este código. -->

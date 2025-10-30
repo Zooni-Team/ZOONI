@@ -144,6 +144,22 @@
             font-weight: 600;
             margin-top: 15px;
         }
+.mensaje-exito {
+    background-color: #e5f8f0;
+    color: #2fa567;
+    border: 2px solid #3ac37d;
+    border-radius: 18px;
+    padding: 14px 18px;
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 18px;
+    text-align: center;
+    animation: fadeIn 0.6s ease;
+}
+@@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
         @@media (max-width: 768px) {
             h1 { font-size: 64px; }
@@ -167,7 +183,12 @@
         <img src="~/img/mascotas-bienvenida.png" alt="Zooni mascotas" class="illustration" />
 
         <h2>Iniciá sesión</h2>
-
+@if (TempData["CuentaCreada"] != null)
+{
+    <div class="mensaje-exito">
+        @TempData["CuentaCreada"]
+    </div>
+}
         <form method="post" asp-action="Login" asp-controller="Auth">
             @Html.AntiForgeryToken()
             <input type="email" name="correo" placeholder="Correo electrónico" required autocomplete="off" />
@@ -254,6 +275,12 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(precargarImagenes, 500);
     }
 });
+</script>
+<script>
+setTimeout(() => {
+  const msg = document.querySelector('.mensaje-exito');
+  if (msg) msg.style.display = 'none';
+}, 3000);
 </script>
 
 </body>

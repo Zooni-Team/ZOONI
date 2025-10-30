@@ -381,10 +381,15 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
 
         int existe = Convert.ToInt32(BD.ExecuteScalar(checkMailQuery, checkParams));
         if (existe > 0)
-        {
-            TempData["Error"] = "Ese correo ya está registrado. Probá con otro.";
-            return RedirectToAction("Registro4");
-        }
+{
+    ViewBag.Error = "Ese correo ya está registrado. Probá con otro.";
+    ViewBag.Nombre = nombre;
+    ViewBag.Apellido = apellido;
+    ViewBag.Mail = mail;
+    ViewBag.Modo = modo;
+    return View("Registro4");
+}
+
 
         // ✅ Actualizamos nombre y apellido
         string updateUserQuery = @"
@@ -535,8 +540,9 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
             BD.ExecuteNonQuery(insertMascota, paramMascota);
         }
 
-        TempData["Success"] = "¡Registro completado con éxito!";
-        return RedirectToAction("Login", "Auth");
+        TempData["CuentaCreada"] = "✅ ¡Cuenta creada exitosamente!";
+return RedirectToAction("Login", "Auth");
+
     }
     catch (Exception ex)
     {

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "7jTlgfvNqC0eUt+ZE5hluzFOYFsIxHQm1sOOAwChVk4=",
+  "Hash": "V7o5zDF1ovnrX++K0txnaXiNG3nO3Y+LhQLiQRH0WEs=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -1117,6 +1117,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png"
+    },
+    {
+      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Salchicha\\perro_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/perros/Salchicha/perro_basico.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Salchicha\\perro_basico.png"
     },
     {
       "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\pezs\\betta\\pez_basico.png",
