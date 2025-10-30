@@ -13,8 +13,16 @@
       "PackagePath": "staticwebassets\\data\\consejos.json"
     },
     {
+      "Id": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\consejos.readme",
+      "PackagePath": "staticwebassets\\data\\consejos.readme"
+    },
+    {
       "Id": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.json",
       "PackagePath": "staticwebassets\\data\\vacunas.json"
+    },
+    {
+      "Id": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.readme",
+      "PackagePath": "staticwebassets\\data\\vacunas.readme"
     },
     {
       "Id": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\favicon.ico",
@@ -71,6 +79,10 @@
     {
       "Id": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
       "PackagePath": "staticwebassets\\img\\mascotas-bienvenida.png"
+    },
+    {
+      "Id": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\img\\mascotas.readme",
+      "PackagePath": "staticwebassets\\img\\mascotas.readme"
     },
     {
       "Id": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\img\\mascotas\\aves\\Cacatúa\\ave_basico.png",

@@ -1,207 +1,131 @@
 [
   {
     "especie": "perro",
-    "raza": "labrador retriever",
+    "raza": "general",
     "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Moquillo Canino (Distemper)", "edadMinMeses": 2, "frecuenciaMeses": 12 },
       { "nombre": "Parvovirus Canino", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Hepatitis Infecciosa Canina (Adenovirus tipo 1)", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Adenovirus tipo 2 (Tos de las Perreras)", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Parainfluenza", "edadMinMeses": 2, "frecuenciaMeses": 12 },
       { "nombre": "Leptospirosis", "edadMinMeses": 4, "frecuenciaMeses": 12 },
       { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Articular", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Coronavirus Canino", "edadMinMeses": 3, "frecuenciaMeses": 12 },
+      { "nombre": "Giardiasis (opcional en zonas de riesgo)", "edadMinMeses": 3, "frecuenciaMeses": 12 },
+      { "nombre": "Bordetella bronchiseptica (Tos de las Perreras)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Lyme (Borrelia burgdorferi)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Leishmaniasis", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Influenza Canina", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo General Veterinario", "edadMinMeses": 3, "frecuenciaMeses": 6 },
       { "nombre": "Control de Peso", "edadMinMeses": 3, "frecuenciaMeses": 6 },
-      { "nombre": "Profilaxis Cardíaca", "edadMinMeses": 6, "frecuenciaMeses": 6 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "golden retriever",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Parvovirus", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Leptospirosis", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Ocular", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-      { "nombre": "Desparasitación Interna", "edadMinMeses": 1, "frecuenciaMeses": 3 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "bulldog",
-    "vacunas": [
-      { "nombre": "Tos de las Perreras", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 3, "frecuenciaMeses": 6 },
-      { "nombre": "Control de Pliegues Cutáneos", "edadMinMeses": 3, "frecuenciaMeses": 3 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "beagle",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Leptospirosis", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Auditivo", "edadMinMeses": 6, "frecuenciaMeses": 12 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "caniche",
-    "vacunas": [
-      { "nombre": "Parvovirus", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Control Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "chihuahua",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Cardíaco", "edadMinMeses": 6, "frecuenciaMeses": 6 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "pug",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 6, "frecuenciaMeses": 6 },
-      { "nombre": "Control de Piel y Pliegues", "edadMinMeses": 3, "frecuenciaMeses": 3 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "dálmata",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Parvovirus", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
       { "nombre": "Chequeo Dermatológico", "edadMinMeses": 6, "frecuenciaMeses": 6 },
-      { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "husky siberiano",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Ocular", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-      { "nombre": "Control de Parásitos", "edadMinMeses": 3, "frecuenciaMeses": 6 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "pastor alemán",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo de Cadera", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-      { "nombre": "Leptospirosis", "edadMinMeses": 4, "frecuenciaMeses": 12 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "border collie",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Parvovirus", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Neurológico", "edadMinMeses": 8, "frecuenciaMeses": 12 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "rottweiler",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Articular", "edadMinMeses": 6, "frecuenciaMeses": 6 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "boxer",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Leptospirosis", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Cardíaco", "edadMinMeses": 6, "frecuenciaMeses": 6 }
-    ]
-  },
-  {
-    "especie": "perro",
-    "raza": "doberman",
-    "vacunas": [
-      { "nombre": "Moquillo", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Rabia", "edadMinMeses": 4, "frecuenciaMeses": 12 },
       { "nombre": "Chequeo Cardíaco", "edadMinMeses": 6, "frecuenciaMeses": 6 },
-      { "nombre": "Desparasitación", "edadMinMeses": 2, "frecuenciaMeses": 3 }
+      { "nombre": "Chequeo Articular / Cadera", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Auditivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Perfil Sanguíneo Completo", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Desparasitación Interna", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Desparasitación Externa", "edadMinMeses": 1, "frecuenciaMeses": 2 },
+      { "nombre": "Profilaxis Cardíaca (dirofilaria)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Control Hepático y Renal", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Evaluación Conductual", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Geriátrico (mayores de 7 años)", "edadMinMeses": 84, "frecuenciaMeses": 6 },
+      { "nombre": "Control Previa Vacacional", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de Pulmones y Respiración", "edadMinMeses": 6, "frecuenciaMeses": 12 }
     ]
   },
+
   {
     "especie": "gato",
-    "raza": "persa",
+    "raza": "general",
     "vacunas": [
-      { "nombre": "Triple Felina (V3)", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Triple Felina (V3: Panleucopenia, Calicivirus, Rinotraqueítis)", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Cuádruple Felina (V4: incluye Clamidiosis)", "edadMinMeses": 2, "frecuenciaMeses": 12 },
       { "nombre": "Leucemia Felina (FeLV)", "edadMinMeses": 3, "frecuenciaMeses": 12 },
       { "nombre": "Rabia Felina", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Ocular", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+      { "nombre": "Peritonitis Infecciosa Felina (PIF)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Rinotraqueítis Viral Felina", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Panleucopenia Felina", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo General Veterinario", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Renal y Hepático", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Desparasitación Interna", "edadMinMeses": 2, "frecuenciaMeses": 3 },
+      { "nombre": "Desparasitación Externa", "edadMinMeses": 2, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Geriátrico", "edadMinMeses": 84, "frecuenciaMeses": 6 },
+      { "nombre": "Perfil Sanguíneo", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Urinario", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Tiroideo (mayores de 7 años)", "edadMinMeses": 84, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 3, "frecuenciaMeses": 6 }
     ]
   },
-  {
-    "especie": "gato",
-    "raza": "maine coon",
-    "vacunas": [
-      { "nombre": "Triple Felina (V3)", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Leucemia Felina (FeLV)", "edadMinMeses": 3, "frecuenciaMeses": 12 },
-      { "nombre": "Rabia Felina", "edadMinMeses": 4, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 6, "frecuenciaMeses": 6 }
-    ]
-  },
-  {
-    "especie": "conejo",
-    "raza": "angora",
-    "vacunas": [
-      { "nombre": "Mixomatosis", "edadMinMeses": 2, "frecuenciaMeses": 6 },
-      { "nombre": "RHD", "edadMinMeses": 2, "frecuenciaMeses": 6 },
-      { "nombre": "Control de Pelo y Piel", "edadMinMeses": 3, "frecuenciaMeses": 6 }
-    ]
-  },
+
   {
     "especie": "ave",
-    "raza": "guacamayo",
+    "raza": "general",
     "vacunas": [
       { "nombre": "Newcastle", "edadMinMeses": 1, "frecuenciaMeses": 12 },
       { "nombre": "Viruela Aviar", "edadMinMeses": 2, "frecuenciaMeses": 12 },
-      { "nombre": "Chequeo de Pico y Garras", "edadMinMeses": 4, "frecuenciaMeses": 6 }
+      { "nombre": "Bronquitis Infecciosa", "edadMinMeses": 1, "frecuenciaMeses": 12 },
+      { "nombre": "Gumboro (Enfermedad Infecciosa de la Bolsa)", "edadMinMeses": 1, "frecuenciaMeses": 12 },
+      { "nombre": "Laringotraqueítis", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Encefalomielitis Aviar", "edadMinMeses": 2, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo de Pico y Garras", "edadMinMeses": 4, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de Plumaje", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Parásitos (piojos, ácaros)", "edadMinMeses": 2, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Digestivo (proventrículo y cloaca)", "edadMinMeses": 6, "frecuenciaMeses": 12 }
     ]
   },
+
+  {
+    "especie": "conejo",
+    "raza": "general",
+    "vacunas": [
+      { "nombre": "Mixomatosis", "edadMinMeses": 2, "frecuenciaMeses": 6 },
+      { "nombre": "Enfermedad Hemorrágica Viral (RHD)", "edadMinMeses": 2, "frecuenciaMeses": 6 },
+      { "nombre": "RHD2 (Variante)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental (crecimiento de incisivos)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Pelo y Piel", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Desparasitación Interna", "edadMinMeses": 2, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+
   {
     "especie": "pez",
-    "raza": "koi",
+    "raza": "general",
     "vacunas": [
-      { "nombre": "Desparasitación preventiva", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-      { "nombre": "Prevención de punto blanco", "edadMinMeses": 4, "frecuenciaMeses": 6 },
-      { "nombre": "Chequeo de Aletas", "edadMinMeses": 2, "frecuenciaMeses": 6 }
+      { "nombre": "Chequeo de Aletas y Escamas", "edadMinMeses": 2, "frecuenciaMeses": 6 },
+      { "nombre": "Prevención de Punto Blanco (Ich)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de Branquias", "edadMinMeses": 4, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Calidad de Agua (pH, nitratos, oxígeno)", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Desparasitación Preventiva", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Temperatura y Alimentación", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Chequeo General por Veterinario Acuático", "edadMinMeses": 12, "frecuenciaMeses": 12 }
     ]
   },
+
   {
     "especie": "reptil",
-    "raza": "iguana",
+    "raza": "general",
     "vacunas": [
-      { "nombre": "Chequeo parasitario", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Parasitológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
       { "nombre": "Revisión de Piel y Muda", "edadMinMeses": 6, "frecuenciaMeses": 6 },
-      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 12 }
-    ]
-  },
-  {
-    "especie": "reptil",
-    "raza": "tortuga",
-    "vacunas": [
-      { "nombre": "Chequeo Caparazón", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-      { "nombre": "Control de Temperatura", "edadMinMeses": 3, "frecuenciaMeses": 6 },
-      { "nombre": "Suplementación de Calcio", "edadMinMeses": 4, "frecuenciaMeses": 3 }
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Caparazón / Escamas", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Temperatura y Humedad Ambiental", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Suplementación de Calcio y UVB", "edadMinMeses": 2, "frecuenciaMeses": 3 },
+      { "nombre": "Control de Alimentación (insectos o vegetales)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de Ojos y Boca", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Óseo (radiografía de densidad)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Parásitos Internos", "edadMinMeses": 6, "frecuenciaMeses": 12 }
     ]
   }
 ]

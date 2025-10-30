@@ -167,6 +167,51 @@
       ]
     },
     {
+      "Route": "data/consejos.fyrfbvtdqs.readme",
+      "AssetFile": "data/consejos.readme",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2970"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:13:44 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "fyrfbvtdqs"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904="
+        },
+        {
+          "Name": "label",
+          "Value": "data/consejos.readme"
+        }
+      ]
+    },
+    {
       "Route": "data/consejos.hligsleycm.json",
       "AssetFile": "data/consejos.json",
       "Selectors": [],
@@ -249,8 +294,45 @@
       ]
     },
     {
-      "Route": "data/vacunas.czr9kxh2hn.json",
-      "AssetFile": "data/vacunas.json",
+      "Route": "data/consejos.readme",
+      "AssetFile": "data/consejos.readme",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2970"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:13:44 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904="
+        }
+      ]
+    },
+    {
+      "Route": "data/vacunas.4409ey6etn.readme",
+      "AssetFile": "data/vacunas.readme",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -263,33 +345,33 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1966"
+          "Value": "2494"
         },
         {
           "Name": "Content-Type",
-          "Value": "application/json"
+          "Value": "application/octet-stream"
         },
         {
           "Name": "ETag",
-          "Value": "\"GMIPA8HFwqLJvnWZgIY9w9sOUZSo+5KrraN1MspW2VM=\""
+          "Value": "\"LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 21:36:00 GMT"
+          "Value": "Wed, 29 Oct 2025 23:13:15 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "czr9kxh2hn"
+          "Value": "4409ey6etn"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-GMIPA8HFwqLJvnWZgIY9w9sOUZSo+5KrraN1MspW2VM="
+          "Value": "sha256-LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y="
         },
         {
           "Name": "label",
-          "Value": "data/vacunas.json"
+          "Value": "data/vacunas.readme"
         }
       ]
     },
@@ -308,7 +390,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1966"
+          "Value": "8178"
         },
         {
           "Name": "Content-Type",
@@ -316,17 +398,99 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"GMIPA8HFwqLJvnWZgIY9w9sOUZSo+5KrraN1MspW2VM=\""
+          "Value": "\"MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 21:36:00 GMT"
+          "Value": "Wed, 29 Oct 2025 23:01:34 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-GMIPA8HFwqLJvnWZgIY9w9sOUZSo+5KrraN1MspW2VM="
+          "Value": "sha256-MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ="
+        }
+      ]
+    },
+    {
+      "Route": "data/vacunas.readme",
+      "AssetFile": "data/vacunas.readme",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2494"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:13:15 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y="
+        }
+      ]
+    },
+    {
+      "Route": "data/vacunas.wgr720li2p.json",
+      "AssetFile": "data/vacunas.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8178"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:01:34 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wgr720li2p"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ="
+        },
+        {
+          "Name": "label",
+          "Value": "data/vacunas.json"
         }
       ]
     },
@@ -1475,6 +1639,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-lnfSiQ17oDiywp/r2a5hZzls91yUbVV0jnScZaD+WgQ="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas.readme",
+      "AssetFile": "img/mascotas.readme",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4261"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"bmipqQzL4md1Al9ZX/gsr1RVqR6bFfIU+RepAJIQz5I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:19:07 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-bmipqQzL4md1Al9ZX/gsr1RVqR6bFfIU+RepAJIQz5I="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas.yrwqoej081.readme",
+      "AssetFile": "img/mascotas.readme",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4261"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"bmipqQzL4md1Al9ZX/gsr1RVqR6bFfIU+RepAJIQz5I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:19:07 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "yrwqoej081"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-bmipqQzL4md1Al9ZX/gsr1RVqR6bFfIU+RepAJIQz5I="
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas.readme"
         }
       ]
     },

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "SG9lmIEW4JUKNgiBh9NZS8k5mjJJG8vnXEVU1gO1Jp8=",
+  "Hash": "gWiVMgFz0TVanT5OI2V4w+3+xQ/rn/3O+sjZfUWZVWI=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -80,6 +80,27 @@
       "OriginalItemSpec": "wwwroot\\data\\consejos.json"
     },
     {
+      "Identity": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\consejos.readme",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "data/consejos#[.{fingerprint}]?.readme",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "fyrfbvtdqs",
+      "Integrity": "ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\data\\consejos.readme"
+    },
+    {
       "Identity": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.json",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
@@ -94,11 +115,32 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "czr9kxh2hn",
-      "Integrity": "GMIPA8HFwqLJvnWZgIY9w9sOUZSo+5KrraN1MspW2VM=",
+      "Fingerprint": "wgr720li2p",
+      "Integrity": "MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\data\\vacunas.json"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.readme",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "data/vacunas#[.{fingerprint}]?.readme",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "4409ey6etn",
+      "Integrity": "LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\data\\vacunas.readme"
     },
     {
       "Identity": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\favicon.ico",
@@ -393,6 +435,27 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\mascotas-bienvenida.png"
+    },
+    {
+      "Identity": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\img\\mascotas.readme",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas#[.{fingerprint}]?.readme",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "Fingerprint": "yrwqoej081",
+      "Integrity": "bmipqQzL4md1Al9ZX/gsr1RVqR6bFfIU+RepAJIQz5I=",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas.readme"
     },
     {
       "Identity": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\img\\mascotas\\aves\\agapornis\\ave_basico.png",
@@ -1863,6 +1926,51 @@
       ]
     },
     {
+      "Route": "data/consejos.fyrfbvtdqs.readme",
+      "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\consejos.readme",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2970"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:13:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "fyrfbvtdqs"
+        },
+        {
+          "Name": "label",
+          "Value": "data/consejos.readme"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904="
+        }
+      ]
+    },
+    {
       "Route": "data/consejos.hligsleycm.json",
       "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\consejos.json",
       "Selectors": [],
@@ -1945,8 +2053,8 @@
       ]
     },
     {
-      "Route": "data/vacunas.czr9kxh2hn.json",
-      "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.json",
+      "Route": "data/consejos.readme",
+      "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\consejos.readme",
       "Selectors": [],
       "ResponseHeaders": [
         {
@@ -1955,19 +2063,56 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1966"
+          "Value": "2970"
         },
         {
           "Name": "Content-Type",
-          "Value": "application/json"
+          "Value": "application/octet-stream"
         },
         {
           "Name": "ETag",
-          "Value": "\"GMIPA8HFwqLJvnWZgIY9w9sOUZSo+5KrraN1MspW2VM=\""
+          "Value": "\"ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 21:36:00 GMT"
+          "Value": "Wed, 29 Oct 2025 23:13:44 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-ue0YifIxMF3tjGVdI0PAahZSFQlVJMM84L8x01mD904="
+        }
+      ]
+    },
+    {
+      "Route": "data/vacunas.4409ey6etn.readme",
+      "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.readme",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2494"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:13:15 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -1977,15 +2122,15 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "czr9kxh2hn"
+          "Value": "4409ey6etn"
         },
         {
           "Name": "label",
-          "Value": "data/vacunas.json"
+          "Value": "data/vacunas.readme"
         },
         {
           "Name": "integrity",
-          "Value": "sha256-GMIPA8HFwqLJvnWZgIY9w9sOUZSo+5KrraN1MspW2VM="
+          "Value": "sha256-LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y="
         }
       ]
     },
@@ -2000,7 +2145,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "1966"
+          "Value": "8178"
         },
         {
           "Name": "Content-Type",
@@ -2008,11 +2153,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"GMIPA8HFwqLJvnWZgIY9w9sOUZSo+5KrraN1MspW2VM=\""
+          "Value": "\"MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Wed, 29 Oct 2025 21:36:00 GMT"
+          "Value": "Wed, 29 Oct 2025 23:01:34 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2022,7 +2167,89 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-GMIPA8HFwqLJvnWZgIY9w9sOUZSo+5KrraN1MspW2VM="
+          "Value": "sha256-MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ="
+        }
+      ]
+    },
+    {
+      "Route": "data/vacunas.readme",
+      "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.readme",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "2494"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:13:15 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-LCHOiq02jtajIgEH+dZ4Af9chqD2ZDWyFdF2QkISf3Y="
+        }
+      ]
+    },
+    {
+      "Route": "data/vacunas.wgr720li2p.json",
+      "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\data\\vacunas.json",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "8178"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/json"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:01:34 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "wgr720li2p"
+        },
+        {
+          "Name": "label",
+          "Value": "data/vacunas.json"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-MGcUJmh8UBrRrCRAMZzVyUROmaQIV0MG+gvyr4eEFCQ="
         }
       ]
     },
@@ -3171,6 +3398,88 @@
         {
           "Name": "integrity",
           "Value": "sha256-lnfSiQ17oDiywp/r2a5hZzls91yUbVV0jnScZaD+WgQ="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas.readme",
+      "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\img\\mascotas.readme",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4261"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"bmipqQzL4md1Al9ZX/gsr1RVqR6bFfIU+RepAJIQz5I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:19:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "no-cache"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "integrity",
+          "Value": "sha256-bmipqQzL4md1Al9ZX/gsr1RVqR6bFfIU+RepAJIQz5I="
+        }
+      ]
+    },
+    {
+      "Route": "img/mascotas.yrwqoej081.readme",
+      "AssetFile": "C:\\Users\\knk\\asdasd\\zooni\\wwwroot\\img\\mascotas.readme",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "4261"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "application/octet-stream"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"bmipqQzL4md1Al9ZX/gsr1RVqR6bFfIU+RepAJIQz5I=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Wed, 29 Oct 2025 23:19:07 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "yrwqoej081"
+        },
+        {
+          "Name": "label",
+          "Value": "img/mascotas.readme"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-bmipqQzL4md1Al9ZX/gsr1RVqR6bFfIU+RepAJIQz5I="
         }
       ]
     },

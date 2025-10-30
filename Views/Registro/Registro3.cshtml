@@ -262,7 +262,7 @@
         <h3>Completá los datos de tu @ViewBag.MascotaEspecie 🐾</h3>
         <img src="@imagenSuperior" alt="Mascota en caja" class="mascota-caja" />
 
-        <form asp-action="Registro3" asp-controller="Registro" method="post">
+<form asp-action="Registro3Post" asp-controller="Registro" asp-route-modo="@ViewBag.Modo">
             @Html.AntiForgeryToken()
 
             <select name="Sexo" required>
