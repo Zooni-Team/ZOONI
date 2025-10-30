@@ -462,7 +462,7 @@ namespace Zooni.Controllers
             Sexo, 
             Fecha_Nacimiento,
             ROW_NUMBER() OVER (
-                PARTITION BY Nombre, Raza, Edad, Peso 
+                PARTITION BY Nombre, Raza 
                 ORDER BY Id_Mascota DESC
             ) AS rn
         FROM Mascota
@@ -473,6 +473,7 @@ namespace Zooni.Controllers
     FROM MascotasUnicas
     WHERE rn = 1
     ORDER BY Nombre ASC;";
+
 
                 var dtMascotas = BD.ExecuteQuery(qMascotas, new Dictionary<string, object> { { "@Id", userId.Value } });
 

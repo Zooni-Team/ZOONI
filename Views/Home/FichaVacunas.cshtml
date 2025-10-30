@@ -391,14 +391,13 @@
     <a href="/Comunidad">👥 Comunidad</a>
     <a href="/Marketplace">🛒 Marketplace</a>
     <a href="/home/FichaMedica">💉 Ficha médica</a>
-    <a href="/home/FichaVacunas">💊 Vacunas</a>
-    <a href="/home/Calendario">📅 Calendario</a>
+    <a href="/home/calendario">📅 Calendario</a>
     <a href="/Chat/ChatZooni">💬 Mi Virtual Vet</a>
     <a href="/Closet">👕 Closet</a>
     <a href="/Home/Perfil">👤 Perfil</a>
-    <a href="/Home/Perfil">⚙️ Configuración</a>
+    <a href="/Home/configuracion">⚙️ Configuración</a>
     <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
-    </div>
+</div>
 
     <div class="overlay" id="overlay"></div>
     @Html.AntiForgeryToken()
@@ -657,30 +656,28 @@
 
     div.innerHTML = `
     <div class="lado-izq">
-        <div class="check" style="border-color:${aplicada ? 'green' : vacunaBD ? '#a67c00' : '#ccc'};background:${aplicada ? 'green' : 'transparent'};">
-        ${aplicada ? '✓' : ''}
-        </div>
         <div class="nombre">${vac.nombre}</div>
     </div>
 
     <div class="lado-der">
         <div class="estado ${aplicada ? 'aplicada' : vacunaBD ? 'pendiente' : 'no'}">
-        ${aplicada ? 'Aplicada' : vacunaBD ? 'Pendiente' : 'Aún no corresponde'}
+            ${aplicada ? 'Aplicada' : vacunaBD ? 'Pendiente' : 'Aún no corresponde'}
         </div>
         <div class="frecuencia">${proximaTxt}</div>
         ${
-        !aplicada
-            ? `<form method="post" action="/Home/MarcarVacuna" style="margin:0">
-                <input name="__RequestVerificationToken" type="hidden"
-                value="${document.querySelector('input[name=__RequestVerificationToken]').value}">
-                <input type="hidden" name="idMascota" value="@ViewBag.IdMascota" />
-                <input type="hidden" name="nombre" value="${vac.nombre}" />
-                <button type="submit" class="btn-marcar">Marcar</button>
-            </form>`
-            : ""
+            !aplicada
+                ? `<form method="post" action="/Home/MarcarVacuna" style="margin:0">
+                    <input name="__RequestVerificationToken" type="hidden"
+                        value="${document.querySelector('input[name=__RequestVerificationToken]').value}">
+                    <input type="hidden" name="idMascota" value="@ViewBag.IdMascota" />
+                    <input type="hidden" name="nombre" value="${vac.nombre}" />
+                    <button type="submit" class="btn-marcar">Marcar</button>
+                </form>`
+                : ""
         }
     </div>
-    `;
+`;
+
 
 
         wrapper.appendChild(div);

@@ -182,14 +182,17 @@ button:hover { background:#2fa76b; transform:translateY(-2px); }
 </header>
 
 <div class="menu-lateral" id="menuLateral">
-  <div class="cerrar-menu" id="cerrarMenu">✖</div>
-  <a href="/Home/Index">🏠 Inicio</a>
-  <a href="/home/FichaMedica">💉 Ficha médica</a>
-  <a href="/home/FichaVacunas">💊 Vacunas</a>
-  <a href="/home/FichaOtros">💡 Consejos</a>
-  <a href="/home/Calendario">📅 Calendario</a>
-  <a href="/Home/Configuracion" style="font-weight:700;">⚙️ Configuración</a>
-  <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/home/FichaMedica">💉 Ficha médica</a>
+    <a href="/home/calendario">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 Mi Virtual Vet</a>
+    <a href="/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Home/configuracion">⚙️ Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
 </div>
 <div class="overlay" id="overlay"></div>
 
@@ -239,8 +242,9 @@ button:hover { background:#2fa76b; transform:translateY(-2px); }
       <label>Sexo</label>
       <select name="Sexo">
         <option value="">Seleccioná</option>
-        <option value="Macho" @@(activa.Sexo=="Macho"?"selected":"")>Macho</option>
-        <option value="Hembra" @@(activa.Sexo=="Hembra"?"selected":"")>Hembra</option>
+<option value="Macho" selected="@(activa.Sexo == "Macho")">Macho</option>
+<option value="Hembra" selected="@(activa.Sexo == "Hembra")">Hembra</option>
+
       </select>
       <button type="submit">Guardar cambios 💾</button>
     </form>

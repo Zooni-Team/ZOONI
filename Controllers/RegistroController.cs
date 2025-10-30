@@ -462,22 +462,22 @@ public IActionResult Registro5()
 [ValidateAntiForgeryToken]
 public IActionResult Registro5(string pais, string provincia, string ciudad, string codigoPais, string telefono)
 {
-            try
-            {
-                var userId = HttpContext.Session.GetInt32("UserId");
+    try
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
 
-                if (userId == null)
-                {
-                    TempData["Error"] = "Sesión expirada. Iniciá nuevamente.";
-                    return RedirectToAction("Registro1");
-                }
+        if (userId == null)
+        {
+            TempData["Error"] = "Sesión expirada. Iniciá nuevamente.";
+            return RedirectToAction("Registro1");
+        }
 
-                HttpContext.Session.SetString("UserPais", pais);
-                HttpContext.Session.SetString("UserProvincia", provincia);
-                HttpContext.Session.SetString("UserCiudad", ciudad);
-                HttpContext.Session.SetString("UserTelefono", $"{codigoPais} {telefono}");
+        HttpContext.Session.SetString("UserPais", pais);
+        HttpContext.Session.SetString("UserProvincia", provincia);
+        HttpContext.Session.SetString("UserCiudad", ciudad);
+        HttpContext.Session.SetString("UserTelefono", $"{codigoPais} {telefono}");
 
-                string query = @"
+        string query = @"
             UPDATE [User]
             SET Pais = @Pais,
                 Provincia = @Provincia,
@@ -485,7 +485,7 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
                 Telefono = @Telefono
             WHERE Id_User = @Id_User";
 
-                var parametros = new Dictionary<string, object>
+        var parametros = new Dictionary<string, object>
         {
             { "@Pais", pais },
             { "@Provincia", provincia },
@@ -494,23 +494,34 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
             { "@Id_User", userId.Value }
         };
 
-                BD.ExecuteNonQuery(query, parametros);
+        BD.ExecuteNonQuery(query, parametros);
 
-                string mascotaNombre = HttpContext.Session.GetString("MascotaNombre") ?? "";
-                string mascotaEspecie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
-                string mascotaRaza = HttpContext.Session.GetString("MascotaRaza") ?? "";
-decimal mascotaPeso = decimal.TryParse(HttpContext.Session.GetString("MascotaPeso"), out var p) ? p : 0;
-                string mascotaSexo = HttpContext.Session.GetString("MascotaSexo") ?? "No definido";
-                int mascotaEdad = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
+        // 🔹 Recuperar datos de la mascota desde la sesión
+        string mascotaNombre = HttpContext.Session.GetString("MascotaNombre") ?? "";
+        string mascotaEspecie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
+        string mascotaRaza = HttpContext.Session.GetString("MascotaRaza") ?? "";
+        decimal mascotaPeso = decimal.TryParse(HttpContext.Session.GetString("MascotaPeso"), out var p) ? p : 0;
+        string mascotaSexo = HttpContext.Session.GetString("MascotaSexo") ?? "No definido";
+        int mascotaEdad = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
 
-                if (!string.IsNullOrEmpty(mascotaNombre))
-                {
-                    
-                    string insertMascota = @"
+        // 🔧 Función interna para truncar strings largos
+        string Truncar(string valor, int max) =>
+            string.IsNullOrEmpty(valor) ? "" :
+            valor.Length > max ? valor.Substring(0, max) : valor;
+
+        // 🛡️ Sanitizar los campos ANTES del insert
+        mascotaNombre = Truncar(mascotaNombre, 150);
+        mascotaEspecie = Truncar(mascotaEspecie, 100);
+        mascotaRaza = Truncar(mascotaRaza, 150);
+        mascotaSexo = Truncar(mascotaSexo, 30);
+
+        if (!string.IsNullOrEmpty(mascotaNombre))
+        {
+            string insertMascota = @"
                 INSERT INTO Mascota (Nombre, Especie, Raza, Peso, Sexo, Edad, Id_User)
                 VALUES (@Nombre, @Especie, @Raza, @Peso, @Sexo, @Edad, @Id_User)";
 
-                    var paramMascota = new Dictionary<string, object>
+            var paramMascota = new Dictionary<string, object>
             {
                 { "@Nombre", mascotaNombre },
                 { "@Especie", mascotaEspecie },
@@ -521,29 +532,20 @@ decimal mascotaPeso = decimal.TryParse(HttpContext.Session.GetString("MascotaPes
                 { "@Id_User", userId.Value }
             };
 
-                    BD.ExecuteNonQuery(insertMascota, paramMascota);
-                }
-
-                TempData["Success"] = "¡Registro completado con éxito!";
-                return RedirectToAction("Login", "Auth");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("❌ Error en Registro5 POST: " + ex.Message);
-                TempData["Error"] = "Error al finalizar el registro.";
-                return RedirectToAction("Registro5");
-            }
-    
-}
-        [HttpGet]
-        public IActionResult VerificarMail(string mail)
-        {
-            string query = "SELECT COUNT(*) FROM Mail WHERE Correo = @Correo";
-            var parametros = new Dictionary<string, object> { { "@Correo", mail } };
-            int existe = Convert.ToInt32(BD.ExecuteScalar(query, parametros));
-
-            return Json(new { existe = existe > 0 });
+            BD.ExecuteNonQuery(insertMascota, paramMascota);
         }
+
+        TempData["Success"] = "¡Registro completado con éxito!";
+        return RedirectToAction("Login", "Auth");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error en Registro5 POST: " + ex.Message);
+        TempData["Error"] = "Error al finalizar el registro.";
+        return RedirectToAction("Registro5");
+    }
+}
+
 [HttpGet]
 [Route("Registro/NuevaMascota")]
 public IActionResult NuevaMascota()
