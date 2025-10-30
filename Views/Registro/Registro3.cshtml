@@ -335,15 +335,52 @@ const preview = document.getElementById('fotoPreview');
 
 btnIniciarCamara.addEventListener('click', async () => {
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        // 🔍 Buscar cámaras disponibles
+        const dispositivos = await navigator.mediaDevices.enumerateDevices();
+        const camaras = dispositivos.filter(d => d.kind === 'videoinput');
+
+        if (camaras.length === 0) {
+            alert("📷 Este dispositivo no tiene cámara disponible 🐾");
+            return;
+        }
+
+        // 🎥 Configurar para usar siempre la FRONTAL
+        const constraints = {
+            video: {
+                facingMode: { exact: "user" }, // usa cámara frontal
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+            },
+            audio: false
+        };
+
+        // 🚀 Intentar abrir la cámara
+        const stream = await navigator.mediaDevices.getUserMedia(constraints);
         video.srcObject = stream;
-        video.style.display = 'block';
-        btnTomarFoto.style.display = 'inline-block';
-        btnIniciarCamara.style.display = 'none';
+        video.style.display = "block";
+        btnTomarFoto.style.display = "inline-block";
+        btnIniciarCamara.style.display = "none";
+        await video.play();
+
+        console.log("✅ Cámara frontal iniciada correctamente.");
     } catch (err) {
-        alert('No se pudo acceder a la cámara 😿');
+        console.error("❌ Error de cámara:", err);
+
+        let mensaje = "No se pudo acceder a la cámara 🐾";
+
+        if (err.name === "NotAllowedError")
+            mensaje = "⚠️ Tenés que permitir el acceso a la cámara.";
+        else if (err.name === "NotFoundError")
+            mensaje = "📷 Este dispositivo no tiene cámara disponible 🐾";
+        else if (err.name === "NotReadableError")
+            mensaje = "💡 Otra aplicación está usando la cámara.";
+        else if (err.message.toLowerCase().includes("secure"))
+            mensaje = "🔒 Debés usar HTTPS (https://localhost:xxxx).";
+
+        alert(mensaje);
     }
 });
+
 
 btnTomarFoto.addEventListener('click', () => {
     const context = canvas.getContext('2d');
