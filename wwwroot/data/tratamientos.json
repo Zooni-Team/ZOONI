@@ -585,5 +585,278 @@
       { "nombre": "Chequeo Renal", "edadMinMeses": 24, "frecuenciaMeses": 12 },
       { "nombre": "Control de Temperatura (evitar frío excesivo)", "edadMinMeses": 3, "frecuenciaMeses": 6 }
     ]
+  },{
+    "especie": "conejo",
+    "raza": "Mini Lop",
+    "vacunas": [
+      { "nombre": "Chequeo Dental (crecimiento de incisivos)", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Digestivo (tránsito intestinal)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Revisión de Uñas y Patas", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso y Alimentación", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dermatológico (ácaros o pérdida de pelo)", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "conejo",
+    "raza": "Angora",
+    "vacunas": [
+      { "nombre": "Cepillado y Control de Pelaje Largo", "edadMinMeses": 3, "frecuenciaMeses": 1 },
+      { "nombre": "Chequeo Digestivo (riesgo de tricobezoares)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "conejo",
+    "raza": "Rex",
+    "vacunas": [
+      { "nombre": "Chequeo Dermatológico (piel delicada)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 12, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "conejo",
+    "raza": "Belier",
+    "vacunas": [
+      { "nombre": "Chequeo Otológico (orejas caídas y humedad)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiaco", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "conejo",
+    "raza": "Cabeza de León",
+    "vacunas": [
+      { "nombre": "Chequeo Dental", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo de Pelo (riesgo de nudos)", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "ave",
+    "raza": "Cacatúa",
+    "vacunas": [
+      { "nombre": "Chequeo de Pico y Garras", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Respiratorio (sinusitis o asma aviar)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Plumaje y Muda", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Conductual (estrés o gritos excesivos)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Nutricional (deficiencia de calcio)", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "ave",
+    "raza": "Guacamayo",
+    "vacunas": [
+      { "nombre": "Chequeo de Pico (crecimiento excesivo)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo de Plumaje (picaje)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Alimentación", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "ave",
+    "raza": "Periquito",
+    "vacunas": [
+      { "nombre": "Chequeo de Pico y Uñas", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Respiratorio (aspergilosis)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Conductual (autoarranque de plumas)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Nutricional", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "ave",
+    "raza": "Amazonas",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiológico (hiperlipidemia)", "edadMinMeses": 18, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo de Plumaje (estrés o picaje)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Hepático (dietas grasas)", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "ave",
+    "raza": "Agapornis",
+    "vacunas": [
+      { "nombre": "Chequeo de Pico y Uñas", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de Plumaje (picaje y ácaros)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Conductual (vínculo y agresividad)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso y Alimentación", "edadMinMeses": 3, "frecuenciaMeses": 6 }
+    ]
+  },{
+    "especie": "pez",
+    "raza": "Betta",
+    "vacunas": [
+      { "nombre": "Control de Temperatura del Agua", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Chequeo de Branquias y Respiración", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Amoníaco y Nitritos", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Revisión de Aletas (roturas o hongos)", "edadMinMeses": 2, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Alimentario (evitar sobrealimentación)", "edadMinMeses": 1, "frecuenciaMeses": 3 }
+    ]
+  },
+  {
+    "especie": "pez",
+    "raza": "Goldfish",
+    "vacunas": [
+      { "nombre": "Control de Calidad del Agua (pH y oxígeno)", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Chequeo Digestivo (estreñimiento por exceso de comida seca)", "edadMinMeses": 2, "frecuenciaMeses": 6 },
+      { "nombre": "Revisión de Escamas y Aletas", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de Branquias", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Temperatura (riesgo de shock térmico)", "edadMinMeses": 1, "frecuenciaMeses": 1 }
+    ]
+  },
+  {
+    "especie": "pez",
+    "raza": "Guppy",
+    "vacunas": [
+      { "nombre": "Chequeo de Temperatura y Luz", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Chequeo de Branquias", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Calidad del Agua (pH neutro)", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Control de Alimentación (evitar sobrepoblación del acuario)", "edadMinMeses": 3, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo de Parásitos Externos", "edadMinMeses": 3, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "pez",
+    "raza": "Cíclido",
+    "vacunas": [
+      { "nombre": "Chequeo de Amoníaco y Nitritos", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Chequeo de Agresividad (dominancia entre machos)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Revisión de Aletas y Escamas", "edadMinMeses": 2, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de pH (ácido o alcalino según especie)", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Control de Temperatura del Agua", "edadMinMeses": 1, "frecuenciaMeses": 1 }
+    ]
+  },
+  {
+    "especie": "pez",
+    "raza": "Koi",
+    "vacunas": [
+      { "nombre": "Chequeo de Branquias y Mucosidad", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de Parásitos (ich y flukes)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Amoníaco y pH del Agua", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Chequeo de Temperatura y Oxígeno", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Chequeo de Alimentación (proteínas balanceadas)", "edadMinMeses": 6, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "Iguana",
+    "vacunas": [
+      { "nombre": "Chequeo de Piel y Escamas", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo (dieta vegetal balanceada)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Humedad y Temperatura del Terrario", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Parasitológico", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón",
+    "vacunas": [
+      { "nombre": "Chequeo de Hidratación (piel y mucosas)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Ocular (infecciones o ceguera temporal)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo de Humedad Ambiental", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Nutricional (deficiencia de calcio)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga",
+    "vacunas": [
+      { "nombre": "Chequeo de Caparazón (hongos o ablandamiento)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Parasitológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Temperatura del Terrario", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Ocular y Narinas", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "Boa",
+    "vacunas": [
+      { "nombre": "Chequeo Digestivo (regurgitación o ayuno prolongado)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo de Escamas y Piel (mudas incompletas)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Temperatura (zona cálida y fría)", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Parasitológico", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "Dragón Barbudo",
+    "vacunas": [
+      { "nombre": "Chequeo Óseo (deficiencia de calcio o D3)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Temperatura y UVB", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo de Piel y Uñas", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Parasitológico", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Leopardo",
+    "vacunas": [
+      { "nombre": "Chequeo de Cola (reserva de grasa)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de Piel y Mudas", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Control de Temperatura del Terrario", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Parasitológico", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "Camaleón Pantera",
+    "vacunas": [
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo de Coloración (indicador de salud)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de Humedad y Rocío", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Nutricional", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "Tortuga Acuática",
+    "vacunas": [
+      { "nombre": "Chequeo del Caparazón (hongos por humedad excesiva)", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Calidad del Agua", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Chequeo Parasitológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Respiratorio", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "Gecko Crestado",
+    "vacunas": [
+      { "nombre": "Chequeo de Piel (muda y humedad)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Parasitológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Temperatura y UVB", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "Varano",
+    "vacunas": [
+      { "nombre": "Chequeo Cardiopulmonar", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo de Piel y Uñas", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Parasitológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Nutricional", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Temperatura del Terrario", "edadMinMeses": 1, "frecuenciaMeses": 3 }
+    ]
   }
 ]

@@ -185,10 +185,20 @@
             </select>
 
             <div class="fila">
-                <select id="CodigoPais" name="CodigoPais" required>
+                <<input 
+  id="codigoPais" 
+  type="text" 
+  placeholder="+54, +1, +34..." 
+  list="listaCodigos"
+  class="input-telefono"
+/>
+<datalist id="listaCodigos"></datalist>
+
                     <option value="">Código</option>
                 </select>
-                <input type="tel" name="Telefono" placeholder="Teléfono" required autocomplete="off" />
+                <input type="tel" name="Telefono" id="Telefono" placeholder="Teléfono" required autocomplete="off"
+       pattern="[0-9]+" title="Solo se permiten números" oninput="this.value = this.value.replace(/[^0-9]/g, '');" />
+
             </div>
 
             <button type="submit" class="btn-principal">Continuar</button>
@@ -199,195 +209,285 @@
         <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
     </div>
 
-    <script>
-        const datosUbicacion = {
-    "Argentina": {
-        codigo: "+54",
-        provincias: {
-            "Ciudad Autónoma de Buenos Aires": [
-                "Palermo", "Recoleta", "Belgrano", "San Telmo", "Caballito", 
-                "Villa Urquiza", "Almagro", "Puerto Madero", "La Boca", "Chacarita", 
-                "Parque Patricios", "Coghlan", "Villa Crespo", "Balvanera", "Flores"
-            ],
-            "Buenos Aires": [
-                "La Plata", "Mar del Plata", "Bahía Blanca", "Tigre", "San Isidro",
-                "Quilmes", "Morón", "Lanús", "Avellaneda", "Lomas de Zamora",
-                "Vicente López", "San Fernando", "Ezeiza", "San Nicolás", "Campana"
-            ],
-            "Córdoba": [
-                "Córdoba", "Villa Carlos Paz", "Río Cuarto", "Alta Gracia", "Villa María",
-                "Jesús María", "La Falda", "Cosquín", "Río Tercero", "Capilla del Monte"
-            ],
-            "Santa Fe": [
-                "Rosario", "Santa Fe", "Rafaela", "Venado Tuerto", "Reconquista",
-                "Esperanza", "Santo Tomé", "Villa Gobernador Gálvez", "Casilda", "Firmat"
-            ],
-            "Mendoza": [
-                "Mendoza", "Godoy Cruz", "San Rafael", "Luján de Cuyo", "Malargüe",
-                "Guaymallén", "Tunuyán", "Las Heras", "San Martín", "Rivadavia"
-            ],
-            "Tucumán": [
-                "San Miguel de Tucumán", "Yerba Buena", "Tafí Viejo", "Concepción",
-                "Banda del Río Salí", "Aguilares", "Monteros", "Lules", "Trancas", "Simoca"
-            ]
-        }
-    },
-    "Chile": {
-        codigo: "+56",
-        provincias: {
-            "Región Metropolitana de Santiago": [
-                "Santiago Centro", "Las Condes", "Providencia", "La Florida", "Ñuñoa",
-                "Puente Alto", "Maipú", "La Reina", "Vitacura", "San Bernardo"
-            ],
-            "Valparaíso": [
-                "Valparaíso", "Viña del Mar", "Quilpué", "Concón", "San Antonio",
-                "Quillota", "Limache", "La Calera", "Los Andes", "Casablanca"
-            ],
-            "Biobío": [
-                "Concepción", "Talcahuano", "Los Ángeles", "Chillán", "Coronel",
-                "Lota", "Penco", "Tomé", "Yumbel", "Curanilahue"
-            ],
-            "Antofagasta": [
-                "Antofagasta", "Calama", "Tocopilla", "Mejillones", "María Elena"
-            ],
-            "Los Lagos": [
-                "Puerto Montt", "Osorno", "Castro", "Ancud", "Frutillar", "Puerto Varas"
-            ]
-        }
-    },
-    "Uruguay": {
-        codigo: "+598",
-        provincias: {
-            "Montevideo": [
-                "Ciudad Vieja", "Pocitos", "Carrasco", "Buceo", "Cordón", 
-                "Centro", "Malvín", "Parque Rodó", "La Blanqueada", "Tres Cruces"
-            ],
-            "Canelones": [
-                "Canelones", "Las Piedras", "Pando", "Santa Lucía", "Atlántida",
-                "Toledo", "Sauce", "Progreso", "Ciudad de la Costa", "La Paz"
-            ],
-            "Maldonado": [
-                "Maldonado", "Punta del Este", "San Carlos", "Pan de Azúcar",
-                "Aiguá", "Piriápolis", "Gregorio Aznárez", "Solanas", "El Tesoro"
-            ],
-            "Colonia": [
-                "Colonia del Sacramento", "Nueva Palmira", "Carmelo",
-                "Rosario", "Juan Lacaze", "Tarariras", "Ombúes de Lavalle"
-            ],
-            "Salto": [
-                "Salto", "Daymán", "Constitución", "San Antonio", "Palomas"
-            ]
-        }
-    },
-    "Brasil": {
-        codigo: "+55",
-        provincias: {
-            "Distrito Federal (Brasilia)": [
-                "Asa Norte", "Asa Sul", "Lago Norte", "Lago Sul", "Taguatinga",
-                "Ceilândia", "Sobradinho", "Guará", "Cruzeiro", "Samambaia"
-            ],
-            "São Paulo": [
-                "São Paulo", "Campinas", "Santos", "Guarulhos", "Sorocaba",
-                "Osasco", "São Bernardo do Campo", "São Caetano", "Jundiaí", "Mogi das Cruzes"
-            ],
-            "Rio de Janeiro": [
-                "Rio de Janeiro", "Niterói", "Petrópolis", "Cabo Frio", "Angra dos Reis",
-                "Volta Redonda", "Duque de Caxias", "Nova Iguaçu", "Campos dos Goytacazes"
-            ],
-            "Bahia": [
-                "Salvador", "Feira de Santana", "Ilhéus", "Porto Seguro", "Vitória da Conquista"
-            ],
-            "Paraná": [
-                "Curitiba", "Londrina", "Maringá", "Ponta Grossa", "Foz do Iguaçu"
-            ]
-        }
-    },
-    "Paraguay": {
-        codigo: "+595",
-        provincias: {
-            "Asunción": [
-                "Centro Histórico", "Recoleta", "Trinidad", "San Roque", "La Catedral",
-                "Mburucuyá", "Las Lomas", "Santa María", "Ykua Satî", "Mariscal López"
-            ],
-            "Central": [
-                "Luque", "San Lorenzo", "Fernando de la Mora", "Capiatá", "Itauguá",
-                "Ñemby", "Lambaré", "Mariano Roque Alonso", "Areguá", "Villeta"
-            ],
-            "Alto Paraná": [
-                "Ciudad del Este", "Presidente Franco", "Hernandarias", "Minga Guazú", "Santa Rita"
-            ],
-            "Itapúa": [
-                "Encarnación", "Hohenau", "Obligado", "Bella Vista", "San Pedro del Paraná"
-            ]
-        }
-    },
-    "Perú": {
-        codigo: "+51",
-        provincias: {
-            "Lima Metropolitana": [
-                "Miraflores", "Callao", "San Isidro", "Barranco", "Chorrillos",
-                "Surco", "San Miguel", "Pueblo Libre", "Magdalena del Mar", "Los Olivos"
-            ],
-            "Cusco": [
-                "Cusco", "Urubamba", "Pisac", "Ollantaytambo", "Calca", "San Jerónimo"
-            ],
-            "Arequipa": [
-                "Arequipa", "Camaná", "Mollendo", "Chivay", "Yanahuara", "Cayma"
-            ],
-            "La Libertad": [
-                "Trujillo", "Huanchaco", "Pacasmayo", "Chepén", "Virú", "El Porvenir"
-            ],
-            "Piura": [
-                "Piura", "Sullana", "Talara", "Paita", "Sechura", "Catacaos"
-            ]
-        }
-    },
-    "Colombia": {
-        codigo: "+57",
-        provincias: {
-            "Bogotá D.C.": [
-                "Chapinero", "Usaquén", "Teusaquillo", "Suba", "Fontibón",
-                "Engativá", "Kennedy", "Santa Fe", "Bosa", "San Cristóbal"
-            ],
-            "Antioquia": [
-                "Medellín", "Bello", "Envigado", "Rionegro", "Itagüí",
-                "Sabaneta", "Copacabana", "La Estrella", "Girardota", "Marinilla"
-            ],
-            "Valle del Cauca": [
-                "Cali", "Palmira", "Buenaventura", "Tuluá", "Yumbo", "Buga", "Jamundí"
-            ],
-            "Atlántico": [
-                "Barranquilla", "Soledad", "Puerto Colombia", "Galapa", "Malambo"
-            ],
-            "Santander": [
-                "Bucaramanga", "Floridablanca", "Giron", "Piedecuesta", "Lebrija"
-            ]
-        }
-    },
-    "España": {
-        codigo: "+34",
-        provincias: {
-            "Madrid (Comunidad de Madrid)": [
-                "Madrid", "Alcalá de Henares", "Getafe", "Leganés", "Móstoles",
-                "Fuenlabrada", "Torrejón de Ardoz", "Pozuelo de Alarcón", "Alcobendas", "Parla"
-            ],
-            "Cataluña": [
-                "Barcelona", "Girona", "Tarragona", "Lleida", "Badalona",
-                "Hospitalet de Llobregat", "Sabadell", "Terrassa"
-            ],
-            "Andalucía": [
-                "Sevilla", "Granada", "Córdoba", "Málaga", "Cádiz",
-                "Almería", "Huelva", "Jaén"
-            ],
-            "Galicia": [
-                "Santiago de Compostela", "Vigo", "A Coruña", "Ourense", "Pontevedra"
-            ],
-            "Valencia (Comunidad Valenciana)": [
-                "Valencia", "Alicante", "Castellón", "Elche", "Gandía"
-            ]
-        }
-    }
+   <script>
+const datosUbicacion = {
+  "Afganistán": { provincias: { "Kabul": ["Kabul"], "Herat": ["Herat"], "Kandahar": ["Kandahar"] } },
+  "Albania": { provincias: { "Tirana": ["Tirana"], "Durrës": ["Durrës"], "Shkodër": ["Shkodër"] } },
+  "Alemania": { provincias: { "Baviera": ["Múnich","Núremberg"], "Berlín": ["Berlín"], "Renania": ["Colonia","Düsseldorf"], "Hamburgo": ["Hamburgo"] } },
+  "Andorra": { provincias: { "Andorra la Vieja": ["Andorra la Vieja"] } },
+  "Angola": { provincias: { "Luanda": ["Luanda"], "Benguela": ["Benguela"], "Huambo": ["Huambo"] } },
+  "Antigua y Barbuda": { provincias: { "Saint John": ["Saint John’s"], "Saint Mary": ["Bolans"] } },
+  "Arabia Saudita": { provincias: { "Riad": ["Riad"], "La Meca": ["La Meca","Yeda"], "Medina": ["Medina"] } },
+  "Argelia": { provincias: { "Argel": ["Argel"], "Orán": ["Orán"], "Constantina": ["Constantina"] } },
+  "Argentina": { provincias: { "Buenos Aires": ["La Plata","Mar del Plata","Tigre"], "Córdoba": ["Córdoba","Villa María"], "Santa Fe": ["Rosario","Santa Fe"], "Mendoza": ["Mendoza","San Rafael"] } },
+  "Armenia": { provincias: { "Ereván": ["Ereván"], "Gyumri": ["Gyumri"] } },
+  "Australia": { provincias: { "Nueva Gales del Sur": ["Sídney"], "Victoria": ["Melbourne"], "Queensland": ["Brisbane"], "Australia Occidental": ["Perth"] } },
+  "Austria": { provincias: { "Viena": ["Viena"], "Tirol": ["Innsbruck"], "Salzburgo": ["Salzburgo"] } },
+  "Azerbaiyán": { provincias: { "Bakú": ["Bakú"], "Ganja": ["Ganja"] } },
+  "Bahamas": { provincias: { "New Providence": ["Nassau"], "Grand Bahama": ["Freeport"] } },
+  "Bangladés": { provincias: { "Daca": ["Daca"], "Chittagong": ["Chittagong"], "Khulna": ["Khulna"] } },
+  "Barbados": { provincias: { "Saint Michael": ["Bridgetown"], "Christ Church": ["Oistins"] } },
+  "Baréin": { provincias: { "Manama": ["Manama"], "Muharraq": ["Muharraq"] } },
+  "Bélgica": { provincias: { "Bruselas": ["Bruselas"], "Flandes": ["Amberes","Gante"], "Valonia": ["Lieja","Namur"] } },
+  "Belice": { provincias: { "Belice": ["Belmopán","San Pedro"], "Cayo": ["San Ignacio"] } },
+  "Benín": { provincias: { "Litoral": ["Cotonú"], "Atlántico": ["Ouidah"] } },
+  "Bielorrusia": { provincias: { "Minsk": ["Minsk"], "Gomel": ["Gomel"], "Brest": ["Brest"] } },
+  "Birmania": { provincias: { "Yangón": ["Yangón"], "Mandalay": ["Mandalay"], "Naypyidó": ["Naypyidó"] } },
+  "Bolivia": { provincias: { "La Paz": ["La Paz"], "Santa Cruz": ["Santa Cruz de la Sierra"], "Cochabamba": ["Cochabamba"] } },
+  "Bosnia y Herzegovina": { provincias: { "Sarajevo": ["Sarajevo"], "Banja Luka": ["Banja Luka"], "Mostar": ["Mostar"] } },
+  "Botsuana": { provincias: { "Gaborone": ["Gaborone"], "Francistown": ["Francistown"] } },
+  "Brasil": { provincias: { "São Paulo": ["São Paulo","Campinas"], "Río de Janeiro": ["Río de Janeiro","Niterói"], "Minas Gerais": ["Belo Horizonte"], "Bahia": ["Salvador","Ilhéus"], "Paraná": ["Curitiba"] } },
+  "Brunéi": { provincias: { "Brunéi-Muara": ["Bandar Seri Begawan"], "Tutong": ["Tutong"] } },
+  "Bulgaria": { provincias: { "Sofía": ["Sofía"], "Plovdiv": ["Plovdiv"], "Varna": ["Varna"] } },
+  "Burkina Faso": { provincias: { "Centro": ["Uagadugú"], "Hauts-Bassins": ["Bobo-Dioulasso"] } },
+  "Burundi": { provincias: { "Buyumbura": ["Buyumbura"], "Gitega": ["Gitega"] } },
+  "Cabo Verde": { provincias: { "Santiago": ["Praia"], "São Vicente": ["Mindelo"] } },
+  "Camboya": { provincias: { "Phnom Penh": ["Phnom Penh"], "Siem Reap": ["Siem Reap"] } },
+  "Camerún": { provincias: { "Litoral": ["Dualá"], "Centro": ["Yaundé"] } },
+  "Canadá": { provincias: { "Ontario": ["Toronto","Ottawa"], "Quebec": ["Montreal","Quebec City"], "Columbia Británica": ["Vancouver","Victoria"], "Alberta": ["Calgary","Edmonton"] } },
+  "Catar": { provincias: { "Ad Dawhah": ["Doha"], "Al Rayyan": ["Al Rayyan"] } },
+  "Chad": { provincias: { "N'Djamena": ["N'Djamena"], "Logone Occidental": ["Moundou"] } },
+  "Chile": { provincias: { "Región Metropolitana": ["Santiago","Las Condes"], "Valparaíso": ["Valparaíso","Viña del Mar"], "Biobío": ["Concepción","Chillán"], "Los Lagos": ["Puerto Montt"] } },
+  "China": { provincias: { "Pekín": ["Pekín"], "Shanghái": ["Shanghái"], "Guangdong": ["Cantón","Shenzhen"], "Sichuan": ["Chengdu"] } },
+  "Chipre": { provincias: { "Nicosia": ["Nicosia"], "Limasol": ["Limasol"], "Larnaca": ["Larnaca"] } },
+  "Colombia": { provincias: { "Bogotá D.C.": ["Bogotá"], "Antioquia": ["Medellín","Envigado"], "Valle del Cauca": ["Cali","Palmira"], "Atlántico": ["Barranquilla"] } },
+  "Comoras": { provincias: { "Ngazidja": ["Moroni"], "Anjouan": ["Mutsamudu"] } },
+  "Congo": { provincias: { "Brazzaville": ["Brazzaville"], "Pointe-Noire": ["Pointe-Noire"] } },
+  "Corea del Norte": { provincias: { "Pyongyang": ["Pyongyang"], "Hamhung": ["Hamhung"] } },
+  "Corea del Sur": { provincias: { "Seúl": ["Seúl"], "Busan": ["Busan"], "Incheon": ["Incheon"] } },
+  "Costa Rica": { provincias: { "San José": ["San José","Escazú"], "Alajuela": ["Alajuela"], "Cartago": ["Cartago"], "Heredia": ["Heredia"] } },
+  "Croacia": { provincias: { "Zagreb": ["Zagreb"], "Split": ["Split"], "Dubrovnik": ["Dubrovnik"] } },
+  "Cuba": { provincias: { "La Habana": ["La Habana"], "Santiago de Cuba": ["Santiago"], "Matanzas": ["Matanzas","Varadero"] } },
+  "Dinamarca": { provincias: { "Hovedstaden": ["Copenhague"], "Midtjylland": ["Aarhus"], "Nordjylland": ["Aalborg"] } },
+  "Ecuador": { provincias: { "Pichincha": ["Quito"], "Guayas": ["Guayaquil"], "Azuay": ["Cuenca"], "Manabí": ["Manta"] } },
+  "Egipto": { provincias: { "El Cairo": ["El Cairo"], "Giza": ["Giza"], "Alejandría": ["Alejandría"] } },
+  "El Salvador": { provincias: { "San Salvador": ["San Salvador"], "La Libertad": ["Santa Tecla"], "Santa Ana": ["Santa Ana"] } },
+  "Emiratos Árabes Unidos": { provincias: { "Dubái": ["Dubái"], "Abu Dabi": ["Abu Dabi"], "Sharjah": ["Sharjah"] } },
+  "Eslovaquia": { provincias: { "Bratislava": ["Bratislava"], "Košice": ["Košice"] } },
+  "Eslovenia": { provincias: { "Liubliana": ["Liubliana"], "Maribor": ["Maribor"] } },
+  "España": { provincias: { "Madrid": ["Madrid","Getafe"], "Cataluña": ["Barcelona","Girona"], "Andalucía": ["Sevilla","Málaga"], "Valencia": ["Valencia","Alicante"] } },
+  "Estados Unidos": { provincias: { "California": ["Los Ángeles","San Francisco"], "Texas": ["Houston","Austin"], "Florida": ["Miami","Orlando"], "Nueva York": ["Nueva York","Buffalo"], "Illinois": ["Chicago"] } },
+  "Estonia": { provincias: { "Harju": ["Tallin"], "Tartu": ["Tartu"] } },
+  "Etiopía": { provincias: { "Addis Abeba": ["Addis Abeba"], "Oromía": ["Adama"], "Amhara": ["Bahir Dar"] } },
+  "Filipinas": { provincias: { "Metro Manila": ["Manila","Makati"], "Cebú": ["Cebú"], "Davao": ["Davao City"] } },
+  "Finlandia": { provincias: { "Uusimaa": ["Helsinki"], "Pirkanmaa": ["Tampere"], "Varsinais-Suomi": ["Turku"] } },
+  "Francia": { provincias: { "Île-de-France": ["París","Versalles"], "Provenza": ["Marsella","Niza"], "Occitania": ["Toulouse","Montpellier"] } },
+  "Gabón": { provincias: { "Estuaire": ["Libreville"], "Haut-Ogooué": ["Franceville"] } },
+  "Gambia": { provincias: { "Banjul": ["Banjul"], "Kanifing": ["Serekunda"] } },
+  "Georgia": { provincias: { "Tiflis": ["Tiflis"], "Batumi": ["Batumi"] } },
+  "Ghana": { provincias: { "Greater Accra": ["Accra"], "Ashanti": ["Kumasi"] } },
+  "Grecia": { provincias: { "Ática": ["Atenas"], "Macedonia": ["Salónica"], "Creta": ["Heraclión"] } },
+  "Guatemala": { provincias: { "Guatemala": ["Ciudad de Guatemala"], "Quetzaltenango": ["Quetzaltenango"], "Petén": ["Flores"] } },
+  "Guinea": { provincias: { "Conakry": ["Conakry"], "Kankan": ["Kankan"] } },
+  "Haití": { provincias: { "Ouest": ["Puerto Príncipe"], "Nord": ["Cap-Haïtien"] } },
+  "Honduras": { provincias: { "Francisco Morazán": ["Tegucigalpa"], "Cortés": ["San Pedro Sula"] } },
+  "Hungría": { provincias: { "Budapest": ["Budapest"], "Debrecen": ["Debrecen"], "Szeged": ["Szeged"] } },
+  "India": { provincias: { "Delhi": ["Nueva Delhi"], "Maharashtra": ["Mumbai"], "Karnataka": ["Bangalore"], "Tamil Nadu": ["Chennai"] } },
+  "Indonesia": { provincias: { "Java Occidental": ["Yakarta","Bandung"], "Bali": ["Denpasar"], "Sumatra": ["Medan"] } },
+  "Irak": { provincias: { "Bagdad": ["Bagdad"], "Basora": ["Basora"], "Erbil": ["Erbil"] } },
+  "Irán": { provincias: { "Teherán": ["Teherán"], "Isfahán": ["Isfahán"], "Shiraz": ["Shiraz"] } },
+  "Irlanda": { provincias: { "Leinster": ["Dublín"], "Munster": ["Cork"], "Connacht": ["Galway"] } },
+  "Islandia": { provincias: { "Capital": ["Reikiavik"], "Sud": ["Selfoss"] } },
+  "Israel": { provincias: { "Distrito Central": ["Tel Aviv"], "Jerusalén": ["Jerusalén"], "Haifa": ["Haifa"] } },
+  "Italia": { provincias: { "Lazio": ["Roma"], "Lombardía": ["Milán"], "Toscana": ["Florencia"], "Veneto": ["Venecia"] } },
+  "Jamaica": { provincias: { "Kingston": ["Kingston"], "Saint James": ["Montego Bay"] } },
+  "Japón": { provincias: { "Tokio": ["Tokio"], "Osaka": ["Osaka"], "Hokkaido": ["Sapporo"], "Kyoto": ["Kioto"] } },
+  "Jordania": { provincias: { "Ammán": ["Ammán"], "Zarqa": ["Zarqa"] } },
+  "Kazajistán": { provincias: { "Astaná": ["Astaná"], "Almatý": ["Almatý"], "Shymkent": ["Shymkent"] } },
+  "Kenia": { provincias: { "Nairobi": ["Nairobi"], "Mombasa": ["Mombasa"] } },
+  "Kirguistán": { provincias: { "Biskek": ["Biskek"], "Osh": ["Osh"] } },
+  "Kuwait": { provincias: { "Capital": ["Ciudad de Kuwait"], "Hawalli": ["Hawalli"] } },
+  "Laos": { provincias: { "Vientián": ["Vientián"], "Luang Prabang": ["Luang Prabang"] } },
+  "Letonia": { provincias: { "Riga": ["Riga"], "Daugavpils": ["Daugavpils"] } },
+  "Líbano": { provincias: { "Beirut": ["Beirut"], "Monte Líbano": ["Jounieh"] } },
+  "Liberia": { provincias: { "Montserrado": ["Monrovia"], "Nimba": ["Ganta"], "Bong": ["Gbarnga"] } },
+  "Libia": { provincias: { "Trípoli": ["Trípoli"], "Bengasi": ["Bengasi"], "Misurata": ["Misurata"] } },
+  "Liechtenstein": { provincias: { "Vaduz": ["Vaduz"], "Balzers": ["Balzers"] } },
+  "Lituania": { provincias: { "Vilna": ["Vilna"], "Kaunas": ["Kaunas"], "Klaipeda": ["Klaipeda"] } },
+  "Luxemburgo": { provincias: { "Luxemburgo": ["Luxemburgo"], "Esch-sur-Alzette": ["Esch-sur-Alzette"] } },
+  "Macedonia del Norte": { provincias: { "Skopie": ["Skopie"], "Bitola": ["Bitola"], "Ohrid": ["Ohrid"] } },
+  "Madagascar": { provincias: { "Antananarivo": ["Antananarivo"], "Toamasina": ["Toamasina"], "Mahajanga": ["Mahajanga"] } },
+  "Malasia": { provincias: { "Kuala Lumpur": ["Kuala Lumpur"], "Selangor": ["Shah Alam"], "Penang": ["George Town"] } },
+  "Malaui": { provincias: { "Central": ["Lilongüe"], "Sur": ["Blantyre"], "Norte": ["Mzuzu"] } },
+  "Maldivas": { provincias: { "Malé": ["Malé"], "Ari": ["Mahibadhoo"] } },
+  "Malí": { provincias: { "Bamako": ["Bamako"], "Sikasso": ["Sikasso"], "Tombuctú": ["Tombuctú"] } },
+  "Malta": { provincias: { "Valeta": ["Valeta"], "Sliema": ["Sliema"], "Mdina": ["Mdina"] } },
+  "Marruecos": { provincias: { "Casablanca-Settat": ["Casablanca"], "Marrakech-Safi": ["Marrakech"], "Rabat-Salé-Kenitra": ["Rabat"] } },
+  "Mauricio": { provincias: { "Plaines Wilhems": ["Curepipe","Vacoas"], "Port Louis": ["Port Louis"] } },
+  "Mauritania": { provincias: { "Nuakchot": ["Nuakchot"], "Adrar": ["Atar"] } },
+   "México": { provincias: { 
+      "Ciudad de México": ["Ciudad de México","Coyoacán","Xochimilco"],
+      "Jalisco": ["Guadalajara","Puerto Vallarta"],
+      "Nuevo León": ["Monterrey"],
+      "Yucatán": ["Mérida"],
+      "Puebla": ["Puebla","Tehuacán"]
+  }},
+  "Moldavia": { provincias: { "Chisináu": ["Chisináu"], "Bălți": ["Bălți"] } },
+  "Mónaco": { provincias: { "Montecarlo": ["Montecarlo"] } },
+  "Mongolia": { provincias: { "Ulán Bator": ["Ulán Bator"], "Darkhan": ["Darkhan"] } },
+  "Montenegro": { provincias: { "Podgorica": ["Podgorica"], "Kotor": ["Kotor"] } },
+  "Mozambique": { provincias: { "Maputo": ["Maputo"], "Sofala": ["Beira"], "Nampula": ["Nampula"] } },
+  "Namibia": { provincias: { "Khomas": ["Windhoek"], "Erongo": ["Swakopmund"] } },
+  "Nepal": { provincias: { "Bagmati": ["Katmandú"], "Gandaki": ["Pokhara"], "Lumbini": ["Butwal"] } },
+  "Nicaragua": { provincias: { "Managua": ["Managua"], "Granada": ["Granada"], "León": ["León"] } },
+  "Níger": { provincias: { "Niamey": ["Niamey"], "Zinder": ["Zinder"] } },
+  "Nigeria": { provincias: { "Lagos": ["Lagos"], "Abuja": ["Abuja"], "Kano": ["Kano"], "Enugu": ["Enugu"] } },
+  "Noruega": { provincias: { "Oslo": ["Oslo"], "Vestland": ["Bergen"], "Trøndelag": ["Trondheim"] } },
+  "Nueva Zelanda": { provincias: { "Auckland": ["Auckland"], "Wellington": ["Wellington"], "Canterbury": ["Christchurch"], "Otago": ["Dunedin"] } },
+  "Omán": { provincias: { "Muscat": ["Mascate"], "Dhofar": ["Salalah"] } },
+  "Países Bajos": { provincias: { "Holanda Septentrional": ["Ámsterdam"], "Holanda Meridional": ["Róterdam","La Haya"], "Utrecht": ["Utrecht"] } },
+  "Pakistán": { provincias: { "Punyab": ["Lahore"], "Sind": ["Karachi"], "Islamabad Capital": ["Islamabad"], "Baluchistán": ["Quetta"] } },
+  "Palestina": { provincias: { "Cisjordania": ["Ramala"], "Gaza": ["Gaza"] } },
+  "Panamá": { provincias: { "Panamá": ["Ciudad de Panamá"], "Colón": ["Colón"], "Chiriquí": ["David"] } },
+  "Papúa Nueva Guinea": { provincias: { "Nacional": ["Port Moresby"], "Morobe": ["Lae"] } },
+  "Paraguay": { provincias: { "Asunción": ["Asunción"], "Central": ["Luque","San Lorenzo"], "Itapúa": ["Encarnación"] } },
+  "Perú": { provincias: { "Lima": ["Lima","Callao"], "Cusco": ["Cusco"], "Arequipa": ["Arequipa"], "La Libertad": ["Trujillo"] } },
+  "Polonia": { provincias: { "Mazovia": ["Varsovia"], "Pequeña Polonia": ["Cracovia"], "Silesia": ["Katowice"], "Pomerania": ["Gdansk"] } },
+  "Portugal": { provincias: { "Lisboa": ["Lisboa"], "Oporto": ["Oporto"], "Faro": ["Faro"], "Madeira": ["Funchal"] } },
+  "Qatar": { provincias: { "Doha": ["Doha"], "Rayyan": ["Rayyan"], "Al Wakrah": ["Wakrah"] } },
+  "Reino Unido": { provincias: { 
+      "Inglaterra": ["Londres","Manchester","Liverpool"], 
+      "Escocia": ["Edimburgo","Glasgow"], 
+      "Gales": ["Cardiff","Swansea"], 
+      "Irlanda del Norte": ["Belfast"]
+  }},
+  "República Checa": { provincias: { "Bohemia Central": ["Praga"], "Moravia": ["Brno","Ostrava"] } },
+  "República Dominicana": { provincias: { "Distrito Nacional": ["Santo Domingo"], "Santiago": ["Santiago de los Caballeros"], "La Altagracia": ["Higüey"] } },
+  "Rumania": { provincias: { "Bucarest": ["Bucarest"], "Cluj": ["Cluj-Napoca"], "Timis": ["Timișoara"] } },
+  "Rusia": { provincias: { "Moscú": ["Moscú"], "San Petersburgo": ["San Petersburgo"], "Novosibirsk": ["Novosibirsk"], "Ekaterimburgo": ["Ekaterimburgo"] } },
+  "San Marino": { provincias: { "San Marino": ["San Marino"] } },
+  "Santa Lucía": { provincias: { "Castries": ["Castries"], "Soufrière": ["Soufrière"] } },
+  "Senegal": { provincias: { "Dakar": ["Dakar"], "Thiès": ["Thiès"], "Saint-Louis": ["Saint-Louis"] } },
+  "Serbia": { provincias: { "Belgrado": ["Belgrado"], "Novi Sad": ["Novi Sad"], "Niš": ["Niš"] } },
+  "Seychelles": { provincias: { "Mahé": ["Victoria"] } },
+  "Sierra Leona": { provincias: { "Western": ["Freetown"], "Northern": ["Makeni"] } },
+  "Singapur": { provincias: { "Central": ["Orchard","Marina Bay"], "North-East": ["Sengkang","Hougang"] } },
+  "Siria": { provincias: { "Damasco": ["Damasco"], "Alepo": ["Alepo"], "Homs": ["Homs"] } },
+  "Somalia": { provincias: { "Benadir": ["Mogadiscio"], "Puntland": ["Bosaso"] } },
+  "Sri Lanka": { provincias: { "Oeste": ["Colombo"], "Centro": ["Kandy"], "Sur": ["Galle"] } },
+  "Sudáfrica": { provincias: { "Gauteng": ["Johannesburgo"], "Cabo Occidental": ["Ciudad del Cabo"], "KwaZulu-Natal": ["Durban"], "Free State": ["Bloemfontein"] } },
+  "Sudán": { provincias: { "Jartum": ["Jartum"], "Darfur": ["Nyala"], "Nilo Azul": ["Ad-Damazin"] } },
+  "Suecia": { provincias: { "Estocolmo": ["Estocolmo"], "Västra Götaland": ["Gotemburgo"], "Skåne": ["Malmö"] } },
+  "Suiza": { provincias: { "Zúrich": ["Zúrich"], "Ginebra": ["Ginebra"], "Berna": ["Berna","Interlaken"], "Vaud": ["Lausana"] } },
+  "Surinam": { provincias: { "Paramaribo": ["Paramaribo"], "Wanica": ["Lelydorp"] } },
+  "Tailandia": { provincias: { "Bangkok": ["Bangkok"], "Chiang Mai": ["Chiang Mai"], "Phuket": ["Phuket"] } },
+  "Tanzania": { provincias: { "Dar es Salaam": ["Dar es Salaam"], "Zanzíbar": ["Zanzíbar"], "Arusha": ["Arusha"] } },
+  "Togo": { provincias: { "Marítima": ["Lomé"], "Plateaux": ["Atakpamé"] } },
+  "Túnez": { provincias: { "Túnez": ["Túnez"], "Sfax": ["Sfax"], "Susa": ["Susa"] } },
+  "Turkmenistán": { provincias: { "Ahal": ["Asjabad"], "Balkan": ["Turkmenbashy"] } },
+  "Turquía": { provincias: { "Estambul": ["Estambul"], "Ankara": ["Ankara"], "Esmirna": ["Esmirna"], "Antalya": ["Antalya"] } },
+  "Ucrania": { provincias: { "Kiev": ["Kiev"], "Lviv": ["Leópolis"], "Odesa": ["Odesa"], "Járkov": ["Járkov"] } },
+  "Uganda": { provincias: { "Kampala": ["Kampala"], "Wakiso": ["Entebbe"] } },
+  "Uruguay": { provincias: { "Montevideo": ["Montevideo"], "Canelones": ["Canelones"], "Maldonado": ["Punta del Este"] } },
+  "Uzbekistán": { provincias: { "Taskent": ["Taskent"], "Samarcanda": ["Samarcanda"], "Bujara": ["Bujara"] } },
+  "Vaticano": { provincias: { "Ciudad del Vaticano": ["Ciudad del Vaticano"] } },
+  "Venezuela": { provincias: { "Distrito Capital": ["Caracas"], "Zulia": ["Maracaibo"], "Miranda": ["Los Teques"], "Lara": ["Barquisimeto"] } },
+  "Vietnam": { provincias: { "Hanoi": ["Hanoi"], "Ho Chi Minh": ["Ho Chi Minh"], "Da Nang": ["Da Nang"] } },
+  "Yemen": { provincias: { "Saná": ["Saná"], "Aden": ["Aden"] } },
+  "Zambia": { provincias: { "Lusaka": ["Lusaka"], "Copperbelt": ["Ndola"], "Southern": ["Livingstone"] } },
+  "Zimbabue": { provincias: { "Harare": ["Harare"], "Bulawayo": ["Bulawayo"], "Manicaland": ["Mutare"] } }
 };
+
+const codigosTelefonicos = {
+  "+1": "Estados Unidos / Canadá",
+  "+7": "Rusia / Kazajistán",
+  "+20": "Egipto",
+  "+27": "Sudáfrica",
+  "+30": "Grecia",
+  "+31": "Países Bajos",
+  "+32": "Bélgica",
+  "+33": "Francia",
+  "+34": "España",
+  "+36": "Hungría",
+  "+39": "Italia",
+  "+40": "Rumania",
+  "+41": "Suiza",
+  "+43": "Austria",
+  "+44": "Reino Unido",
+  "+45": "Dinamarca",
+  "+46": "Suecia",
+  "+47": "Noruega",
+  "+48": "Polonia",
+  "+49": "Alemania",
+  "+51": "Perú",
+  "+52": "México",
+  "+53": "Cuba",
+  "+54": "Argentina",
+  "+55": "Brasil",
+  "+56": "Chile",
+  "+57": "Colombia",
+  "+58": "Venezuela",
+  "+60": "Malasia",
+  "+61": "Australia",
+  "+62": "Indonesia",
+  "+63": "Filipinas",
+  "+64": "Nueva Zelanda",
+  "+65": "Singapur",
+  "+66": "Tailandia",
+  "+81": "Japón",
+  "+82": "Corea del Sur",
+  "+84": "Vietnam",
+  "+86": "China",
+  "+90": "Turquía",
+  "+91": "India",
+  "+92": "Pakistán",
+  "+93": "Afganistán",
+  "+94": "Sri Lanka",
+  "+95": "Myanmar",
+  "+98": "Irán",
+  "+212": "Marruecos",
+  "+213": "Argelia",
+  "+216": "Túnez",
+  "+218": "Libia",
+  "+221": "Senegal",
+  "+222": "Mauritania",
+  "+225": "Costa de Marfil",
+  "+229": "Benín",
+  "+230": "Mauricio",
+  "+233": "Ghana",
+  "+234": "Nigeria",
+  "+240": "Guinea Ecuatorial",
+  "+243": "Rep. Dem. del Congo",
+  "+251": "Etiopía",
+  "+254": "Kenia",
+  "+255": "Tanzania",
+  "+260": "Zambia",
+  "+263": "Zimbabue",
+  "+297": "Aruba",
+  "+351": "Portugal",
+  "+352": "Luxemburgo",
+  "+353": "Irlanda",
+  "+354": "Islandia",
+  "+355": "Albania",
+  "+356": "Malta",
+  "+357": "Chipre",
+  "+358": "Finlandia",
+  "+370": "Lituania",
+  "+371": "Letonia",
+  "+372": "Estonia",
+  "+373": "Moldavia",
+  "+374": "Armenia",
+  "+375": "Bielorrusia",
+  "+376": "Andorra",
+  "+377": "Mónaco",
+  "+378": "San Marino",
+  "+380": "Ucrania",
+  "+381": "Serbia",
+  "+385": "Croacia",
+  "+386": "Eslovenia",
+  "+387": "Bosnia y Herzegovina",
+  "+389": "Macedonia del Norte",
+  "+420": "Rep. Checa",
+  "+421": "Eslovaquia",
+  "+423": "Liechtenstein",
+  "+507": "Panamá",
+  "+509": "Haití",
+  "+591": "Bolivia",
+  "+595": "Paraguay",
+  "+598": "Uruguay"
+};
+
+
 
 
         const paisSelect = document.getElementById("Pais");
@@ -441,12 +541,19 @@ paisSelect.addEventListener("change", () => {
     const pais = paisSelect.value;
     if (pais && datosUbicacion[pais]) {
         const codigo = datosUbicacion[pais].codigo;
-        telefonoInput.value = codigo + " ";
-        telefonoInput.focus();
+        codigoPaisSelect.innerHTML = "";
+        const optCodigo = document.createElement("option");
+        optCodigo.value = codigo;
+        optCodigo.textContent = codigo;
+        codigoPaisSelect.appendChild(optCodigo);
+        codigoPaisSelect.value = codigo;
+        telefonoInput.value = ""; // ✅ deja vacío el input
     } else {
+        codigoPaisSelect.innerHTML = "<option value=''>Código</option>";
         telefonoInput.value = "";
     }
 });
+
 
 // ✅ Si cambia el código manualmente, se sincroniza con el input
 codigoPaisSelect.addEventListener("change", () => {

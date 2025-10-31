@@ -9,6 +9,7 @@ namespace Zooni.Controllers
     {
 
         [HttpGet]
+
         [Route("Registro/Registro1")]
         public IActionResult Registro1()
         {
@@ -124,6 +125,7 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
     }
 }
 [HttpGet]
+
         public IActionResult Registro2(string modo = "")
         {
             var userId = HttpContext.Session.GetInt32("UserId");
@@ -567,6 +569,28 @@ public IActionResult NuevaMascota()
 
     return View("Registro2", new Mascota());
 }
+// ... tus métodos [HttpGet] anteriores
+
+[HttpGet]
+[Route("Registro/VerificarMail")]
+public JsonResult VerificarMail(string mail)
+{
+    try
+    {
+        string query = "SELECT COUNT(*) FROM Mail WHERE LOWER(Correo) = LOWER(@Correo)";
+        var param = new Dictionary<string, object> { { "@Correo", mail.Trim().ToLower() } };
+        int existe = Convert.ToInt32(BD.ExecuteScalar(query, param));
+
+        return Json(new { existe = existe > 0 });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error en VerificarMail: " + ex.Message);
+        return Json(new { existe = false });
+    }
+}
+
+// 👇 debajo de este ya vienen tus [HttpPost]
 
 [HttpPost]
 [ValidateAntiForgeryToken]

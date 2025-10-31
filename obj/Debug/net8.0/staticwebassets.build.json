@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "YNx1ELMQCbRp8X89xsZPk5PamFe7WS+PjQme7fW37iM=",
+  "Hash": "S5I70+nPK9Xyc7hdxJ2MVQwMN5w77TRqG03jnsyysSk=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "Zooni\\wwwroot",
       "Source": "Zooni",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\css\\registro.css",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\css\\registro.css",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "css/registro.css",
       "AssetKind": "All",
@@ -36,10 +36,10 @@
       "OriginalItemSpec": "wwwroot\\css\\registro.css"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\css\\site.css",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\css\\site.css",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "css/site.css",
       "AssetKind": "All",
@@ -55,10 +55,10 @@
       "OriginalItemSpec": "wwwroot\\css\\site.css"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\data\\consejos.json",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\data\\consejos.json",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "data/consejos.json",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\data\\consejos.json"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\data\\consejos.readme",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\data\\consejos.readme",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "data/consejos.readme",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\data\\consejos.readme"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\data\\tratamientos.json",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\data\\tratamientos.json",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "data/tratamientos.json",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\data\\tratamientos.json"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\data\\vacunas.json",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\data\\vacunas.json",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "data/vacunas.json",
       "AssetKind": "All",
@@ -131,10 +131,10 @@
       "OriginalItemSpec": "wwwroot\\data\\vacunas.json"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\favicon.ico",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\favicon.ico",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "favicon.ico",
       "AssetKind": "All",
@@ -150,10 +150,10 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\apple-icon.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\apple-icon.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/apple-icon.png",
       "AssetKind": "All",
@@ -169,10 +169,10 @@
       "OriginalItemSpec": "wwwroot\\img\\apple-icon.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\cajas\\avecaja.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\avecaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/cajas/avecaja.png",
       "AssetKind": "All",
@@ -188,10 +188,10 @@
       "OriginalItemSpec": "wwwroot\\img\\cajas\\avecaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\cajas\\Cajas.ReadMe",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\Cajas.ReadMe",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/cajas/Cajas.ReadMe",
       "AssetKind": "All",
@@ -207,10 +207,10 @@
       "OriginalItemSpec": "wwwroot\\img\\cajas\\Cajas.ReadMe"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\cajas\\conejocaja.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\conejocaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/cajas/conejocaja.png",
       "AssetKind": "All",
@@ -226,10 +226,10 @@
       "OriginalItemSpec": "wwwroot\\img\\cajas\\conejocaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\cajas\\gatocaja.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\gatocaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/cajas/gatocaja.png",
       "AssetKind": "All",
@@ -245,10 +245,10 @@
       "OriginalItemSpec": "wwwroot\\img\\cajas\\gatocaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\cajas\\perrocaja.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\perrocaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/cajas/perrocaja.png",
       "AssetKind": "All",
@@ -264,10 +264,10 @@
       "OriginalItemSpec": "wwwroot\\img\\cajas\\perrocaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\cajas\\pezcaja.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\pezcaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/cajas/pezcaja.png",
       "AssetKind": "All",
@@ -283,10 +283,10 @@
       "OriginalItemSpec": "wwwroot\\img\\cajas\\pezcaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\cajas\\reptilcaja.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\reptilcaja.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/cajas/reptilcaja.png",
       "AssetKind": "All",
@@ -302,10 +302,10 @@
       "OriginalItemSpec": "wwwroot\\img\\cajas\\reptilcaja.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\facebook-icon.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\facebook-icon.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/facebook-icon.png",
       "AssetKind": "All",
@@ -321,10 +321,10 @@
       "OriginalItemSpec": "wwwroot\\img\\facebook-icon.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\fondos\\bosque.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\fondos\\bosque.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/fondos/bosque.png",
       "AssetKind": "All",
@@ -340,10 +340,10 @@
       "OriginalItemSpec": "wwwroot\\img\\fondos\\bosque.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\google-icon.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\google-icon.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/google-icon.png",
       "AssetKind": "All",
@@ -359,10 +359,10 @@
       "OriginalItemSpec": "wwwroot\\img\\google-icon.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\icons\\hamburger.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\icons\\hamburger.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/icons/hamburger.png",
       "AssetKind": "All",
@@ -378,10 +378,10 @@
       "OriginalItemSpec": "wwwroot\\img\\icons\\hamburger.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas-bienvenida.png",
       "AssetKind": "All",
@@ -397,10 +397,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas-bienvenida.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas.readme",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas.readme",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas.readme",
       "AssetKind": "All",
@@ -416,10 +416,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas.readme"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\aves\\agapornis\\ave_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\agapornis\\ave_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/aves/agapornis/ave_basico.png",
       "AssetKind": "All",
@@ -435,10 +435,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\aves\\agapornis\\ave_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\aves\\amazonas\\ave_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\amazonas\\ave_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/aves/amazonas/ave_basico.png",
       "AssetKind": "All",
@@ -454,10 +454,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\aves\\amazonas\\ave_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\aves\\Cacatúa\\ave_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\Cacatúa\\ave_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/aves/Cacatúa/ave_basico.png",
       "AssetKind": "All",
@@ -473,10 +473,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\aves\\Cacatúa\\ave_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\aves\\guacamayo\\ave_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\guacamayo\\ave_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/aves/guacamayo/ave_basico.png",
       "AssetKind": "All",
@@ -492,10 +492,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\aves\\guacamayo\\ave_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\aves\\otra raza\\ave_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\otra raza\\ave_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/aves/otra raza/ave_basico.png",
       "AssetKind": "All",
@@ -511,10 +511,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\aves\\otra raza\\ave_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\aves\\periquito\\ave_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\periquito\\ave_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/aves/periquito/ave_basico.png",
       "AssetKind": "All",
@@ -530,10 +530,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\aves\\periquito\\ave_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\conejos\\Angora\\conejo_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\Angora\\conejo_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/conejos/Angora/conejo_basico.png",
       "AssetKind": "All",
@@ -549,10 +549,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\conejos\\Angora\\conejo_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\conejos\\Belier\\conejo_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\Belier\\conejo_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/conejos/Belier/conejo_basico.png",
       "AssetKind": "All",
@@ -568,10 +568,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\conejos\\Belier\\conejo_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\conejos\\Cabeza de león\\conejo_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\Cabeza de león\\conejo_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/conejos/Cabeza de león/conejo_basico.png",
       "AssetKind": "All",
@@ -587,10 +587,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\conejos\\Cabeza de león\\conejo_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\conejos\\Mini Lop\\conejo_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\Mini Lop\\conejo_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/conejos/Mini Lop/conejo_basico.png",
       "AssetKind": "All",
@@ -606,10 +606,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\conejos\\Mini Lop\\conejo_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\conejos\\otra raza\\conejo_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\otra raza\\conejo_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/conejos/otra raza/conejo_basico.png",
       "AssetKind": "All",
@@ -625,10 +625,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\conejos\\otra raza\\conejo_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\conejos\\Rex\\conejo_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\Rex\\conejo_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/conejos/Rex/conejo_basico.png",
       "AssetKind": "All",
@@ -644,10 +644,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\conejos\\Rex\\conejo_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\gatos\\bengala\\gato_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\bengala\\gato_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/gatos/bengala/gato_basico.png",
       "AssetKind": "All",
@@ -663,10 +663,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\bengala\\gato_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\gatos\\bombay\\gato_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\bombay\\gato_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/gatos/bombay/gato_basico.png",
       "AssetKind": "All",
@@ -682,10 +682,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\bombay\\gato_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\gatos\\british shorthair\\gato_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\british shorthair\\gato_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/gatos/british shorthair/gato_basico.png",
       "AssetKind": "All",
@@ -701,10 +701,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\british shorthair\\gato_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/gatos/esfinge/gato_basico.png",
       "AssetKind": "All",
@@ -720,10 +720,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\gatos\\maine coon\\gato_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\maine coon\\gato_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/gatos/maine coon/gato_basico.png",
       "AssetKind": "All",
@@ -739,10 +739,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\maine coon\\gato_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\gatos\\otra raza\\gato_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\otra raza\\gato_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/gatos/otra raza/gato_basico.png",
       "AssetKind": "All",
@@ -758,10 +758,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\otra raza\\gato_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\gatos\\persa\\gato_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\persa\\gato_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/gatos/persa/gato_basico.png",
       "AssetKind": "All",
@@ -777,10 +777,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\persa\\gato_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\gatos\\ragdoll\\gato_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\ragdoll\\gato_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/gatos/ragdoll/gato_basico.png",
       "AssetKind": "All",
@@ -796,10 +796,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\ragdoll\\gato_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\gatos\\siames\\gato_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\siames\\gato_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/gatos/siames/gato_basico.png",
       "AssetKind": "All",
@@ -815,10 +815,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\gatos\\siames\\gato_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Akita Inu\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Akita Inu\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Akita Inu/perro_basico.png",
       "AssetKind": "All",
@@ -834,10 +834,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Akita Inu\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Basset Hound\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Basset Hound\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Basset Hound/perro_basico.png",
       "AssetKind": "All",
@@ -853,10 +853,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Basset Hound\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/beagle/perro_basico.png",
       "AssetKind": "All",
@@ -872,10 +872,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Border Collie\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Border Collie\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Border Collie/perro_basico.png",
       "AssetKind": "All",
@@ -891,10 +891,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Border Collie\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Boxer\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Boxer\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Boxer/perro_basico.png",
       "AssetKind": "All",
@@ -910,10 +910,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Boxer\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\bulldog\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\bulldog\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/bulldog/perro_basico.png",
       "AssetKind": "All",
@@ -929,10 +929,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\bulldog\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Caniche\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Caniche\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Caniche/perro_basico.png",
       "AssetKind": "All",
@@ -948,10 +948,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Caniche\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\chihuahua\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\chihuahua\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/chihuahua/perro_basico.png",
       "AssetKind": "All",
@@ -967,10 +967,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\chihuahua\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/cocker spaniel/perro_basico.png",
       "AssetKind": "All",
@@ -986,10 +986,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\dálmata\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\dálmata\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/dálmata/perro_basico.png",
       "AssetKind": "All",
@@ -1005,10 +1005,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\dálmata\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Doberman\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Doberman\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Doberman/perro_basico.png",
       "AssetKind": "All",
@@ -1024,10 +1024,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Doberman\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\golden retriever\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\golden retriever\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/golden retriever/perro_basico.png",
       "AssetKind": "All",
@@ -1043,10 +1043,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\golden retriever\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/husky siberiano/perro_basico.png",
       "AssetKind": "All",
@@ -1062,10 +1062,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Jack Russell\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Jack Russell\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Jack Russell/perro_basico.png",
       "AssetKind": "All",
@@ -1081,10 +1081,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Jack Russell\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\labrador retriever\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\labrador retriever\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/labrador retriever/perro_basico.png",
       "AssetKind": "All",
@@ -1100,10 +1100,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\labrador retriever\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Maltés\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Maltés\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Maltés/perro_basico.png",
       "AssetKind": "All",
@@ -1119,10 +1119,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Maltés\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perrito_confundido.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perrito_confundido.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/otra raza/perrito_confundido.png",
       "AssetKind": "All",
@@ -1138,10 +1138,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\otra raza\\perrito_confundido.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_ballindeverdad.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_ballindeverdad.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/otra raza/perro_ballindeverdad.png",
       "AssetKind": "All",
@@ -1157,10 +1157,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\otra raza\\perro_ballindeverdad.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/otra raza/perro_basico.png",
       "AssetKind": "All",
@@ -1176,10 +1176,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\otra raza\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_bienagustin.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_bienagustin.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/otra raza/perro_bienagustin.png",
       "AssetKind": "All",
@@ -1195,10 +1195,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\otra raza\\perro_bienagustin.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_breakingbad.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_breakingbad.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/otra raza/perro_breakingbad.png",
       "AssetKind": "All",
@@ -1214,10 +1214,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\otra raza\\perro_breakingbad.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Pastor Alemán\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Pastor Alemán\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Pastor Alemán/perro_basico.png",
       "AssetKind": "All",
@@ -1233,10 +1233,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Pastor Alemán\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Pitbull\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Pitbull\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Pitbull/perro_basico.png",
       "AssetKind": "All",
@@ -1252,10 +1252,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Pitbull\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Pomerania\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Pomerania\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Pomerania/perro_basico.png",
       "AssetKind": "All",
@@ -1271,10 +1271,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Pomerania\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/pug/perro_basico.png",
       "AssetKind": "All",
@@ -1290,10 +1290,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/pug/perro_smoking.png",
       "AssetKind": "All",
@@ -1309,10 +1309,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Rottweiler\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Rottweiler\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Rottweiler/perro_basico.png",
       "AssetKind": "All",
@@ -1328,10 +1328,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Rottweiler\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Salchicha\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Salchicha\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Salchicha/perro_basico.png",
       "AssetKind": "All",
@@ -1347,10 +1347,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Salchicha\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\San Bernardo\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\San Bernardo\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/San Bernardo/perro_basico.png",
       "AssetKind": "All",
@@ -1366,10 +1366,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\San Bernardo\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Schnauzer\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Schnauzer\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Schnauzer/perro_basico.png",
       "AssetKind": "All",
@@ -1385,10 +1385,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Schnauzer\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Shih Tzu\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Shih Tzu\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Shih Tzu/perro_basico.png",
       "AssetKind": "All",
@@ -1404,10 +1404,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Shih Tzu\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Weimaraner\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Weimaraner\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Weimaraner/perro_basico.png",
       "AssetKind": "All",
@@ -1423,10 +1423,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Weimaraner\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\perros\\Yorkshire Terrier\\perro_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Yorkshire Terrier\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/perros/Yorkshire Terrier/perro_basico.png",
       "AssetKind": "All",
@@ -1442,10 +1442,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Yorkshire Terrier\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\pezs\\betta\\pez_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\betta\\pez_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/pezs/betta/pez_basico.png",
       "AssetKind": "All",
@@ -1461,10 +1461,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\pezs\\betta\\pez_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\pezs\\Cíclido\\pez_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\Cíclido\\pez_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/pezs/Cíclido/pez_basico.png",
       "AssetKind": "All",
@@ -1480,10 +1480,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\pezs\\Cíclido\\pez_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\pezs\\Goldfish\\pez_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\Goldfish\\pez_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/pezs/Goldfish/pez_basico.png",
       "AssetKind": "All",
@@ -1499,10 +1499,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\pezs\\Goldfish\\pez_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\pezs\\Guppy\\pez_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\Guppy\\pez_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/pezs/Guppy/pez_basico.png",
       "AssetKind": "All",
@@ -1518,10 +1518,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\pezs\\Guppy\\pez_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\pezs\\Koi\\pez_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\Koi\\pez_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/pezs/Koi/pez_basico.png",
       "AssetKind": "All",
@@ -1537,10 +1537,10 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\pezs\\Koi\\pez_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\pezs\\otra raza\\pez_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\otra raza\\pez_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/pezs/otra raza/pez_basico.png",
       "AssetKind": "All",
@@ -1556,10 +1556,48 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\pezs\\otra raza\\pez_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\reptils\\camaleón\\reptil_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Boa\\reptil_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/reptils/Boa/reptil_basico.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\Boa\\reptil_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Camaleón pantera\\reptil_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/reptils/Camaleón pantera/reptil_basico.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\Camaleón pantera\\reptil_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\camaleón\\reptil_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/reptils/camaleón/reptil_basico.png",
       "AssetKind": "All",
@@ -1575,10 +1613,67 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\camaleón\\reptil_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\reptils\\iguana\\reptil_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Dragón Barbudo\\reptil_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/reptils/Dragón Barbudo/reptil_basico.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\Dragón Barbudo\\reptil_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Gecko crestado\\reptil_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/reptils/Gecko crestado/reptil_basico.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\Gecko crestado\\reptil_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Gecko Leopardo\\reptil_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/reptils/Gecko Leopardo/reptil_basico.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\Gecko Leopardo\\reptil_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\iguana\\reptil_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/reptils/iguana/reptil_basico.png",
       "AssetKind": "All",
@@ -1594,10 +1689,48 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\iguana\\reptil_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\mascotas\\reptils\\tortuga\\reptil_basico.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Serpiente del maíz\\reptil_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/reptils/Serpiente del maíz/reptil_basico.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\Serpiente del maíz\\reptil_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Tortuga acuática\\reptil_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/reptils/Tortuga acuática/reptil_basico.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\Tortuga acuática\\reptil_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\tortuga\\reptil_basico.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/mascotas/reptils/tortuga/reptil_basico.png",
       "AssetKind": "All",
@@ -1613,10 +1746,29 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\tortuga\\reptil_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\img\\recursos\\corazon.png",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Varano\\reptil_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "img/mascotas/reptils/Varano/reptil_basico.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\reptils\\Varano\\reptil_basico.png"
+    },
+    {
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\recursos\\corazon.png",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "img/recursos/corazon.png",
       "AssetKind": "All",
@@ -1632,10 +1784,10 @@
       "OriginalItemSpec": "wwwroot\\img\\recursos\\corazon.png"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\js\\registro.js",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\js\\registro.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "js/registro.js",
       "AssetKind": "All",
@@ -1651,10 +1803,10 @@
       "OriginalItemSpec": "wwwroot\\js\\registro.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\js\\site.js",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\js\\site.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "js/site.js",
       "AssetKind": "All",
@@ -1670,10 +1822,10 @@
       "OriginalItemSpec": "wwwroot\\js\\site.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "AssetKind": "All",
@@ -1689,10 +1841,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js",
       "AssetKind": "All",
@@ -1708,10 +1860,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery-validation-unobtrusive/LICENSE.txt",
       "AssetKind": "All",
@@ -1727,10 +1879,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.js",
       "AssetKind": "All",
@@ -1746,10 +1898,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery-validation/dist/additional-methods.min.js",
       "AssetKind": "All",
@@ -1765,10 +1917,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.js",
       "AssetKind": "All",
@@ -1784,10 +1936,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery-validation/dist/jquery.validate.min.js",
       "AssetKind": "All",
@@ -1803,10 +1955,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery-validation/LICENSE.md",
       "AssetKind": "All",
@@ -1822,10 +1974,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery/dist/jquery.js",
       "AssetKind": "All",
@@ -1841,10 +1993,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery/dist/jquery.min.js",
       "AssetKind": "All",
@@ -1860,10 +2012,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery/dist/jquery.min.map",
       "AssetKind": "All",
@@ -1879,10 +2031,10 @@
       "OriginalItemSpec": "wwwroot\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Identity": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\49092919\\ZOONi\\zooni\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
       "RelativePath": "lib/jquery/LICENSE.txt",
       "AssetKind": "All",
