@@ -142,105 +142,101 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
 
             return View(new Mascota());
         }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Registro2(Mascota model, string modo = "")
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult Registro2(Mascota model, string modo = "")
+{
+    try
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
         {
-            try
-            {
-                var userId = HttpContext.Session.GetInt32("UserId");
-                if (userId == null)
-                {
-                    TempData["Error"] = "No hay usuario en sesión 🐾";
-                    return RedirectToAction("Registro1");
-                }
-
-                if (string.IsNullOrWhiteSpace(model.Especie))
-                {
-                    ViewBag.Error = "Seleccioná una especie antes de continuar 🐕🐈";
-                    return View(model);
-                }
-
-                decimal pesoNormalizado = 0;
-                try
-                {
-                    string pesoInput = Request.Form["Peso"].ToString().Replace(',', '.');
-                    decimal.TryParse(pesoInput, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoNormalizado);
-                    pesoNormalizado = Math.Round(pesoNormalizado, 2);
-                }
-                catch { }
-
-                string query = @"
-                    INSERT INTO Mascota 
-                    (Id_User, Nombre, Especie, Edad, Raza, Sexo, Peso, Color, Chip, Foto, Esterilizado, Fecha_Nacimiento)
-                    VALUES 
-                    (@Id_User, @Nombre, @Especie, @Edad, @Raza, @Sexo, @Peso, @Color, @Chip, @Foto, @Esterilizado, SYSDATETIME());
-                    SELECT SCOPE_IDENTITY();";
-
-                var parametros = new Dictionary<string, object>
-                {
-                    { "@Id_User", userId.Value },
-                    { "@Nombre", model.Nombre ?? "MiMascota" },
-                    { "@Especie", model.Especie },
-                    { "@Edad", model.Edad },
-                    { "@Raza", model.Raza ?? "" },
-                    { "@Sexo", model.Sexo ?? "" },
-                    { "@Peso", pesoNormalizado },
-                    { "@Color", model.Color ?? "" },
-                    { "@Chip", model.Chip ?? "" },
-                    { "@Foto", model.Foto ?? "" },
-                    { "@Esterilizado", model.Esterilizado }
-                };
-
-                int idMascota = Convert.ToInt32(BD.ExecuteScalar(query, parametros));
-                HttpContext.Session.SetInt32("MascotaId", idMascota);
-                HttpContext.Session.SetString("MascotaNombre", model.Nombre ?? "MiMascota");
-                HttpContext.Session.SetString("MascotaEspecie", model.Especie ?? "Desconocida");
-
-                Console.WriteLine($"🚀 Redirigiendo a Registro3 con modo = {modo}");
-                return RedirectToAction("Registro3", new { modo });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("❌ Error en Registro2 POST: " + ex.Message);
-                ViewBag.Error = "Ocurrió un error al registrar la mascota 🐾";
-                return View(model);
-            }
+            TempData["Error"] = "No hay usuario en sesión 🐾";
+            return RedirectToAction("Registro1");
         }
+
+        if (string.IsNullOrWhiteSpace(model.Especie))
+        {
+            ViewBag.Error = "Seleccioná una especie antes de continuar 🐕🐈";
+            return View(model);
+        }
+
+        decimal pesoNormalizado = 0;
+        try
+        {
+            string pesoInput = Request.Form["Peso"].ToString().Replace(',', '.');
+            decimal.TryParse(pesoInput, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoNormalizado);
+            pesoNormalizado = Math.Round(pesoNormalizado, 2);
+        }
+        catch { }
+
+        // Guardamos solo en sesión
+        HttpContext.Session.SetString("MascotaNombre", model.Nombre ?? "MiMascota");
+        HttpContext.Session.SetString("MascotaEspecie", model.Especie ?? "Desconocida");
+        HttpContext.Session.SetString("MascotaRaza", model.Raza ?? "");
+        HttpContext.Session.SetString("MascotaSexo", model.Sexo ?? "");
+        HttpContext.Session.SetString("MascotaColor", model.Color ?? "");
+        HttpContext.Session.SetString("MascotaChip", model.Chip ?? "");
+        HttpContext.Session.SetString("MascotaFoto", model.Foto ?? "");
+        HttpContext.Session.SetString("MascotaEsterilizado", model.Esterilizado.ToString());
+        HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        HttpContext.Session.SetInt32("MascotaEdad", model.Edad);
+
+        Console.WriteLine($"🚀 Registro2 completado parcialmente: {model.Nombre}, {model.Especie}, {model.Raza}, {pesoNormalizado}kg");
+
+        return RedirectToAction("Registro3", new { modo });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error en Registro2 POST: " + ex.Message);
+        ViewBag.Error = "Ocurrió un error al registrar la mascota 🐾";
+        return View(model);
+    }
+}
 
 [HttpGet]
 public IActionResult Registro3(string modo = "")
 {
     var userId = HttpContext.Session.GetInt32("UserId");
-    if (userId == null) 
+    if (userId == null)
         return RedirectToAction("Registro1");
 
-    // 🟢 Recuperamos los valores de sesión (que vienen de Registro2)
-    var nombre = HttpContext.Session.GetString("MascotaNombre") ?? "MiMascota";
-    var especie = HttpContext.Session.GetString("MascotaEspecie") ?? "Desconocida";
-    var raza = HttpContext.Session.GetString("MascotaRaza") ?? "";
-    var peso = decimal.TryParse(HttpContext.Session.GetString("MascotaPeso"), out var p) ? p : 0;
+    // 🟢 Primero intentamos recuperar desde sesión (nuevo flujo)
+    var nombre = HttpContext.Session.GetString("MascotaNombre");
+    var especie = HttpContext.Session.GetString("MascotaEspecie");
+    var raza = HttpContext.Session.GetString("MascotaRaza");
+    var pesoStr = HttpContext.Session.GetString("MascotaPeso");
+    var edadInt = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
 
-    // 🟡 Llenamos el modelo
+    if (string.IsNullOrEmpty(nombre) || string.IsNullOrEmpty(especie))
+    {
+        TempData["Error"] = "Faltan datos de la mascota. Volvé a completar el paso anterior 🐾";
+        return RedirectToAction("Registro2");
+    }
+
+    decimal.TryParse(pesoStr, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal peso);
+
+    // 🟢 Creamos el modelo desde sesión
     var mascota = new Mascota
     {
         Nombre = nombre,
         Especie = especie,
         Raza = raza,
-        Peso = peso
+        Peso = peso,
+        Edad = edadInt
     };
 
-    // 🟠 Pasamos los datos a ViewBag para el .cshtml
-    ViewBag.MascotaNombre = nombre;
-    ViewBag.MascotaEspecie = especie;
-    ViewBag.MascotaRaza = raza;
-    ViewBag.Modo = modo;
-
+    // 🟡 En caso de tener un modo ya guardado
     if (!string.IsNullOrEmpty(modo))
         HttpContext.Session.SetString("ModoRegistro", modo);
 
-    Console.WriteLine($"🐾 LLEGÓ A REGISTRO3 con especie: {especie}");
+    ViewBag.MascotaNombre = nombre;
+    ViewBag.MascotaEspecie = especie;
+    ViewBag.MascotaRaza = raza;
+    ViewBag.MascotaPeso = peso;
+    ViewBag.Modo = modo;
+
+    Console.WriteLine($"🐾 LLEGÓ A REGISTRO3 con datos en sesión → {nombre}, {especie}, {raza}, {peso}kg");
 
     return View(mascota);
 }
@@ -252,39 +248,27 @@ public IActionResult Registro3Post(Mascota model, string modo = "")
     try
     {
         var userId = HttpContext.Session.GetInt32("UserId");
-        var mascotaId = HttpContext.Session.GetInt32("MascotaId");
-        if (userId == null || mascotaId == null)
+        if (userId == null)
             return RedirectToAction("Registro1");
 
-        string modoFinal = !string.IsNullOrEmpty(modo) ? modo : HttpContext.Session.GetString("ModoRegistro") ?? "";
+        string modoFinal = !string.IsNullOrEmpty(modo)
+            ? modo
+            : HttpContext.Session.GetString("ModoRegistro") ?? "";
 
+        // Normalizamos peso
         decimal pesoNormalizado = 0;
         string pesoInput = Request.Form["Peso"].ToString().Replace(',', '.');
         decimal.TryParse(pesoInput, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoNormalizado);
         pesoNormalizado = Math.Round(pesoNormalizado, 2);
 
-        string query = @"
-    UPDATE Mascota
-    SET Sexo=@Sexo, Raza=@Raza, Peso=@Peso, Edad=@Edad, Foto=@Foto
-    WHERE Id_Mascota=@Id_Mascota";
-
-
-        BD.ExecuteNonQuery(query, new Dictionary<string, object>
-        {
-            { "@Sexo", model.Sexo ?? "" },
-            { "@Raza", model.Raza ?? "" },
-            { "@Peso", pesoNormalizado },
-            { "@Edad", model.Edad },
-            { "@Foto", model.Foto ?? "" },
-            { "@Id_Mascota", mascotaId.Value }
-        });
-
-        // 🟢 GUARDA EN SESIÓN LOS DATOS PARA REGISTRO4
+        // Actualizamos los datos en sesión
         HttpContext.Session.SetString("MascotaRaza", model.Raza ?? "");
-        HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString(System.Globalization.CultureInfo.InvariantCulture));
+        HttpContext.Session.SetString("MascotaSexo", model.Sexo ?? "");
+        HttpContext.Session.SetString("MascotaFoto", model.Foto ?? "");
         HttpContext.Session.SetInt32("MascotaEdad", model.Edad);
+        HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString(System.Globalization.CultureInfo.InvariantCulture));
 
-        Console.WriteLine($"🐾 Registro3Post -> Especie: {HttpContext.Session.GetString("MascotaEspecie")}, Raza: {model.Raza}");
+        Console.WriteLine($"🐾 Registro3Post -> Especie: {HttpContext.Session.GetString("MascotaEspecie")}, Raza: {model.Raza}, Peso: {pesoNormalizado}");
 
         if (modoFinal.ToLower() == "nuevamascota")
         {
@@ -308,7 +292,7 @@ public IActionResult Registro4(string modo = "")
 {
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null)
-    {//SEBASTIAN CALVIÑO ESTUVO AQUI JIJI
+    {
         TempData["Error"] = "Sesión expirada. Volvé a iniciar sesión 🐾";
         return RedirectToAction("Registro1");
     }
@@ -335,6 +319,11 @@ public IActionResult Registro4(string modo = "")
 [Route("Registro/Registro4")]
 public IActionResult Registro4(string nombre, string apellido, string mail, string contrasena, string confirmarContrasena, string modo = "")
 {
+    if (HttpContext.Session.GetString("MascotaNombre") == null)
+{
+    TempData["Error"] = "Faltan datos de la mascota. Volvé a completar los pasos anteriores 🐾";
+    return RedirectToAction("Registro2");
+}
     try
     {
         var userId = HttpContext.Session.GetInt32("UserId");
@@ -344,7 +333,6 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             return RedirectToAction("Registro1");
         }
 
-        // 🟡 Detectar si estamos agregando nueva mascota
         var modoFinal = !string.IsNullOrEmpty(modo)
             ? modo
             : (HttpContext.Session.GetString("ModoRegistro") ?? "").ToLower();
@@ -355,7 +343,6 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             return RedirectToAction("Configuracion", "Home");
         }
 
-        // 🧩 Validaciones básicas
         if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(apellido) || string.IsNullOrWhiteSpace(mail))
         {
             TempData["Error"] = "Por favor completá todos los campos.";
@@ -368,7 +355,6 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             return RedirectToAction("Registro4");
         }
 
-        // 💌 Verificar si ya existe un usuario con el mismo mail
         string checkQuery = @"
             SELECT COUNT(*) 
             FROM Mail M 
@@ -384,7 +370,6 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
 
         if (existe > 0)
         {
-            // ⚠️ Mostrar error en la misma vista sin romper flujo
             ViewBag.Error = "Este correo ya está registrado 🐾. Iniciá sesión o usá otro.";
             ViewBag.Nombre = nombre;
             ViewBag.Apellido = apellido;
@@ -393,7 +378,6 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             return View("Registro4");
         }
 
-        // ✅ Actualizar datos personales
         string updateUserQuery = @"
             UPDATE [User]
             SET Nombre = @Nombre,
@@ -407,7 +391,6 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             { "@Id_User", userId.Value }
         });
 
-        // ✅ Actualizar correo y contraseña
         string updateMailQuery = @"
             UPDATE M
             SET M.Correo = @Correo,
@@ -423,7 +406,6 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             { "@Id_User", userId.Value }
         });
 
-        // 🟢 Guardar en sesión
         HttpContext.Session.SetString("UserNombre", nombre);
         HttpContext.Session.SetString("UserApellido", apellido);
         HttpContext.Session.SetString("UserMail", mail);
@@ -465,7 +447,6 @@ public IActionResult Registro5()
     return View();
 }
 
-
 [HttpPost]
 [Route("Registro/Registro5")]
 [ValidateAntiForgeryToken]
@@ -474,19 +455,19 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
     try
     {
         var userId = HttpContext.Session.GetInt32("UserId");
-
         if (userId == null)
         {
             TempData["Error"] = "Sesión expirada. Iniciá nuevamente.";
             return RedirectToAction("Registro1");
         }
 
+        // Guardamos datos del usuario
         HttpContext.Session.SetString("UserPais", pais);
         HttpContext.Session.SetString("UserProvincia", provincia);
         HttpContext.Session.SetString("UserCiudad", ciudad);
         HttpContext.Session.SetString("UserTelefono", $"{codigoPais} {telefono}");
 
-        string query = @"
+        string queryUser = @"
             UPDATE [User]
             SET Pais = @Pais,
                 Provincia = @Provincia,
@@ -494,59 +475,52 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
                 Telefono = @Telefono
             WHERE Id_User = @Id_User";
 
-        var parametros = new Dictionary<string, object>
+        BD.ExecuteNonQuery(queryUser, new Dictionary<string, object>
         {
             { "@Pais", pais },
             { "@Provincia", provincia },
             { "@Ciudad", ciudad },
             { "@Telefono", $"{codigoPais} {telefono}" },
             { "@Id_User", userId.Value }
-        };
+        });
 
-        BD.ExecuteNonQuery(query, parametros);
+        // Datos finales de mascota desde sesión
+        string nombre = HttpContext.Session.GetString("MascotaNombre") ?? "";
+        string especie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
+        string raza = HttpContext.Session.GetString("MascotaRaza") ?? "";
+        string sexo = HttpContext.Session.GetString("MascotaSexo") ?? "";
+        decimal.TryParse(HttpContext.Session.GetString("MascotaPeso"), out decimal peso);
+        int edad = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
 
-        // 🔹 Recuperar datos de la mascota desde la sesión
-        string mascotaNombre = HttpContext.Session.GetString("MascotaNombre") ?? "";
-        string mascotaEspecie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
-        string mascotaRaza = HttpContext.Session.GetString("MascotaRaza") ?? "";
-        decimal mascotaPeso = decimal.TryParse(HttpContext.Session.GetString("MascotaPeso"), out var p) ? p : 0;
-        string mascotaSexo = HttpContext.Session.GetString("MascotaSexo") ?? "No definido";
-        int mascotaEdad = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
-
-        // 🔧 Función interna para truncar strings largos
-        string Truncar(string valor, int max) =>
-            string.IsNullOrEmpty(valor) ? "" :
-            valor.Length > max ? valor.Substring(0, max) : valor;
-
-        // 🛡️ Sanitizar los campos ANTES del insert
-        mascotaNombre = Truncar(mascotaNombre, 150);
-        mascotaEspecie = Truncar(mascotaEspecie, 100);
-        mascotaRaza = Truncar(mascotaRaza, 150);
-        mascotaSexo = Truncar(mascotaSexo, 30);
-
-        if (!string.IsNullOrEmpty(mascotaNombre))
+        // Insert definitivo
+        if (!string.IsNullOrEmpty(nombre) && !string.IsNullOrEmpty(especie))
         {
-            string insertMascota = @"
-                INSERT INTO Mascota (Nombre, Especie, Raza, Peso, Sexo, Edad, Id_User)
-                VALUES (@Nombre, @Especie, @Raza, @Peso, @Sexo, @Edad, @Id_User)";
+            string insert = @"
+                INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Fecha_Nacimiento)
+                VALUES (@Id_User, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, SYSDATETIME())";
 
-            var paramMascota = new Dictionary<string, object>
+            BD.ExecuteNonQuery(insert, new Dictionary<string, object>
             {
-                { "@Nombre", mascotaNombre },
-                { "@Especie", mascotaEspecie },
-                { "@Raza", mascotaRaza },
-                { "@Peso", mascotaPeso },
-                { "@Sexo", mascotaSexo },
-                { "@Edad", mascotaEdad },
-                { "@Id_User", userId.Value }
-            };
-
-            BD.ExecuteNonQuery(insertMascota, paramMascota);
+                { "@Id_User", userId.Value },
+                { "@Nombre", nombre },
+                { "@Especie", especie },
+                { "@Raza", raza },
+                { "@Sexo", sexo },
+                { "@Peso", peso },
+                { "@Edad", edad }
+            });
         }
 
-        TempData["CuentaCreada"] = "✅ ¡Cuenta creada exitosamente!";
-return RedirectToAction("Login", "Auth");
+        // Limpieza final de sesión
+        HttpContext.Session.Remove("MascotaNombre");
+        HttpContext.Session.Remove("MascotaEspecie");
+        HttpContext.Session.Remove("MascotaRaza");
+        HttpContext.Session.Remove("MascotaSexo");
+        HttpContext.Session.Remove("MascotaPeso");
+        HttpContext.Session.Remove("MascotaEdad");
 
+        TempData["CuentaCreada"] = "✅ ¡Cuenta creada exitosamente!";
+        return RedirectToAction("Login", "Auth");
     }
     catch (Exception ex)
     {
@@ -555,6 +529,7 @@ return RedirectToAction("Login", "Auth");
         return RedirectToAction("Registro5");
     }
 }
+
 
 [HttpGet]
 [Route("Registro/NuevaMascota")]
@@ -569,7 +544,6 @@ public IActionResult NuevaMascota()
 
     return View("Registro2", new Mascota());
 }
-// ... tus métodos [HttpGet] anteriores
 
 [HttpGet]
 [Route("Registro/VerificarMail")]
@@ -590,7 +564,6 @@ public JsonResult VerificarMail(string mail)
     }
 }
 
-// 👇 debajo de este ya vienen tus [HttpPost]
 
 [HttpPost]
 [ValidateAntiForgeryToken]

@@ -1699,3 +1699,5 @@ C:\Users\49317356\zooni\bin\Debug\net8.0\itext.svg.dll
 C:\Users\49317356\zooni\bin\Debug\net8.0\itext.bouncy-castle-adapter.dll
 C:\Users\49317356\zooni\bin\Debug\net8.0\itext.commons.dll
 C:\Users\49317356\zooni\bin\Debug\net8.0\Microsoft.DotNet.PlatformAbstractions.dll
+C:\Users\49317356\zooni\bin\Debug\net8.0\package-lock.json
+C:\Users\49317356\zooni\bin\Debug\net8.0\package.json

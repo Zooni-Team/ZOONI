@@ -202,24 +202,14 @@
         }
 
         @@media (max-width: 768px) {
-            .contenedor {
-                padding: 1.5rem;
-                max-width: 360px;
-            }
+            .contenedor { padding: 1.5rem; max-width: 360px; }
             h3 { font-size: 1.4rem; }
         }
 
         @@media (max-width: 480px) {
-            .contenedor {
-                padding: 1.2rem;
-                max-width: 340px;
-            }
+            .contenedor { padding: 1.2rem; max-width: 340px; }
             h3 { font-size: 1.3rem; }
-            .volver {
-                top: 12px;
-                left: 12px;
-                font-size: 24px;
-            }
+            .volver { top: 12px; left: 12px; font-size: 24px; }
         }
 
         .edad-container, .peso-container {
@@ -232,50 +222,33 @@
             margin-top: 0.8rem;
         }
 
-        .edad-container label, .peso-container label {
+        .foto-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 1.2rem;
+            gap: 0.6rem;
+        }
+
+        .foto-label {
             color: var(--marron);
             font-weight: 600;
-            margin-bottom: 0.4rem;
+            font-size: 1.05rem;
+        }
+
+        .btn-secundario {
+            background-color: #ffd85a;
+            color: #5b4500;
+            border: none;
+            border-radius: 25px;
+            padding: 10px 30px;
+            font-weight: 600;
             font-size: 1rem;
-            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
         }
 
-        .edad-container input[type="range"], .peso-container input[type="range"] {
-            width: 80%;
-            margin: 0.5rem auto;
-            display: block;
-            accent-color: var(--amarillo);
-        }
-        .foto-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 1.2rem;
-    gap: 0.6rem;
-}
-
-.foto-label {
-    color: var(--marron);
-    font-weight: 600;
-    font-size: 1.05rem;
-}
-
-.btn-secundario {
-    background-color: #ffd85a;
-    color: #5b4500;
-    border: none;
-    border-radius: 25px;
-    padding: 10px 30px;
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-.btn-secundario:hover {
-    background-color: #ffc93c;
-}
-
-
+        .btn-secundario:hover { background-color: #ffc93c; }
     </style>
 </head>
 
@@ -287,11 +260,10 @@
 
     <div class="contenedor">
         <button class="volver" onclick="window.location.href='/Registro/Registro2'">←</button>
-
         <h3>Completá los datos de tu @ViewBag.MascotaEspecie 🐾</h3>
         <img src="@imagenSuperior" alt="Mascota en caja" class="mascota-caja" />
 
-<form asp-action="Registro3Post" asp-controller="Registro" asp-route-modo="@ViewBag.Modo">
+        <form asp-action="Registro3Post" asp-controller="Registro" asp-route-modo="@ViewBag.Modo">
             @Html.AntiForgeryToken()
 
             <select name="Sexo" required>
@@ -315,90 +287,16 @@
                 <input type="range" id="Edad" name="Edad" min="0" max="240" value="0" />
                 <div class="edad-texto" id="edadTexto">0 meses</div>
             </div>
-<div class="foto-container">
-    <label for="fotoMascota" class="foto-label">📸 Sacale una foto a tu mascota</label>
-    <video id="video" autoplay playsinline style="display:none;"></video>
-    <canvas id="canvas" style="display:none;"></canvas>
-    <button type="button" id="btnIniciarCamara" class="btn-secundario">Abrir cámara</button>
-    <button type="button" id="btnTomarFoto" class="btn-principal" style="display:none;">Tomar foto</button>
-    <img id="fotoPreview" alt="Foto de mascota" style="max-width:150px; margin-top:10px; border-radius:15px; display:none;" />
-    <input type="hidden" name="Foto" id="fotoBase64" />
-</div>
 
-<script>
-const video = document.getElementById('video');
-const canvas = document.getElementById('canvas');
-const fotoBase64 = document.getElementById('fotoBase64');
-const btnIniciarCamara = document.getElementById('btnIniciarCamara');
-const btnTomarFoto = document.getElementById('btnTomarFoto');
-const preview = document.getElementById('fotoPreview');
-
-btnIniciarCamara.addEventListener('click', async () => {
-    try {
-        // 🔍 Buscar cámaras disponibles
-        const dispositivos = await navigator.mediaDevices.enumerateDevices();
-        const camaras = dispositivos.filter(d => d.kind === 'videoinput');
-
-        if (camaras.length === 0) {
-            alert("📷 Este dispositivo no tiene cámara disponible 🐾");
-            return;
-        }
-
-        // 🎥 Configurar para usar siempre la FRONTAL
-        const constraints = {
-            video: {
-                facingMode: { exact: "user" }, // usa cámara frontal
-                width: { ideal: 1280 },
-                height: { ideal: 720 }
-            },
-            audio: false
-        };
-
-        // 🚀 Intentar abrir la cámara
-        const stream = await navigator.mediaDevices.getUserMedia(constraints);
-        video.srcObject = stream;
-        video.style.display = "block";
-        btnTomarFoto.style.display = "inline-block";
-        btnIniciarCamara.style.display = "none";
-        await video.play();
-
-        console.log("✅ Cámara frontal iniciada correctamente.");
-    } catch (err) {
-        console.error("❌ Error de cámara:", err);
-
-        let mensaje = "No se pudo acceder a la cámara 🐾";
-
-        if (err.name === "NotAllowedError")
-            mensaje = "⚠️ Tenés que permitir el acceso a la cámara.";
-        else if (err.name === "NotFoundError")
-            mensaje = "📷 Este dispositivo no tiene cámara disponible 🐾";
-        else if (err.name === "NotReadableError")
-            mensaje = "💡 Otra aplicación está usando la cámara.";
-        else if (err.message.toLowerCase().includes("secure"))
-            mensaje = "🔒 Debés usar HTTPS (https://localhost:xxxx).";
-
-        alert(mensaje);
-    }
-});
-
-
-btnTomarFoto.addEventListener('click', () => {
-    const context = canvas.getContext('2d');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const dataURL = canvas.toDataURL('image/png');
-    fotoBase64.value = dataURL;
-    preview.src = dataURL;
-    preview.style.display = 'block';
-    video.style.display = 'none';
-    btnTomarFoto.style.display = 'none';
-    const stream = video.srcObject;
-    if (stream) {
-        stream.getTracks().forEach(track => track.stop());
-    }
-});
-</script>
+            <div class="foto-container">
+                <label for="fotoMascota" class="foto-label">📸 Sacale una foto a tu mascota</label>
+                <video id="video" autoplay playsinline style="display:none;"></video>
+                <canvas id="canvas" style="display:none;"></canvas>
+                <button type="button" id="btnIniciarCamara" class="btn-secundario">Abrir cámara</button>
+                <button type="button" id="btnTomarFoto" class="btn-principal" style="display:none;">Tomar foto</button>
+                <img id="fotoPreview" alt="Foto de mascota" style="max-width:150px; margin-top:10px; border-radius:15px; display:none;" />
+                <input type="hidden" name="Foto" id="fotoBase64" />
+            </div>
 
             <button type="submit" class="btn-principal">Continuar</button>
         </form>
@@ -408,84 +306,87 @@ btnTomarFoto.addEventListener('click', () => {
         <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
     </div>
 
-   <script>
+<script>
 const especie = "@especie".trim().toLowerCase();
 
-    const razasPorEspecie = {
-        perro: [ "Labrador Retriever", "Golden Retriever", "Bulldog", "Beagle", "Caniche", "Chihuahua", "Pug", "Dálmata", "Husky Siberiano", "Cocker Spaniel", "Pastor Alemán", "Salchicha" ,"Border Collie", "Rottweiler", "Boxer", "Shih Tzu", "Doberman", "Jack Russell Terrier", "Pitbull", "Yorkshire Terrier", "Maltés", "Schnauzer", "Akita Inu", "San Bernardo", "Pomerania", "Weimaraner", "Basset Hound", "Galgo", "Samoyedo", "Otra raza"],        
-        gato: ["Persa", "Siames", "Maine Coon", "Bengala", "Ragdoll", "British Shorthair", "Bombay", "Esfinge", "Angora Turco", "Siberiano", "Abisinio", "Azul Ruso", "Scottish Fold", "Bosque de Noruega", "Birmano", "Oriental de Pelo Corto", "Himalayo", "Savannah", "Cornish Rex", "Otra raza"],
-        conejo: ["Mini Lop", "Angora", "Rex", "Belier", "Cabeza de León", "Otra raza"],
-        ave: ["Cacatúa", "Guacamayo", "Periquito", "Amazonas", "Agapornis", "Otra raza"],
-        pez: ["Betta", "Goldfish", "Guppy", "Cíclido", "Koi", "Otra raza"],
-        reptil: ["Iguana", "Camaleón", "Tortuga", "Gecko","Boa","Serpiente del maíz","Camaleón pantera", "Tortuga acuática","Gecko crestado","Varano","Dragón Barbudo","Gecko Leopardo","Otra raza"]
-    };
+const razasPorEspecie = {
+    perro: ["Labrador Retriever", "Golden Retriever", "Bulldog", "Beagle", "Caniche", "Chihuahua", "Pug", "Dálmata", "Husky Siberiano", "Cocker Spaniel", "Pastor Alemán", "Salchicha","Border Collie","Rottweiler","Boxer","Shih Tzu","Doberman","Jack Russell Terrier","Pitbull","Yorkshire Terrier","Maltés","Schnauzer","Akita Inu","San Bernardo","Pomerania","Weimaraner","Basset Hound","Galgo","Samoyedo","Otra raza"],
+    gato: ["Persa","Siames","Maine Coon","Bengala","Ragdoll","British Shorthair","Bombay","Esfinge","Angora Turco","Siberiano","Abisinio","Azul Ruso","Scottish Fold","Bosque de Noruega","Birmano","Oriental de Pelo Corto","Himalayo","Savannah","Cornish Rex","Otra raza"],
+    conejo: ["Mini Lop","Angora","Rex","Belier","Cabeza de León","Otra raza"],
+    ave: ["Cacatúa","Guacamayo","Periquito","Amazonas","Agapornis","Otra raza"],
+    pez: ["Betta","Goldfish","Guppy","Cíclido","Koi","Otra raza"],
+    reptil: ["Iguana","Camaleón","Tortuga","Gecko","Boa","Serpiente del maíz","Camaleón pantera","Tortuga acuática","Gecko crestado","Varano","Dragón Barbudo","Gecko Leopardo","Otra raza"],
+    hamster: ["Sirio (Doradito)","Ruso","Campbell","Roborovski","Chino","Otra raza"],
+    raton: ["Doméstico","Blanco de laboratorio","Fancy","Rata Dumbo","Rata Rex","Otra raza"]
+};
 
-    const razaSelect = document.getElementById("Raza");
-    function llenarSelect(select, opciones) {
-        select.innerHTML = "<option value=''>Seleccioná una opción</option>";
-        opciones.forEach(op => {
-            const opt = document.createElement("option");
-            opt.value = op;
-            opt.textContent = op;
-            select.appendChild(opt);
-        });
-    }
-    llenarSelect(razaSelect, razasPorEspecie[especie] || razasPorEspecie.perro);
+const razaSelect = document.getElementById("Raza");
+function llenarSelect(select, opciones) {
+    select.innerHTML = "<option value=''>Seleccioná una opción</option>";
+    opciones.forEach(op => {
+        const opt = document.createElement("option");
+        opt.value = op;
+        opt.textContent = op;
+        select.appendChild(opt);
+    });
+}
+llenarSelect(razaSelect, razasPorEspecie[especie] || razasPorEspecie.perro);
 
-    const pesoSlider = document.getElementById("Peso");
-    const pesoTexto = document.getElementById("pesoTexto");
-    const rangoPorEspeciePeso = {
-        perro: [0, 80],
-        gato: [0, 15],
-        conejo: [0, 5],
-        ave: [0, 3],
-        pez: [0, 2],
-        reptil: [0, 20]
-    };
-    const rangoPeso = rangoPorEspeciePeso[especie] || [0, 50];
-    pesoSlider.min = rangoPeso[0];
-    pesoSlider.max = rangoPeso[1];
-    pesoSlider.value = (rangoPeso[1] / 5).toFixed(1);
-    pesoTexto.textContent = pesoSlider.value.replace(".", ",") + " kg";
+const pesoSlider = document.getElementById("Peso");
+const pesoTexto = document.getElementById("pesoTexto");
+const rangoPorEspeciePeso = {
+    perro: [0, 80],
+    gato: [0, 15],
+    conejo: [0, 5],
+    ave: [0, 3],
+    pez: [0, 2],
+    reptil: [0, 20],
+    hamster: [0, 0.25],
+    raton: [0, 0.6]
+};
 
-    pesoSlider.addEventListener("input", () => {
+const rangoPeso = rangoPorEspeciePeso[especie] || [0, 50];
+pesoSlider.min = rangoPeso[0];
+pesoSlider.max = rangoPeso[1];
+pesoSlider.value = (rangoPeso[1] / 5).toFixed(2);
+pesoTexto.textContent = pesoSlider.value.replace(".", ",") + " kg";
+
+pesoSlider.addEventListener("input", () => {
     pesoTexto.textContent = pesoSlider.value.replace(".", ",") + " kg";
 });
 
+const edadSlider = document.getElementById("Edad");
+const edadTexto = document.getElementById("edadTexto");
 
-    const edadSlider = document.getElementById("Edad");
-    const edadTexto = document.getElementById("edadTexto");
+const rangoPorEspecieEdad = {
+    perro: 240,
+    gato: 240,
+    conejo: 144,
+    ave: 600,
+    pez: 120,
+    reptil: 720,
+    hamster: 36,
+    raton: 48
+};
 
-    const rangoPorEspecieEdad = {
-        perro: 240,   
-        gato: 240,
-        conejo: 144,  
-        ave: 600,     
-        pez: 120,    
-        reptil: 720   
-    };
+const edadMax = rangoPorEspecieEdad[especie] || 240;
+edadSlider.max = edadMax;
+edadSlider.value = edadMax / 20;
+edadTexto.textContent = "0 meses";
 
-    const edadMax = rangoPorEspecieEdad[especie] || 240;
-    edadSlider.max = edadMax;
-    edadSlider.value = edadMax / 20;
-    edadTexto.textContent = "0 meses";
-
-    edadSlider.addEventListener("input", () => {
-        const meses = parseInt(edadSlider.value);
-        edadTexto.textContent = meses < 12
-            ? `${meses} ${meses === 1 ? "mes" : "meses"}`
-            : `${(meses / 12).toFixed(1)} ${(meses / 12 === 1) ? "año" : "años"}`;
-    });
-
+edadSlider.addEventListener("input", () => {
+    const meses = parseInt(edadSlider.value);
+    edadTexto.textContent = meses < 12
+        ? `${meses} ${meses === 1 ? "mes" : "meses"}`
+        : `${(meses / 12).toFixed(1)} ${(meses / 12 === 1) ? "año" : "años"}`;
+});
 
 const form = document.querySelector("form");
 form.addEventListener("submit", () => {
     const peso = pesoSlider.value.replace(",", ".");
     pesoSlider.value = parseFloat(peso).toFixed(2);
 });
-
 </script>
-
 
 </body>
 </html>

@@ -56,4 +56,25 @@
     "raza": "general",
     "vacunas": []
   }
+  ,
+  {
+    "especie": "hamster",
+    "raza": "general",
+    "vacunas": [
+      { "nombre": "Chequeo General Veterinario", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Desparasitación Interna (si tiene acceso a exteriores)", "edadMinMeses": 3, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental (crecimiento de incisivos)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dermatológico (piel y pelo)", "edadMinMeses": 3, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "raton",
+    "raza": "general",
+    "vacunas": [
+      { "nombre": "Chequeo General Veterinario", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Desparasitación Interna (si vive en colonias o jaulas compartidas)", "edadMinMeses": 3, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Dental (incisivos largos o mal alineados)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dermatológico (piel, orejas y cola)", "edadMinMeses": 3, "frecuenciaMeses": 6 }
+    ]
+  }
 ]

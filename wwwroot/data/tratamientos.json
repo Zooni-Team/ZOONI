@@ -12,25 +12,27 @@
       { "nombre": "Profilaxis Cardíaca", "edadMinMeses": 6, "frecuenciaMeses": 6 },
       { "nombre": "Control de Pulgas y Garrapatas", "edadMinMeses": 2, "frecuenciaMeses": 2 },
       { "nombre": "Chequeo Dermatológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-      { "nombre": "Evaluación Conductual", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+      { "nombre": "Evaluación Conductual", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Esterilización / Castración Preventiva", "edadMinMeses": 6, "frecuenciaMeses": 12 }
     ]
   },
   {
-  "especie": "gato",
-  "raza": "general",
-  "vacunas": [
-    { "nombre": "Desparasitación Interna", "edadMinMeses": 2, "frecuenciaMeses": 3 },
-    { "nombre": "Desparasitación Externa", "edadMinMeses": 2, "frecuenciaMeses": 3 },
-    { "nombre": "Chequeo General Veterinario", "edadMinMeses": 3, "frecuenciaMeses": 6 },
-    { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
-    { "nombre": "Chequeo Renal y Hepático", "edadMinMeses": 12, "frecuenciaMeses": 12 },
-    { "nombre": "Chequeo Cardiológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-    { "nombre": "Control de Peso", "edadMinMeses": 3, "frecuenciaMeses": 6 },
-    { "nombre": "Chequeo Ocular y Auditivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-    { "nombre": "Evaluación del Estrés y Comportamiento", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-    { "nombre": "Chequeo de Hipertiroidismo/Hipertiroidismo", "edadMinMeses": 96, "frecuenciaMeses": 12 }
-  ]
-},
+    "especie": "gato",
+    "raza": "general",
+    "vacunas": [
+      { "nombre": "Desparasitación Interna", "edadMinMeses": 2, "frecuenciaMeses": 3 },
+      { "nombre": "Desparasitación Externa", "edadMinMeses": 2, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo General Veterinario", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Renal y Hepático", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Cardiológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Peso", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Ocular y Auditivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Evaluación del Estrés y Comportamiento", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo de Hipertiroidismo/Hipertiroidismo", "edadMinMeses": 96, "frecuenciaMeses": 12 },
+      { "nombre": "Esterilización / Castración Preventiva", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
   {
     "especie": "conejo",
     "raza": "general",
@@ -41,10 +43,11 @@
       { "nombre": "Chequeo Digestivo (intestino, cecotropos)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
       { "nombre": "Chequeo Respiratorio", "edadMinMeses": 6, "frecuenciaMeses": 12 },
       { "nombre": "Chequeo Cardiológico y general de bienestar", "edadMinMeses": 6, "frecuenciaMeses": 12 },
-      { "nombre": "Revisión de Uñas y movilidad (hock/back-s), postura", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+      { "nombre": "Revisión de Uñas y movilidad (hock/back-s), postura", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Esterilización / Castración Preventiva", "edadMinMeses": 6, "frecuenciaMeses": 12 }
     ]
   },
- {
+  {
     "especie": "ave",
     "raza": "general",
     "vacunas": [
@@ -54,6 +57,49 @@
       { "nombre": "Chequeo Digestivo (heces, crop, ingesta)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
       { "nombre": "Chequeo Respiratorio y Cardiológico", "edadMinMeses": 6, "frecuenciaMeses": 12 },
       { "nombre": "Evaluación Nutricional y de Enriquecimiento (hábitat y conducta)", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "pez",
+    "raza": "general",
+    "vacunas": [
+      { "nombre": "Control de Calidad del Agua (pH y temperatura)", "edadMinMeses": 1, "frecuenciaMeses": 1 },
+      { "nombre": "Chequeo de Branquias y Aletas", "edadMinMeses": 2, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo de Alimentación (balance de proteínas y exceso de comida)", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo de Parásitos Externos", "edadMinMeses": 3, "frecuenciaMeses": 6 }
+    ]
+  },
+  {
+    "especie": "reptil",
+    "raza": "general",
+    "vacunas": [
+      { "nombre": "Chequeo de Piel y Escamas", "edadMinMeses": 6, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo (dieta balanceada)", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Control de Temperatura y Humedad del Terrario", "edadMinMeses": 1, "frecuenciaMeses": 3 },
+      { "nombre": "Chequeo Ocular", "edadMinMeses": 12, "frecuenciaMeses": 12 },
+      { "nombre": "Chequeo Parasitológico", "edadMinMeses": 6, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "hamster",
+    "raza": "general",
+    "vacunas": [
+      { "nombre": "Chequeo General Veterinario", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Control Dental (crecimiento de incisivos)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dermatológico (piel y pelo)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Esterilización / Castración (opcional por comportamiento)", "edadMinMeses": 4, "frecuenciaMeses": 12 }
+    ]
+  },
+  {
+    "especie": "raton",
+    "raza": "general",
+    "vacunas": [
+      { "nombre": "Chequeo General Veterinario", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dental", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Dermatológico (piel y cola)", "edadMinMeses": 3, "frecuenciaMeses": 6 },
+      { "nombre": "Chequeo Digestivo", "edadMinMeses": 6, "frecuenciaMeses": 12 },
+      { "nombre": "Esterilización / Castración (opcional por comportamiento)", "edadMinMeses": 4, "frecuenciaMeses": 12 }
     ]
   },
    {

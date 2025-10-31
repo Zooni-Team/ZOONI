@@ -2490,6 +2490,135 @@
     "especie": "reptil",
     "raza": "Varano",
     "texto": "Su mordida es poderosa ⚡. Respetá su espacio."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Sirio (Doradito)",
+    "texto": "El hámster sirio es solitario 🏡. Nunca lo pongas con otro, se pelean."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Sirio (Doradito)",
+    "texto": "Le gusta correr de noche 🌙. Unas ruedas grandes lo mantienen feliz."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Sirio (Doradito)",
+    "texto": "No lo despiertes durante el día 😴. Se estresa y puede morder."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Sirio (Doradito)",
+    "texto": "Dale materiales para hacer nido 🧻. Le encanta esconder comida."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Sirio (Doradito)",
+    "texto": "No uses algodón como cama 🚫. Usá papel sin perfume o viruta segura."
+  },
+
+  {
+    "especie": "hamster",
+    "raza": "Ruso",
+    "texto": "El hámster ruso es pequeño y curioso 👀. Ideal para observar, no para manipular mucho."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Ruso",
+    "texto": "Puede convivir en pareja si crecen juntos 👯, pero vigilá siempre."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Ruso",
+    "texto": "Le gusta excavar 🕳️. Un poco de sustrato profundo lo hace feliz."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Ruso",
+    "texto": "No tolera bien el calor 🥵. Mantenelo entre 18 y 24 °C."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Ruso",
+    "texto": "Come semillas y verduras frescas 🥕. Evitá los cítricos."
+  },
+
+  {
+    "especie": "hamster",
+    "raza": "Campbell",
+    "texto": "Puede ser territorial ⚔️. Mejor tenerlo solo."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Campbell",
+    "texto": "Propenso a la diabetes 🍬. Evitá frutas dulces."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Campbell",
+    "texto": "Le gusta morder tubos y cartón 📦. Ayuda a desgastar sus dientes."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Campbell",
+    "texto": "No lo bañes 🚫. Se limpia solo con la arena especial."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Campbell",
+    "texto": "Dale una jaula amplia 🏠. Son muy activos."
+  },
+
+  {
+    "especie": "hamster",
+    "raza": "Roborovski",
+    "texto": "Es el más veloz ⚡. Mejor observarlo que manipularlo."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Roborovski",
+    "texto": "Le encanta cavar túneles 🕳️. Usá sustrato profundo."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Roborovski",
+    "texto": "Tolera mejor la compañía 🧡, pero vigilá peleas."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Roborovski",
+    "texto": "Usá una rueda sin barrotes 🛞. Puede lastimar sus patas pequeñas."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Roborovski",
+    "texto": "Evita corrientes de aire ❄️. Son sensibles al frío."
+  },
+
+  {
+    "especie": "hamster",
+    "raza": "Chino",
+    "texto": "Tiene una cola más larga que otros 🐀. Es totalmente normal."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Chino",
+    "texto": "Muy ágil y rápido 🏃. Mejor mantenerlo en jaulas cerradas."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Chino",
+    "texto": "No le gusta que lo toquen mucho 🙅. Ganate su confianza con comida."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Chino",
+    "texto": "Prefiere ambientes templados 🌡️. Evitá cambios bruscos de temperatura."
+  },
+  {
+    "especie": "hamster",
+    "raza": "Chino",
+    "texto": "Dale arena para baño 🪣. Les encanta revolcarse para limpiar su pelaje."
   }
   
 ]
