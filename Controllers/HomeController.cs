@@ -13,26 +13,27 @@ namespace Zooni.Controllers
 {
     public class HomeController : Controller
     {
-        private DataRow ObtenerMascotaActiva(int userId)
-        {
-            int? mascotaId = HttpContext.Session.GetInt32("MascotaId");
-            string query;
-            Dictionary<string, object> param;
+       private DataRow ObtenerMascotaActiva(int userId)
+{
+    int? mascotaId = HttpContext.Session.GetInt32("MascotaId");
+    string query;
+    Dictionary<string, object> param;
 
-            if (mascotaId != null)
-            {
-                query = "SELECT TOP 1 * FROM Mascota WHERE Id_Mascota = @Id";
-                param = new Dictionary<string, object> { { "@Id", mascotaId.Value } };
-            }
-            else
-            {
-                query = @"SELECT TOP 1 * FROM Mascota WHERE Id_User = @UserId ORDER BY Id_Mascota DESC";
-                param = new Dictionary<string, object> { { "@UserId", userId } };
-            }
+    if (mascotaId != null)
+    {
+        query = "SELECT TOP 1 * FROM Mascota WHERE Id_Mascota = @Id";
+        param = new Dictionary<string, object> { { "@Id", mascotaId.Value } };
+    }
+    else
+    {
+        query = @"SELECT TOP 1 * FROM Mascota WHERE Id_User = @UserId ORDER BY Id_Mascota DESC";
+        param = new Dictionary<string, object> { { "@UserId", userId } };
+    }
 
-            var dt = BD.ExecuteQuery(query, param);
-            return dt.Rows.Count > 0 ? dt.Rows[0] : null;
-        }
+    var dt = BD.ExecuteQuery(query, param);
+    return dt.Rows.Count > 0 ? dt.Rows[0] : null;
+}
+
 
         // 🔹 Método para setear los ViewBag básicos de mascota
         private void CargarViewBagMascota(DataRow mascota)
@@ -72,6 +73,8 @@ namespace Zooni.Controllers
 
                 var mascota = ObtenerMascotaActiva(userId.Value);
                 CargarViewBagMascota(mascota);
+                ViewBag.MascotaFoto = HttpContext.Session.GetString("MascotaFoto");
+
 
                 return View();
             }
@@ -754,12 +757,25 @@ public IActionResult DescargarPDF()
     string nombre = mascota["Nombre"].ToString();
     string especie = mascota["Especie"].ToString();
     string raza = mascota["Raza"].ToString();
-    decimal pesoNum = Convert.ToDecimal(mascota["Peso"] == DBNull.Value ? 0 : mascota["Peso"]);
-    string peso = $"{pesoNum:0.##} kg";
+
+    // ✅ Peso corregido (misma lógica que en las views)
+    string pesoStr = mascota["Peso"] == DBNull.Value ? "0" : mascota["Peso"].ToString();
+    decimal pesoNum = 0;
+    decimal.TryParse(pesoStr.Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoNum);
+
+    if (pesoNum >= 100)
+        pesoNum /= 10;
+
+    string peso = $"{pesoNum:0.##}".Replace('.', ',') + " kg";
+
+    // 🎂 Edad formateada
     int edadMeses = Convert.ToInt32(mascota["Edad"] ?? 0);
     int años = edadMeses / 12;
     int meses = edadMeses % 12;
-    string edad = $"{(años > 0 ? $"{años} año{(años > 1 ? "s" : "")}" : "")}{(meses > 0 ? $" y {meses} mes{(meses > 1 ? "es" : "")}" : "")}";
+    string edad =
+        $"{(años > 0 ? $"{años} año{(años > 1 ? "s" : "")}" : "")}" +
+        $"{(meses > 0 ? $" y {meses} mes{(meses > 1 ? "es" : "")}" : "")}";
+
     string foto = mascota.Table.Columns.Contains("Foto") && mascota["Foto"] != DBNull.Value
         ? mascota["Foto"].ToString()
         : "/img/mascotas/default.png";
@@ -810,7 +826,7 @@ public IActionResult DescargarPDF()
         doc.Add(img);
     }
 
-    // 🔹 Datos generales en tabla limpia
+    // 🔹 Datos generales
     var tablaDatos = new Table(UnitValue.CreatePercentArray(new float[] { 1, 2 }))
         .UseAllAvailableWidth()
         .SetBackgroundColor(grisSuave)
@@ -873,6 +889,7 @@ public IActionResult DescargarPDF()
         doc.Add(tablaVac);
     }
 
+    // 🔹 Tratamientos
     string qTrat = @"SELECT TOP 10 Nombre, Fecha_Inicio, Proximo_Control, Veterinario
                      FROM Tratamiento WHERE Id_Mascota = @Id ORDER BY Fecha_Inicio DESC";
     var tratamientos = BD.ExecuteQuery(qTrat, new Dictionary<string, object> { { "@Id", idMascota } });
@@ -909,7 +926,7 @@ public IActionResult DescargarPDF()
         doc.Add(tablaTrat);
     }
 
-    // 🐾 Cierre estético
+    // 🐾 Cierre
     doc.Add(new Paragraph("\n\nZooni – Tu mascota, tu mundo 💚")
         .SetTextAlignment(TextAlignment.CENTER)
         .SetFont(fuenteRegular)
@@ -972,6 +989,11 @@ public IActionResult Perfil()
 
     ViewBag.Mascotas = mascotas;
     return View("Perfil");
+}
+[HttpGet]
+public IActionResult Juegos()
+{
+    return View();
 }
 
     }

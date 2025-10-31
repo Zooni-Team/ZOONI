@@ -143,7 +143,7 @@
     "pesoMax": 2.5,
     "texto": "Tu british bebé parece una nubecita azul 🍼. En esta etapa necesita alimento rico en proteínas para crecer fuerte y redondito."
   },
-  
+
   {
     "especie": "gato",
     "raza": "British Shorthair",
@@ -2619,6 +2619,135 @@
     "especie": "hamster",
     "raza": "Chino",
     "texto": "Dale arena para baño 🪣. Les encanta revolcarse para limpiar su pelaje."
+  },
+
+  {
+    "especie": "raton",
+    "raza": "Doméstico",
+    "texto": "Los ratones domésticos son sociables 🐭. Viven mejor en pareja o grupo."
+  },
+  {
+    "especie": "raton",
+    "raza": "Doméstico",
+    "texto": "Les gusta explorar 🧩. Agregá túneles y juguetes."
+  },
+  {
+    "especie": "raton",
+    "raza": "Doméstico",
+    "texto": "No uses viruta de pino 🚫. Mejor papel reciclado o maíz molido."
+  },
+  {
+    "especie": "raton",
+    "raza": "Doméstico",
+    "texto": "Comen poco pero seguido 🍽️. Mantené siempre comida disponible."
+  },
+  {
+    "especie": "raton",
+    "raza": "Doméstico",
+    "texto": "Limpian su pelaje constantemente 🧼. No los bañes."
+  },
+
+  {
+    "especie": "raton",
+    "raza": "Blanco de laboratorio",
+    "texto": "Muy dócil y curioso 🧠. Ideal para interacción tranquila."
+  },
+  {
+    "especie": "raton",
+    "raza": "Blanco de laboratorio",
+    "texto": "Prefiere jaulas grandes y ventiladas 🌬️."
+  },
+  {
+    "especie": "raton",
+    "raza": "Blanco de laboratorio",
+    "texto": "Le gusta morder cartón o ramas seguras 🌿."
+  },
+  {
+    "especie": "raton",
+    "raza": "Blanco de laboratorio",
+    "texto": "Dale materiales para anidar 🧻. Son muy hogareños."
+  },
+  {
+    "especie": "raton",
+    "raza": "Blanco de laboratorio",
+    "texto": "Evita ruidos fuertes 🔊. Tienen oído sensible."
+  },
+
+  {
+    "especie": "raton",
+    "raza": "Fancy",
+    "texto": "Los ratones Fancy son amigables 💞. Se acostumbran a su humano."
+  },
+  {
+    "especie": "raton",
+    "raza": "Fancy",
+    "texto": "Les gusta trepar 🧗. Agregá niveles y ramas."
+  },
+  {
+    "especie": "raton",
+    "raza": "Fancy",
+    "texto": "No uses jaulas con barrotes anchos 🚫. Pueden escaparse fácilmente."
+  },
+  {
+    "especie": "raton",
+    "raza": "Fancy",
+    "texto": "Aman las ruedas 🛞. Es ejercicio y diversión."
+  },
+  {
+    "especie": "raton",
+    "raza": "Fancy",
+    "texto": "Ofreceles snacks sanos (semillas, avena, frutas suaves) 🍌."
+  },
+
+  {
+    "especie": "raton",
+    "raza": "Rata Dumbo",
+    "texto": "Las ratas Dumbo son extremadamente inteligentes 🧠 y cariñosas."
+  },
+  {
+    "especie": "raton",
+    "raza": "Rata Dumbo",
+    "texto": "Reconocen voces humanas 🎵. Hablales con calma."
+  },
+  {
+    "especie": "raton",
+    "raza": "Rata Dumbo",
+    "texto": "Necesitan compañía 🧍‍♀️🧍‍♂️. No las tengas solas."
+  },
+  {
+    "especie": "raton",
+    "raza": "Rata Dumbo",
+    "texto": "Les gusta esconder comida 🥜. Es normal que acumulen."
+  },
+  {
+    "especie": "raton",
+    "raza": "Rata Dumbo",
+    "texto": "Limpian su jaula cada semana 🧽. Evita el amoníaco del pis."
+  },
+
+  {
+    "especie": "raton",
+    "raza": "Rata Rex",
+    "texto": "Tienen pelaje rizado 🌀. Cepillalas suavemente si se ensucian."
+  },
+  {
+    "especie": "raton",
+    "raza": "Rata Rex",
+    "texto": "Muy sociables 💕. Les gusta estar en grupos."
+  },
+  {
+    "especie": "raton",
+    "raza": "Rata Rex",
+    "texto": "Necesitan enriquecimiento diario 🧩. Cambiá los juguetes seguido."
+  },
+  {
+    "especie": "raton",
+    "raza": "Rata Rex",
+    "texto": "Evita temperaturas altas 🥵. Su pelaje denso las calienta rápido."
+  },
+  {
+    "especie": "raton",
+    "raza": "Rata Rex",
+    "texto": "Les encanta trepar 🪜. Agregá cuerdas o plataformas."
   }
-  
 ]

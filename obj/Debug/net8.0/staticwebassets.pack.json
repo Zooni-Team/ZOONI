@@ -381,6 +381,10 @@
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
+      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\country-state-city\\country-state-city.umd.min.js",
+      "PackagePath": "staticwebassets\\lib\\country-state-city\\country-state-city.umd.min.js"
+    },
+    {
       "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },

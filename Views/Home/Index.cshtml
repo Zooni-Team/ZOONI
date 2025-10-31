@@ -5,7 +5,8 @@
     var mascotaNombre = ViewBag.MascotaNombre;
     var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
     var mascotaRaza = ViewBag.MascotaRaza?.ToString()?.ToLower() ?? "basico";
-    var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
+    var rutaAnimada = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
+    var rutaFoto = ViewBag.MascotaFoto ?? "";
 }
 <!DOCTYPE html>
 <html lang="es">
@@ -35,6 +36,7 @@ html, body {
     align-items: center;
 }
 
+/* ----------------- HEADER Y MENÚ ------------------ */
 header {
     position: fixed;
     top: 15px;
@@ -47,161 +49,10 @@ header {
     height: 38px;
     display: block;
     cursor: pointer;
-    background: none;
-    border: none;
-    outline: none;
-    padding: 0;
-    margin: 0;
     transition: transform .25s ease;
 }
 .menu-icon:hover { transform: scale(1.1); }
 
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    left: -260px;
-    width: 240px;
-    height: 100%;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(12px);
-    box-shadow: 4px 0 14px rgba(0,0,0,0.15);
-    display: flex;
-    flex-direction: column;
-    padding: 2.5rem 1.2rem;
-    gap: 1rem;
-    transition: all .4s ease;
-    z-index: 9;
-    border-top-right-radius: 18px;
-    border-bottom-right-radius: 18px;
-    
-}
-.menu-lateral.abierto { left: 0; }
-.menu-lateral {
-    left: -260px;
-    overflow-y: hidden;
-}
-.menu-lateral a {
-    text-decoration: none;
-    font-weight: 600;
-    color: var(--marron);
-    font-size: 1.1rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 12px;
-    transition: all .25s ease;
-}
-.menu-lateral a:hover {
-    background: var(--amarillo);
-    color: #3c2a00;
-}
-
-.cerrar-menu {
-    align-self: flex-end;
-    font-size: 1.6rem;
-    cursor: pointer;
-    margin-bottom: 1.5rem;
-    color: var(--marron);
-}
-.cerrar-menu:hover { transform: scale(1.2); }
-
-.overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.25);
-    opacity: 0; pointer-events: none;
-    transition: opacity .3s ease;
-    z-index: 8;
-}
-.overlay.activo { opacity: 1; pointer-events: auto; }
-
-main {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    justify-content: flex-start;
-    height: 100%;
-    width: 100%;
-    box-sizing: border-box;
-    padding-top: 70px;
-
-}
-
-.mascota-nombre {
-    font-weight: 700;
-    font-size: 2.2rem;
-    color: #fff;
-    text-shadow:
-        -1px -1px 2px rgba(0,0,0,0.5),
-         1px -1px 2px rgba(0,0,0,0.5),
-        -1px  1px 2px rgba(0,0,0,0.5),
-         1px  1px 2px rgba(0,0,0,0.5);
-    margin-bottom: 5px;
-}
-
-
-.mascota-img {
-    width: 330px;
-    height: auto;
-    margin-bottom: -25px;
-    margin-top: 60px;
-    animation: flotar 3s ease-in-out infinite;
-    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
-    transform: translateY(-10px);
-    
-}
-
-@@keyframes flotar {
-    0%,100% { transform: translateY(-10px); }
-    50% { transform: translateY(-18px); }
-}
-
-.panel {
-    border-radius: 24px;
-    padding: 30px 25px;
-    width: 90%;
-    max-width: 380px;
-    display: flex;
-    justify-content: center;
-}
-
-.botones {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    width: 100%;
-    margin-top: 2%;
-}
-
-.boton {
-    background: var(--amarillo);
-    border: none;
-    border-radius: 20px;
-    padding: 24px 0;
-    font-weight: 700;
-    font-size: 40px;
-    color: #3a2b00;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-.boton:hover { transform: scale(1.05); background: #FFC93C; }
-
-footer {
-    position: absolute;
-    bottom: 20px;
-    text-align: center;
-    width: 100%;
-    font-size: .1.2rem;
-    color: #654b34;
-    opacity: 0.8;
-}
-
-@@media (max-width: 480px) {
-    .mascota-img { width: 260px; transform: translateY(-5px); }
-    .panel { padding: 25px 20px; }
-    .boton { font-size: 29px; padding: 22px 0; }
-}
 .menu-lateral {
     position: fixed;
     top: 0;
@@ -220,35 +71,138 @@ footer {
     z-index: 999;
     border-right: none;
 }
-
-.menu-lateral.abierto {
-    transform: translateX(0); 
+.menu-lateral.abierto { transform: translateX(0); }
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--marron);
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    transition: all .25s ease;
 }
-.boton {
-    background: linear-gradient(180deg, var(--amarillo) 0%, #ffcb3a 100%);
-    border: 2px solid rgba(0,0,0,0.05);
-    border-radius: 24px;
-    padding: 22px 0;
-    font-weight: 700;
-    font-size: 1.8rem;
-    color: #3a2b00;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.3);
+.menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+.cerrar-menu {
+    align-self: flex-end;
+    font-size: 1.6rem;
     cursor: pointer;
+    margin-bottom: 1.5rem;
+    color: var(--marron);
+}
+.cerrar-menu:hover { transform: scale(1.2); }
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 8;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+/* ----------------- MAIN ------------------ */
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: flex-start;
+    height: 100%;
     width: 100%;
-    transition: background 0.2s ease, transform 0.1s ease;
-    letter-spacing: 0.5px;
+    box-sizing: border-box;
+    padding-top: 70px;
+}
+.mascota-nombre {
+    font-weight: 700;
+    font-size: 2.2rem;
+    color: #fff;
+    text-shadow: -1px -1px 2px rgba(0,0,0,0.5),
+                 1px -1px 2px rgba(0,0,0,0.5),
+                -1px  1px 2px rgba(0,0,0,0.5),
+                 1px  1px 2px rgba(0,0,0,0.5);
+    margin-bottom: 5px;
 }
 
-.boton:hover {
-    background: linear-gradient(180deg, #ffd64f 0%, #ffc020 100%);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+/* ----------------- FOTO CON FLECHAS ------------------ */
+.mascota-wrapper {
+    position: relative;
+    display: inline-block;
+    margin-top: 60px;
 }
 
-.boton:active {
-    transform: translateY(0);
-    box-shadow: 0 3px 6px rgba(0,0,0,0.2) inset;
+.mascota-img {
+    width: 330px;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.45s ease, transform 0.45s ease;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.3));
+    z-index: 0;
 }
+
+.mascota-img.visible {
+    opacity: 1;
+    z-index: 2;
+    position: relative;
+    transform: translateX(-50%) translateY(-10px);
+    animation: flotar 3s ease-in-out infinite;
+}
+@@keyframes flotar {
+    0%,100% { transform: translateX(-50%) translateY(-10px); }
+    50% { transform: translateX(-50%) translateY(-18px); }
+}
+
+/* Flechas */
+.arrow {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: #fffaf0;
+    background: rgba(60, 42, 27, 0.6);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+    z-index: 5;
+}
+.arrow:hover {
+    background: #FFD85A;
+    color: #3a2b00;
+    transform: translateY(-50%) scale(1.15);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+.arrow-left { left: -55px; }
+.arrow-right { right: -55px; }
+
+.fade {
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade.hidden-left {
+    transform: translateX(-80%) scale(0.95);
+    opacity: 0;
+    z-index: 1;
+}
+
+.fade.hidden-right {
+    transform: translateX(80%) scale(0.95);
+    opacity: 0;
+    z-index: 1;
+}
+
+/* ----------------- BOTONES ------------------ */
 .panel {
     border-radius: 28px;
     padding: 30px 25px;
@@ -258,9 +212,13 @@ footer {
     justify-content: center;
     margin-top: 10px;
 }
-
-.boton {
+.botones {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     width: 100%;
+}
+.boton {
     background: linear-gradient(180deg, #FFD85A 0%, #FFCA3B 100%);
     border: 2px solid rgba(255, 213, 90, 0.6);
     border-radius: 18px;
@@ -272,61 +230,36 @@ footer {
     cursor: pointer;
     transition: all 0.2s ease;
 }
-
 .boton:hover {
     background: linear-gradient(180deg, #FFE17C 0%, #FFD85A 100%);
     transform: translateY(-2px);
 }
 
-.boton:active {
-    transform: translateY(0);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15) inset;
-}
-
-.botones {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-}
-.mascota-wrapper {
-    position: relative;
-    display: inline-block;
-}
-
-.mascota-img {
-    transition: transform 0.25s ease;
-    margin-bottom: -10%;
-}
-
-.mascota-wrapper:hover .mascota-img {
-    transform: scale(1.05);
-}
-
-.corazon {
+/* ----------------- FOOTER ------------------ */
+footer {
     position: absolute;
-    top: 10%; 
-    left: 50%;
-    width: 26px;
-    height: 26px;
-    background: url('/img/recursos/corazon.png') center/contain no-repeat;
-    opacity: 0;
-    animation: flotarAura 1.8s ease-out forwards;
-    pointer-events: none;
+    bottom: 20px;
+    text-align: center;
+    width: 100%;
+    font-size: 1.2rem;
+    color: #654b34;
+    opacity: 0.8;
 }
 
-@@keyframes flotarAura {
-    0% {
-        transform: translate(-50%, 0) scale(0.7) rotate(0deg);
-        opacity: 0;
-    }
-    20% { opacity: 1; }
-    100% {
-        transform: translate(var(--x), -100px) scale(1.2) rotate(var(--r));
-        opacity: 0;
-    }
+@@media (max-width: 480px) {
+    .mascota-img { width: 260px; }
+    .arrow-left { left: -40px; }
+    .arrow-right { right: -40px; }
+}
+.mascota-img.visible {
+    animation: flotar 3s ease-in-out infinite, reboteEntrada 0.45s ease;
 }
 
+@@keyframes reboteEntrada {
+    0% { transform: translateX(-50%) scale(0.9); opacity: 0; }
+    60% { transform: translateX(-50%) scale(1.05); opacity: 1; }
+    100% { transform: translateX(-50%) scale(1); }
+}
 
 </style>
 </head>
@@ -355,18 +288,28 @@ footer {
 @if (mascotaNombre != null)
 {
     <div class="mascota-nombre">@mascotaNombre</div>
-<div class="mascota-wrapper" id="mascotaWrapper">
-   <img src="@(string.IsNullOrEmpty(ViewBag.MascotaFoto) 
-    ? $"/img/mascotas/{ViewBag.MascotaEspecie}s/{ViewBag.MascotaRaza}/{ViewBag.MascotaEspecie}_basico.png" 
-    : ViewBag.MascotaFoto)" 
-alt="@ViewBag.MascotaNombre" 
-class="mascota-img" />
 
+    <div class="mascota-wrapper" id="mascotaWrapper">
+        <!-- Foto animada -->
+        <img src="@rutaAnimada"
+             alt="Avatar @mascotaNombre"
+             class="mascota-img fade visible"
+             id="fotoAnimada"/>
 
-</div>
+        <!-- Foto real -->
+        <img src="@(string.IsNullOrEmpty(rutaFoto) ? "" : rutaFoto)"
+             alt="Foto real de @mascotaNombre"
+             class="mascota-img fade"
+             id="fotoReal"/>
+
+        <!-- Flechas -->
+        <button class="arrow arrow-left" id="prevFoto">⮜</button>
+        <button class="arrow arrow-right" id="nextFoto">⮞</button>
+    </div>
+
     <div class="panel">
         <div class="botones">
-            <button class="boton">🐾 Servicios</button>
+            <button class="boton" onclick="location.href='@Url.Action("Juegos", "Home")'">🎮 Juegos</button>
             <button class="boton">💉 Historial</button>
             <button class="boton">📅 Calendario</button>
             <button class="boton">👕 Closet</button>
@@ -386,7 +329,6 @@ const menu = document.getElementById("menuLateral");
 const overlay = document.getElementById("overlay");
 const abrir = document.getElementById("abrirMenu");
 const cerrar = document.getElementById("cerrarMenu");
-
 function cerrarMenu() {
     menu.classList.remove("abierto");
     overlay.classList.remove("activo");
@@ -398,35 +340,32 @@ abrir.addEventListener("click", () => {
 cerrar.addEventListener("click", cerrarMenu);
 overlay.addEventListener("click", cerrarMenu);
 </script>
+
 <script>
-const mascotaWrapper = document.getElementById("mascotaWrapper");
+const animada = document.getElementById("fotoAnimada");
+const real = document.getElementById("fotoReal");
+const prev = document.getElementById("prevFoto");
+const next = document.getElementById("nextFoto");
+let mostrandoReal = false;
 
-function crearCorazones() {
-    for (let i = 0; i < 6; i++) {
-        const corazon = document.createElement("div");
-        corazon.classList.add("corazon");
-
-        const direccion = Math.random() < 0.5 ? -1 : 1;
-        const desplazamientoX = direccion * (40 + Math.random() * 30); 
-        const rotacion = direccion * (15 + Math.random() * 15); 
-
-        corazon.style.setProperty("--x", `${desplazamientoX}px`);
-        corazon.style.setProperty("--r", `${rotacion}deg`);
-        corazon.style.animationDelay = `${i * 0.12}s`;
-
-        mascotaWrapper.appendChild(corazon);
-        setTimeout(() => corazon.remove(), 1800);
+function alternarFoto(direccion) {
+    if (mostrandoReal) {
+        real.classList.remove("visible");
+        real.classList.add(direccion === "left" ? "hidden-left" : "hidden-right");
+        animada.classList.remove("hidden-left", "hidden-right");
+        animada.classList.add("visible");
+    } else {
+        animada.classList.remove("visible");
+        animada.classList.add(direccion === "left" ? "hidden-left" : "hidden-right");
+        real.classList.remove("hidden-left", "hidden-right");
+        real.classList.add("visible");
     }
+    mostrandoReal = !mostrandoReal;
 }
-
-mascotaWrapper.addEventListener("mouseenter", crearCorazones);
+prev.addEventListener("click", () => alternarFoto("left"));
+next.addEventListener("click", () => alternarFoto("right"));
 </script>
-
-
-
 
 </body>
 </html>
-<!-- © 2025 Zooni Team
-Licensed under CC BY-NC-ND 4.0 (https://creativecommons.org/licenses/by-nc-nd/4.0/)
-No se permite la modificación o uso comercial de este código. -->
+<!-- © 2025 Zooni Team -->

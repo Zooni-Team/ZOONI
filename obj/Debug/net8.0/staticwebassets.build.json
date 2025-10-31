@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "S5I70+nPK9Xyc7hdxJ2MVQwMN5w77TRqG03jnsyysSk=",
+  "Hash": "n8uIZUL8cV3AtGCQ7AnsGlDupyYcATNnD9cK2S1zVrw=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -1820,6 +1820,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\country-state-city\\country-state-city.umd.min.js",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49317356\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "lib/country-state-city/country-state-city.umd.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\country-state-city\\country-state-city.umd.min.js"
     },
     {
       "Identity": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",

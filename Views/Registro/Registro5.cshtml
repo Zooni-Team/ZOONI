@@ -1,9 +1,9 @@
 @{
     ViewData["Title"] = "Registro - Zooni";
     Layout = null;
-    var mascotaNombre = ViewBag.MascotaNombre ?? "Mascota";
-    var mascotaEspecie = (ViewBag.MascotaEspecie ?? "perro").ToString().ToLower();
-    var mascotaRaza = (ViewBag.MascotaRaza ?? "basico").ToString().ToLower();
+    var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
+    var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
+    var mascotaRaza = ViewBag.MascotaRaza?.ToString()?.ToLower() ?? "basico";
     var rutaImagen = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
 }
 <!DOCTYPE html>
@@ -12,173 +12,248 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>@ViewData["Title"]</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
-:root{--marron:#8B5E3C;--verde:#3ac37d;--borde:#d8d8d8}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Poppins',sans-serif;background:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;overflow-x:hidden;position:relative}
-.bg{
-  position:fixed;
-  inset:0;
-  background:url('/img/mascotas-bienvenida.png') bottom center no-repeat;
-  background-size:contain;
-  opacity:0.15;
-  z-index:0;
+:root {
+    --marron: #8B5E3C;
+    --verde: #3ac37d;
+    --gris-claro: #ccc;
 }
-h1{color:var(--marron);font-size:2.2rem;margin-top:1rem;z-index:2}
-h2{color:#555;margin:.2rem 0 1rem;font-size:1.05rem;font-weight:700;z-index:2}
-.card{width:min(420px,92%);background:#fff;border-radius:24px;box-shadow:0 8px 24px rgba(0,0,0,.08);padding:22px;text-align:center;z-index:2;position:relative}
-.back{position:absolute;left:14px;top:12px;border:0;background:transparent;font-size:26px;color:var(--marron);cursor:pointer}
-.pet{font-weight:700;color:#000;margin:.2rem 0 .4rem}
-.pet-img{width:200px;object-fit:contain;margin:6px auto 12px;display:block}
-.label{font-size:.92rem;color:#444;text-align:left;width:100%;max-width:340px;margin:0 auto 6px}
-.row{display:flex;gap:12px;justify-content:center;width:100%;flex-wrap:wrap}
-.ctrl{width:100%;max-width:340px;padding:12px 14px;border-radius:18px;border:1.6px solid var(--borde);font-size:15px;background:#fff;appearance:none;outline:0;text-align:center;cursor:pointer}
-.ctrl:focus{border-color:var(--verde);box-shadow:0 0 0 2px rgba(58,195,125,.2)}
-.half{flex:1;min-width:155px;max-width:165px}
-.select{position:relative;flex:1}
-.select:after{content:"▾";position:absolute;right:14px;top:50%;transform:translateY(-50%);pointer-events:none;color:#777}
-.btn{width:100%;max-width:340px;margin:12px auto 2px;background:var(--verde);color:#fff;border:0;border-radius:22px;padding:12px 22px;font-size:1.05rem;font-weight:600;cursor:pointer}
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+h1 {
+    color: var(--marron);
+    font-size: 2.3rem;
+    margin: 1rem 0 0;
+    font-weight: 700;
+}
+h2 {
+    color: #555;
+    font-weight: 700;
+    margin: .3rem 0 1rem;
+    font-size: 1.1rem;
+}
+.contenedor {
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
+    text-align: center;
+    padding: 2rem;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    z-index: 2;
+}
+.volver {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--marron);
+    cursor: pointer;
+    transition: transform .2s ease, color .2s ease;
+}
+.volver:hover { transform: scale(1.1); color: var(--verde); }
+.nombre-mascota {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: #000;
+    margin-bottom: .4rem;
+}
+.mascota-img {
+    width: 200px;
+    height: auto;
+    margin: .5rem 0 1rem;
+    object-fit: contain;
+    z-index: 3;
+}
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+.fila {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    max-width: 320px;
+}
+input, select {
+    width: 100%;
+    max-width: 320px;
+    padding: 12px;
+    border-radius: 20px;
+    border: 1.8px solid var(--gris-claro);
+    font-size: 15px;
+    text-align: center;
+    outline: none;
+}
+input:focus, select:focus {
+    border-color: var(--verde);
+}
+.btn-principal {
+    background: var(--verde);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 40px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+    width: 100%;
+    max-width: 320px;
+    font-weight: 600;
+}
+.imagen-bienvenida {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+}
+.imagen-bienvenida img {
+    width: 100%;
+    max-width: 900px;
+    object-fit: cover;
+}
 </style>
 </head>
 <body>
-<div class="bg"></div>
-
 <h1>Zooni</h1>
 <h2>¡Registrate!</h2>
 
-<div class="card">
-    <button class="back" onclick="location.href='/Registro/Registro4'">←</button>
-    <div class="pet">@mascotaNombre</div>
-    <img src="@rutaImagen" alt="Mascota" class="pet-img" onerror="this.style.display='none'">
-    <p style="font-weight:600;color:#444;margin:.4rem 0 1rem">¡Ya falta poco!</p>
+<div class="contenedor">
+    <button class="volver" onclick="window.location.href='/Registro/Registro4'">←</button>
+    <div class="nombre-mascota">@mascotaNombre</div>
+    <img src="@rutaImagen" alt="Mascota" class="mascota-img" />
+    <p style="font-weight:600;color:#444;">¡Ya falta poco!</p>
 
-    <form asp-action="Registro5" asp-controller="Registro" method="post" id="registroForm">
+    <form asp-action="Registro5" asp-controller="Registro" method="post">
         @Html.AntiForgeryToken()
 
-        <div class="label">País</div>
-        <div class="select">
-            <select id="Pais" name="pais" class="ctrl" required></select>
+        <div class="fila">
+            <select id="Pais" name="Pais" required></select>
+            <select id="Provincia" name="Provincia" required disabled>
+                <option value="">Provincia</option>
+            </select>
         </div>
 
-        <div class="row" style="margin-top:10px">
-            <div class="select half">
-                <select id="Provincia" name="provincia" class="ctrl" required disabled></select>
-            </div>
-            <div class="select half">
-                <select id="Ciudad" name="ciudad" class="ctrl" required disabled></select>
-            </div>
+        <select id="Ciudad" name="Ciudad" required disabled>
+            <option value="">Ciudad</option>
+        </select>
+
+        <div class="fila">
+            <select id="CodigoPais" name="CodigoPais" required>
+                <option value="">Código</option>
+            </select>
+            <input type="tel" name="Telefono" placeholder="Teléfono" required autocomplete="off" />
         </div>
 
-        <div class="row" style="margin-top:10px">
-            <div class="select half">
-                <select id="CodigoPais" name="codigoPais" class="ctrl" required></select>
-            </div>
-            <input id="Telefono" name="telefono" type="tel" class="ctrl half" placeholder="Teléfono" required autocomplete="off" inputmode="numeric" pattern="[0-9]{5,20}">
-        </div>
-
-        <button type="submit" class="btn">Continuar</button>
+        <button type="submit" class="btn-principal">Continuar</button>
     </form>
 </div>
 
+<div class="imagen-bienvenida">
+    <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
+</div>
+
+<!-- ✅ Librería local -->
+<script src="~/lib/country-state-city/country-state-city.umd.min.js"></script>
+
 <script>
-document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded", () => {
+    if (typeof window.csc === "undefined") {
+        console.error("❌ No se cargó la librería country-state-city");
+        return;
+    }
 
-const COUNTRIES_ALL=[
-["AR","Argentina","+54"],["BR","Brasil","+55"],["CL","Chile","+56"],["CO","Colombia","+57"],
-["UY","Uruguay","+598"],["MX","México","+52"],["US","Estados Unidos","+1"],
-["ES","España","+34"],["PE","Perú","+51"],["GB","Reino Unido","+44"],["FR","Francia","+33"],["IT","Italia","+39"]
-];
+    const { Country, State, City } = window.csc;
+    const paisSelect = document.getElementById("Pais");
+    const provinciaSelect = document.getElementById("Provincia");
+    const ciudadSelect = document.getElementById("Ciudad");
+    const codigoSelect = document.getElementById("CodigoPais");
+    const telefonoInput = document.querySelector('input[name="Telefono"]');
 
-const STATES_CITIES={
-"AR":[["Buenos Aires",["La Plata","Mar del Plata","Bahía Blanca","Tigre","San Isidro"]],
-["Córdoba",["Córdoba","Villa Carlos Paz","Río Cuarto","Alta Gracia"]],
-["Santa Fe",["Rosario","Santa Fe","Rafaela","Venado Tuerto"]]],
-"BR":[["São Paulo",["São Paulo","Campinas","Santos","Guarulhos"]],
-["Rio de Janeiro",["Rio de Janeiro","Niterói","Petrópolis"]],
-["Paraná",["Curitiba","Londrina","Maringá"]]],
-"CL":[["Región Metropolitana",["Santiago","Las Condes","Ñuñoa","Maipú"]],
-["Valparaíso",["Valparaíso","Viña del Mar","Quilpué"]]],
-"UY":[["Montevideo",["Montevideo","Pocitos","Carrasco"]],
-["Canelones",["Ciudad de la Costa","Las Piedras"]]],
-"ES":[["Madrid",["Madrid","Getafe","Alcalá de Henares"]],
-["Cataluña",["Barcelona","Girona","Tarragona"]],
-["Andalucía",["Sevilla","Málaga","Granada"]]],
-"MX":[["Ciudad de México",["Coyoacán","Iztapalapa","Xochimilco"]],
-["Jalisco",["Guadalajara","Zapopan","Puerto Vallarta"]],
-["Nuevo León",["Monterrey","San Nicolás","Guadalupe"]]],
-"US":[["California",["Los Ángeles","San Francisco","San Diego"]],
-["Florida",["Miami","Orlando","Tampa"]],
-["Nueva York",["Nueva York","Buffalo","Rochester"]]],
-"CO":[["Bogotá D.C.",["Bogotá"]],
-["Antioquia",["Medellín","Envigado","Bello"]],
-["Valle del Cauca",["Cali","Palmira","Yumbo"]]],
-"PE":[["Lima",["Lima","Callao","Miraflores"]],
-["Cusco",["Cusco","Urubamba"]],
-["Arequipa",["Arequipa","Cayma"]]]
-};
+    const flag = (a2) => String.fromCodePoint(...[...a2.toUpperCase()].map(c => 127397 + c.charCodeAt(0)));
 
-const Pais=document.getElementById('Pais');
-const Prov=document.getElementById('Provincia');
-const Ciudad=document.getElementById('Ciudad');
-const Cod=document.getElementById('CodigoPais');
-const Tel=document.getElementById('Telefono');
-
-function flag(a2){const u=a2.toUpperCase();return String.fromCodePoint(...[...u].map(c=>127397+c.charCodeAt(0)))}
-
-function fillCountries(){
-  Pais.innerHTML='<option value="">Seleccioná un país</option>';
-  COUNTRIES_ALL.sort((a,b)=>a[1].localeCompare(b[1])).forEach(([a2,name,dial])=>{
-    const o=document.createElement('option');
-    o.value=a2;o.textContent=`${flag(a2)} ${name}`;o.dataset.dial=dial;
-    Pais.appendChild(o);
-  });
-}
-function fillCodes(dial){
-  Cod.innerHTML='';
-  const all=[...new Set(COUNTRIES_ALL.map(c=>c[2]))].sort((a,b)=>(+a.replace('+',''))-(+b.replace('+','')));
-  all.forEach(c=>{
-    const o=document.createElement('option');o.value=c;o.textContent=c;Cod.appendChild(o);
-  });
-  Cod.value=dial||'';
-}
-
-function resetProv(){Prov.innerHTML='<option value="">Provincia/Estado</option>';Prov.disabled=true;}
-function resetCity(){Ciudad.innerHTML='<option value="">Ciudad</option>';Ciudad.disabled=true;}
-
-fillCountries();fillCodes('');resetProv();resetCity();
-
-Pais.addEventListener('change',e=>{
-  e.preventDefault();
-  const a2=Pais.value;
-  const dial=Pais.selectedOptions[0]?.dataset?.dial||'';
-  fillCodes(dial);resetProv();resetCity();
-  if(STATES_CITIES[a2]){
-    Prov.disabled=false;
-    Prov.innerHTML='<option value="">Provincia/Estado</option>';
-    STATES_CITIES[a2].forEach(([st])=>{
-      const o=document.createElement('option');o.value=st;o.textContent=st;Prov.appendChild(o);
+    // 🌍 Países
+    const countries = Country.getAllCountries();
+    paisSelect.innerHTML = '<option value="">País</option>';
+    countries.forEach(c => {
+        const opt = document.createElement("option");
+        opt.value = c.isoCode;
+        opt.textContent = `${flag(c.isoCode)} ${c.name}`;
+        opt.dataset.phone = `+${c.phonecode}`;
+        paisSelect.appendChild(opt);
     });
-  }
+
+    // 📞 Códigos
+    const allCodes = [...new Set(countries.map(c => `+${c.phonecode}`))]
+        .sort((a, b) => parseInt(a.slice(1)) - parseInt(b.slice(1)));
+    codigoSelect.innerHTML = '<option value="">Código</option>' +
+        allCodes.map(c => `<option value="${c}">${c}</option>`).join("");
+
+    function reset(sel, label) {
+        sel.innerHTML = `<option value="">${label}</option>`;
+        sel.disabled = true;
+    }
+    reset(provinciaSelect, "Provincia");
+    reset(ciudadSelect, "Ciudad");
+
+    // 🏳️ País seleccionado → Provincias
+    paisSelect.addEventListener("change", () => {
+        const iso = paisSelect.value;
+        const dial = paisSelect.selectedOptions[0]?.dataset?.phone || "";
+        codigoSelect.value = dial;
+        reset(provinciaSelect, "Provincia");
+        reset(ciudadSelect, "Ciudad");
+        if (!iso) return;
+        telefonoInput.value = dial + " ";
+        telefonoInput.focus();
+
+        const states = State.getStatesOfCountry(iso);
+        if (states.length) {
+            provinciaSelect.disabled = false;
+            provinciaSelect.innerHTML = '<option value="">Provincia</option>' +
+                states.map(s => `<option value="${s.isoCode}">${s.name}</option>`).join("");
+        }
+    });
+
+    // 🏙️ Provincia → Ciudades
+   // 🏙️ Provincia → Ciudades
+provinciaSelect.addEventListener("change", () => {
+    const isoPais = paisSelect.value;
+    const isoProv = provinciaSelect.value;
+    reset(ciudadSelect, "Ciudad");
+
+    if (!isoPais || !isoProv) return;
+
+    const list = window.csc.City.getCitiesOfState(isoPais, isoProv);
+    const cities = Array.isArray(list) ? list : [];
+
+    if (cities.length > 0) {
+        ciudadSelect.disabled = false;
+        ciudadSelect.innerHTML = '<option value="">Ciudad</option>' +
+            cities.map(ci => `<option value="${ci}">${ci}</option>`).join("");
+    }
 });
 
-Prov.addEventListener('change',e=>{
-  e.preventDefault();
-  const a2=Pais.value;const st=Prov.value;
-  resetCity();
-  const arr=STATES_CITIES[a2]||[];
-  const item=arr.find(x=>x[0]===st);
-  if(item){
-    Ciudad.disabled=false;
-    Ciudad.innerHTML='<option value="">Ciudad</option>';
-    item[1].forEach(ci=>{
-      const o=document.createElement('option');o.value=ci;o.textContent=ci;Ciudad.appendChild(o);
-    });
-  }
+    // 📞 Código → sincronización con input teléfono
+    codigoSelect.addEventListener("change", () => {
+    telefonoInput.focus();
 });
-
-Cod.addEventListener('change',()=>Tel.focus());
-
 });
 </script>
 </body>

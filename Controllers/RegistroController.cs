@@ -240,35 +240,52 @@ public IActionResult Registro3(string modo = "")
 
     return View(mascota);
 }
-
 [HttpPost]
 [ValidateAntiForgeryToken]
-public IActionResult Registro3Post(Mascota model, string modo = "")
+public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int Edad, string Foto, string modo = "")
 {
     try
     {
-        var userId = HttpContext.Session.GetInt32("UserId");
+        int? userId = HttpContext.Session.GetInt32("UserId");
         if (userId == null)
             return RedirectToAction("Registro1");
+
+        // 🐶 Si el usuario sacó una foto, guardarla físicamente
+        if (!string.IsNullOrEmpty(Foto) && Foto.StartsWith("data:image"))
+        {
+            try
+            {
+                var base64 = Foto.Split(',')[1];
+                var bytes = Convert.FromBase64String(base64);
+
+                var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+                if (!Directory.Exists(uploadsPath))
+                    Directory.CreateDirectory(uploadsPath);
+
+                var fileName = $"mascota_{Guid.NewGuid()}.png";
+                var filePath = Path.Combine(uploadsPath, fileName);
+                System.IO.File.WriteAllBytes(filePath, bytes);
+
+                HttpContext.Session.SetString("MascotaFoto", "/uploads/" + fileName);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error al guardar la foto: " + ex.Message);
+                HttpContext.Session.SetString("MascotaFoto", "");
+            }
+        }
+
+        // 🟢 Guardar otros datos en sesión
+        HttpContext.Session.SetString("MascotaSexo", Sexo);
+        HttpContext.Session.SetString("MascotaRaza", Raza);
+        HttpContext.Session.SetString("MascotaPeso", Peso.ToString());
+        HttpContext.Session.SetString("MascotaEdad", Edad.ToString());
 
         string modoFinal = !string.IsNullOrEmpty(modo)
             ? modo
             : HttpContext.Session.GetString("ModoRegistro") ?? "";
 
-        // Normalizamos peso
-        decimal pesoNormalizado = 0;
-        string pesoInput = Request.Form["Peso"].ToString().Replace(',', '.');
-        decimal.TryParse(pesoInput, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoNormalizado);
-        pesoNormalizado = Math.Round(pesoNormalizado, 2);
-
-        // Actualizamos los datos en sesión
-        HttpContext.Session.SetString("MascotaRaza", model.Raza ?? "");
-        HttpContext.Session.SetString("MascotaSexo", model.Sexo ?? "");
-        HttpContext.Session.SetString("MascotaFoto", model.Foto ?? "");
-        HttpContext.Session.SetInt32("MascotaEdad", model.Edad);
-        HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString(System.Globalization.CultureInfo.InvariantCulture));
-
-        Console.WriteLine($"🐾 Registro3Post -> Especie: {HttpContext.Session.GetString("MascotaEspecie")}, Raza: {model.Raza}, Peso: {pesoNormalizado}");
+        Console.WriteLine($"🐾 Registro3Post OK → Especie: {HttpContext.Session.GetString("MascotaEspecie")}, Raza: {Raza}, Peso: {Peso}kg");
 
         if (modoFinal.ToLower() == "nuevamascota")
         {
@@ -285,6 +302,7 @@ public IActionResult Registro3Post(Mascota model, string modo = "")
         return RedirectToAction("Registro3");
     }
 }
+
 
 [HttpGet]
 [Route("Registro/Registro4")]

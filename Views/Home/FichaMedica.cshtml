@@ -1,19 +1,35 @@
+@using System.Globalization
 @{
     ViewData["Title"] = "Ficha Médica - Zooni";
     Layout = null;
 
     var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
-    var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
+    var mascotaEspecie = (ViewBag.MascotaEspecie?.ToString() ?? "perro").ToLower();
     var mascotaRaza = ViewBag.MascotaRaza?.ToString() ?? "Desconocida";
     var mascotaEdadMeses = Convert.ToInt32(ViewBag.MascotaEdad ?? 0);
-var mascotaPeso = Convert.ToDecimal(ViewBag.MascotaPeso ?? 0);
-var pesoFormateado = mascotaPeso.ToString("0.##").Replace('.', ',');
+
+    // ✅ Formateo seguro del peso
+    var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
+    decimal mascotaPeso = 0;
+    decimal.TryParse(pesoStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out mascotaPeso);
+
+    // 🧮 Corrección automática si parece desplazado (ej: 417 → 41.7)
+    if (mascotaPeso >= 100)
+    {
+        mascotaPeso /= 10;
+    }
+
+    var pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
+
     var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
 
     int años = mascotaEdadMeses / 12;
     int meses = mascotaEdadMeses % 12;
-    string edadFormateada = $"{(años > 0 ? $"{años} año{(años > 1 ? "s" : "")}" : "")}{(meses > 0 ? $" y {meses} mes{(meses > 1 ? "es" : "")}" : "")}";
+    string edadFormateada =
+        $"{(años > 0 ? $"{años} año{(años > 1 ? "s" : "")}" : "")}" +
+        $"{(meses > 0 ? $" y {meses} mes{(meses > 1 ? "es" : "")}" : "")}";
 }
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -112,6 +128,31 @@ main {
     color: var(--marron);
     margin-bottom: 6px;
     font-size: 1.9rem;
+}
+.bloque-pdf {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 28px 0 28px; /* separa igual desde arriba y abajo */
+}
+
+#btnDescargarPDF {
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    padding: 12px 36px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.05rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.18);
+    transition: all 0.25s ease;
+}
+
+#btnDescargarPDF:hover {
+    background: #2e9b67;
+    transform: translateY(-2px);
 }
 
 .mascota-img {
@@ -302,15 +343,8 @@ main {
 <div class="dato">⚖️ <span>Peso:</span> @pesoFormateado kg</div>
         <div class="dato">🎂 <span>Edad:</span> @edadFormateada</div>
     </div>
-<div style="margin-top: 10px; text-align:center;">
-    <button id="btnDescargarPDF" 
-        style="background: var(--verde); color: white; border: none; 
-               border-radius: 12px; padding: 10px 20px; 
-               font-weight: 600; cursor: pointer; 
-               font-family: 'Poppins', sans-serif; 
-               box-shadow: 0 3px 6px rgba(0,0,0,0.2);">
-        📄 Descargar PDF
-    </button>
+<div class="bloque-pdf">
+    <button id="btnDescargarPDF">📄 Descargar PDF</button>
 </div>
 
     <div class="historial">
