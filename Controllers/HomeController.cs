@@ -523,6 +523,32 @@ Fecha_Nacimiento = row["Fecha_Nacimiento"] == DBNull.Value
                 {
                     ViewBag.MascotaActiva = mascotas.Count > 0 ? mascotas[0] : new Mascota();
                 }
+// 🔄 Si se acaba de agregar una nueva mascota, recargar desde la BD
+if (TempData["Exito"] != null && TempData["Exito"].ToString().Contains("Mascota agregada"))
+{
+    // Recuperar nuevamente todas las mascotas del usuario
+    var dtMascotasRefrescado = BD.ExecuteQuery(qMascotas, new Dictionary<string, object> { { "@Id", userId.Value } });
+    var mascotasRefrescadas = new List<Mascota>();
+
+    foreach (System.Data.DataRow row in dtMascotasRefrescado.Rows)
+    {
+        mascotasRefrescadas.Add(new Mascota
+        {
+            Id_Mascota = Convert.ToInt32(row["Id_Mascota"]),
+            Nombre = row["Nombre"].ToString(),
+            Especie = row["Especie"].ToString(),
+            Raza = row["Raza"].ToString(),
+            Edad = row["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(row["Edad"]),
+            Peso = row["Peso"] == DBNull.Value ? 0 : Convert.ToDecimal(row["Peso"]),
+            Sexo = row["Sexo"].ToString(),
+            Fecha_Nacimiento = row["Fecha_Nacimiento"] == DBNull.Value
+                ? DateTime.MinValue
+                : Convert.ToDateTime(row["Fecha_Nacimiento"])
+        });
+    }
+
+    ViewBag.Mascotas = mascotasRefrescadas;
+}
 
                 return View();
             }
@@ -944,23 +970,31 @@ public IActionResult DescargarPDF()
 
     return File(memory.ToArray(), "application/pdf", $"{nombre}_FichaMedica_Zooni.pdf");
 }
-
 [HttpGet]
 public IActionResult Perfil()
 {
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null) return RedirectToAction("Login", "Auth");
 
-    string qPerfil = @"SELECT TOP 1 P.Id_Perfil, U.Nombre, U.Apellido, U.Pais, P.Descripcion, P.FotoPerfil
-                       FROM Perfil P 
-                       INNER JOIN [User] U ON P.Id_Usuario = U.Id_User
-                       WHERE U.Id_User = @Id";
+    // 🔍 Intentar obtener perfil
+    string qPerfil = @"
+        SELECT TOP 1 P.Id_Perfil, U.Nombre, U.Apellido, U.Pais, P.Descripcion, P.FotoPerfil
+        FROM Perfil P 
+        INNER JOIN [User] U ON P.Id_Usuario = U.Id_User
+        WHERE U.Id_User = @Id";
 
     var dtPerfil = BD.ExecuteQuery(qPerfil, new Dictionary<string, object> { { "@Id", userId.Value } });
+
+    // 🧩 Si no hay perfil, crear uno por defecto
     if (dtPerfil.Rows.Count == 0)
     {
-        TempData["Error"] = "No se encontró perfil.";
-        return RedirectToAction("Index");
+        string qInsert = @"
+            INSERT INTO Perfil (Id_Usuario, FotoPerfil, Descripcion, AniosVigencia)
+            VALUES (@U, '/img/perfil/default.png', 'Amante de los animales ❤️', 1)";
+        BD.ExecuteNonQuery(qInsert, new Dictionary<string, object> { { "@U", userId.Value } });
+
+        // volver a consultar
+        dtPerfil = BD.ExecuteQuery(qPerfil, new Dictionary<string, object> { { "@Id", userId.Value } });
     }
 
     var p = dtPerfil.Rows[0];
@@ -969,9 +1003,8 @@ public IActionResult Perfil()
     ViewBag.Descripcion = p["Descripcion"]?.ToString() ?? "Amante de los animales ❤️";
     ViewBag.FotoPerfil = p["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png";
 
-    // Mascotas del usuario
-    string qMascotas = @"SELECT Id_Mascota, Nombre, Especie, Raza, Foto 
-                         FROM Mascota WHERE Id_User = @Id";
+    // 🐾 Mascotas
+    string qMascotas = @"SELECT Id_Mascota, Nombre, Especie, Raza, Foto FROM Mascota WHERE Id_User = @Id";
     var dtMascotas = BD.ExecuteQuery(qMascotas, new Dictionary<string, object> { { "@Id", userId.Value } });
 
     var mascotas = new List<Mascota>();
@@ -990,11 +1023,7 @@ public IActionResult Perfil()
     ViewBag.Mascotas = mascotas;
     return View("Perfil");
 }
-[HttpGet]
-public IActionResult Juegos()
-{
-    return View();
-}
+
 
     }
 }

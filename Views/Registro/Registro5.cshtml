@@ -188,8 +188,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const flag = (a2) => String.fromCodePoint(...[...a2.toUpperCase()].map(c => 127397 + c.charCodeAt(0)));
 
-    // 🌍 Países
-    const countries = Country.getAllCountries();
+    // 🌍 Países ordenados alfabéticamente
+    const countries = Country.getAllCountries().sort((a, b) => a.name.localeCompare(b.name));
     paisSelect.innerHTML = '<option value="">País</option>';
     countries.forEach(c => {
         const opt = document.createElement("option");
@@ -199,12 +199,15 @@ document.addEventListener("DOMContentLoaded", () => {
         paisSelect.appendChild(opt);
     });
 
-    // 📞 Códigos
+    // 📞 Códigos ordenados ascendentemente
     const allCodes = [...new Set(countries.map(c => `+${c.phonecode}`))]
+        .filter(c => c && c !== "+") // eliminar vacíos
         .sort((a, b) => parseInt(a.slice(1)) - parseInt(b.slice(1)));
+
     codigoSelect.innerHTML = '<option value="">Código</option>' +
         allCodes.map(c => `<option value="${c}">${c}</option>`).join("");
 
+    // 🧹 Función auxiliar
     function reset(sel, label) {
         sel.innerHTML = `<option value="">${label}</option>`;
         sel.disabled = true;
@@ -212,19 +215,26 @@ document.addEventListener("DOMContentLoaded", () => {
     reset(provinciaSelect, "Provincia");
     reset(ciudadSelect, "Ciudad");
 
-    // 🏳️ País seleccionado → Provincias
+    // 🏳️ País → provincias y código
     paisSelect.addEventListener("change", () => {
         const iso = paisSelect.value;
         const dial = paisSelect.selectedOptions[0]?.dataset?.phone || "";
-        codigoSelect.value = dial;
         reset(provinciaSelect, "Provincia");
         reset(ciudadSelect, "Ciudad");
-        if (!iso) return;
-        telefonoInput.value = dial + " ";
+
+        // Asignar código sin repetirlo en el input
+        if (dial) {
+            codigoSelect.value = dial;
+            telefonoInput.value = dial + " ";
+        } else {
+            codigoSelect.value = "";
+            telefonoInput.value = "";
+        }
         telefonoInput.focus();
 
+        // Provincias del país
         const states = State.getStatesOfCountry(iso);
-        if (states.length) {
+        if (states.length > 0) {
             provinciaSelect.disabled = false;
             provinciaSelect.innerHTML = '<option value="">Provincia</option>' +
                 states.map(s => `<option value="${s.isoCode}">${s.name}</option>`).join("");
@@ -232,29 +242,39 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 🏙️ Provincia → Ciudades
-   // 🏙️ Provincia → Ciudades
-provinciaSelect.addEventListener("change", () => {
-    const isoPais = paisSelect.value;
-    const isoProv = provinciaSelect.value;
-    reset(ciudadSelect, "Ciudad");
+    provinciaSelect.addEventListener("change", () => {
+        const isoPais = paisSelect.value;
+        const isoProv = provinciaSelect.value;
+        reset(ciudadSelect, "Ciudad");
 
-    if (!isoPais || !isoProv) return;
+        if (!isoPais || !isoProv) return;
 
-    const list = window.csc.City.getCitiesOfState(isoPais, isoProv);
-    const cities = Array.isArray(list) ? list : [];
+        const list = City.getCitiesOfState(isoPais, isoProv);
+        const cities = Array.isArray(list) ? list : [];
 
-    if (cities.length > 0) {
-        ciudadSelect.disabled = false;
-        ciudadSelect.innerHTML = '<option value="">Ciudad</option>' +
-            cities.map(ci => `<option value="${ci}">${ci}</option>`).join("");
-    }
-});
+        if (cities.length > 0) {
+            ciudadSelect.disabled = false;
+            ciudadSelect.innerHTML = '<option value="">Ciudad</option>' +
+                cities.map(ci => `<option value="${ci}">${ci}</option>`).join("");
+        }
+    });
 
-    // 📞 Código → sincronización con input teléfono
+    // 📞 Cambio manual de código → actualizar input sin duplicar
     codigoSelect.addEventListener("change", () => {
-    telefonoInput.focus();
-});
+        const dial = codigoSelect.value;
+        telefonoInput.value = dial ? dial + " " : "";
+        telefonoInput.focus();
+    });
+
+    // ✂️ Prevención de duplicados si el usuario edita el input
+    telefonoInput.addEventListener("input", () => {
+        const dial = codigoSelect.value;
+        if (dial && telefonoInput.value.startsWith(dial + dial)) {
+            telefonoInput.value = dial + " ";
+        }
+    });
 });
 </script>
+
 </body>
 </html>

@@ -226,6 +226,55 @@ main {
     .evento { padding: 14px 16px; }
     .boton-agregar { width: 50px; height: 50px; font-size: 1.6rem; }
 }
+.modal-content {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px 24px; /* 💡 más espacio lateral */
+    width: 92%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25);
+    box-sizing: border-box; /* 💡 evita overflow en móviles */
+}
+
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    font-size: 0.95rem;
+    box-sizing: border-box; /* 💡 evita desbordes horizontales */
+}
+
+/* 🎯 Mejoras visuales solo en pantallas chicas */
+@@media (max-width: 480px) {
+    .modal-content {
+        width: 94%;
+        padding: 20px 18px;
+        border-radius: 16px;
+    }
+
+    .modal-content h2 {
+        font-size: 1.2rem;
+        text-align: center;
+        margin-bottom: 12px;
+    }
+
+    .modal-content button {
+        width: 100%;
+        font-size: 1rem;
+        padding: 11px;
+        margin-top: 8px;
+    }
+
+    textarea {
+        min-height: 70px;
+    }
+}
+
 </style>
 </head>
 

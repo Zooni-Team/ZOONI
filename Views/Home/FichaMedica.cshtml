@@ -11,13 +11,11 @@
     // ✅ Formateo seguro del peso
     var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
     decimal mascotaPeso = 0;
-    decimal.TryParse(pesoStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out mascotaPeso);
+    if (!decimal.TryParse(pesoStr, NumberStyles.Any, CultureInfo.InvariantCulture, out var mascotaPeso))
+    mascotaPeso = 0;
 
-    // 🧮 Corrección automática si parece desplazado (ej: 417 → 41.7)
-    if (mascotaPeso >= 100)
-    {
-        mascotaPeso /= 10;
-    }
+string pesoFormateado = mascotaPeso.ToString("0.##", new CultureInfo("es-AR"));
+
 
     var pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
 

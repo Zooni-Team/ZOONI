@@ -224,7 +224,7 @@ button:hover {
 /* RESPONSIVE */
 @@media (max-width: 600px) {
     .mascota-card { flex-direction: column; text-align: center; }
-    #chatBox { height: 30vh; }
+    #chatBox { height: 40vh; }
     textarea { height: 50px; }
 }
 h1
@@ -325,12 +325,9 @@ h1
     <h1 style="color:#fff; text-shadow:2px 3px 5px rgba(0.3,0.3,0.3,0.5); margin-bottom:10px;">ZooniVet</h1>
 
     <div class="mascota-card">
-        <img src="/img/mascotas/@(ViewBag.Especie?.ToString().ToLower() ?? "perro")s/@(ViewBag.Raza?.ToString().ToLower() ?? "basico")/@(ViewBag.Especie?.ToString().ToLower() ?? "perro")_basico.png" alt="Mascota">
         <div class="mascota-info">
             <strong>@ViewBag.Nombre</strong><br>
-            <small>@ViewBag.Raza (@ViewBag.Especie)</small><br>
-🕒 @ViewBag.Edad meses 
-        </div>
+            <small>@ViewBag.Raza (@ViewBag.Especie)</small>        </div>
     </div>
 
     <div id="chatBox"></div>
@@ -344,7 +341,6 @@ h1
 
             <textarea id="mensaje" placeholder="Escribí tu mensaje para ZooniVet..." required></textarea>
             <button type="submit">Enviar 🩺</button>
-            <button type="button" id="reiniciar">Reiniciar 🔄</button>
             <p id="status">💬 Esperando mensaje...</p>
         </form>
 </main>

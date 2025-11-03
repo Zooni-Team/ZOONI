@@ -1701,3 +1701,15 @@ C:\Users\49317356\zooni\bin\Debug\net8.0\itext.commons.dll
 C:\Users\49317356\zooni\bin\Debug\net8.0\Microsoft.DotNet.PlatformAbstractions.dll
 C:\Users\49317356\zooni\bin\Debug\net8.0\package-lock.json
 C:\Users\49317356\zooni\bin\Debug\net8.0\package.json
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.csproj.AssemblyReference.cache
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.AssemblyInfoInputs.cache
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.AssemblyInfo.cs
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.csproj.CoreCompileInputs.cache
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.RazorAssemblyInfo.cache
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.RazorAssemblyInfo.cs
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.sourcelink.json
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.dll
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\refint\Zooni.dll
+C:\Users\49374119\Desktop\ZOONI\obj\Debug\net8.0\Zooni.pdb

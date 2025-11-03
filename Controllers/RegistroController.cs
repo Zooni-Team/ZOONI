@@ -59,6 +59,16 @@ public IActionResult CrearUsuarioDesdeLogin(string correo, string contrasena)
 
             var userParams = new Dictionary<string, object> { { "@Id_Mail", idMail } };
             idUser = Convert.ToInt32(BD.ExecuteScalar(queryUser, userParams));
+            string qPerfilCheck = "SELECT COUNT(*) FROM Perfil WHERE Id_Usuario = @Id";
+int existePerfil = Convert.ToInt32(BD.ExecuteScalar(qPerfilCheck, new Dictionary<string, object> { { "@Id", idUser } }));
+
+if (existePerfil == 0)
+{
+    string qPerfilInsert = @"
+        INSERT INTO Perfil (Id_Usuario, FotoPerfil, Descripcion, AniosVigencia)
+        VALUES (@U, '/img/perfil/default.png', 'Amante de los animales ❤️', 1)";
+    BD.ExecuteNonQuery(qPerfilInsert, new Dictionary<string, object> { { "@U", idUser } });
+}
         }
 
         HttpContext.Session.SetInt32("UserId", idUser);
@@ -112,6 +122,16 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
 
         var userParams = new Dictionary<string, object> { { "@Id_Mail", idMail } };
         int idUser = Convert.ToInt32(BD.ExecuteScalar(queryUser, userParams));
+        if (existePerfil == 0)
+{
+    string qPerfilInsert = @"
+        INSERT INTO Perfil (Id_Usuario, FotoPerfil, Descripcion, AniosVigencia)
+        VALUES (@U, '/img/perfil/default.png', 'Amante de los animales ❤️', 1)";
+    BD.ExecuteNonQuery(qPerfilInsert, new Dictionary<string, object> { { "@U", idUser } });
+}
+string qPerfilCheck = "SELECT COUNT(*) FROM Perfil WHERE Id_Usuario = @Id";
+int existePerfil = Convert.ToInt32(BD.ExecuteScalar(qPerfilCheck, new Dictionary<string, object> { { "@Id", idUser } }));
+
 
         HttpContext.Session.SetInt32("UserId", idUser);
 
@@ -179,7 +199,7 @@ public IActionResult Registro2(Mascota model, string modo = "")
         HttpContext.Session.SetString("MascotaChip", model.Chip ?? "");
         HttpContext.Session.SetString("MascotaFoto", model.Foto ?? "");
         HttpContext.Session.SetString("MascotaEsterilizado", model.Esterilizado.ToString());
-        HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString(System.Globalization.CultureInfo.InvariantCulture));
+HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString(CultureInfo.InvariantCulture));
         HttpContext.Session.SetInt32("MascotaEdad", model.Edad);
 
         Console.WriteLine($"🚀 Registro2 completado parcialmente: {model.Nombre}, {model.Especie}, {model.Raza}, {pesoNormalizado}kg");
@@ -278,8 +298,8 @@ public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int E
         // 🟢 Guardar otros datos en sesión
         HttpContext.Session.SetString("MascotaSexo", Sexo);
         HttpContext.Session.SetString("MascotaRaza", Raza);
-        HttpContext.Session.SetString("MascotaPeso", Peso.ToString());
-        HttpContext.Session.SetString("MascotaEdad", Edad.ToString());
+HttpContext.Session.SetString("MascotaPeso", Peso.ToString(CultureInfo.InvariantCulture));
+HttpContext.Session.SetInt32("MascotaEdad", Edad);
 
         string modoFinal = !string.IsNullOrEmpty(modo)
             ? modo
@@ -288,10 +308,17 @@ public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int E
         Console.WriteLine($"🐾 Registro3Post OK → Especie: {HttpContext.Session.GetString("MascotaEspecie")}, Raza: {Raza}, Peso: {Peso}kg");
 
         if (modoFinal.ToLower() == "nuevamascota")
-        {
-            TempData["Exito"] = "Mascota agregada correctamente 🐾";
-            return RedirectToAction("Configuracion", "Home");
-        }
+{
+    // 🐾 Obtener el ID de la última mascota agregada
+    string qUltima = "SELECT TOP 1 Id_Mascota FROM Mascota WHERE Id_User = @U ORDER BY Id_Mascota DESC";
+    var idMascotaNueva = BD.ExecuteScalar(qUltima, new Dictionary<string, object> { { "@U", userId.Value } });
+
+    if (idMascotaNueva != null && idMascotaNueva != DBNull.Value)
+        HttpContext.Session.SetInt32("MascotaId", Convert.ToInt32(idMascotaNueva));
+
+    TempData["Exito"] = "Mascota agregada correctamente 🐾";
+    return RedirectToAction("Configuracion", "Home");
+}
 
         return RedirectToAction("Registro4", "Registro");
     }

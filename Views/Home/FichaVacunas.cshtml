@@ -12,16 +12,15 @@
 
     // ✅ Peso con corrección automática
     var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
-    decimal mascotaPeso = 0;
-    decimal.TryParse(pesoStr.Replace(',', '.'), NumberStyles.Any, CultureInfo.InvariantCulture, out mascotaPeso);
+    var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
+decimal mascotaPeso;
 
-    // 🧮 Corrige si parece mal desplazado (ej: 417 → 41.7)
-    if (mascotaPeso >= 100)
-    {
-        mascotaPeso /= 10;
-    }
+if (!decimal.TryParse(pesoStr, NumberStyles.Any, CultureInfo.InvariantCulture, out mascotaPeso))
+{
+    mascotaPeso = 0;
+}
 
-    var pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
+string pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
 
     // 🖼️ Ruta de imagen
     var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
