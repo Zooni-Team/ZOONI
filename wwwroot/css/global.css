@@ -1,0 +1,58 @@
+:root {
+  --verde: #39b77c;
+  --amarillo: #FFD85A;
+  --marron: #3c2a1b;
+  --fondo: #f9f9f8;
+  --rojo: #ff6b6b;
+  --crema: #fffaf4;
+  --texto: #3c2a1b;
+}
+
+/* 🌞 MODO CLARO */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--fondo);
+  color: var(--texto);
+  transition: background-color .4s ease, color .4s ease;
+}
+
+/* 🌙 MODO OSCURO */
+body.dark-mode {
+  --fondo: #1a1a1a;
+  --marron: #eaeaea;
+  --crema: #2a2a2a;
+  --amarillo: #d1b24b;
+  --verde: #2fc78f;
+  --rojo: #ff7878;
+  --texto: #f0f0f0;
+  background: var(--fondo) url('/img/fondos/consultorio_dark.jpg') center/cover fixed no-repeat;
+  color: var(--texto);
+}
+
+body.dark-mode section {
+  background: rgba(40, 40, 40, 0.95);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.4);
+}
+
+body.dark-mode input,
+body.dark-mode select {
+  background-color: #2b2b2b;
+  border-color: #555;
+  color: #fff;
+}
+
+body.dark-mode button {
+  background: var(--verde);
+  color: #fff;
+}
+
+body.dark-mode a {
+  color: var(--amarillo);
+}
+
+/* Animación sutil al cambiar tema */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}

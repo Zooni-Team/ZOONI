@@ -1,29 +1,17 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var tema = Context.Session.GetString("Tema") ?? "claro";
+    var claseTema = tema == "oscuro" ? "dark-mode" : "";
+}
+<!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - NombreProyecto</title>
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"] - Zooni</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/global.css" /> 
 </head>
-
-<body>
-    <header>
-        NombreProyecto
-    </header>
-
-    <main role="main">
-        @RenderBody()
-    </main>
-
-    <footer>
-        &copy; @DateTime.Now.Year - NombreProyecto
-    </footer>
-
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+<body class="@claseTema">
+    @RenderBody()
 </body>
-
 </html>

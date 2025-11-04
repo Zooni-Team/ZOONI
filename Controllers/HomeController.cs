@@ -1023,6 +1023,15 @@ public IActionResult Perfil()
     ViewBag.Mascotas = mascotas;
     return View("Perfil");
 }
+[HttpPost]
+public IActionResult CambiarTema(string modo)
+{
+    if (modo == "oscuro" || modo == "claro")
+    {
+        HttpContext.Session.SetString("Tema", modo);
+    }
+    return RedirectToAction("Configuracion");
+}
 
 
     }

@@ -227,6 +227,16 @@ button:hover { background:#2fa76b; transform:translateY(-2px); }
       <button type="submit" class="boton-secundario" style="margin-top:10px;">Agregar nueva mascota ➕</button>
     </form>
   </section>
+<section>
+  <h2>🌓 Tema de la aplicación</h2>
+  <form asp-action="CambiarTema" method="post">
+    <label>Seleccioná tu modo preferido:</label>
+    <select name="modo" onchange="this.form.submit()">
+      <option value="claro" @(Context.Session.GetString("Tema") == "claro" ? "selected" : "")>☀️ Modo claro</option>
+      <option value="oscuro" @(Context.Session.GetString("Tema") == "oscuro" ? "selected" : "")>🌙 Modo oscuro</option>
+    </select>
+  </form>
+</section>
 
   <section>
     <h2>✏️ Editar datos de mascota activa</h2>
