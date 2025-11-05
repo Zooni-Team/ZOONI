@@ -8,19 +8,18 @@
     var mascotaRaza = ViewBag.MascotaRaza?.ToString() ?? "Desconocida";
     var mascotaEdadMeses = Convert.ToInt32(ViewBag.MascotaEdad ?? 0);
 
-    // ✅ Formateo seguro del peso
+    // ✅ Peso formateado correctamente
     var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
-    decimal mascotaPeso = 0;
-    if (!decimal.TryParse(pesoStr, NumberStyles.Any, CultureInfo.InvariantCulture, out var mascotaPeso))
-    mascotaPeso = 0;
+    decimal mascotaPeso;
+    if (!decimal.TryParse(pesoStr, NumberStyles.Any, CultureInfo.InvariantCulture, out mascotaPeso))
+        mascotaPeso = 0;
 
-string pesoFormateado = mascotaPeso.ToString("0.##", new CultureInfo("es-AR"));
+    string pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
 
-
-    var pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
-
+    // 🖼️ Ruta imagen
     var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
 
+    // 🎂 Edad legible
     int años = mascotaEdadMeses / 12;
     int meses = mascotaEdadMeses % 12;
     string edadFormateada =

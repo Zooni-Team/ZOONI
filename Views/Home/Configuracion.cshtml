@@ -232,8 +232,8 @@ button:hover { background:#2fa76b; transform:translateY(-2px); }
   <form asp-action="CambiarTema" method="post">
     <label>Seleccioná tu modo preferido:</label>
     <select name="modo" onchange="this.form.submit()">
-      <option value="claro" @(Context.Session.GetString("Tema") == "claro" ? "selected" : "")>☀️ Modo claro</option>
-      <option value="oscuro" @(Context.Session.GetString("Tema") == "oscuro" ? "selected" : "")>🌙 Modo oscuro</option>
+      <option value="claro" @@(Context.Session.GetString("Tema") == "claro" ? "selected" : "")>☀️ Modo claro</option>
+      <option value="oscuro" @@(Context.Session.GetString("Tema") == "oscuro" ? "selected" : "")>🌙 Modo oscuro</option>
     </select>
   </form>
 </section>

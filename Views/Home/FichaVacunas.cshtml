@@ -12,7 +12,6 @@
 
     // ✅ Peso con corrección automática
     var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
-    var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
 decimal mascotaPeso;
 
 if (!decimal.TryParse(pesoStr, NumberStyles.Any, CultureInfo.InvariantCulture, out mascotaPeso))

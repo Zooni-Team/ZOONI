@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Zooni.Models;
 using System;
@@ -69,6 +70,7 @@ if (existePerfil == 0)
         VALUES (@U, '/img/perfil/default.png', 'Amante de los animales ❤️', 1)";
     BD.ExecuteNonQuery(qPerfilInsert, new Dictionary<string, object> { { "@U", idUser } });
 }
+
         }
 
         HttpContext.Session.SetInt32("UserId", idUser);
@@ -122,15 +124,17 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
 
         var userParams = new Dictionary<string, object> { { "@Id_Mail", idMail } };
         int idUser = Convert.ToInt32(BD.ExecuteScalar(queryUser, userParams));
-        if (existePerfil == 0)
+        string qPerfilCheck = "SELECT COUNT(*) FROM Perfil WHERE Id_Usuario = @Id";
+int existePerfil = Convert.ToInt32(BD.ExecuteScalar(qPerfilCheck, new Dictionary<string, object> { { "@Id", idUser } }));
+
+if (existePerfil == 0)
 {
     string qPerfilInsert = @"
         INSERT INTO Perfil (Id_Usuario, FotoPerfil, Descripcion, AniosVigencia)
         VALUES (@U, '/img/perfil/default.png', 'Amante de los animales ❤️', 1)";
     BD.ExecuteNonQuery(qPerfilInsert, new Dictionary<string, object> { { "@U", idUser } });
 }
-string qPerfilCheck = "SELECT COUNT(*) FROM Perfil WHERE Id_Usuario = @Id";
-int existePerfil = Convert.ToInt32(BD.ExecuteScalar(qPerfilCheck, new Dictionary<string, object> { { "@Id", idUser } }));
+
 
 
         HttpContext.Session.SetInt32("UserId", idUser);
