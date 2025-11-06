@@ -149,23 +149,26 @@ if (existePerfil == 0)
     }
 }
 [HttpGet]
+public IActionResult Registro2(string modo = "", string origen = "")
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+    {
+        TempData["Error"] = "Primero registrá un usuario 🐕‍🦺";
+        return RedirectToAction("Registro1");
+    }
 
-        public IActionResult Registro2(string modo = "")
-        {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null)
-            {
-                TempData["Error"] = "Primero registrá un usuario 🐕‍🦺";
-                return RedirectToAction("Registro1");
-            }
+    if (!string.IsNullOrEmpty(origen))
+        HttpContext.Session.SetString("OrigenRegistro", origen);
 
-            ViewBag.Modo = modo;
-            if (!string.IsNullOrEmpty(modo))
-                HttpContext.Session.SetString("ModoRegistro", modo);
+    ViewBag.Modo = modo;
+    if (!string.IsNullOrEmpty(modo))
+        HttpContext.Session.SetString("ModoRegistro", modo);
 
+    ViewBag.Origen = origen;
+    return View(new Mascota());
+}
 
-            return View(new Mascota());
-        }
 [HttpPost]
 [ValidateAntiForgeryToken]
 public IActionResult Registro2(Mascota model, string modo = "")
@@ -225,7 +228,6 @@ public IActionResult Registro3(string modo = "")
     if (userId == null)
         return RedirectToAction("Registro1");
 
-    // 🟢 Primero intentamos recuperar desde sesión (nuevo flujo)
     var nombre = HttpContext.Session.GetString("MascotaNombre");
     var especie = HttpContext.Session.GetString("MascotaEspecie");
     var raza = HttpContext.Session.GetString("MascotaRaza");
@@ -240,7 +242,6 @@ public IActionResult Registro3(string modo = "")
 
     decimal.TryParse(pesoStr, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal peso);
 
-    // 🟢 Creamos el modelo desde sesión
     var mascota = new Mascota
     {
         Nombre = nombre,
@@ -250,9 +251,13 @@ public IActionResult Registro3(string modo = "")
         Edad = edadInt
     };
 
-    // 🟡 En caso de tener un modo ya guardado
     if (!string.IsNullOrEmpty(modo))
         HttpContext.Session.SetString("ModoRegistro", modo);
+
+    // ✅ Guardar el origen si no existe aún
+    string origen = HttpContext.Session.GetString("OrigenRegistro");
+    if (string.IsNullOrEmpty(origen))
+        HttpContext.Session.SetString("OrigenRegistro", Request.Query["origen"].ToString() ?? "");
 
     ViewBag.MascotaNombre = nombre;
     ViewBag.MascotaEspecie = especie;
@@ -260,10 +265,9 @@ public IActionResult Registro3(string modo = "")
     ViewBag.MascotaPeso = peso;
     ViewBag.Modo = modo;
 
-    Console.WriteLine($"🐾 LLEGÓ A REGISTRO3 con datos en sesión → {nombre}, {especie}, {raza}, {peso}kg");
-
     return View(mascota);
 }
+
 [HttpPost]
 [ValidateAntiForgeryToken]
 public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int Edad, string Foto, string modo = "")

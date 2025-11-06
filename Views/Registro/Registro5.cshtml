@@ -15,119 +15,81 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
 :root {
-    --marron: #8B5E3C;
-    --verde: #3ac37d;
-    --gris-claro: #ccc;
+    --marron:#8B5E3C;
+    --verde:#3ac37d;
+    --gris-claro:#ccc;
 }
-body {
-    font-family: 'Poppins', sans-serif;
-    background: #fff;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
+body{
+    font-family:'Poppins',sans-serif;
+    background:#fff;
+    margin:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-height:100vh;
 }
-h1 {
-    color: var(--marron);
-    font-size: 2.3rem;
-    margin: 1rem 0 0;
-    font-weight: 700;
+h1{color:var(--marron);font-size:2.3rem;margin:1rem 0 0;font-weight:700;}
+h2{color:#555;font-weight:700;margin:.3rem 0 1rem;font-size:1.1rem;}
+.contenedor{
+    background:#fff;
+    border-radius:25px;
+    box-shadow:0 8px 25px rgba(0,0,0,.08);
+    text-align:center;
+    padding:2rem;
+    width:90%;
+    max-width:400px;
+    position:relative;
+    z-index:2;
 }
-h2 {
-    color: #555;
-    font-weight: 700;
-    margin: .3rem 0 1rem;
-    font-size: 1.1rem;
+.volver{
+    position:absolute;
+    top:15px;
+    left:15px;
+    background:none;
+    border:none;
+    font-size:28px;
+    color:var(--marron);
+    cursor:pointer;
+    transition:transform .2s ease,color .2s ease;
 }
-.contenedor {
-    background: #fff;
-    border-radius: 25px;
-    box-shadow: 0 8px 25px rgba(0,0,0,.08);
-    text-align: center;
-    padding: 2rem;
-    width: 90%;
-    max-width: 400px;
-    position: relative;
-    z-index: 2;
+.volver:hover{transform:scale(1.1);color:var(--verde);}
+.nombre-mascota{font-weight:700;font-size:1.4rem;color:#000;margin-bottom:.4rem;}
+.mascota-img{width:200px;height:auto;margin:.5rem 0 1rem;object-fit:contain;z-index:3;}
+form{display:flex;flex-direction:column;align-items:center;gap:12px;}
+.fila{display:flex;justify-content:center;gap:10px;width:100%;max-width:320px;}
+input,select{
+    width:100%;
+    max-width:320px;
+    padding:12px;
+    border-radius:20px;
+    border:1.8px solid var(--gris-claro);
+    font-size:15px;
+    text-align:center;
+    outline:none;
 }
-.volver {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background: none;
-    border: none;
-    font-size: 28px;
-    color: var(--marron);
-    cursor: pointer;
-    transition: transform .2s ease, color .2s ease;
+input:focus,select:focus{border-color:var(--verde);}
+.btn-principal{
+    background:var(--verde);
+    color:#fff;
+    border:none;
+    border-radius:25px;
+    padding:12px 40px;
+    font-size:1.1rem;
+    cursor:pointer;
+    margin-top:1rem;
+    width:100%;
+    max-width:320px;
+    font-weight:600;
 }
-.volver:hover { transform: scale(1.1); color: var(--verde); }
-.nombre-mascota {
-    font-weight: 700;
-    font-size: 1.4rem;
-    color: #000;
-    margin-bottom: .4rem;
+.imagen-bienvenida{
+    position:absolute;
+    bottom:0;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    z-index:1;
 }
-.mascota-img {
-    width: 200px;
-    height: auto;
-    margin: .5rem 0 1rem;
-    object-fit: contain;
-    z-index: 3;
-}
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 12px;
-}
-.fila {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    max-width: 320px;
-}
-input, select {
-    width: 100%;
-    max-width: 320px;
-    padding: 12px;
-    border-radius: 20px;
-    border: 1.8px solid var(--gris-claro);
-    font-size: 15px;
-    text-align: center;
-    outline: none;
-}
-input:focus, select:focus {
-    border-color: var(--verde);
-}
-.btn-principal {
-    background: var(--verde);
-    color: #fff;
-    border: none;
-    border-radius: 25px;
-    padding: 12px 40px;
-    font-size: 1.1rem;
-    cursor: pointer;
-    margin-top: 1rem;
-    width: 100%;
-    max-width: 320px;
-    font-weight: 600;
-}
-.imagen-bienvenida {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    z-index: 1;
-}
-.imagen-bienvenida img {
-    width: 100%;
-    max-width: 900px;
-    object-fit: cover;
-}
+.imagen-bienvenida img{width:100%;max-width:900px;object-fit:cover;}
 </style>
 </head>
 <body>
@@ -151,7 +113,7 @@ input:focus, select:focus {
         </div>
 
         <select id="Ciudad" name="Ciudad" required disabled>
-            <option value="">Ciudad</option>
+            <option value="">Ciudad / Barrio</option>
         </select>
 
         <div class="fila">
@@ -169,112 +131,38 @@ input:focus, select:focus {
     <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
 </div>
 
-<!-- ✅ Librería local -->
 <script src="~/lib/country-state-city/country-state-city.umd.min.js"></script>
-
 <script>
-document.addEventListener("DOMContentLoaded", () => {
-    if (typeof window.csc === "undefined") {
-        console.error("❌ No se cargó la librería country-state-city");
-        return;
-    }
+document.addEventListener("DOMContentLoaded",()=>{
+  const { Country, State, City } = window.csc;
+  const pais = document.getElementById("Pais");
+  const prov = document.getElementById("Provincia");
+  const ciudad = document.getElementById("Ciudad");
+  const codigo = document.getElementById("CodigoPais");
+  const tel = document.querySelector('input[name="Telefono"]');
 
-    const { Country, State, City } = window.csc;
-    const paisSelect = document.getElementById("Pais");
-    const provinciaSelect = document.getElementById("Provincia");
-    const ciudadSelect = document.getElementById("Ciudad");
-    const codigoSelect = document.getElementById("CodigoPais");
-    const telefonoInput = document.querySelector('input[name="Telefono"]');
+  const flag = a2 => String.fromCodePoint(...[...a2.toUpperCase()].map(c => 127397 + c.charCodeAt(0)));
+  const countries = Country.getAllCountries();
+  pais.innerHTML = '<option value="">País</option>' + countries.map(c=>`<option value="${c.isoCode}" data-phone="+${c.phonecode}">${flag(c.isoCode)} ${c.name}</option>`).join("");
+  codigo.innerHTML = '<option value="">Código</option>' + countries.map(c=>`<option value="+${c.phonecode}">+${c.phonecode}</option>`).join("");
 
-    const flag = (a2) => String.fromCodePoint(...[...a2.toUpperCase()].map(c => 127397 + c.charCodeAt(0)));
+  pais.addEventListener("change",()=>{
+      const iso=pais.value;
+      const phone=pais.selectedOptions[0]?.dataset?.phone||"";
+      const provincias=State.getStatesOfCountry(iso);
+      prov.innerHTML='<option value="">Provincia</option>'+provincias.map(s=>`<option value="${s.isoCode}">${s.name}</option>`).join("");
+      prov.disabled=provincias.length===0;
+      ciudad.innerHTML='<option value="">Ciudad / Barrio</option>'; ciudad.disabled=true;
+      codigo.value=phone; tel.value=""; tel.focus();
+  });
 
-    // 🌍 Países ordenados alfabéticamente
-    const countries = Country.getAllCountries().sort((a, b) => a.name.localeCompare(b.name));
-    paisSelect.innerHTML = '<option value="">País</option>';
-    countries.forEach(c => {
-        const opt = document.createElement("option");
-        opt.value = c.isoCode;
-        opt.textContent = `${flag(c.isoCode)} ${c.name}`;
-        opt.dataset.phone = `+${c.phonecode}`;
-        paisSelect.appendChild(opt);
-    });
-
-    // 📞 Códigos ordenados ascendentemente
-    const allCodes = [...new Set(countries.map(c => `+${c.phonecode}`))]
-        .filter(c => c && c !== "+") // eliminar vacíos
-        .sort((a, b) => parseInt(a.slice(1)) - parseInt(b.slice(1)));
-
-    codigoSelect.innerHTML = '<option value="">Código</option>' +
-        allCodes.map(c => `<option value="${c}">${c}</option>`).join("");
-
-    // 🧹 Función auxiliar
-    function reset(sel, label) {
-        sel.innerHTML = `<option value="">${label}</option>`;
-        sel.disabled = true;
-    }
-    reset(provinciaSelect, "Provincia");
-    reset(ciudadSelect, "Ciudad");
-
-    // 🏳️ País → provincias y código
-    paisSelect.addEventListener("change", () => {
-        const iso = paisSelect.value;
-        const dial = paisSelect.selectedOptions[0]?.dataset?.phone || "";
-        reset(provinciaSelect, "Provincia");
-        reset(ciudadSelect, "Ciudad");
-
-        // Asignar código sin repetirlo en el input
-        if (dial) {
-            codigoSelect.value = dial;
-            telefonoInput.value = dial + " ";
-        } else {
-            codigoSelect.value = "";
-            telefonoInput.value = "";
-        }
-        telefonoInput.focus();
-
-        // Provincias del país
-        const states = State.getStatesOfCountry(iso);
-        if (states.length > 0) {
-            provinciaSelect.disabled = false;
-            provinciaSelect.innerHTML = '<option value="">Provincia</option>' +
-                states.map(s => `<option value="${s.isoCode}">${s.name}</option>`).join("");
-        }
-    });
-
-    // 🏙️ Provincia → Ciudades
-    provinciaSelect.addEventListener("change", () => {
-        const isoPais = paisSelect.value;
-        const isoProv = provinciaSelect.value;
-        reset(ciudadSelect, "Ciudad");
-
-        if (!isoPais || !isoProv) return;
-
-        const list = City.getCitiesOfState(isoPais, isoProv);
-        const cities = Array.isArray(list) ? list : [];
-
-        if (cities.length > 0) {
-            ciudadSelect.disabled = false;
-            ciudadSelect.innerHTML = '<option value="">Ciudad</option>' +
-                cities.map(ci => `<option value="${ci}">${ci}</option>`).join("");
-        }
-    });
-
-    // 📞 Cambio manual de código → actualizar input sin duplicar
-    codigoSelect.addEventListener("change", () => {
-        const dial = codigoSelect.value;
-        telefonoInput.value = dial ? dial + " " : "";
-        telefonoInput.focus();
-    });
-
-    // ✂️ Prevención de duplicados si el usuario edita el input
-    telefonoInput.addEventListener("input", () => {
-        const dial = codigoSelect.value;
-        if (dial && telefonoInput.value.startsWith(dial + dial)) {
-            telefonoInput.value = dial + " ";
-        }
-    });
+  prov.addEventListener("change",()=>{
+      const isoP=pais.value, isoProv=prov.value;
+      const cities=City.getCitiesOfState(isoP,isoProv);
+      ciudad.innerHTML='<option value="">Ciudad / Barrio</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join("");
+      ciudad.disabled=cities.length===0;
+  });
 });
 </script>
-
 </body>
 </html>

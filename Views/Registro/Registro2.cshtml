@@ -240,7 +240,7 @@
     </div>
 
     <div class="contenedor">
-        <button class="volver" onclick="window.location.href='/auth/login'">←</button>
+<button class="volver" onclick="volver()">←</button>
 
         <h3 class="subtitulo">Contanos sobre tu mascota 🐾</h3>
 
@@ -280,6 +280,24 @@
     <div class="imagen-bienvenida">
         <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
     </div>
+<script>
+function volver() {
+  const origen = sessionStorage.getItem("OrigenRegistro") || "";
+  if (origen === "configuracion") {
+    window.location.href = "/Home/Configuracion";
+  } else {
+    window.location.href = "/Auth/Login";
+  }
+}
+</script>
+<script>
+  // Guarda origen si viene desde Configuración
+  const params = new URLSearchParams(window.location.search);
+  const origen = params.get("origen");
+  if (origen) sessionStorage.setItem("OrigenRegistro", origen);
+</script>
+
+
 </body>
 </html>
 
