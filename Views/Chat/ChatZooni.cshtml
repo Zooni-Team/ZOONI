@@ -11,6 +11,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>@ViewData["Title"]</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
 <style>
 :root {
     --verde: #3ac37d;
@@ -38,7 +39,6 @@ header {
     left: 20px;
     z-index: 10;
 }
-
 .menu-icon {
     width: 38px;
     height: 38px;
@@ -53,13 +53,13 @@ header {
 .menu-lateral {
     position: fixed;
     top: 0;
-    left: -260px;
+    left: 0;
     width: 240px;
     height: 100%;
     background: rgba(255,255,255,0.96);
     backdrop-filter: blur(12px);
     box-shadow: 4px 0 14px var(--sombra);
-    display: flex;
+    display: none;
     flex-direction: column;
     padding: 2.5rem 1.2rem;
     gap: 1rem;
@@ -68,7 +68,11 @@ header {
     border-top-right-radius: 18px;
     border-bottom-right-radius: 18px;
 }
-.menu-lateral.abierto { left: 0; }
+.menu-lateral.abierto { display: flex; animation: slideIn 0.35s ease forwards; }
+@@keyframes slideIn {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
 .cerrar-menu {
     align-self: flex-end;
     font-size: 1.6rem;
@@ -85,10 +89,7 @@ header {
     border-radius: 12px;
     transition: all .25s ease;
 }
-.menu-lateral a:hover {
-    background: var(--amarillo);
-    color: #3c2a00;
-}
+.menu-lateral a:hover { background: var(--amarillo); color: #3c2a00; }
 .overlay {
     position: fixed;
     top: 0; left: 0;
@@ -124,17 +125,7 @@ main {
     margin-bottom: 20px;
     backdrop-filter: blur(10px);
 }
-.mascota-card img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid var(--verde);
-}
-.mascota-info strong {
-    color: var(--verde);
-    font-size: 1.2rem;
-}
+.mascota-info strong { color: var(--verde); font-size: 1.2rem; }
 .mascota-info small { color: #555; }
 
 /* CHAT */
@@ -146,8 +137,10 @@ main {
     padding: 15px;
     box-shadow: 0 4px 12px var(--sombra);
     overflow-y: auto;
-    height: 30vh;
+    height: 60vh;
     backdrop-filter: blur(8px);
+    display: flex;
+    flex-direction: column;
 }
 .msg {
     margin: 8px 0;
@@ -173,19 +166,21 @@ main {
 form {
     width: 90%;
     max-width: 600px;
-    margin-top: 12px;
+    margin-top: 18px;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     gap: 8px;
 }
 textarea {
     resize: none;
-    height: 55px;
+    flex: 1;
+    height: 65px;
     padding: 12px;
     border-radius: 15px;
     border: 1px solid #ccc;
     font-family: 'Poppins';
-    font-size: 18px;
+    font-size: 17px;
     outline: none;
     transition: 0.3s;
 }
@@ -194,25 +189,29 @@ textarea:focus {
     box-shadow: 0 0 5px #b2e7c9;
 }
 button {
-    background: var(--amarillo);
+    background: #000;
     border: none;
-    border-radius: 15px;
-    padding: 10px;
-    font-weight: 700;
-    font-size: 1rem;
-    color: #3a2b00;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    font-size: 1.6rem;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.3);
     cursor: pointer;
     transition: all 0.2s ease;
 }
 button:hover {
-    background: #ffcc48;
-    transform: translateY(-1px);
+    background: #222;
+    transform: scale(1.05);
 }
 #status {
     font-size: 13px;
     color: #654b34;
     text-align: center;
+    margin-top: 8px;
 }
 
 /* ANIMACIONES */
@@ -224,82 +223,14 @@ button:hover {
 /* RESPONSIVE */
 @@media (max-width: 600px) {
     .mascota-card { flex-direction: column; text-align: center; }
-    #chatBox { height: 40vh; }
-    textarea { height: 50px; }
+    #chatBox { height: 50vh; }
+    textarea { height: 65px; }
+    button { height: 65px; width: 65px; }
 }
-h1
-{
-    margin-top: -10%;
-}
-/* MENÚ LATERAL */
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 240px;
-    height: 100%;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(12px);
-    box-shadow: 4px 0 14px var(--sombra);
-    display: none; /* oculto al inicio */
-    flex-direction: column;
-    padding: 2.5rem 1.2rem;
-    gap: 1rem;
-    transition: all .4s ease;
-    z-index: 9;
-    border-top-right-radius: 18px;
-    border-bottom-right-radius: 18px;
-}
-.menu-lateral.abierto {
-    display: flex;
-    animation: slideIn 0.35s ease forwards;
-}
-@@keyframes slideIn {
-    from { transform: translateX(-100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-.cerrar-menu {
-    align-self: flex-end;
-    font-size: 1.6rem;
-    cursor: pointer;
-    margin-bottom: 1.5rem;
-    color: var(--marron);
-}
-
-.menu-lateral a {
-    text-decoration: none;
-    font-weight: 600;
-    color: var(--marron);
-    font-size: 1.1rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 12px;
-    transition: all .25s ease;
-}
-.menu-lateral a:hover {
-    background: var(--amarillo);
-    color: #3c2a00;
-}
-
-/* OVERLAY */
-.overlay {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: rgba(0,0,0,0.25);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity .3s ease;
-    z-index: 8;
-}
-.overlay.activo {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-
+h1 { margin-top: -10%; text-align:center; }
 </style>
 </head>
+
 <body>
 <header>
     <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
@@ -327,22 +258,23 @@ h1
     <div class="mascota-card">
         <div class="mascota-info">
             <strong>@ViewBag.Nombre</strong><br>
-            <small>@ViewBag.Raza (@ViewBag.Especie)</small>        </div>
+            <small>@ViewBag.Raza (@ViewBag.Especie)</small>
+        </div>
     </div>
 
     <div id="chatBox"></div>
 
-        <form id="chatForm">
-            <input type="hidden" id="especie" value="@ViewBag.Especie" />
-            <input type="hidden" id="raza" value="@ViewBag.Raza" />
-            <input type="hidden" id="edad" value="@ViewBag.Edad" />
-            <input type="hidden" id="peso" value="@ViewBag.Peso" />
-            <input type="hidden" id="infoMedica" value="@ViewBag.InfoMedica" />
+    <form id="chatForm">
+        <input type="hidden" id="especie" value="@ViewBag.Especie" />
+        <input type="hidden" id="raza" value="@ViewBag.Raza" />
+        <input type="hidden" id="edad" value="@ViewBag.Edad" />
+        <input type="hidden" id="peso" value="@ViewBag.Peso" />
+        <input type="hidden" id="infoMedica" value="@ViewBag.InfoMedica" />
 
-            <textarea id="mensaje" placeholder="Escribí tu mensaje para ZooniVet..." required></textarea>
-            <button type="submit">Enviar 🩺</button>
-            <p id="status">💬 Esperando mensaje...</p>
-        </form>
+        <textarea id="mensaje" placeholder="Escribí tu mensaje para ZooniVet..." required></textarea>
+        <button type="submit">↑</button>
+    </form>
+    <p id="status">💬 Esperando mensaje...</p>
 </main>
 
 <script>
@@ -364,8 +296,7 @@ overlay.addEventListener("click", cerrarMenu);
 
 // CHAT
 const form = document.getElementById("chatForm");
-const chatBox = document.getElementById("chatBox"); //vitalink estuvo aqui
-const reiniciar = document.getElementById("reiniciar");
+const chatBox = document.getElementById("chatBox");
 const status = document.getElementById("status");
 
 function addMsg(text, type) {
@@ -409,12 +340,6 @@ form.addEventListener("submit", async e => {
         addMsg("❌ Error de conexión con el servidor o con Gemini.", "Zooni");
         status.textContent = "⚠️ ZooniVet no disponible.";
     }
-});
-
-reiniciar.addEventListener("click", async () => {
-    await fetch("/Chat/ReiniciarChat", { method: "POST" });
-    chatBox.innerHTML = "";
-    status.textContent = "💬 Chat reiniciado.";
 });
 </script>
 </body>

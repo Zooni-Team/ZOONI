@@ -64,7 +64,8 @@ namespace Zooni.Controllers
             {
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (userId == null) return RedirectToAction("Login", "Auth");
-
+var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+        ViewBag.Tema = tema;
                 var param = new Dictionary<string, object> { { "@UserId", userId.Value } };
                 var userDt = BD.ExecuteQuery("SELECT TOP 1 Nombre, Apellido FROM [User] WHERE Id_User = @UserId", param);
 
@@ -444,12 +445,14 @@ namespace Zooni.Controllers
         [HttpGet]
         public IActionResult Configuracion()
         {
+
             try
             {
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (userId == null)
                     return RedirectToAction("Login", "Auth");
-
+ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+        ViewBag.Tema = tema;
                 string qUser = @"
                     SELECT U.Nombre, U.Apellido, U.Telefono, M.Correo
                     FROM [User] U
@@ -695,7 +698,8 @@ public IActionResult FichaTratamientos()
         var userId = HttpContext.Session.GetInt32("UserId");
         if (userId == null)
             return RedirectToAction("Login", "Auth");
-
+ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+        ViewBag.Tema = tema;
         // 🔹 Obtener la mascota activa o la última registrada
         var mascota = ObtenerMascotaActiva(userId.Value);
         if (mascota == null)
@@ -774,7 +778,8 @@ public IActionResult DescargarPDF()
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null)
         return RedirectToAction("Login", "Auth");
-
+ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+        ViewBag.Tema = tema;
     var mascota = ObtenerMascotaActiva(userId.Value);
     if (mascota == null)
         return Content("No se encontró ninguna mascota para generar el PDF");
@@ -975,7 +980,8 @@ public IActionResult Perfil()
 {
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null) return RedirectToAction("Login", "Auth");
-
+  var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+        ViewBag.Tema = tema;
     // 🔍 Intentar obtener perfil
     string qPerfil = @"
         SELECT TOP 1 P.Id_Perfil, U.Nombre, U.Apellido, U.Pais, P.Descripcion, P.FotoPerfil
@@ -1026,10 +1032,9 @@ public IActionResult Perfil()
 [HttpPost]
 public IActionResult CambiarTema(string modo)
 {
-    if (modo == "oscuro" || modo == "claro")
-    {
-        HttpContext.Session.SetString("Tema", modo);
-    }
+    if(modo != "claro" && modo != "oscuro")
+       modo = "claro";
+    HttpContext.Session.SetString("Tema", modo);
     return RedirectToAction("Configuracion");
 }
 

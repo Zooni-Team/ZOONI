@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="~/css/global.css" /> 
 </head>
 <body class="@claseTema">
+<body class="tema-@((ViewBag.Tema ?? "claro"))" data-tema="@((ViewBag.Tema ?? "claro"))">
     @RenderBody()
 </body>
 </html>

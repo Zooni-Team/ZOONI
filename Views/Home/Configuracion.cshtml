@@ -1,303 +1,86 @@
-@using Zooni.Models
 @{
     ViewData["Title"] = "Configuración - Zooni ⚙️";
     Layout = null;
-
-    var mascotas = (ViewBag.Mascotas as List<Mascota> ?? new List<Mascota>())
-                   .Where(m => m.Fecha_Nacimiento != null);
-    Mascota activa = ViewBag.MascotaActiva as Mascota ?? new Mascota();
 }
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>@ViewData["Title"]</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --verde:#39b77c;
-  --amarillo:#FFD85A;
-  --marron:#3c2a1b;
-  --fondo:#f9f9f8;
-  --rojo:#ff6b6b;
-  --crema:#fffaf4;
+body {
+  margin:0;
+  background:#f9f9f8;
+  font-family:'Poppins',sans-serif;
+  color:#3c2a1b;
 }
-
-html, body {
-  margin: 0; padding: 0;
-  width: 100%; height: 100%;
-  background: var(--fondo) url('/img/fondos/consultorio.jpg') center/cover fixed no-repeat;
-  font-family: 'Poppins', sans-serif;
-  color: var(--marron);
-  display: flex; flex-direction: column; align-items: center;
-  overflow-x: hidden;
-}
-
-header { position: fixed; top: 15px; left: 20px; z-index: 10; }
-.menu-icon { width: 38px; cursor: pointer; transition: transform .25s ease; }
-.menu-icon:hover { transform: scale(1.1); }
-
-.menu-lateral {
-  position: fixed;
-  top: 0; left: 0;
-  transform: translateX(-100%);
-  width: 240px; height: 100%;
-  background: rgba(255,255,255,0.97);
-  backdrop-filter: blur(16px);
-  box-shadow: 4px 0 18px rgba(0,0,0,0.15);
-  display: flex; flex-direction: column;
-  padding: 2.5rem 1.2rem;
-  gap: 1rem;
-  transition: transform 0.35s ease;
-  border-top-right-radius: 18px;
-  border-bottom-right-radius: 18px;
-  z-index: 9999;
-}
-.menu-lateral.abierto { transform: translateX(0); }
-
-.menu-lateral a {
-  text-decoration: none;
-  font-weight: 600;
-  color: var(--marron);
-  font-size: 1.1rem;
-  padding: 0.6rem 0.8rem;
-  border-radius: 12px;
-  transition: all .25s ease;
-}
-.menu-lateral a:hover {
-  background: var(--amarillo);
-  color: #3c2a00;
-}
-.cerrar-menu {
-  align-self: flex-end;
-  font-size: 1.6rem;
-  cursor: pointer;
-  color: var(--marron);
-  margin-bottom: 1.2rem;
-}
-.overlay {
-  position: fixed; top:0; left:0;
-  width:100%; height:100%;
-  background:rgba(0,0,0,0.25);
-  opacity:0; pointer-events:none;
-  transition:opacity .3s ease;
-  z-index: 8;
-}
-.overlay.activo { opacity:1; pointer-events:auto; }
-
-main {
-  margin-top: 90px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-bottom: 60px;
-}
-
-section {
-  background: rgba(255,255,255,0.95);
-  border-radius: 28px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-  width: 90%;
-  max-width: 430px;
-  padding: 1.8rem 1.5rem;
-  margin-bottom: 25px;
-  backdrop-filter: blur(10px);
-}
-
 h1 {
   text-align:center;
-  margin-top:20px;
-  font-size:1.9rem;
+  padding:25px 0 10px;
   font-weight:700;
+  color:#3c2a1b;
 }
-
-h2 {
-  font-size:1.25rem;
-  margin-bottom:14px;
-  font-weight:600;
+.section {
+  width:90%;
+  max-width:430px;
+  margin:15px auto;
 }
-
-label {
-  display:block;
-  font-weight:600;
-  margin-bottom:5px;
-}
-input, select {
-  width:100%;
-  padding:10px;
-  border:1px solid #ddd;
-  border-radius:10px;
-  font-family:'Poppins',sans-serif;
-  margin-bottom:12px;
- margin-right: 3%;
-}
-
-button {
-  width:100%;
-  border:none;
-  border-radius:14px;
-  padding:12px 14px;
-  background:var(--verde);
-  color:white;
-  font-weight:600;
-  cursor:pointer;
-  transition:all .25s ease;
-}
-button:hover { background:#2fa76b; transform:translateY(-2px); }
-.boton-secundario { background:var(--crema); border:1px solid var(--verde); color:var(--marron); }
-.boton-eliminar { background:var(--rojo); }
-
-.mascota-activa {
-  display:flex;
-  align-items:center;
-  gap:14px;
-  padding:12px;
-  background:var(--crema);
-  border-radius:16px;
-  margin-bottom:10px;
-  box-shadow:0 2px 6px rgba(0,0,0,0.05);
-}
-.mascota-activa img {
-  width:72px; height:72px;
-  object-fit:contain;
-  border-radius:50%;
+.group {
   background:white;
-  filter:drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+  border-radius:22px;
+  overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,.08);
+  margin-bottom:20px;
 }
-.mascota-activa .info span { display:block; font-size:.9rem; }
-
-@@media (max-width:480px){
-  section { padding:1.2rem; }
-  .mascota-activa img { width:60px; height:60px; }
+.group a {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:16px 20px;
+  text-decoration:none;
+  color:#3c2a1b;
+  font-weight:500;
+  border-bottom:1px solid #eee;
+  transition:background .2s;
+}
+.group a:last-child {
+  border-bottom:none;
+}
+.group a:hover {
+  background:#faf7f0;
+}
+.arrow {
+  font-size:1.3rem;
+  color:#bbb;
 }
 </style>
 </head>
-
 <body>
-<header>
-  <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
-</header>
+<h1>Configuración ⚙️</h1>
+<div class="section">
 
-<div class="menu-lateral" id="menuLateral">
-    <div class="cerrar-menu" id="cerrarMenu">✖</div>
-    <a href="/Home/Index">🏠 Inicio</a>
-    <a href="/Comunidad">👥 Comunidad</a>
-    <a href="/Marketplace">🛒 Marketplace</a>
-    <a href="/home/FichaMedica">💉 Ficha médica</a>
-    <a href="/home/calendario">📅 Calendario</a>
-    <a href="/Chat/ChatZooni">💬 ChatBot</a>
-    <a href="/Closet">👕 Closet</a>
-    <a href="/Home/Perfil">👤 Perfil</a>
-    <a href="/Home/configuracion">⚙️ Configuración</a>
-    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+  <div class="group">
+    <a href="/Home/ConfigUsuario">👤 Cuenta y Seguridad<span class="arrow">›</span></a>
+    <a href="/Home/ConfigTema">🎨 Tema de la aplicación<span class="arrow">›</span></a>
+    <a href="/Home/ConfigMedios">📷 Medios y Calidad<span class="arrow">›</span></a>
+    <a href="/Home/ConfigTiempoUso">⏱ Tiempo en la app<span class="arrow">›</span></a>
+  </div>
+
+  <div class="group">
+    <a href="/Home/ConfigMascotas">🐾 Mis Mascotas<span class="arrow">›</span></a>
+    <a href="/Home/ConfigPrivacidad">🔒 Privacidad y visibilidad<span class="arrow">›</span></a>
+    <a href="/Home/ConfigPermisosApp">📱 Permisos de la app<span class="arrow">›</span></a>
+    <a href="/Home/ConfigNotificaciones">🔔 Notificaciones y alertas<span class="arrow">›</span></a>
+  </div>
+
+  <div class="group">
+    <a href="/Home/ConfigSuscripciones">💎 Suscripciones y pagos<span class="arrow">›</span></a>
+    <a href="/Home/ConfigLegal">📄 Legal y Términos<span class="arrow">›</span></a>
+    <a href="/Home/ConfigAyuda">❓ Ayuda y Soporte<span class="arrow">›</span></a>
+  </div>
+
 </div>
-<div class="overlay" id="overlay"></div>
-
-<main>
-  <h1>Configuración ⚙️</h1>
-
-  <section>
-    <div class="mascota-activa">
-      <img src="/img/mascotas/@(activa.Especie)s/@(activa.Raza)/@(activa.Especie)_basico.png" alt="@activa.Nombre" />
-      <div class="info">
-        <strong>@activa.Nombre</strong>
-        <span>@activa.Especie - @activa.Raza</span>
-        <span>@activa.Peso kg · @activa.Edad meses · @activa.Sexo</span>
-      </div>
-    </div>
-
-    <h2>🐾 Mis Mascotas</h2>
-    <form asp-action="CambiarMascota" method="post">
-      <label>Seleccionar mascota activa</label>
-      <select name="MascotaId" required>
-        <option disabled selected>Seleccioná una...</option>
-        @foreach (var m in mascotas)
-        {
-            <option value="@m.Id_Mascota">@m.Nombre (@m.Especie - @m.Raza)</option>
-        }
-      </select>
-      <button type="submit">Cambiar mascota 🐕</button>
-    </form>
-
-    <form method="get" action="/Registro/Registro2">
-  <input type="hidden" name="modo" value="nuevaMascota" />
-  <input type="hidden" name="origen" value="configuracion" />
-  <button type="submit" class="boton-secundario" style="margin-top:10px;">Agregar nueva mascota ➕</button>
-</form>
-
-  </section>
-<section>
-  <h2>🌓 Tema de la aplicación</h2>
-  <form asp-action="CambiarTema" method="post">
-    <label>Seleccioná tu modo preferido:</label>
-    <select name="modo" onchange="
-  const v = this.value;
-  sessionStorage.setItem('Tema', v);
-  document.body.setAttribute('data-tema', v);
-  this.form.submit();
-">
-  <option value="claro">☀️ Modo claro</option>
-  <option value="oscuro">🌙 Modo oscuro</option>
-</select>
-
-  </form>
-</section>
-
-  <section>
-    <h2>✏️ Editar datos de mascota activa</h2>
-    <form asp-action="EditarMascota" method="post">
-      <label>Nombre</label>
-      <input type="text" name="Nombre" value="@activa.Nombre" required />
-      <label>Raza</label>
-      <input type="text" name="Raza" value="@activa.Raza" />
-      <label>Edad (meses)</label>
-      <input type="number" name="Edad" value="@activa.Edad" min="0" />
-      <label>Peso (kg)</label>
-      <input type="number" step="0.1" name="Peso" value="@activa.Peso" min="0" />
-      <label>Sexo</label>
-      <select name="Sexo">
-        <option value="">Seleccioná</option>
-<option value="Macho" selected="@(activa.Sexo == "Macho")">Macho</option>
-<option value="Hembra" selected="@(activa.Sexo == "Hembra")">Hembra</option>
-
-      </select>
-      <button type="submit">Guardar cambios 💾</button>
-    </form>
-  </section>
-
-  <section>
-    <h2>📧 Datos de usuario</h2>
-    <form asp-action="ActualizarContacto" method="post">
-      <label>Correo electrónico</label>
-      <input type="email" name="Correo" value="@ViewBag.Mail" required />
-      <label>Teléfono</label>
-      <input type="text" name="Telefono" value="@ViewBag.Telefono" />
-      <button type="submit">Actualizar datos ✉️</button>
-    </form>
-  </section>
-
-  <section>
-    <h2>🛠️ Soporte</h2>
-    <p>¿Tenés algún problema o sugerencia? Escribinos a:</p>
-    <p><strong><a href="mailto:support@zooni.info">support@zooni.info</a></strong></p>
-  </section>
-
-  <section>
-    <h2>⚠️ Zona peligrosa</h2>
-    <form asp-action="EliminarUsuario" method="post" onsubmit="return confirm('¿Seguro que querés eliminar tu cuenta? Esta acción es irreversible 🥺');">
-      <button type="submit" class="boton-eliminar">Eliminar cuenta 💀</button>
-    </form>
-  </section>
-</main>
-
-<script>
-const menu=document.getElementById("menuLateral"),overlay=document.getElementById("overlay");
-document.getElementById("abrirMenu").onclick=()=>{menu.classList.add("abierto");overlay.classList.add("activo");};
-document.getElementById("cerrarMenu").onclick=cerrarMenu;overlay.onclick=cerrarMenu;
-function cerrarMenu(){menu.classList.remove("abierto");overlay.classList.remove("activo");}
-</script>
 </body>
 </html>
