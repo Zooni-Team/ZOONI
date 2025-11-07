@@ -606,48 +606,7 @@ if (TempData["Exito"] != null && TempData["Exito"].ToString().Contains("Mascota 
             }
         }
 
-        [HttpPost]
-        public IActionResult EditarMascota(Mascota model)
-        {
-            try
-            {
-                var mascotaId = HttpContext.Session.GetInt32("MascotaId");
-                if (mascotaId == null)
-                {
-                    TempData["Error"] = "No hay mascota activa.";
-                    return RedirectToAction("Configuracion");
-                }
-
-                var pesoStr = model.Peso.ToString("F2");
-                var (pesoNormalizado, pesoDisplay) = PesoHelper.NormalizarPeso(pesoStr);
-                
-                string q = @"
-                    UPDATE Mascota
-                    SET Nombre=@Nombre, Raza=@Raza, Edad=@Edad, Peso=@Peso, PesoDisplay=@PesoDisplay, Sexo=@Sexo
-                    WHERE Id_Mascota=@Id";
-
-                var p = new Dictionary<string, object>
-                {
-                    { "@Nombre", model.Nombre },
-                    { "@Raza", model.Raza },
-                    { "@Edad", model.Edad },
-                    { "@Peso", pesoNormalizado },
-                    { "@PesoDisplay", pesoDisplay },
-                    { "@Sexo", model.Sexo },
-                    { "@Id", mascotaId.Value }
-                };
-
-                BD.ExecuteNonQuery(q, p);
-                TempData["Exito"] = "Datos de mascota actualizados ✅";
-                return RedirectToAction("Configuracion");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("❌ Error en EditarMascota: " + ex.Message);
-                TempData["Error"] = "No se pudieron guardar los cambios.";
-                return RedirectToAction("Configuracion");
-            }
-        }
+        
 
         [HttpPost]
         public IActionResult ActualizarContacto(string Correo, string Telefono)
@@ -1048,6 +1007,128 @@ public IActionResult CambiarTema(string modo)
        modo = "claro";
     HttpContext.Session.SetString("Tema", modo);
     return RedirectToAction("Configuracion");
+}
+// 1) GET ConfigMascotas: listado completo
+[HttpGet]
+public IActionResult ConfigMascotas()
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    // Tema para la vista
+    ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
+
+    // Obtener mascotas activas
+    string qActivas = "SELECT Id_Mascota, Nombre, Especie, Raza, Foto FROM Mascota WHERE Id_User = @U AND Archivada = 0 ORDER BY Nombre";
+    var dtAct = BD.ExecuteQuery(qActivas, new Dictionary<string, object> { { "@U", userId.Value } });
+    var listaAct = new List<Mascota>();
+    foreach (DataRow r in dtAct.Rows)
+    {
+        listaAct.Add(new Mascota {
+            Id_Mascota = Convert.ToInt32(r["Id_Mascota"]),
+            Nombre     = r["Nombre"].ToString(),
+            Especie    = r["Especie"].ToString(),
+            Raza       = r["Raza"].ToString(),
+            Foto       = r["Foto"]?.ToString()
+        });
+    }
+    ViewBag.MascotasActivas = listaAct;
+
+    // Obtener mascotas archivadas
+    string qArch = "SELECT Id_Mascota, Nombre, Especie, Raza, Foto FROM Mascota WHERE Id_User = @U AND Archivada = 1 ORDER BY Nombre";
+    var dtArch = BD.ExecuteQuery(qArch, new Dictionary<string, object> { { "@U", userId.Value } });
+    var listaArch = new List<Mascota>();
+    foreach (DataRow r in dtArch.Rows)
+    {
+        listaArch.Add(new Mascota {
+            Id_Mascota = Convert.ToInt32(r["Id_Mascota"]),
+            Nombre     = r["Nombre"].ToString(),
+            Especie    = r["Especie"].ToString(),
+            Raza       = r["Raza"].ToString(),
+            Foto       = r["Foto"]?.ToString()
+        });
+    }
+    ViewBag.MascotasArchivadas = listaArch;
+
+    return View();
+}
+
+// 2) POST ArchivarMascota: cambia estado a archivada
+[HttpPost]
+public IActionResult ArchivarMascota(int id)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    string q = "UPDATE Mascota SET Archivada = 1 WHERE Id_Mascota = @Id AND Id_User = @U";
+    BD.ExecuteNonQuery(q, new Dictionary<string,object> { { "@Id", id }, { "@U", userId.Value } });
+
+    TempData["Exito"] = "Mascota archivada correctamente 🗃";
+    return RedirectToAction("ConfigMascotas");
+}
+
+// 3) GET EditarMascota: cargar vista de edición
+[HttpGet]
+public IActionResult EditarMascota(int id)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    string q = "SELECT * FROM Mascota WHERE Id_Mascota = @Id AND Id_User = @U";
+    var dt = BD.ExecuteQuery(q, new Dictionary<string, object> { { "@Id", id }, { "@U", userId.Value } });
+    if (dt.Rows.Count == 0)
+        return RedirectToAction("ConfigMascotas");
+
+    var r = dt.Rows[0];
+    var m = new Mascota {
+        Id_Mascota = id,
+        Nombre     = r["Nombre"].ToString(),
+        Especie    = r["Especie"].ToString(),
+        Raza       = r["Raza"].ToString(),
+        Edad       = r["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(r["Edad"]),
+        Peso       = r["Peso"] == DBNull.Value ? 0 : Convert.ToDecimal(r["Peso"]),
+        Sexo       = r["Sexo"].ToString(),
+        Foto       = r["Foto"]?.ToString()
+    };
+    ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
+    return View(m);
+}
+
+// 4) POST (o PUT) para cambiar color o editar datos (simplificado)
+[HttpPost]
+public IActionResult GuardarMascotaEditada(Mascota model)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    string q = @"
+        UPDATE Mascota
+        SET Nombre = @Nombre,
+            Raza   = @Raza,
+            Edad   = @Edad,
+            Peso   = @Peso,
+            Sexo   = @Sexo,
+            Foto   = @Foto,
+            TagColor = @TagColor
+        WHERE Id_Mascota = @Id AND Id_User = @U";
+    BD.ExecuteNonQuery(q, new Dictionary<string,object> {
+        { "@Nombre", model.Nombre },
+        { "@Raza", model.Raza },
+        { "@Edad", model.Edad },
+        { "@Peso", model.Peso },
+        { "@Sexo", model.Sexo },
+        { "@Foto", model.Foto },
+        { "@TagColor", model.TagColor },
+        { "@Id", model.Id_Mascota },
+        { "@U", userId.Value }
+    });
+
+    TempData["Exito"] = "Datos de la mascota guardados ✅";
+    return RedirectToAction("ConfigMascotas");
 }
 
 

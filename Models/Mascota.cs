@@ -27,22 +27,27 @@ namespace Zooni.Models
 
         public int Edad { get; set; }
 
-        public DateTime Fecha_Nacimiento { get; set; }
+        public DateTime? Fecha_Nacimiento { get; set; }   // ✅ Puede no estar definida
 
         [Column(TypeName = "decimal(5,2)")]
         [Range(0.1, 300, ErrorMessage = "El peso debe estar entre 0.1 y 300 kg")]
         public decimal Peso { get; set; }
 
         [StringLength(100)]
-        public string Color { get; set; }
+        public string? Color { get; set; }
 
         public bool Esterilizado { get; set; }
 
         [StringLength(50)]
-        public string Chip { get; set; }
-        public string Foto { get; set; }
+        public string? Chip { get; set; }
+
+        public string? Foto { get; set; }
 
         public bool Estado { get; set; } = true;
 
+        // 🐶 NUEVOS CAMPOS:
+        public bool Archivada { get; set; } = false;          // ✅ Permite archivar mascotas sin borrarlas
+        [StringLength(20)]
+        public string? TagColor { get; set; }                 // ✅ Guarda el color del “botón” o etiqueta en UI
     }
 }

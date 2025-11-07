@@ -259,47 +259,59 @@
     </div>
 
     <div class="contenedor">
-        <button class="volver" onclick="window.location.href='/Registro/Registro2'">←</button>
+<button class="volver" onclick="window.location.href='/Registro/Registro2?volver=true'">←</button>
         <h3>Completá los datos de tu @ViewBag.MascotaEspecie 🐾</h3>
         <img src="@imagenSuperior" alt="Mascota en caja" class="mascota-caja" />
 
-        <form asp-action="Registro3Post" asp-controller="Registro" asp-route-modo="@ViewBag.Modo">
-            @Html.AntiForgeryToken()
+        <form asp-action="Registro3Post" asp-controller="Registro" method="post">
+    @Html.AntiForgeryToken()
 
-            <select name="Sexo" required>
-                <option value="">Sexo</option>
-                <option value="Macho">Macho</option>
-                <option value="Hembra">Hembra</option>
-            </select>
+    <!-- 🔹 Campo oculto para modo -->
+    <input type="hidden" name="modo" value="@ViewBag.Modo ?? "normal"" />
 
-            <select id="Raza" name="Raza" required>
-                <option value="">Seleccioná una opción</option>
-            </select>
+    <!-- 🔹 Campo oculto para especie -->
+    <input type="hidden" name="Especie" value="@ViewBag.MascotaEspecie" />
 
-            <div class="peso-container">
-                <label for="Peso">Peso (kg)</label>
-                <input type="range" id="Peso" name="Peso" min="0" max="50" step="0.1" value="5" />
-                <div class="peso-texto" id="pesoTexto">5 kg</div>
-            </div>
+    <!-- SEXO -->
+    <select name="Sexo" required>
+        <option value="">Sexo</option>
+        <option value="Macho">Macho</option>
+        <option value="Hembra">Hembra</option>
+    </select>
 
-            <div class="edad-container">
-                <label for="Edad">Edad</label>
-                <input type="range" id="Edad" name="Edad" min="0" max="240" value="0" />
-                <div class="edad-texto" id="edadTexto">0 meses</div>
-            </div>
+    <!-- RAZA -->
+    <select id="Raza" name="Raza" required>
+        <option value="">Seleccioná una opción</option>
+    </select>
 
-            <div class="foto-container">
-                <label for="fotoMascota" class="foto-label">📸 Sacale una foto a tu mascota</label>
-                <video id="video" autoplay playsinline style="display:none;"></video>
-                <canvas id="canvas" style="display:none;"></canvas>
-                <button type="button" id="btnIniciarCamara" class="btn-secundario">Abrir cámara</button>
-                <button type="button" id="btnTomarFoto" class="btn-principal" style="display:none;">Tomar foto</button>
-                <img id="fotoPreview" alt="Foto de mascota" style="max-width:150px; margin-top:10px; border-radius:15px; display:none;" />
-                <input type="hidden" name="Foto" id="fotoBase64" />
-            </div>
+    <!-- PESO -->
+    <div class="peso-container">
+        <label for="Peso">Peso (kg)</label>
+        <input type="range" id="Peso" name="Peso" min="0" max="50" step="0.1" value="5" />
+        <div class="peso-texto" id="pesoTexto">5 kg</div>
+    </div>
 
-            <button type="submit" class="btn-principal">Continuar</button>
-        </form>
+    <!-- EDAD -->
+    <div class="edad-container">
+        <label for="Edad">Edad</label>
+        <input type="range" id="Edad" name="Edad" min="0" max="240" value="0" />
+        <div class="edad-texto" id="edadTexto">0 meses</div>
+    </div>
+
+    <!-- FOTO -->
+    <div class="foto-container">
+        <label for="fotoMascota" class="foto-label">📸 Sacale una foto a tu mascota</label>
+        <video id="video" autoplay playsinline style="display:none;"></video>
+        <canvas id="canvas" style="display:none;"></canvas>
+        <button type="button" id="btnIniciarCamara" class="btn-secundario">Abrir cámara</button>
+        <button type="button" id="btnTomarFoto" class="btn-principal" style="display:none;">Tomar foto</button>
+        <img id="fotoPreview" alt="Foto de mascota" style="max-width:150px; margin-top:10px; border-radius:15px; display:none;" />
+        <input type="hidden" name="Foto" id="fotoBase64" />
+    </div>
+
+    <button type="submit" class="btn-principal">Continuar</button>
+</form>
+
     </div>
 
     <div class="imagen-bienvenida">

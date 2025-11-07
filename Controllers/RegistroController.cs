@@ -147,8 +147,7 @@ if (existePerfil == 0)
         TempData["Error"] = "Error al conectar con la base de datos.";
         return RedirectToAction("Registro1", "Registro");
     }
-}
-[HttpGet]
+}[HttpGet]
 public IActionResult Registro2(string modo = "", string origen = "")
 {
     var userId = HttpContext.Session.GetInt32("UserId");
@@ -157,6 +156,27 @@ public IActionResult Registro2(string modo = "", string origen = "")
         TempData["Error"] = "Primero registrá un usuario 🐕‍🦺";
         return RedirectToAction("Registro1");
     }
+
+    // 🧹 Si vuelve hacia atrás desde Registro3 o más, limpiar los datos previos
+    if (Request.Query["volver"] == "true")
+    {
+        HttpContext.Session.Remove("MascotaNombre");
+        HttpContext.Session.Remove("MascotaEspecie");
+        HttpContext.Session.Remove("MascotaRaza");
+        HttpContext.Session.Remove("MascotaSexo");
+        HttpContext.Session.Remove("MascotaColor");
+        HttpContext.Session.Remove("MascotaChip");
+        HttpContext.Session.Remove("MascotaFoto");
+        HttpContext.Session.Remove("MascotaEsterilizado");
+        HttpContext.Session.Remove("MascotaPeso");
+        HttpContext.Session.Remove("MascotaEdad");
+        HttpContext.Session.Remove("MascotaPesoDisplay");
+
+        Console.WriteLine("🔄 Datos de mascota limpiados al volver a Registro2");
+    }
+
+    // 👇❌ BORRÁ ESTA SEGUNDA LÍNEA DUPLICADA 👇
+    // var userId = HttpContext.Session.GetInt32("UserId");
 
     if (!string.IsNullOrEmpty(origen))
         HttpContext.Session.SetString("OrigenRegistro", origen);
@@ -168,6 +188,7 @@ public IActionResult Registro2(string modo = "", string origen = "")
     ViewBag.Origen = origen;
     return View(new Mascota());
 }
+
 
 [HttpPost]
 [ValidateAntiForgeryToken]
@@ -225,7 +246,7 @@ public IActionResult Registro2(Mascota model, string modo = "")
 
         Console.WriteLine($"🚀 Registro2 completado parcialmente: {model.Nombre}, {model.Especie}, {model.Raza}, {pesoNormalizado}kg");
 
-        return RedirectToAction("Registro3", new { modo });
+return RedirectToAction("Registro3", new { modo = "normal" });
     }
     catch (Exception ex)
     {
@@ -233,14 +254,26 @@ public IActionResult Registro2(Mascota model, string modo = "")
         ViewBag.Error = "Ocurrió un error al registrar la mascota 🐾";
         return View(model);
     }
-}
-
-[HttpGet]
+}[HttpGet]
 public IActionResult Registro3(string modo = "")
 {
+    // 👇 esta es la única línea válida
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null)
         return RedirectToAction("Registro1");
+
+    // 🧹 Limpieza si vuelve desde Registro4
+    if (Request.Query["volver"] == "true")
+    {
+        HttpContext.Session.Remove("MascotaSexo");
+        HttpContext.Session.Remove("MascotaRaza");
+        HttpContext.Session.Remove("MascotaPeso");
+        HttpContext.Session.Remove("MascotaPesoDisplay");
+        HttpContext.Session.Remove("MascotaEdad");
+        HttpContext.Session.Remove("MascotaFoto");
+
+        Console.WriteLine("🔄 Datos de Registro3 limpiados al volver desde Registro4");
+    }
 
     var nombre = HttpContext.Session.GetString("MascotaNombre");
     var especie = HttpContext.Session.GetString("MascotaEspecie");
@@ -268,18 +301,20 @@ public IActionResult Registro3(string modo = "")
     if (!string.IsNullOrEmpty(modo))
         HttpContext.Session.SetString("ModoRegistro", modo);
 
-        // ✅ Guardar el origen si no existe aún
-        string? origen = HttpContext.Session.GetString("OrigenRegistro");
-        if (string.IsNullOrEmpty(origen))
-            HttpContext.Session.SetString("OrigenRegistro", Request.Query["origen"].ToString() ?? "");
+    string? origen = HttpContext.Session.GetString("OrigenRegistro");
+    if (string.IsNullOrEmpty(origen))
+        HttpContext.Session.SetString("OrigenRegistro", Request.Query["origen"].ToString() ?? "");
 
-        ViewBag.MascotaNombre = nombre;
-        ViewBag.MascotaEspecie = especie;
-        ViewBag.MascotaRaza = raza;
-        ViewBag.MascotaPeso = peso;
-        ViewBag.MascotaPesoDisplay = HttpContext.Session.GetString("MascotaPesoDisplay");
-        ViewBag.Modo = modo;    return View(mascota);
+    ViewBag.MascotaNombre = nombre;
+    ViewBag.MascotaEspecie = especie;
+    ViewBag.MascotaRaza = raza;
+    ViewBag.MascotaPeso = peso;
+    ViewBag.MascotaPesoDisplay = HttpContext.Session.GetString("MascotaPesoDisplay");
+    ViewBag.Modo = modo;
+
+    return View(mascota);
 }
+
 
 [HttpPost]
 [ValidateAntiForgeryToken]
@@ -291,22 +326,19 @@ public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int E
         if (userId == null)
             return RedirectToAction("Registro1");
 
-        // 🐶 Si el usuario sacó una foto, guardarla físicamente
+        // 🐶 Guardar la foto si existe
         if (!string.IsNullOrEmpty(Foto) && Foto.StartsWith("data:image"))
         {
             try
             {
                 var base64 = Foto.Split(',')[1];
                 var bytes = Convert.FromBase64String(base64);
-
                 var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
                 if (!Directory.Exists(uploadsPath))
                     Directory.CreateDirectory(uploadsPath);
-
                 var fileName = $"mascota_{Guid.NewGuid()}.png";
                 var filePath = Path.Combine(uploadsPath, fileName);
                 System.IO.File.WriteAllBytes(filePath, bytes);
-
                 HttpContext.Session.SetString("MascotaFoto", "/uploads/" + fileName);
             }
             catch (Exception ex)
@@ -316,48 +348,81 @@ public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int E
             }
         }
 
-        // 🟢 Guardar otros datos en sesión
+        // 🟢 Normalizar peso
         var (pesoNormalizado, pesoDisplay) = PesoHelper.NormalizarPeso(Peso.ToString());
         string especie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
-
         if (!string.IsNullOrEmpty(especie) && !PesoHelper.ValidarPesoParaEspecie(pesoNormalizado, especie))
         {
             TempData["Error"] = $"El peso ingresado es demasiado alto para un {especie}";
             return RedirectToAction("Registro3");
         }
 
+        // 🧠 Guardar en sesión
         HttpContext.Session.SetString("MascotaSexo", Sexo);
         HttpContext.Session.SetString("MascotaRaza", Raza);
         HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString("F2", CultureInfo.InvariantCulture));
         HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplay);
         HttpContext.Session.SetInt32("MascotaEdad", Edad);
 
-        string modoFinal = !string.IsNullOrEmpty(modo)
-            ? modo
-            : HttpContext.Session.GetString("ModoRegistro") ?? "";
+        // 🧩 Definir modo final con fallback
+        // 🔹 Definición robusta del modo final
+string modoFinal = (modo ?? "").Trim().ToLower();
+if (string.IsNullOrEmpty(modoFinal))
+    modoFinal = HttpContext.Session.GetString("ModoRegistro")?.ToLower() ?? "normal";
 
-        Console.WriteLine($"🐾 Registro3Post OK → Especie: {HttpContext.Session.GetString("MascotaEspecie")}, Raza: {Raza}, Peso: {Peso}kg");
+Console.WriteLine($"🐾 Registro3Post → Modo final: {modoFinal}");
 
-        if (modoFinal.ToLower() == "nuevamascota")
+// 🔄 Lógica final
+if (modoFinal == "nuevamascota")
 {
-    // 🐾 Obtener el ID de la última mascota agregada
-    string qUltima = "SELECT TOP 1 Id_Mascota FROM Mascota WHERE Id_User = @U ORDER BY Id_Mascota DESC";
-    var idMascotaNueva = BD.ExecuteScalar(qUltima, new Dictionary<string, object> { { "@U", userId.Value } });
+    string nombre = HttpContext.Session.GetString("MascotaNombre") ?? "MiMascota";
+    string especie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
+    string raza = HttpContext.Session.GetString("MascotaRaza") ?? "";
+    string sexo = HttpContext.Session.GetString("MascotaSexo") ?? "";
+    decimal.TryParse(HttpContext.Session.GetString("MascotaPeso"), out decimal peso);
+    int edad = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
+    string foto = HttpContext.Session.GetString("MascotaFoto") ?? "";
+    string pesoDisplay = HttpContext.Session.GetString("MascotaPesoDisplay") ?? $"{peso} kg";
 
-    if (idMascotaNueva != null && idMascotaNueva != DBNull.Value)
-        HttpContext.Session.SetInt32("MascotaId", Convert.ToInt32(idMascotaNueva));
+    string queryInsert = @"
+        INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Foto, Fecha_Nacimiento, PesoDisplay)
+        VALUES (@U, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, @Foto, SYSDATETIME(), @PesoDisplay);
+        SELECT SCOPE_IDENTITY();";
 
-    TempData["Exito"] = "Mascota agregada correctamente 🐾";
+    var parametros = new Dictionary<string, object>
+    {
+        { "@U", userId.Value },
+        { "@Nombre", nombre },
+        { "@Especie", especie },
+        { "@Raza", raza },
+        { "@Sexo", sexo },
+        { "@Peso", peso },
+        { "@Edad", edad },
+        { "@Foto", foto },
+        { "@PesoDisplay", pesoDisplay }
+    };
+
+    object nuevaId = BD.ExecuteScalar(queryInsert, parametros);
+
+    if (nuevaId != null && nuevaId != DBNull.Value)
+        HttpContext.Session.SetInt32("MascotaId", Convert.ToInt32(nuevaId));
+
+    TempData["Exito"] = $"Mascota {nombre} agregada correctamente 🐶";
+    Console.WriteLine("➡️ Mascota insertada y redirigiendo a Configuración");
     return RedirectToAction("Configuracion", "Home");
 }
 
-        return RedirectToAction("Registro4", "Registro");
+
+// 🔹 Si no es modo nueva mascota, continuar el registro normal
+Console.WriteLine("➡️ Redirigiendo a Registro4 (modo normal)");
+return RedirectToAction("Registro4", "Registro");
+
     }
     catch (Exception ex)
     {
         Console.WriteLine("❌ Error en Registro3Post: " + ex.Message);
         TempData["Error"] = "Error al guardar los datos.";
-        return RedirectToAction("Registro3");
+return RedirectToAction("Registro3", new { modo = "normal" });
     }
 }
 
@@ -641,7 +706,6 @@ public JsonResult VerificarMail(string mail)
     }
 }
 
-
 [HttpPost]
 [ValidateAntiForgeryToken]
 [Route("Registro/NuevaMascotaPost")]
@@ -656,20 +720,27 @@ public IActionResult NuevaMascotaPost(Mascota model)
             return RedirectToAction("Login", "Auth");
         }
 
+        // Normalizar el peso
         string pesoInput = Request.Form["Peso"].ToString();
         var (pesoNormalizado, pesoDisplay) = PesoHelper.NormalizarPeso(pesoInput);
 
+        // Validar peso para la especie
         if (!PesoHelper.ValidarPesoParaEspecie(pesoNormalizado, model.Especie))
         {
             TempData["Error"] = $"El peso ingresado es demasiado alto para un {model.Especie}";
             return RedirectToAction("Configuracion", "Home");
         }
 
+        // Asignar valores por defecto si no se proporcionan
+        string tagColor = model.TagColor ?? "#39b77c";  // Color predeterminado
+        bool estado = model.Estado;  // Por defecto ya está en true en el modelo Mascota (activo)
+
+        // Insertar la mascota
         string query = @"
             INSERT INTO Mascota 
-            (Id_User, Nombre, Especie, Edad, Raza, Sexo, Peso, Color, Chip, Foto, Esterilizado, Fecha_Nacimiento)
+            (Id_User, Nombre, Especie, Edad, Raza, Sexo, Peso, Color, Chip, Foto, Esterilizado, Estado, TagColor, Fecha_Nacimiento)
             VALUES 
-            (@Id_User, @Nombre, @Especie, @Edad, @Raza, @Sexo, @Peso, @Color, @Chip, @Foto, @Esterilizado, SYSDATETIME());";
+            (@Id_User, @Nombre, @Especie, @Edad, @Raza, @Sexo, @Peso, @Color, @Chip, @Foto, @Esterilizado, @Estado, @TagColor, SYSDATETIME());";
 
         var parametros = new Dictionary<string, object>
         {
@@ -684,11 +755,15 @@ public IActionResult NuevaMascotaPost(Mascota model)
             { "@Color", model.Color ?? "" },
             { "@Chip", model.Chip ?? "" },
             { "@Foto", model.Foto ?? "" },
-            { "@Esterilizado", model.Esterilizado }
+            { "@Esterilizado", model.Esterilizado },
+            { "@Estado", estado },  // Estado se establece en 'true' si no se pasa un valor
+            { "@TagColor", tagColor }  // Asignación de color del tag
         };
 
+        // Ejecutar la consulta de inserción
         BD.ExecuteNonQuery(query, parametros);
 
+        // Mensaje de éxito
         TempData["Exito"] = "Mascota agregada correctamente 🐶";
         return RedirectToAction("Configuracion", "Home");
     }
@@ -699,6 +774,7 @@ public IActionResult NuevaMascotaPost(Mascota model)
         return RedirectToAction("Configuracion", "Home");
     }
 }
+
 
     }
     

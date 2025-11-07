@@ -98,13 +98,14 @@
         position: relative;
     }
 
-    .fila {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        width: 100%;
-        max-width: 320px;
-    }
+ .fila {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; 
+    width: 100%;
+    max-width: 320px;
+}
 
     input {
         width: 100%;
@@ -232,7 +233,7 @@
     <h2>¡Registrate!</h2>
 
     <div class="contenedor">
-        <button class="volver" onclick="window.location.href='/Registro/Registro3'">←</button>
+<button class="volver" onclick="if(confirm('¿Volver atrás? Se perderán los datos de usuario cargados.')) window.location.href='/Registro/Registro3?volver=true'">←</button>
         <div class="nombre-mascota">@ViewBag.MascotaNombre</div>
         <img src="@rutaImagen" alt="Mascota" class="mascota-img" class="mascota-img"/>
 
