@@ -53,6 +53,8 @@ namespace Zooni.Controllers
                 string especie = mascota["Especie"].ToString();
                 string raza = mascota["Raza"].ToString();
                 decimal pesoDecimal = Convert.ToDecimal(mascota["Peso"] ?? 0);
+                string? pesoDisplay = mascota.Table.Columns.Contains("PesoDisplay") ? 
+                    mascota["PesoDisplay"]?.ToString() : null;
                 int edad = Convert.ToInt32(mascota["Edad"] ?? 0);
                 string sexo = mascota["Sexo"]?.ToString() ?? "No definido";
                 bool esterilizado = Convert.ToBoolean(mascota["Esterilizado"]);
@@ -87,7 +89,8 @@ namespace Zooni.Controllers
                 ViewBag.Nombre = nombre;
                 ViewBag.Especie = especie;
                 ViewBag.Raza = raza;
-                ViewBag.Peso = pesoDecimal.ToString("0.##");
+                ViewBag.Peso = pesoDisplay ?? PesoHelper.FormatearPeso(pesoDecimal);
+                ViewBag.PesoCalculos = pesoDecimal;
                 ViewBag.Edad = edad;
                 ViewBag.Sexo = sexo;
                 ViewBag.Color = color;
@@ -102,7 +105,7 @@ namespace Zooni.Controllers
                     especie,
                     raza,
                     edad,
-                    peso = pesoDecimal,
+                    peso = pesoDisplay ?? PesoHelper.FormatearPeso(pesoDecimal),
                     sexo,
                     esterilizado,
                     color,

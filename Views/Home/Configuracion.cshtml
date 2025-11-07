@@ -1,86 +1,249 @@
 @{
-    ViewData["Title"] = "Configuración - Zooni ⚙️";
+    ViewData["Title"] = "Configuración - Zooni";
     Layout = null;
+    var tema = ViewBag.Tema ?? "claro";
 }
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>@ViewData["Title"]</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
-body {
-  margin:0;
-  background:#f9f9f8;
-  font-family:'Poppins',sans-serif;
-  color:#3c2a1b;
+:root {
+    --verde: #39b77c;
+    --amarillo: #FFD85A;
+    --marron: #3c2a1b;
+    --fondo: #f9f9f8;
 }
+
+html, body {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    background: var(--fondo);
+    font-family: 'Poppins', sans-serif;
+    color: var(--marron);
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+}
+
+header { 
+    position: fixed; 
+    top: 15px; 
+    left: 20px; 
+    z-index: 10; 
+}
+
+.menu-icon { 
+    width: 38px; 
+    cursor: pointer; 
+    transition: transform .25s ease; 
+}
+.menu-icon:hover { 
+    transform: scale(1.1); 
+}
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 240px;
+    height: 100%;
+    background: rgba(255,255,255,0.98);
+    backdrop-filter: blur(16px);
+    box-shadow: 4px 0 18px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    z-index: 9999;
+}
+
+.menu-lateral.abierto {
+    transform: translateX(0);
+}
+
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--marron);
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    transition: all .25s ease;
+}
+
+.menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+
+.cerrar-menu {
+    align-self: flex-end;
+    font-size: 1.6rem;
+    cursor: pointer;
+    color: var(--marron);
+    margin-bottom: 1.2rem;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 8;
+}
+
+.overlay.activo {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+main {
+    margin-top: 80px;
+    width: 100%;
+    max-width: 430px;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
 h1 {
-  text-align:center;
-  padding:25px 0 10px;
-  font-weight:700;
-  color:#3c2a1b;
+    text-align: center;
+    font-weight: 700;
+    color: var(--marron);
+    margin-bottom: 25px;
 }
-.section {
-  width:90%;
-  max-width:430px;
-  margin:15px auto;
-}
+
 .group {
-  background:white;
-  border-radius:22px;
-  overflow:hidden;
-  box-shadow:0 2px 8px rgba(0,0,0,.08);
-  margin-bottom:20px;
+    background: white;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-bottom: 20px;
+    transition: transform 0.2s ease;
 }
+
+.group:hover {
+    transform: translateY(-2px);
+}
+
 .group a {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:16px 20px;
-  text-decoration:none;
-  color:#3c2a1b;
-  font-weight:500;
-  border-bottom:1px solid #eee;
-  transition:background .2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    text-decoration: none;
+    color: var(--marron);
+    font-weight: 500;
+    border-bottom: 1px solid #eee;
+    transition: background .2s;
 }
+
 .group a:last-child {
-  border-bottom:none;
+    border-bottom: none;
 }
+
 .group a:hover {
-  background:#faf7f0;
+    background: #faf7f0;
 }
+
 .arrow {
-  font-size:1.3rem;
-  color:#bbb;
+    font-size: 1.3rem;
+    color: #bbb;
+}
+
+.tema-@tema {
+    background-color: @(tema == "oscuro" ? "#1a1a1a" : "#f9f9f8");
+    color: @(tema == "oscuro" ? "#fff" : "#3c2a1b");
+}
+
+.tema-@tema .group {
+    background: @(tema == "oscuro" ? "#2d2d2d" : "#ffffff");
+}
+
+.tema-@tema .group a {
+    color: @(tema == "oscuro" ? "#fff" : "#3c2a1b");
+    border-bottom-color: @(tema == "oscuro" ? "#3d3d3d" : "#eee");
+}
+
+.tema-@tema .group a:hover {
+    background: @(tema == "oscuro" ? "#363636" : "#faf7f0");
 }
 </style>
 </head>
-<body>
-<h1>Configuración ⚙️</h1>
-<div class="section">
+<body class="tema-@tema">
+<header>
+    <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
 
-  <div class="group">
-    <a href="/Home/ConfigUsuario">👤 Cuenta y Seguridad<span class="arrow">›</span></a>
-    <a href="/Home/ConfigTema">🎨 Tema de la aplicación<span class="arrow">›</span></a>
-    <a href="/Home/ConfigMedios">📷 Medios y Calidad<span class="arrow">›</span></a>
-    <a href="/Home/ConfigTiempoUso">⏱ Tiempo en la app<span class="arrow">›</span></a>
-  </div>
-
-  <div class="group">
-    <a href="/Home/ConfigMascotas">🐾 Mis Mascotas<span class="arrow">›</span></a>
-    <a href="/Home/ConfigPrivacidad">🔒 Privacidad y visibilidad<span class="arrow">›</span></a>
-    <a href="/Home/ConfigPermisosApp">📱 Permisos de la app<span class="arrow">›</span></a>
-    <a href="/Home/ConfigNotificaciones">🔔 Notificaciones y alertas<span class="arrow">›</span></a>
-  </div>
-
-  <div class="group">
-    <a href="/Home/ConfigSuscripciones">💎 Suscripciones y pagos<span class="arrow">›</span></a>
-    <a href="/Home/ConfigLegal">📄 Legal y Términos<span class="arrow">›</span></a>
-    <a href="/Home/ConfigAyuda">❓ Ayuda y Soporte<span class="arrow">›</span></a>
-  </div>
-
+<div class="menu-lateral" id="menuLateral">
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/home/FichaMedica">💉 Ficha médica</a>
+    <a href="/home/calendario">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 ChatBot</a>
+    <a href="/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Home/configuracion">⚙️ Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
 </div>
+
+<div class="overlay" id="overlay"></div>
+
+<main>
+    <h1>Configuración ⚙️</h1>
+
+    <div class="group">
+        <a href="/Home/ConfigUsuario">👤 Cuenta y Seguridad<span class="arrow">›</span></a>
+        <a href="/Home/ConfigTema">🎨 Tema de la aplicación<span class="arrow">›</span></a>
+        <a href="/Home/ConfigMedios">📷 Medios y Calidad<span class="arrow">›</span></a>
+        <a href="/Home/ConfigTiempoUso">⏱ Tiempo en la app<span class="arrow">›</span></a>
+    </div>
+
+    <div class="group">
+        <a href="/Home/ConfigMascotas">🐾 Mis Mascotas<span class="arrow">›</span></a>
+        <a href="/Home/ConfigPrivacidad">🔒 Privacidad y visibilidad<span class="arrow">›</span></a>
+        <a href="/Home/ConfigPermisosApp">📱 Permisos de la app<span class="arrow">›</span></a>
+        <a href="/Home/ConfigNotificaciones">🔔 Notificaciones y alertas<span class="arrow">›</span></a>
+    </div>
+
+    <div class="group">
+        <a href="/Home/ConfigSuscripciones">💎 Suscripciones y pagos<span class="arrow">›</span></a>
+        <a href="/Home/ConfigLegal">📄 Legal y Términos<span class="arrow">›</span></a>
+        <a href="/Home/ConfigAyuda">❓ Ayuda y Soporte<span class="arrow">›</span></a>
+    </div>
+</main>
+
+<script>
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+
+document.getElementById("abrirMenu").onclick = () => {
+    menu.classList.add("abierto");
+    overlay.classList.add("activo");
+};
+
+document.getElementById("cerrarMenu").onclick = cerrarMenu;
+overlay.onclick = cerrarMenu;
+
+function cerrarMenu() {
+    menu.classList.remove("abierto");
+    overlay.classList.remove("activo");
+}
+</script>
+
 </body>
 </html>

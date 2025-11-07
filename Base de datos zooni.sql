@@ -467,6 +467,7 @@ CREATE TABLE [dbo].[Mascota](
 	[Esterilizado] [bit] NOT NULL,
 	[Chip] [nvarchar](200) NULL,
 	[Foto] [nvarchar](max) NULL,
+	[PesoDisplay] [nvarchar](20) NULL,
  CONSTRAINT [PK__Mascota__C7A382FE0A959648] PRIMARY KEY CLUSTERED 
 (
 	[Id_Mascota] ASC

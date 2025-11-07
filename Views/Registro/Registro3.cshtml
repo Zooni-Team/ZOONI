@@ -374,11 +374,28 @@ const pesoTexto = document.getElementById("pesoTexto");
 const edadSlider = document.getElementById("Edad");
 const edadTexto = document.getElementById("edadTexto");
 
-const rangoPorEspeciePeso = { perro:[0,80], gato:[0,15], conejo:[0,5], ave:[0,3], pez:[0,2], reptil:[0,20], hamster:[0,0.25], raton:[0,0.6] };
-const rangoPeso = rangoPorEspeciePeso[especie] || [0,50];
-pesoSlider.min = rangoPeso[0]; pesoSlider.max = rangoPeso[1]; pesoSlider.value = (rangoPeso[1]/5).toFixed(2);
-pesoTexto.textContent = pesoSlider.value.replace(".", ",")+" kg";
-pesoSlider.addEventListener("input",()=>pesoTexto.textContent=pesoSlider.value.replace(".", ",")+" kg");
+const rangoPorEspeciePeso = { 
+    perro:[0.1,80], gato:[0.1,15], conejo:[0.1,5], 
+    ave:[0.1,3], pez:[0.1,2], reptil:[0.1,20], 
+    hamster:[0.1,0.25], raton:[0.1,0.6] 
+};
+const rangoPeso = rangoPorEspeciePeso[especie] || [0.1,50];
+pesoSlider.min = rangoPeso[0];
+pesoSlider.max = rangoPeso[1];
+pesoSlider.step = pesoSlider.max <= 1 ? 0.01 : 0.1;
+pesoSlider.value = Math.max(rangoPeso[0], Math.min(rangoPeso[1], rangoPeso[1]/5));
+
+// Función para formatear el peso con precisión variable
+function formatearPesoTexto(valor) {
+    valor = parseFloat(valor);
+    let decimales = valor <= 1 ? 2 : 1;
+    return valor.toFixed(decimales).replace(".", ",") + " kg";
+}
+
+pesoTexto.textContent = formatearPesoTexto(pesoSlider.value);
+pesoSlider.addEventListener("input", () => {
+    pesoTexto.textContent = formatearPesoTexto(pesoSlider.value);
+});
 
 const rangoPorEspecieEdad = { perro:240, gato:240, conejo:144, ave:600, pez:120, reptil:720, hamster:36, raton:48 };
 edadSlider.max = rangoPorEspecieEdad[especie] || 240;

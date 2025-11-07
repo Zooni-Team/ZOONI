@@ -44,11 +44,19 @@ namespace Zooni.Controllers
         return;
     }
 
-    ViewBag.MascotaNombre = mascota["Nombre"].ToString();
-    ViewBag.MascotaEspecie = mascota["Especie"].ToString();
-    ViewBag.MascotaRaza = mascota["Raza"].ToString();
+    ViewBag.MascotaNombre = mascota["Nombre"]?.ToString() ?? "Sin nombre";
+    ViewBag.MascotaEspecie = mascota["Especie"]?.ToString() ?? "Desconocida";
+    ViewBag.MascotaRaza = mascota["Raza"]?.ToString() ?? "";
     ViewBag.MascotaEdad = mascota["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(mascota["Edad"]);
-    ViewBag.MascotaPeso = mascota["Peso"] == DBNull.Value ? 0 : Convert.ToDecimal(mascota["Peso"]);
+    
+    // Manejo mejorado del peso usando PesoHelper
+    decimal peso = 0;
+    if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), out peso))
+    {
+        var (pesoNormalizado, pesoDisplay) = PesoHelper.NormalizarPeso(peso.ToString("0.####"));
+        ViewBag.MascotaPeso = pesoNormalizado;
+        ViewBag.MascotaPesoDisplay = pesoDisplay;
+    }
 
     // 🟢 NUEVO: agregar la foto si existe
     ViewBag.MascotaFoto = mascota.Table.Columns.Contains("Foto") && mascota["Foto"] != DBNull.Value
@@ -610,9 +618,12 @@ if (TempData["Exito"] != null && TempData["Exito"].ToString().Contains("Mascota 
                     return RedirectToAction("Configuracion");
                 }
 
+                var pesoStr = model.Peso.ToString("F2");
+                var (pesoNormalizado, pesoDisplay) = PesoHelper.NormalizarPeso(pesoStr);
+                
                 string q = @"
                     UPDATE Mascota
-                    SET Nombre=@Nombre, Raza=@Raza, Edad=@Edad, Peso=@Peso, Sexo=@Sexo
+                    SET Nombre=@Nombre, Raza=@Raza, Edad=@Edad, Peso=@Peso, PesoDisplay=@PesoDisplay, Sexo=@Sexo
                     WHERE Id_Mascota=@Id";
 
                 var p = new Dictionary<string, object>
@@ -620,7 +631,8 @@ if (TempData["Exito"] != null && TempData["Exito"].ToString().Contains("Mascota 
                     { "@Nombre", model.Nombre },
                     { "@Raza", model.Raza },
                     { "@Edad", model.Edad },
-                    { "@Peso", model.Peso },
+                    { "@Peso", pesoNormalizado },
+                    { "@PesoDisplay", pesoDisplay },
                     { "@Sexo", model.Sexo },
                     { "@Id", mascotaId.Value }
                 };

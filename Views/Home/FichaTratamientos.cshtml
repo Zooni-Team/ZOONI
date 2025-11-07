@@ -7,8 +7,9 @@
     var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
     var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
     var mascotaRaza = (ViewBag.MascotaRaza ?? "desconocida").ToString();
-var mascotaPesoDecimal = Convert.ToDecimal(ViewBag.MascotaPeso ?? 0);
-var pesoFormateado = mascotaPesoDecimal.ToString("0.##").Replace('.', ',');
+var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
+var mascotaPeso = PesoHelper.NormalizarPeso(pesoStr);
+var pesoFormateado = PesoHelper.FormatearPeso(mascotaPeso);
     var mascotaEdad = ViewBag.MascotaEdad ?? 0;
     var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
     int años = Convert.ToInt32(mascotaEdad) / 12;

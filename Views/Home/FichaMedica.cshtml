@@ -8,13 +8,14 @@
     var mascotaRaza = ViewBag.MascotaRaza?.ToString() ?? "Desconocida";
     var mascotaEdadMeses = Convert.ToInt32(ViewBag.MascotaEdad ?? 0);
 
-    // ✅ Peso formateado correctamente
-    var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
-    decimal mascotaPeso;
-    if (!decimal.TryParse(pesoStr, NumberStyles.Any, CultureInfo.InvariantCulture, out mascotaPeso))
-        mascotaPeso = 0;
-
-    string pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
+    // ✅ Usar el peso de display si está disponible
+    string? pesoDisplay = ViewBag.MascotaPesoDisplay?.ToString();
+    string pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
+    (decimal mascotaPeso, string pesoFormateado) = PesoHelper.NormalizarPeso(pesoStr);
+    if (!string.IsNullOrEmpty(pesoDisplay))
+    {
+        pesoFormateado = pesoDisplay;
+    }
 
     // 🖼️ Ruta imagen
     var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
@@ -337,7 +338,7 @@ main {
         <img src="@rutaMascota" alt="Mascota" class="mascota-img" />
         <div class="dato">🐾 <span>Especie:</span> @mascotaEspecie</div>
         <div class="dato">📜 <span>Raza:</span> @mascotaRaza</div>
-<div class="dato">⚖️ <span>Peso:</span> @pesoFormateado kg</div>
+<div class="dato">⚖️ <span>Peso:</span> @pesoFormateado</div>
         <div class="dato">🎂 <span>Edad:</span> @edadFormateada</div>
     </div>
 <div class="bloque-pdf">

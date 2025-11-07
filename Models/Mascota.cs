@@ -30,6 +30,7 @@ namespace Zooni.Models
         public DateTime Fecha_Nacimiento { get; set; }
 
         [Column(TypeName = "decimal(5,2)")]
+        [Range(0.1, 300, ErrorMessage = "El peso debe estar entre 0.1 y 300 kg")]
         public decimal Peso { get; set; }
 
         [StringLength(100)]

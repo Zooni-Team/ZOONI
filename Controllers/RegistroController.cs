@@ -189,13 +189,26 @@ public IActionResult Registro2(Mascota model, string modo = "")
         }
 
         decimal pesoNormalizado = 0;
+        string displayWeight = "";
         try
         {
-            string pesoInput = Request.Form["Peso"].ToString().Replace(',', '.');
-            decimal.TryParse(pesoInput, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoNormalizado);
-            pesoNormalizado = Math.Round(pesoNormalizado, 2);
+            string pesoInput = Request.Form["Peso"].ToString();
+            var (peso, display) = PesoHelper.NormalizarPeso(pesoInput);
+            pesoNormalizado = peso;
+            displayWeight = display;
+
+            if (!PesoHelper.ValidarPesoParaEspecie(pesoNormalizado, model.Especie))
+            {
+                ViewBag.Error = $"El peso ingresado es demasiado alto para un {model.Especie}";
+                return View(model);
+            }
         }
-        catch { }
+        catch (Exception ex) 
+        {
+            Console.WriteLine($"❌ Error al procesar peso: {ex.Message}");
+            ViewBag.Error = "Error al procesar el peso ingresado";
+            return View(model);
+        }
 
         // Guardamos solo en sesión
         HttpContext.Session.SetString("MascotaNombre", model.Nombre ?? "MiMascota");
@@ -206,7 +219,8 @@ public IActionResult Registro2(Mascota model, string modo = "")
         HttpContext.Session.SetString("MascotaChip", model.Chip ?? "");
         HttpContext.Session.SetString("MascotaFoto", model.Foto ?? "");
         HttpContext.Session.SetString("MascotaEsterilizado", model.Esterilizado.ToString());
-HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString(CultureInfo.InvariantCulture));
+        HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString("F2", CultureInfo.InvariantCulture));
+        HttpContext.Session.SetString("MascotaPesoDisplay", displayWeight);
         HttpContext.Session.SetInt32("MascotaEdad", model.Edad);
 
         Console.WriteLine($"🚀 Registro2 completado parcialmente: {model.Nombre}, {model.Especie}, {model.Raza}, {pesoNormalizado}kg");
@@ -254,18 +268,17 @@ public IActionResult Registro3(string modo = "")
     if (!string.IsNullOrEmpty(modo))
         HttpContext.Session.SetString("ModoRegistro", modo);
 
-    // ✅ Guardar el origen si no existe aún
-    string origen = HttpContext.Session.GetString("OrigenRegistro");
-    if (string.IsNullOrEmpty(origen))
-        HttpContext.Session.SetString("OrigenRegistro", Request.Query["origen"].ToString() ?? "");
+        // ✅ Guardar el origen si no existe aún
+        string? origen = HttpContext.Session.GetString("OrigenRegistro");
+        if (string.IsNullOrEmpty(origen))
+            HttpContext.Session.SetString("OrigenRegistro", Request.Query["origen"].ToString() ?? "");
 
-    ViewBag.MascotaNombre = nombre;
-    ViewBag.MascotaEspecie = especie;
-    ViewBag.MascotaRaza = raza;
-    ViewBag.MascotaPeso = peso;
-    ViewBag.Modo = modo;
-
-    return View(mascota);
+        ViewBag.MascotaNombre = nombre;
+        ViewBag.MascotaEspecie = especie;
+        ViewBag.MascotaRaza = raza;
+        ViewBag.MascotaPeso = peso;
+        ViewBag.MascotaPesoDisplay = HttpContext.Session.GetString("MascotaPesoDisplay");
+        ViewBag.Modo = modo;    return View(mascota);
 }
 
 [HttpPost]
@@ -304,10 +317,20 @@ public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int E
         }
 
         // 🟢 Guardar otros datos en sesión
+        var (pesoNormalizado, pesoDisplay) = PesoHelper.NormalizarPeso(Peso.ToString());
+        string especie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
+
+        if (!string.IsNullOrEmpty(especie) && !PesoHelper.ValidarPesoParaEspecie(pesoNormalizado, especie))
+        {
+            TempData["Error"] = $"El peso ingresado es demasiado alto para un {especie}";
+            return RedirectToAction("Registro3");
+        }
+
         HttpContext.Session.SetString("MascotaSexo", Sexo);
         HttpContext.Session.SetString("MascotaRaza", Raza);
-HttpContext.Session.SetString("MascotaPeso", Peso.ToString(CultureInfo.InvariantCulture));
-HttpContext.Session.SetInt32("MascotaEdad", Edad);
+        HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString("F2", CultureInfo.InvariantCulture));
+        HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplay);
+        HttpContext.Session.SetInt32("MascotaEdad", Edad);
 
         string modoFinal = !string.IsNullOrEmpty(modo)
             ? modo
@@ -549,8 +572,8 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
         if (!string.IsNullOrEmpty(nombre) && !string.IsNullOrEmpty(especie))
         {
             string insert = @"
-                INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Fecha_Nacimiento)
-                VALUES (@Id_User, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, SYSDATETIME())";
+                INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Fecha_Nacimiento, PesoDisplay)
+                VALUES (@Id_User, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, SYSDATETIME(), @PesoDisplay)";
 
             BD.ExecuteNonQuery(insert, new Dictionary<string, object>
             {
@@ -560,6 +583,7 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
                 { "@Raza", raza },
                 { "@Sexo", sexo },
                 { "@Peso", peso },
+                { "@PesoDisplay", HttpContext.Session.GetString("MascotaPesoDisplay") ?? (peso.ToString("F2") + " kg") },
                 { "@Edad", edad }
             });
         }
@@ -632,10 +656,14 @@ public IActionResult NuevaMascotaPost(Mascota model)
             return RedirectToAction("Login", "Auth");
         }
 
-        decimal pesoNormalizado = 0;
-        string pesoInput = Request.Form["Peso"].ToString().Replace(',', '.');
-        decimal.TryParse(pesoInput, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoNormalizado);
-        pesoNormalizado = Math.Round(pesoNormalizado, 2);
+        string pesoInput = Request.Form["Peso"].ToString();
+        var (pesoNormalizado, pesoDisplay) = PesoHelper.NormalizarPeso(pesoInput);
+
+        if (!PesoHelper.ValidarPesoParaEspecie(pesoNormalizado, model.Especie))
+        {
+            TempData["Error"] = $"El peso ingresado es demasiado alto para un {model.Especie}";
+            return RedirectToAction("Configuracion", "Home");
+        }
 
         string query = @"
             INSERT INTO Mascota 
@@ -652,6 +680,7 @@ public IActionResult NuevaMascotaPost(Mascota model)
             { "@Raza", model.Raza ?? "" },
             { "@Sexo", model.Sexo ?? "" },
             { "@Peso", pesoNormalizado },
+            { "@PesoDisplay", pesoDisplay },
             { "@Color", model.Color ?? "" },
             { "@Chip", model.Chip ?? "" },
             { "@Foto", model.Foto ?? "" },

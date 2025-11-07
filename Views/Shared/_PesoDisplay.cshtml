@@ -1,0 +1,9 @@
+@model decimal?
+
+@{
+    var peso = Model ?? 0.1M;
+    peso = Math.Max(0.1M, Math.Min(300M, Math.Round(peso, 2)));
+    var pesoFormateado = peso.ToString("F2", new System.Globalization.CultureInfo("es-ES"));
+}
+
+@pesoFormateado kg
