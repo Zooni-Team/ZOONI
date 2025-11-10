@@ -1,6 +1,5 @@
 ﻿@{
     var tema = Context.Session.GetString("Tema") ?? "claro";
-    var claseTema = tema == "oscuro" ? "dark-mode" : "";
 }
 <!DOCTYPE html>
 <html lang="es">
@@ -8,15 +7,86 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewData["Title"] - Zooni</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="~/css/global.css" /> 
+    <link rel="stylesheet" href="~/css/global.css" />
+
+    <style>
+        :root {
+            --verde: #39b77c;
+            --marron: #3c2a1b;
+            --amarillo: #FFD85A;
+            --fondo-claro: #f9f9f8;
+            --fondo-oscuro: #121212;
+            --texto-claro: #3c2a1b;
+            --texto-oscuro: #ffffff;
+        }
+
+        header {
+            width: 100%;
+            padding: 10px 20px;
+            background-color: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
+            color: @(tema == "oscuro" ? "#ffffff" : "#3c2a1b");
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: background-color .4s ease, color .4s ease;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px 10px;
+            font-size: 0.9rem;
+            color: @(tema == "oscuro" ? "#ddd" : "#555");
+            transition: color .4s ease;
+        }
+    </style>
 </head>
-<header>
+
+<body class="tema-@(tema)">
+    <header>
+        <h1>@ViewData["Title"]</h1>
+    </header>
+
+    <main role="main">
         @RenderBody()
+    </main>
 
-</header>
-<body>
-@RenderSection("Scripts", required: false)
+    <footer>
+        © Zooni 🦮 — Tu mascota, tu mundo
+    </footer>
 
+    @RenderSection("Scripts", required: false)
+    <script>
+function activarTransicionTema() {
+  const overlay = document.createElement('div');
+  overlay.classList.add('theme-transition');
+  document.body.appendChild(overlay);
+
+  // Forzar reflujo visual antes de activar animación
+  void overlay.offsetWidth;
+  overlay.classList.add('activo');
+
+  setTimeout(() => {
+    overlay.classList.remove('activo');
+    setTimeout(() => overlay.remove(), 400);
+  }, 500);
+}
+
+// Detectar el cambio de tema (solo si viene del selector)
+if (window.location.pathname.toLowerCase().includes("configtema")) {
+  const botones = document.querySelectorAll("button[name='modo']");
+  botones.forEach(btn => {
+    btn.addEventListener("click", e => {
+      e.preventDefault();
+      activarTransicionTema();
+
+      fetch('/Home/CambiarTema', {
+        method: 'POST',
+        headers: {'Content-Type':'application/x-www-form-urlencoded'},
+        body: 'modo=' + btn.value
+      }).then(() => setTimeout(() => location.reload(), 450));
+    });
+  });
+}
+</script>
 </body>
 </html>

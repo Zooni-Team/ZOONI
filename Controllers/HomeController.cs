@@ -1003,11 +1003,11 @@ public IActionResult Perfil()
 [HttpPost]
 public IActionResult CambiarTema(string modo)
 {
-    if(modo != "claro" && modo != "oscuro")
-       modo = "claro";
+    if (modo != "claro" && modo != "oscuro") modo = "claro";
     HttpContext.Session.SetString("Tema", modo);
-    return RedirectToAction("Configuracion");
+    return RedirectToAction("ConfigTema");
 }
+
 // 1) GET ConfigMascotas: listado completo
 [HttpGet]
 public IActionResult ConfigMascotas()
@@ -1016,58 +1016,226 @@ public IActionResult ConfigMascotas()
     if (userId == null)
         return RedirectToAction("Login", "Auth");
 
-    // Tema para la vista
     ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
 
-    // Obtener mascotas activas
-    string qActivas = "SELECT Id_Mascota, Nombre, Especie, Raza, Foto FROM Mascota WHERE Id_User = @U AND Archivada = 0 ORDER BY Nombre";
+    // ✅ Evita duplicados por nombre y raza (solo muestra la más nueva)
+    string qActivas = @"
+        WITH MascotasUnicas AS (
+            SELECT 
+                Id_Mascota, Nombre, Especie, Raza, Foto, 
+                ROW_NUMBER() OVER (PARTITION BY Nombre, Raza ORDER BY Id_Mascota DESC) AS rn
+            FROM Mascota
+            WHERE Id_User = @U AND (Archivada IS NULL OR Archivada = 0)
+        )
+        SELECT Id_Mascota, Nombre, Especie, Raza, Foto 
+        FROM MascotasUnicas WHERE rn = 1
+        ORDER BY Nombre ASC;";
+
     var dtAct = BD.ExecuteQuery(qActivas, new Dictionary<string, object> { { "@U", userId.Value } });
     var listaAct = new List<Mascota>();
-    foreach (DataRow r in dtAct.Rows)
-    {
+    foreach (System.Data.DataRow r in dtAct.Rows)
         listaAct.Add(new Mascota {
             Id_Mascota = Convert.ToInt32(r["Id_Mascota"]),
-            Nombre     = r["Nombre"].ToString(),
-            Especie    = r["Especie"].ToString(),
-            Raza       = r["Raza"].ToString(),
-            Foto       = r["Foto"]?.ToString()
+            Nombre = r["Nombre"].ToString(),
+            Especie = r["Especie"].ToString(),
+            Raza = r["Raza"].ToString(),
+            Foto = r["Foto"]?.ToString() ?? "/img/mascotas/default.png"
         });
-    }
-    ViewBag.MascotasActivas = listaAct;
 
-    // Obtener mascotas archivadas
-    string qArch = "SELECT Id_Mascota, Nombre, Especie, Raza, Foto FROM Mascota WHERE Id_User = @U AND Archivada = 1 ORDER BY Nombre";
+    // 🗃 Archivadas también sin duplicados
+    string qArch = @"
+        WITH MascotasArchivadas AS (
+            SELECT 
+                Id_Mascota, Nombre, Especie, Raza, Foto, 
+                ROW_NUMBER() OVER (PARTITION BY Nombre, Raza ORDER BY Id_Mascota DESC) AS rn
+            FROM Mascota
+            WHERE Id_User = @U AND Archivada = 1
+        )
+        SELECT Id_Mascota, Nombre, Especie, Raza, Foto 
+        FROM MascotasArchivadas WHERE rn = 1
+        ORDER BY Nombre ASC;";
+
     var dtArch = BD.ExecuteQuery(qArch, new Dictionary<string, object> { { "@U", userId.Value } });
     var listaArch = new List<Mascota>();
-    foreach (DataRow r in dtArch.Rows)
-    {
+    foreach (System.Data.DataRow r in dtArch.Rows)
         listaArch.Add(new Mascota {
             Id_Mascota = Convert.ToInt32(r["Id_Mascota"]),
-            Nombre     = r["Nombre"].ToString(),
-            Especie    = r["Especie"].ToString(),
-            Raza       = r["Raza"].ToString(),
-            Foto       = r["Foto"]?.ToString()
+            Nombre = r["Nombre"].ToString(),
+            Especie = r["Especie"].ToString(),
+            Raza = r["Raza"].ToString(),
+            Foto = r["Foto"]?.ToString() ?? "/img/mascotas/default.png"
         });
-    }
+
+    ViewBag.MascotasActivas = listaAct;
     ViewBag.MascotasArchivadas = listaArch;
 
     return View();
-}
-
-// 2) POST ArchivarMascota: cambia estado a archivada
-[HttpPost]
-public IActionResult ArchivarMascota(int id)
+}[HttpGet]
+[Route("Home/ConfigUsuario")]
+public IActionResult ConfigUsuario()
 {
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null)
         return RedirectToAction("Login", "Auth");
 
-    string q = "UPDATE Mascota SET Archivada = 1 WHERE Id_Mascota = @Id AND Id_User = @U";
-    BD.ExecuteNonQuery(q, new Dictionary<string,object> { { "@Id", id }, { "@U", userId.Value } });
+    ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
 
-    TempData["Exito"] = "Mascota archivada correctamente 🗃";
-    return RedirectToAction("ConfigMascotas");
+    try
+    {
+        string query = @"
+            SELECT U.Nombre, U.Apellido, M.Correo, U.Telefono
+            FROM [User] U
+            INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+            WHERE U.Id_User = @Id";
+
+        var dt = BD.ExecuteQuery(query, new Dictionary<string, object> { { "@Id", userId.Value } });
+
+        if (dt.Rows.Count == 0)
+        {
+            ViewBag.Nombre = "";
+            ViewBag.Apellido = "";
+            ViewBag.Mail = "";
+            ViewBag.Telefono = "";
+        }
+        else
+        {
+            var u = dt.Rows[0];
+            ViewBag.Nombre = u["Nombre"].ToString();
+            ViewBag.Apellido = u["Apellido"].ToString();
+            ViewBag.Mail = u["Correo"].ToString();
+            ViewBag.Telefono = u["Telefono"]?.ToString() ?? "";
+        }
+
+        return View("~/Views/Home/ConfigUsuario.cshtml");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error ConfigUsuario: " + ex.Message);
+        TempData["Error"] = "Error al cargar los datos del usuario.";
+        return RedirectToAction("Configuracion");
+    }
+}[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult ActualizarUsuario(string nombre, string apellido, string correo, string telefono, string actualContrasena, string contrasena)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    try
+    {
+        // ✅ Verificar contraseña actual
+        string qCheck = @"
+            SELECT M.Contrasena
+            FROM Mail M 
+            INNER JOIN [User] U ON M.Id_Mail = U.Id_Mail
+            WHERE U.Id_User = @Id";
+        var actual = BD.ExecuteScalar(qCheck, new Dictionary<string, object> { { "@Id", userId.Value } })?.ToString();
+
+        if (string.IsNullOrEmpty(actualContrasena) || actual != actualContrasena)
+        {
+            TempData["Error"] = "La contraseña actual no coincide ❌";
+            return RedirectToAction("ConfigUsuario");
+        }
+
+        // ✅ Solo guarda si se presiona el botón
+        if (Request.Form.ContainsKey("nombre") && Request.Form.ContainsKey("correo"))
+        {
+            BD.ExecuteNonQuery(@"
+                UPDATE [User]
+                SET Nombre = @N, Apellido = @A, Telefono = @T
+                WHERE Id_User = @Id", new Dictionary<string, object>
+            {
+                { "@N", nombre },
+                { "@A", apellido },
+                { "@T", telefono ?? "" },
+                { "@Id", userId.Value }
+            });
+
+            BD.ExecuteNonQuery(@"
+                UPDATE M
+                SET M.Correo = @Correo, M.Contrasena = @Contrasena
+                FROM Mail M
+                INNER JOIN [User] U ON M.Id_Mail = U.Id_Mail
+                WHERE U.Id_User = @Id_User", new Dictionary<string, object>
+            {
+                { "@Correo", correo },
+                { "@Contrasena", contrasena },
+                { "@Id_User", userId.Value }
+            });
+
+            TempData["Exito"] = "Datos actualizados correctamente ✅";
+        }
+
+        return RedirectToAction("ConfigUsuario");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error ActualizarUsuario: " + ex.Message);
+        TempData["Error"] = "Error al actualizar los datos.";
+        return RedirectToAction("ConfigUsuario");
+    }
 }
+[HttpGet]
+public IActionResult ConfigAyuda()
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
+    return View();
+}[HttpPost]
+public IActionResult EnviarSoporte(string nombre, string correo, string contrasena, string mensaje)
+{
+    try
+    {
+        if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(correo) ||
+            string.IsNullOrWhiteSpace(contrasena) || string.IsNullOrWhiteSpace(mensaje))
+        {
+            TempData["Error"] = "Completá todos los campos antes de enviar 🐾";
+            return RedirectToAction("ConfigAyuda");
+        }
+
+        // 🔍 Validar si la combinación correo + contraseña es correcta
+        string q = @"
+            SELECT COUNT(*) 
+            FROM Mail M
+            INNER JOIN [User] U ON M.Id_Mail = U.Id_Mail
+            WHERE M.Correo = @Correo AND M.Contrasena = @Contrasena";
+
+        var param = new Dictionary<string, object>
+        {
+            { "@Correo", correo },
+            { "@Contrasena", contrasena }
+        };
+
+        int valido = Convert.ToInt32(BD.ExecuteScalar(q, param));
+
+        if (valido == 0)
+        {
+            TempData["Error"] = "La contraseña no coincide con el correo ingresado 🐾";
+            return RedirectToAction("ConfigAyuda");
+        }
+
+        // ✅ Si es válido, se envía el mensaje (simulado por consola)
+        Console.WriteLine($"📩 Soporte recibido de {nombre} ({correo}): {mensaje}");
+
+        TempData["Exito"] = "Tu mensaje fue enviado correctamente 🩵 ¡Gracias por comunicarte con Zooni!";
+        return RedirectToAction("ConfigAyuda");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error en EnviarSoporte: " + ex.Message);
+        TempData["Error"] = "Hubo un problema al enviar el mensaje. Intentá de nuevo más tarde.";
+        return RedirectToAction("ConfigAyuda");
+    }
+}
+
+
+
+
+
 
 // 3) GET EditarMascota: cargar vista de edición
 [HttpGet]
@@ -1130,7 +1298,16 @@ public IActionResult GuardarMascotaEditada(Mascota model)
     TempData["Exito"] = "Datos de la mascota guardados ✅";
     return RedirectToAction("ConfigMascotas");
 }
+[HttpGet]
+public IActionResult ConfigTema()
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
 
-
-    }
+    var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+    ViewBag.Tema = tema;
+    return View();
+}   
+}
 }

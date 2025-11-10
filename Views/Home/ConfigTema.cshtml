@@ -1,0 +1,255 @@
+@{
+    ViewData["Title"] = "Tema de la Aplicación - Zooni";
+    Layout = null;
+    var tema = ViewBag.Tema ?? "claro";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+
+<style>
+/* 🎨 VARIABLES BASE */
+:root {
+  --verde: #3ac37d;
+  --amarillo: #FFD85A;
+  --marron: #3a2a1b;
+  --texto-claro: #3a2a1b;
+  --texto-oscuro: #ffffff;
+  --fondo-claro: #ffffff;
+  --fondo-oscuro: #0f0f0f;
+}
+
+/* 🌞 Modo claro */
+body.tema-claro {
+  background: var(--fondo-claro);
+  color: var(--texto-claro);
+}
+
+/* 🌙 Modo oscuro */
+body.tema-oscuro {
+  background: var(--fondo-oscuro);
+  color: var(--texto-oscuro);
+}
+
+/* ===== Reset ===== */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+  transition: background .4s ease, color .4s ease;
+}
+
+/* ===== Textos globales ===== */
+h1, h2, h3, h4, p, span, label, a, li {
+  color: inherit !important;
+  transition: color .3s ease;
+}
+
+/* ===== Menú lateral ===== */
+header {
+  position: fixed;
+  top: 15px;
+  left: 20px;
+  z-index: 10;
+}
+
+.menu-icon {
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  transition: transform .25s ease, filter .3s ease;
+  filter: brightness(0); /* negro en modo claro */
+}
+body.tema-oscuro .menu-icon {
+  filter: brightness(10); /* blanco total en oscuro */
+}
+.menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+  width: 250px;
+  height: 100%;
+  background: @(tema == "oscuro" ? "#161616" : "#fdfdfd");
+  box-shadow: 4px 0 14px rgba(0,0,0,0.25);
+  border-right: 2px solid rgba(255,255,255,0.15);
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 1.2rem;
+  gap: 1rem;
+  transition: transform 0.35s ease, background .4s ease, color .4s ease;
+  z-index: 999;
+}
+.menu-lateral.abierto { transform: translateX(0); }
+
+.menu-lateral a {
+  text-decoration: none;
+  font-weight: 600;
+  color: inherit;
+  font-size: 1.05rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  transition: all .25s ease;
+}
+.menu-lateral a:hover {
+  background: var(--verde);
+  color: #fff !important;
+}
+
+.cerrar-menu {
+  align-self: flex-end;
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  color: inherit;
+}
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 998;
+}
+.overlay.activo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ===== Contenido ===== */
+main {
+  width: 100%;
+  max-width: 500px;
+  margin: 100px auto 60px auto;
+  padding: 0 20px;
+  text-align: center;
+  transition: color .4s ease;
+}
+
+h1 {
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1rem;
+  margin-bottom: 35px;
+}
+
+/* ===== Botones ===== */
+.opciones {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+}
+
+button {
+  background: var(--verde);
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 22px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  width: 80%;
+  max-width: 280px;
+  transition: background .3s ease, transform .2s ease;
+}
+button:hover {
+  background: #2fa66a;
+  transform: translateY(-2px);
+}
+button:active { transform: scale(0.97); }
+
+/* 📱 Responsive */
+@@media (max-width: 600px) {
+  main { margin-top: 80px; }
+  h1 { font-size: 1.6rem; }
+  .opciones { gap: 18px; }
+  button { width: 90%; }
+  .menu-lateral { width: 220px; padding: 2rem 1rem; }
+}
+</style>
+</head>
+
+<body class="tema-@tema">
+<header>
+  <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+  <div class="cerrar-menu" id="cerrarMenu">✖</div>
+  <a href="/Home/Index">🏠 Inicio</a>
+  <a href="/Comunidad">👥 Comunidad</a>
+  <a href="/Marketplace">🛒 Marketplace</a>
+  <a href="/Home/FichaMedica">💉 Ficha médica</a>
+  <a href="/Home/Calendario">📅 Calendario</a>
+  <a href="/Chat/ChatZooni">💬 ChatBot</a>
+  <a href="/Closet">👕 Closet</a>
+  <a href="/Home/Perfil">👤 Perfil</a>
+  <a href="/Home/Configuracion">⚙️ Configuración</a>
+  <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<main>
+  <h1>Tema de la aplicación 🎨</h1>
+  <p>Seleccioná cómo querés ver Zooni:</p>
+
+  <div class="opciones">
+    <form method="post" action="/Home/CambiarTema">
+      <button type="submit" name="modo" value="claro">☀️ Modo Claro</button>
+      <button type="submit" name="modo" value="oscuro">🌙 Modo Oscuro</button>
+    </form>
+  </div>
+</main>
+
+<script>
+// ===== Menú lateral =====
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+document.getElementById("abrirMenu").onclick = () => {
+  menu.classList.add("abierto");
+  overlay.classList.add("activo");
+};
+document.getElementById("cerrarMenu").onclick = cerrarMenu;
+overlay.onclick = cerrarMenu;
+
+function cerrarMenu() {
+  menu.classList.remove("abierto");
+  overlay.classList.remove("activo");
+}
+
+// ===== Fade animado =====
+document.querySelectorAll("button[name='modo']").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const fade = document.createElement("div");
+    fade.style.position = "fixed";
+    fade.style.inset = "0";
+    fade.style.background = "rgba(0,0,0,0.5)";
+    fade.style.zIndex = "9999";
+    fade.style.opacity = "0";
+    fade.style.transition = "opacity 0.4s ease";
+    document.body.appendChild(fade);
+    requestAnimationFrame(() => fade.style.opacity = "1");
+    setTimeout(() => fade.remove(), 600);
+  });
+});
+</script>
+</body>
+</html>

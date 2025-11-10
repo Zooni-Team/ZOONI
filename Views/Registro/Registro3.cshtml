@@ -267,7 +267,7 @@
     @Html.AntiForgeryToken()
 
     <!-- 🔹 Campo oculto para modo -->
-    <input type="hidden" name="modo" value="@ViewBag.Modo ?? "normal"" />
+<input type="hidden" name="modo" value="@(ViewBag.Modo != null ? ViewBag.Modo.ToString() : "normal")" />
 
     <!-- 🔹 Campo oculto para especie -->
     <input type="hidden" name="Especie" value="@ViewBag.MascotaEspecie" />

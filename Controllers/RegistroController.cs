@@ -349,7 +349,7 @@ public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int E
         }
 
         // 🟢 Normalizar peso
-        var (pesoNormalizado, pesoDisplay) = PesoHelper.NormalizarPeso(Peso.ToString());
+var (pesoNormalizado, pesoDisplayFinal) = PesoHelper.NormalizarPeso(Peso.ToString());
         string especie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
         if (!string.IsNullOrEmpty(especie) && !PesoHelper.ValidarPesoParaEspecie(pesoNormalizado, especie))
         {
@@ -361,28 +361,29 @@ public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int E
         HttpContext.Session.SetString("MascotaSexo", Sexo);
         HttpContext.Session.SetString("MascotaRaza", Raza);
         HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString("F2", CultureInfo.InvariantCulture));
-        HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplay);
+HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplayFinal);
         HttpContext.Session.SetInt32("MascotaEdad", Edad);
 
         // 🧩 Definir modo final con fallback
         // 🔹 Definición robusta del modo final
-string modoFinal = (modo ?? "").Trim().ToLower();
-if (string.IsNullOrEmpty(modoFinal))
-    modoFinal = HttpContext.Session.GetString("ModoRegistro")?.ToLower() ?? "normal";
+string modoFinal = string.IsNullOrWhiteSpace(modo)
+    ? (HttpContext.Session.GetString("ModoRegistro")?.ToLower() ?? "normal")
+    : modo.Trim().ToLower();
 
-Console.WriteLine($"🐾 Registro3Post → Modo final: {modoFinal}");
+Console.WriteLine($"🐾 [DEBUG] Modo final resuelto: {modoFinal}");
+
 
 // 🔄 Lógica final
 if (modoFinal == "nuevamascota")
 {
     string nombre = HttpContext.Session.GetString("MascotaNombre") ?? "MiMascota";
-    string especie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
+    string tipo = HttpContext.Session.GetString("MascotaEspecie") ?? "";
     string raza = HttpContext.Session.GetString("MascotaRaza") ?? "";
     string sexo = HttpContext.Session.GetString("MascotaSexo") ?? "";
     decimal.TryParse(HttpContext.Session.GetString("MascotaPeso"), out decimal peso);
     int edad = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
     string foto = HttpContext.Session.GetString("MascotaFoto") ?? "";
-    string pesoDisplay = HttpContext.Session.GetString("MascotaPesoDisplay") ?? $"{peso} kg";
+HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplayFinal);
 
     string queryInsert = @"
         INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Foto, Fecha_Nacimiento, PesoDisplay)
@@ -390,17 +391,18 @@ if (modoFinal == "nuevamascota")
         SELECT SCOPE_IDENTITY();";
 
     var parametros = new Dictionary<string, object>
-    {
-        { "@U", userId.Value },
-        { "@Nombre", nombre },
-        { "@Especie", especie },
-        { "@Raza", raza },
-        { "@Sexo", sexo },
-        { "@Peso", peso },
-        { "@Edad", edad },
-        { "@Foto", foto },
-        { "@PesoDisplay", pesoDisplay }
-    };
+{
+    { "@U", userId.Value },
+    { "@Nombre", nombre },
+    { "@Especie", especie },
+    { "@Raza", raza },
+    { "@Sexo", sexo },
+    { "@Peso", peso },
+    { "@Edad", edad },
+    { "@Foto", foto },
+    { "@PesoDisplay", pesoDisplayFinal }
+};
+
 
     object nuevaId = BD.ExecuteScalar(queryInsert, parametros);
 

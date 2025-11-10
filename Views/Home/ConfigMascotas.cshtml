@@ -1,142 +1,184 @@
 @using Zooni.Models
 @{
-    ViewData["Title"] = "Mis Mascotas";
+    ViewData["Title"] = "Configuración de Mascotas 🐶";
     Layout = "_Layout";
+    var tema = ViewBag.Tema ?? "claro";
+    var mascotasActivas = ViewBag.MascotasActivas as List<Mascota> ?? new();
+    var mascotasArchivadas = ViewBag.MascotasArchivadas as List<Mascota> ?? new();
 }
 
-<header style="display:flex; align-items:center; padding:18px; font-family:'Poppins',sans-serif; color:var(--text-color); background:var(--bg-color);">
-    <a asp-action="Configuracion" asp-controller="Home" style="text-decoration:none; color:inherit; font-size:1.8rem; margin-right:12px;">‹</a>
-    <h1 style="font-size:1.4rem; font-weight:600; margin:0;">@ViewData["Title"]</h1>
-</header>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 
-<section style="width:90%; max-width:430px; margin:20px auto;">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: @(tema == "oscuro" ? "#1f1f1f" : "#fafafa");
+            color: @(tema == "oscuro" ? "#f2f2f2" : "#333");
+            margin: 0;
+            padding: 0;
+        }
+        .config-container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: @(tema == "oscuro" ? "#3ac37d" : "#2b8558");
+        }
+        .mascotas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .card {
+            background: @(tema == "oscuro" ? "#2a2a2a" : "#fff");
+            border-radius: 18px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 100%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid #3ac37d;
+        }
+        .card h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: @(tema == "oscuro" ? "#fff" : "#4b3b2b");
+        }
+        .card p {
+            margin: 4px 0;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .acciones {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-editar {
+            background-color: #ffd85a;
+            color: #4b3b2b;
+        }
+        .btn-archivar {
+            background-color: #f87171;
+            color: #fff;
+        }
+        .btn-editar:hover { background-color: #ffc93c; }
+        .btn-archivar:hover { background-color: #ef4444; }
 
-    <div style="margin-bottom:20px; text-align:right;">
-        <a asp-action="NuevaMascota" asp-controller="Registro"
-           style="padding:10px 16px; background:var(--accent-color, #39b77c); color:white; border:none; border-radius:8px; font-weight:500; text-decoration:none;">
-            + Agregar Mascota
-        </a>
-    </div>
+        .seccion-titulo {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-top: 40px;
+            margin-bottom: 10px;
+            color: @(tema == "oscuro" ? "#ffd85a" : "#3ac37d");
+        }
 
-    <!-- Mascotas activas -->
-    <div style="margin-bottom:30px;">
-        <h2 style="font-size:1.1rem; font-weight:500; color:var(--text-secondary-color); margin-bottom:10px;">Activas</h2>
+        .btn-agregar {
+            display: block;
+            margin: 20px auto;
+            background-color: #3ac37d;
+            color: white;
+            font-weight: 600;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            transition: 0.3s ease;
+        }
+        .btn-agregar:hover { background-color: #2f9e64; transform: scale(1.03); }
 
-        @if (ViewBag.MascotasActivas != null && ((List<Mascota>)ViewBag.MascotasActivas).Count > 0)
+        .mensaje-vacio {
+            text-align: center;
+            opacity: 0.7;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="config-container">
+        <h1>Configuración de Mascotas 🐾</h1>
+
+        <a href="/Registro/NuevaMascota" class="btn-agregar">+ Agregar nueva mascota</a>
+
+        <div class="seccion-titulo">Activas</div>
+        @if (mascotasActivas.Count > 0)
         {
-            foreach (Mascota m in (List<Mascota>)ViewBag.MascotasActivas)
-            {
-                var foto = !string.IsNullOrEmpty(m.Foto) ? m.Foto : "/img/mascotas/default.png";
-                <div class="mascota-card" style="background:var(--card-bg); border-radius:18px; box-shadow:0 2px 6px rgba(0,0,0,0.08); margin-bottom:16px; overflow:hidden; color:var(--text-color); position:relative;">
-                    <a asp-action="EditarMascota" asp-controller="Home" asp-route-id="@m.Id_Mascota"
-                       style="display:flex; align-items:center; text-decoration:none; color:inherit; padding:16px;">
-                        <div style="width:60px; height:60px; margin-right:12px; border-radius:30px; overflow:hidden; flex-shrink:0;">
-                            <img src="@foto" alt="@m.Nombre" style="width:100%; height:100%; object-fit:cover;">
+            <div class="mascotas-grid">
+                @foreach (var m in mascotasActivas)
+                {
+                    <div class="card">
+                        <img src="@(string.IsNullOrEmpty(m.Foto) ? "/img/mascotas/default.png" : m.Foto)" alt="@m.Nombre" />
+                        <h3>@m.Nombre</h3>
+                        <p>@m.Especie - @m.Raza</p>
+                        <div class="acciones">
+                            <form asp-action="EditarMascota" asp-controller="Home" method="get">
+                                <input type="hidden" name="id" value="@m.Id_Mascota" />
+                                <button type="submit" class="btn btn-editar">Editar</button>
+                            </form>
+                            <form asp-action="ArchivarMascota" asp-controller="Home" method="post">
+                                @Html.AntiForgeryToken()
+                                <input type="hidden" name="id" value="@m.Id_Mascota" />
+                                <button type="submit" class="btn btn-archivar">Archivar</button>
+                            </form>
                         </div>
-                        <div style="flex:1;">
-                            <div style="font-size:1.1rem; font-weight:600;">@m.Nombre</div>
-                            <div style="font-size:0.9rem; color:var(--text-secondary-color);">@m.Especie | @m.Raza</div>
-                        </div>
-                        <span class="arrow" style="font-size:1.3rem; color:var(--text-secondary-color);">›</span>
-                    </a>
-
-                    <div style="position:absolute; top:16px; right:16px; display:flex; gap:8px;">
-                        <form asp-action="ArchivarMascota" asp-controller="Home" method="post" style="margin:0;">
-                            <input type="hidden" name="id" value="@m.Id_Mascota" />
-                            <button type="submit" style="background:none; border:none; color:var(--text-secondary-color); font-size:1.1rem;" title="Archivar">🗃</button>
-                        </form>
-                        <button type="button" class="color-picker-btn" data-mascota="@m.Id_Mascota"
-                                style="background-color:var(--accent-color,#39b77c); width:24px; height:24px; border-radius:12px; border:2px solid white;"></button>
                     </div>
-                </div>
-            }
+                }
+            </div>
         }
         else
         {
-            <div style="text-align:center; padding:40px 0; color:var(--text-secondary-color);">
-                No tienes mascotas registradas aún.<br />Toca “+ Agregar Mascota” para comenzar.
-            </div>
+            <p class="mensaje-vacio">No tenés mascotas activas actualmente.</p>
         }
-    </div>
 
-    <!-- Mascotas archivadas -->
-    <div>
-        <h2 style="font-size:1.1rem; font-weight:500; color:var(--text-secondary-color); margin-bottom:10px;">Archivadas</h2>
-        @if (ViewBag.MascotasArchivadas != null && ((List<Mascota>)ViewBag.MascotasArchivadas).Count > 0)
+        <div class="seccion-titulo">Archivadas 🗃</div>
+        @if (mascotasArchivadas.Count > 0)
         {
-            foreach (Mascota m in (List<Mascota>)ViewBag.MascotasArchivadas)
-            {
-                var foto = !string.IsNullOrEmpty(m.Foto) ? m.Foto : "/img/mascotas/default.png";
-                <div class="mascota-card archived" style="background:var(--card-bg); border-radius:18px; box-shadow:0 2px 6px rgba(0,0,0,0.04); margin-bottom:16px; overflow:hidden; color:var(--text-secondary-color); opacity:0.6;">
-                    <div style="display:flex; align-items:center; padding:16px;">
-                        <div style="width:60px; height:60px; margin-right:12px; border-radius:30px; overflow:hidden; flex-shrink:0;">
-                            <img src="@foto" alt="@m.Nombre" style="width:100%; height:100%; object-fit:cover;">
-                        </div>
-                        <div style="flex:1;">
-                            <div style="font-size:1.1rem; font-weight:600;">@m.Nombre</div>
-                            <div style="font-size:0.9rem;">@m.Especie | @m.Raza</div>
-                        </div>
-                        <span class="arrow" style="font-size:1.3rem; color:var(--text-secondary-color);">›</span>
+            <div class="mascotas-grid">
+                @foreach (var m in mascotasArchivadas)
+                {
+                    <div class="card" style="opacity:0.7;">
+                        <img src="@(string.IsNullOrEmpty(m.Foto) ? "/img/mascotas/default.png" : m.Foto)" alt="@m.Nombre" />
+                        <h3>@m.Nombre</h3>
+                        <p>@m.Especie - @m.Raza</p>
                     </div>
-                </div>
-            }
+                }
+            </div>
         }
         else
         {
-            <div style="text-align:center; padding:30px 0; color:var(--text-secondary-color);">
-                No hay mascotas archivadas.
-            </div>
+            <p class="mensaje-vacio">No hay mascotas archivadas.</p>
         }
     </div>
-
-</section>
-
-<style>
-body.tema-claro {
-    --bg-color: #f9f9f8;
-    --text-color: #3c2a1b;
-    --card-bg: #ffffff;
-    --text-secondary-color: #777;
-    --accent-color: #39b77c;
-}
-body.tema-oscuro {
-    --bg-color: #1a1a1a;
-    --text-color: #eaeaea;
-    --card-bg: #2a2a2a;
-    --text-secondary-color: #aaa;
-    --accent-color: #57b887;
-}
-body {
-    background: var(--bg-color);
-    color: var(--text-color);
-}
-.color-picker-btn {
-    cursor: pointer;
-}
-.color-picker-btn:hover {
-    filter: brightness(0.9);
-}
-.mascota-card:hover {
-    background: var(--hover-card-bg, #faf7f0);
-}
-.mascota-card.archived:hover {
-    background: var(--hover-card-bg, #2c2c2c);
-}
-</style>
-
-@section Scripts {
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.color-picker-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const id = btn.dataset.mascota;
-            const newColor = prompt("Ingresá un color (#hex o nombre):", btn.style.backgroundColor);
-            if (newColor) {
-                btn.style.backgroundColor = newColor;
-                document.documentElement.style.setProperty(`--tag-color-${id}`, newColor);
-            }
-        });
-    });
-});
-</script>
-}
+</body>
+</html>

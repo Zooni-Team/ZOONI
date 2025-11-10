@@ -1,0 +1,321 @@
+@{
+    ViewData["Title"] = "Ayuda y Soporte 🐾";
+    Layout = null;
+    var tema = ViewBag.Tema ?? "claro";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --verde: #3ac37d;
+  --marron: #3a2a1b;
+  --rojo: #e74c3c;
+  --fondo-claro: #f9f9f8;
+}
+
+/* ===== GENERAL ===== */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: @(tema == "oscuro" ? "#181818" : "var(--fondo-claro)");
+  color: @(tema == "oscuro" ? "#fff" : "var(--marron)");
+}
+
+/* ===== HEADER ===== */
+header {
+  position: fixed;
+  top: 15px;
+  left: 20px;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.menu-icon {
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  transition: transform .25s ease;
+  filter: @(tema == "oscuro" ? "invert(1)" : "none");
+}
+.menu-icon:hover { transform: scale(1.1); }
+
+.back {
+  font-size: 1.8rem;
+  color: var(--marron);
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 8px;
+}
+
+/* ===== MENU LATERAL ===== */
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform: translateX(-100%);
+  width: 250px;
+  height: 100%;
+  background: @(tema == "oscuro" ? "#1b1b1b" : "#ffffff");
+  box-shadow: 4px 0 12px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  padding: 2.5rem 1.2rem;
+  gap: 1rem;
+  transition: transform .35s ease;
+  z-index: 999;
+}
+.menu-lateral.abierto { transform: translateX(0); }
+
+.menu-lateral a {
+  text-decoration: none;
+  font-weight: 600;
+  color: @(tema == "oscuro" ? "#f1f1f1" : "#2c2c2c");
+  font-size: 1.05rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 10px;
+  transition: all .25s ease;
+}
+.menu-lateral a:hover {
+  background: var(--verde);
+  color: #fff;
+}
+
+.cerrar-menu {
+  align-self: flex-end;
+  font-size: 1.4rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  color: inherit;
+}
+
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+  z-index: 998;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+/* ===== MAIN ===== */
+main {
+  margin: 100px auto 50px auto;
+  max-width: 500px;
+  background: @(tema == "oscuro" ? "#242424" : "#fff");
+  border-radius: 22px;
+  padding: 25px;
+  box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+}
+h1 {
+  text-align: center;
+  color: var(--verde);
+  font-size: 1.5rem;
+  margin-bottom: 25px;
+}
+
+/* ===== SECCIONES ===== */
+section {
+  margin-bottom: 35px;
+}
+
+/* FAQ */
+.faq-item {
+  background: @(tema == "oscuro" ? "#2d2d2d" : "#f9f9f9");
+  border: 1px solid @(tema == "oscuro" ? "#444" : "#ddd");
+  border-radius: 14px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.faq-question {
+  padding: 14px 18px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background .2s ease;
+}
+.faq-question:hover {
+  background: rgba(57,183,124,0.15);
+}
+.faq-answer {
+  padding: 0 18px 14px 18px;
+  display: none;
+  font-size: 0.95rem;
+  color: @(tema == "oscuro" ? "#ddd" : "#555");
+}
+
+/* FORMULARIO */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+input, textarea {
+  border-radius: 12px;
+  border: 1.5px solid @(tema == "oscuro" ? "#555" : "#ddd");
+  padding: 10px 14px;
+  font-size: 1rem;
+  background: @(tema == "oscuro" ? "#1e1e1e" : "#fff");
+  color: @(tema == "oscuro" ? "#fff" : "#222");
+  outline: none;
+  resize: none;
+}
+textarea { min-height: 100px; }
+input:focus, textarea:focus {
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(57,183,124,0.25);
+}
+button {
+  background: var(--verde);
+  border: none;
+  border-radius: 25px;
+  padding: 12px 18px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+button:hover { background: #2fa567; transform: translateY(-2px); }
+
+/* CONSEJOS */
+.tip {
+  background: rgba(57,183,124,0.12);
+  padding: 12px 18px;
+  border-radius: 12px;
+  margin-bottom: 10px;
+  font-size: 0.95rem;
+  border-left: 4px solid var(--verde);
+}
+
+/* ANIMACIONES */
+@@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+  <a href="/Home/Configuracion" class="back">‹</a>
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+  <div class="cerrar-menu" id="cerrarMenu">✖</div>
+  <a href="/Home/Index">🏠 Inicio</a>
+  <a href="/Comunidad">👥 Comunidad</a>
+  <a href="/Marketplace">🛒 Marketplace</a>
+  <a href="/Home/FichaMedica">💉 Ficha médica</a>
+  <a href="/Home/Calendario">📅 Calendario</a>
+  <a href="/Chat/ChatZooni">💬 ChatBot</a>
+  <a href="/Closet">👕 Closet</a>
+  <a href="/Home/Perfil">👤 Perfil</a>
+  <a href="/Home/Configuracion">⚙️ Configuración</a>
+  <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<main>
+  <h1>Centro de Ayuda 🐶</h1>
+
+  <section>
+    <h3>Preguntas Frecuentes</h3>
+    <div class="faq-item">
+      <div class="faq-question">¿Cómo registro una nueva mascota? <span>+</span></div>
+      <div class="faq-answer">Podés hacerlo desde “Mis Mascotas” → “Agregar nueva mascota”. Completá los datos y listo 🐾</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Puedo cambiar el correo asociado? <span>+</span></div>
+      <div class="faq-answer">Sí, en “Cuenta y Seguridad” podés actualizar tu correo y contraseña.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">¿Cómo elimino mi cuenta? <span>+</span></div>
+      <div class="faq-answer">Desde “Cuenta y Seguridad”, al final del formulario tenés la opción de eliminar tu cuenta permanentemente.</div>
+    </div>
+  </section>
+
+  <section>
+  <h3>Contactanos</h3>
+
+  @if (TempData["Error"] != null)
+  {
+      <div style="background:#ffefef;border:1px solid #e74c3c;color:#b30000;padding:10px 14px;
+                  border-radius:10px;font-weight:600;margin-bottom:10px;text-align:center;">
+          @TempData["Error"]
+      </div>
+  }
+
+  @if (TempData["Exito"] != null)
+  {
+      <div style="background:#e7f8ee;border:1px solid #3ac37d;color:#167e4a;padding:10px 14px;
+                  border-radius:10px;font-weight:600;margin-bottom:10px;text-align:center;">
+          @TempData["Exito"]
+      </div>
+  }
+
+  <form method="post" action="/Home/EnviarSoporte">
+    <input type="text" name="nombre" placeholder="Tu nombre" required />
+    <input type="email" name="correo" placeholder="Tu correo" required />
+    <input type="password" name="contrasena" placeholder="Tu contraseña" required />
+    <textarea name="mensaje" placeholder="Contanos tu duda o problema..." required></textarea>
+    <button type="submit">📨 Enviar mensaje</button>
+  </form>
+</section>
+
+
+  </section>
+
+  <section>
+    <h3>Consejos útiles</h3>
+    <div class="tip">💡 Revisá el calendario de tu mascota semanalmente para mantener sus vacunas y tratamientos al día.</div>
+    <div class="tip">🐾 Guardá los PDF médicos desde la ficha de tu mascota para tener siempre su historial actualizado.</div>
+    <div class="tip">🎯 Activá las notificaciones en “Configuración → Notificaciones” para no perder citas importantes.</div>
+  </section>
+</main>
+
+<script>
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+
+document.getElementById("abrirMenu").onclick = () => {
+  menu.classList.add("abierto");
+  overlay.classList.add("activo");
+};
+document.getElementById("cerrarMenu").onclick = cerrarMenu;
+overlay.onclick = cerrarMenu;
+
+function cerrarMenu() {
+  menu.classList.remove("abierto");
+  overlay.classList.remove("activo");
+}
+
+// Acordeón FAQ
+document.querySelectorAll('.faq-question').forEach(q => {
+  q.addEventListener('click', () => {
+    const answer = q.nextElementSibling;
+    const open = answer.style.display === 'block';
+    document.querySelectorAll('.faq-answer').forEach(a => a.style.display = 'none');
+    document.querySelectorAll('.faq-question span').forEach(s => s.textContent = '+');
+    if (!open) {
+      answer.style.display = 'block';
+      q.querySelector('span').textContent = '−';
+    }
+  });
+});
+</script>
+</body>
+</html>
