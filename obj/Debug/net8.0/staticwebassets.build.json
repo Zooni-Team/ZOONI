@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DD1ZXYOmRulgaxHHXOoeXgEG9GJsKaTh8JVpfb4IwYc=",
+  "Hash": "vfGjTY9YQA6SutTzWUx1kxflIdRzEER+Ko7aUoCHWWI=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -148,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\data\\vacunas.json"
+    },
+    {
+      "Identity": "C:\\Users\\49374119\\zooni\\wwwroot\\data\\veterinarios.json",
+      "SourceId": "Zooni",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\49374119\\zooni\\wwwroot\\",
+      "BasePath": "_content/Zooni",
+      "RelativePath": "data/veterinarios.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\data\\veterinarios.json"
     },
     {
       "Identity": "C:\\Users\\49374119\\zooni\\wwwroot\\favicon.ico",
@@ -530,12 +549,12 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\aves\\guacamayo\\ave_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\aves\\otra raza\\ave_basico.png",
+      "Identity": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\aves\\Otra raza\\ave_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\49374119\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas/aves/otra raza/ave_basico.png",
+      "RelativePath": "img/mascotas/aves/Otra raza/ave_basico.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -546,7 +565,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\mascotas\\aves\\otra raza\\ave_basico.png"
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\aves\\Otra raza\\ave_basico.png"
     },
     {
       "Identity": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\aves\\periquito\\ave_basico.png",

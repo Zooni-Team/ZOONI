@@ -3,7 +3,7 @@
     Layout = null;
     var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
     var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
-    var mascotaRaza = ViewBag.MascotaRaza?.ToString()?.ToLower() ?? "basico";
+    var mascotaRaza = ViewBag.MascotaRaza?.ToString() ?? "basico"; // ✅ Usar raza exacta, sin ToLower
     var rutaImagen = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
 }
 <!DOCTYPE html>

@@ -79,9 +79,8 @@ body.tema-oscuro .menu-icon {
   transform: translateX(-100%);
   width: 250px;
   height: 100%;
-  background: @(tema == "oscuro" ? "#161616" : "#fdfdfd");
+  backdrop-filter: blur(12px);
   box-shadow: 4px 0 14px rgba(0,0,0,0.25);
-  border-right: 2px solid rgba(255,255,255,0.15);
   display: flex;
   flex-direction: column;
   padding: 2.5rem 1.2rem;
@@ -89,20 +88,37 @@ body.tema-oscuro .menu-icon {
   transition: transform 0.35s ease, background .4s ease, color .4s ease;
   z-index: 999;
 }
+body.tema-claro .menu-lateral {
+  background: rgba(255,255,255,0.96);
+}
+body.tema-oscuro .menu-lateral {
+  background: rgba(30,30,30,0.96);
+  box-shadow: 4px 0 14px rgba(0, 0, 0, 0.5);
+}
 .menu-lateral.abierto { transform: translateX(0); }
 
 .menu-lateral a {
   text-decoration: none;
   font-weight: 600;
-  color: inherit;
   font-size: 1.05rem;
   padding: 0.5rem 0.8rem;
   border-radius: 10px;
   transition: all .25s ease;
+  color: inherit;
 }
-.menu-lateral a:hover {
+body.tema-claro .menu-lateral a {
+  color: var(--marron);
+}
+body.tema-oscuro .menu-lateral a {
+  color: #ffffff;
+}
+body.tema-claro .menu-lateral a:hover {
+  background: var(--amarillo);
+  color: #3c2a00;
+}
+body.tema-oscuro .menu-lateral a:hover {
   background: var(--verde);
-  color: #fff !important;
+  color: #ffffff;
 }
 
 .cerrar-menu {
@@ -110,7 +126,17 @@ body.tema-oscuro .menu-icon {
   font-size: 1.4rem;
   cursor: pointer;
   margin-bottom: 1.5rem;
+  transition: transform 0.2s ease;
   color: inherit;
+}
+body.tema-claro .cerrar-menu {
+  color: var(--marron);
+}
+body.tema-oscuro .cerrar-menu {
+  color: #ffffff;
+}
+.cerrar-menu:hover {
+  transform: scale(1.2);
 }
 
 .overlay {
@@ -200,7 +226,7 @@ button:active { transform: scale(0.97); }
   <a href="/Home/FichaMedica">💉 Ficha médica</a>
   <a href="/Home/Calendario">📅 Calendario</a>
   <a href="/Chat/ChatZooni">💬 ChatBot</a>
-  <a href="/Closet">👕 Closet</a>
+  <a href="/Home/Closet">👕 Closet</a>
   <a href="/Home/Perfil">👤 Perfil</a>
   <a href="/Home/Configuracion">⚙️ Configuración</a>
   <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>

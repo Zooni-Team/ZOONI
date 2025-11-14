@@ -43,17 +43,27 @@ header {
   width: 36px;
   height: 36px;
   cursor: pointer;
-  transition: transform .25s ease;
-  filter: @(tema == "oscuro" ? "invert(1)" : "none");
+  transition: transform .25s ease, filter .3s ease;
+  filter: brightness(0); /* negro en modo claro */
+}
+body.tema-oscuro .menu-icon {
+  filter: brightness(0) invert(1); /* blanco en modo oscuro */
 }
 .menu-icon:hover { transform: scale(1.1); }
 
 .back {
   font-size: 1.8rem;
-  color: var(--marron);
   font-weight: 700;
   text-decoration: none;
   margin-left: 8px;
+  color: inherit;
+  transition: color .3s ease;
+}
+body.tema-claro .back {
+  color: var(--marron);
+}
+body.tema-oscuro .back {
+  color: #ffffff;
 }
 
 /* ===== MENU LATERAL ===== */
@@ -64,27 +74,41 @@ header {
   transform: translateX(-100%);
   width: 250px;
   height: 100%;
-  background: @(tema == "oscuro" ? "#1b1b1b" : "#ffffff");
+  backdrop-filter: blur(12px);
   box-shadow: 4px 0 12px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
   padding: 2.5rem 1.2rem;
   gap: 1rem;
-  transition: transform .35s ease;
+  transition: transform .35s ease, background .4s ease, color .4s ease;
   z-index: 999;
+}
+body.tema-claro .menu-lateral {
+  background: rgba(255,255,255,0.96);
+}
+body.tema-oscuro .menu-lateral {
+  background: rgba(30,30,30,0.96);
+  box-shadow: 4px 0 12px rgba(0,0,0,0.5);
 }
 .menu-lateral.abierto { transform: translateX(0); }
 
 .menu-lateral a {
   text-decoration: none;
   font-weight: 600;
-  color: @(tema == "oscuro" ? "#f1f1f1" : "#2c2c2c");
   font-size: 1.05rem;
   padding: 0.5rem 0.8rem;
   border-radius: 10px;
   transition: all .25s ease;
+  color: inherit;
 }
-.menu-lateral a:hover {
+body.tema-claro .menu-lateral a {
+  color: #2c2c2c;
+}
+body.tema-oscuro .menu-lateral a {
+  color: #f1f1f1;
+}
+body.tema-claro .menu-lateral a:hover,
+body.tema-oscuro .menu-lateral a:hover {
   background: var(--verde);
   color: #fff;
 }
@@ -94,7 +118,17 @@ header {
   font-size: 1.4rem;
   cursor: pointer;
   margin-bottom: 1.5rem;
+  transition: transform 0.2s ease, color .3s ease;
   color: inherit;
+}
+body.tema-claro .cerrar-menu {
+  color: #2c2c2c;
+}
+body.tema-oscuro .cerrar-menu {
+  color: #f1f1f1;
+}
+.cerrar-menu:hover {
+  transform: scale(1.2);
 }
 
 .overlay {
@@ -222,7 +256,7 @@ button:hover { background: #2fa567; transform: translateY(-2px); }
   <a href="/Home/FichaMedica">💉 Ficha médica</a>
   <a href="/Home/Calendario">📅 Calendario</a>
   <a href="/Chat/ChatZooni">💬 ChatBot</a>
-  <a href="/Closet">👕 Closet</a>
+  <a href="/Home/Closet">👕 Closet</a>
   <a href="/Home/Perfil">👤 Perfil</a>
   <a href="/Home/Configuracion">⚙️ Configuración</a>
   <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>

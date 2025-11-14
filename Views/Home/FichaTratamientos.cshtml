@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Ficha de Tratamientos - Zooni";
     Layout = null;
-    var tema = ViewBag.Tema ?? HttpContext.Session.GetString("Tema") ?? "claro";
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
 
     var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
     var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
@@ -13,7 +13,8 @@ decimal.TryParse(ViewBag.MascotaPeso?.ToString() ?? "0", System.Globalization.Nu
 string? pesoDisplay = ViewBag.MascotaPesoDisplay?.ToString();
 string pesoFormateado = PesoHelper.FormatearPeso(mascotaPeso, pesoDisplay);
     var mascotaEdad = ViewBag.MascotaEdad ?? 0;
-    var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
+    // 🖼️ Ruta de imagen (usar MascotaAvatar del ViewBag si está disponible, sino construir con raza exacta)
+    var rutaMascota = ViewBag.MascotaAvatar ?? $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
     int años = Convert.ToInt32(mascotaEdad) / 12;
     int meses = Convert.ToInt32(mascotaEdad) % 12;
     string edadFormateada = $"{años} años y {meses} meses";
@@ -94,6 +95,7 @@ body.tema-claro .menu-lateral {
 }
 body.tema-oscuro .menu-lateral {
   background: rgba(30, 30, 30, 0.96);
+  box-shadow: 4px 0 14px rgba(0, 0, 0, 0.5);
 }
 .menu-lateral.abierto {
   left: 0;
@@ -108,9 +110,19 @@ body.tema-oscuro .menu-lateral {
   transition: all 0.25s ease;
   color: inherit;
 }
-.menu-lateral a:hover {
+body.tema-claro .menu-lateral a {
+  color: var(--marron);
+}
+body.tema-oscuro .menu-lateral a {
+  color: #ffffff;
+}
+body.tema-claro .menu-lateral a:hover {
   background: var(--amarillo);
   color: #3c2a00;
+}
+body.tema-oscuro .menu-lateral a:hover {
+  background: var(--verde);
+  color: #ffffff;
 }
 
 .cerrar-menu {
@@ -118,7 +130,14 @@ body.tema-oscuro .menu-lateral {
   font-size: 1.6rem;
   cursor: pointer;
   margin-bottom: 1.5rem;
+  transition: transform 0.2s ease;
   color: inherit;
+}
+body.tema-claro .cerrar-menu {
+  color: var(--marron);
+}
+body.tema-oscuro .cerrar-menu {
+  color: #ffffff;
 }
 .cerrar-menu:hover {
   transform: scale(1.2);
@@ -457,7 +476,7 @@ body.tema-oscuro .menu-lateral {
     <a href="/Home/FichaMedica">💉 Ficha médica</a>
     <a href="/Home/Calendario">📅 Calendario</a>
     <a href="/Chat/ChatZooni">💬 ChatBot</a>
-    <a href="/Closet">👕 Closet</a>
+    <a href="/Home/Closet">👕 Closet</a>
     <a href="/Home/Perfil">👤 Perfil</a>
     <a href="/Home/Configuracion">⚙️ Configuración</a>
     <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>

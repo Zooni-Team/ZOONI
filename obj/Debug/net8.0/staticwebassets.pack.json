@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets\\data\\vacunas.json"
     },
     {
+      "Id": "C:\\Users\\49374119\\zooni\\wwwroot\\data\\veterinarios.json",
+      "PackagePath": "staticwebassets\\data\\veterinarios.json"
+    },
+    {
       "Id": "C:\\Users\\49374119\\zooni\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
@@ -97,6 +101,10 @@
       "PackagePath": "staticwebassets\\img\\mascotas\\aves\\Cacatúa\\ave_basico.png"
     },
     {
+      "Id": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\aves\\Otra raza\\ave_basico.png",
+      "PackagePath": "staticwebassets\\img\\mascotas\\aves\\Otra raza\\ave_basico.png"
+    },
+    {
       "Id": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\aves\\agapornis\\ave_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\aves\\agapornis\\ave_basico.png"
     },
@@ -107,10 +115,6 @@
     {
       "Id": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\aves\\guacamayo\\ave_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\aves\\guacamayo\\ave_basico.png"
-    },
-    {
-      "Id": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\aves\\otra raza\\ave_basico.png",
-      "PackagePath": "staticwebassets\\img\\mascotas\\aves\\otra raza\\ave_basico.png"
     },
     {
       "Id": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\aves\\periquito\\ave_basico.png",

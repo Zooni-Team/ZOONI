@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Configuración de Mascotas 🐶";
     Layout = null;
-    var tema = ViewBag.Tema ?? HttpContext.Session.GetString("Tema") ?? "claro";
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
     var mascotasActivas = ViewBag.MascotasActivas as List<Mascota> ?? new();
     var mascotasArchivadas = ViewBag.MascotasArchivadas as List<Mascota> ?? new();
 }
@@ -86,21 +86,32 @@ body.tema-claro .menu-lateral {
 }
 body.tema-oscuro .menu-lateral {
     background: rgba(30,30,30,0.96);
+    box-shadow: 4px 0 14px rgba(0, 0, 0, 0.5);
 }
 .menu-lateral.abierto { transform: translateX(0); }
 
 .menu-lateral a {
     text-decoration: none;
     font-weight: 600;
-    color: inherit;
     font-size: 1.05rem;
     padding: 0.5rem 0.8rem;
     border-radius: 10px;
     transition: all .25s ease;
+    color: inherit;
 }
-.menu-lateral a:hover {
+body.tema-claro .menu-lateral a {
+    color: var(--marron);
+}
+body.tema-oscuro .menu-lateral a {
+    color: #ffffff;
+}
+body.tema-claro .menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+body.tema-oscuro .menu-lateral a:hover {
     background: var(--verde);
-    color: #fff !important;
+    color: #ffffff;
 }
 
 .cerrar-menu {
@@ -108,7 +119,17 @@ body.tema-oscuro .menu-lateral {
     font-size: 1.4rem;
     cursor: pointer;
     margin-bottom: 1.5rem;
+    transition: transform 0.2s ease;
     color: inherit;
+}
+body.tema-claro .cerrar-menu {
+    color: var(--marron);
+}
+body.tema-oscuro .cerrar-menu {
+    color: #ffffff;
+}
+.cerrar-menu:hover {
+    transform: scale(1.2);
 }
 
 .overlay {
@@ -131,6 +152,7 @@ main {
     max-width: 900px;
     margin: 100px auto 60px auto;
     padding: 0 20px;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -156,7 +178,9 @@ h1 {
     transition: background .3s ease, transform .2s ease;
     box-shadow: 0 4px 12px rgba(58, 195, 125, 0.3);
     max-width: 300px;
+    width: 100%;
     text-align: center;
+    box-sizing: border-box;
 }
 .btn-agregar:hover {
     background: #2fa66a;
@@ -179,6 +203,8 @@ h1 {
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 20px;
     margin-top: 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .card {
@@ -189,6 +215,8 @@ h1 {
     align-items: center;
     padding: 20px;
     transition: transform 0.2s ease, box-shadow 0.2s ease, background .4s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 body.tema-claro .card {
     background: var(--card-claro);
@@ -282,10 +310,163 @@ body.tema-oscuro .card:hover {
     opacity: 0.6;
 }
 
+/* Media Queries */
+@@media (max-width: 1024px) {
+    main {
+        max-width: 100%;
+        padding: 0 30px;
+    }
+    .mascotas-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 18px;
+    }
+}
+
+@@media (max-width: 768px) {
+    main {
+        margin-top: 90px;
+        padding: 0 25px;
+    }
+    h1 {
+        font-size: 1.7rem;
+        margin-bottom: 25px;
+    }
+    .btn-agregar {
+        max-width: 100%;
+        padding: 12px 25px;
+        font-size: 0.95rem;
+    }
+    .mascotas-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 16px;
+    }
+    .seccion-titulo {
+        font-size: 1.2rem;
+        margin-top: 35px;
+        margin-bottom: 18px;
+    }
+    .card {
+        padding: 18px;
+    }
+    .card img {
+        width: 110px;
+        height: 110px;
+    }
+    .card h3 {
+        font-size: 1.2rem;
+    }
+}
+
 @@media (max-width: 600px) {
-    main { margin-top: 80px; }
-    h1 { font-size: 1.6rem; }
-    .mascotas-grid { grid-template-columns: 1fr; }
+    main {
+        margin-top: 80px;
+        padding: 0 20px;
+    }
+    h1 {
+        font-size: 1.6rem;
+        margin-bottom: 20px;
+    }
+    .btn-agregar {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        margin-bottom: 25px;
+    }
+    .mascotas-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        margin-top: 15px;
+    }
+    .seccion-titulo {
+        font-size: 1.1rem;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        padding-bottom: 8px;
+    }
+    .card {
+        padding: 16px;
+    }
+    .card img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 12px;
+    }
+    .card h3 {
+        font-size: 1.15rem;
+    }
+    .card p {
+        font-size: 0.85rem;
+    }
+    .acciones {
+        margin-top: 12px;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+}
+
+@@media (max-width: 480px) {
+    main {
+        margin-top: 75px;
+        padding: 0 15px;
+    }
+    h1 {
+        font-size: 1.4rem;
+        margin-bottom: 18px;
+    }
+    .btn-agregar {
+        padding: 11px 18px;
+        font-size: 0.88rem;
+    }
+    .seccion-titulo {
+        font-size: 1rem;
+        margin-top: 25px;
+        margin-bottom: 12px;
+    }
+    .card {
+        padding: 14px;
+    }
+    .card img {
+        width: 90px;
+        height: 90px;
+    }
+    .card h3 {
+        font-size: 1.1rem;
+    }
+    .card p {
+        font-size: 0.8rem;
+    }
+    .acciones {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .btn {
+        flex: 1;
+        min-width: 100px;
+    }
+    .mensaje-vacio {
+        padding: 30px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+@@media (max-width: 360px) {
+    main {
+        padding: 0 12px;
+    }
+    h1 {
+        font-size: 1.3rem;
+    }
+    .card {
+        padding: 12px;
+    }
+    .card img {
+        width: 80px;
+        height: 80px;
+    }
 }
 </style>
 </head>
@@ -322,7 +503,7 @@ body.tema-oscuro .card:hover {
             @foreach (var m in mascotasActivas)
             {
                 <div class="card">
-                    <img src="@(string.IsNullOrEmpty(m.Foto) ? "/img/mascotas/default.png" : m.Foto)" alt="@m.Nombre" />
+                    <img src="@(string.IsNullOrEmpty(m.Foto) || m.Foto == "" ? "/img/mascotas/default.png" : (m.Foto.StartsWith("/") ? m.Foto : "/" + m.Foto))" alt="@m.Nombre" onerror="this.src='/img/mascotas/default.png'" />
                     <h3>@m.Nombre</h3>
                     <p>@m.Especie - @m.Raza</p>
                     <div class="acciones">
@@ -352,7 +533,7 @@ body.tema-oscuro .card:hover {
             @foreach (var m in mascotasArchivadas)
             {
                 <div class="card archivada">
-                    <img src="@(string.IsNullOrEmpty(m.Foto) ? "/img/mascotas/default.png" : m.Foto)" alt="@m.Nombre" />
+                    <img src="@(string.IsNullOrEmpty(m.Foto) || m.Foto == "" ? "/img/mascotas/default.png" : (m.Foto.StartsWith("/") ? m.Foto : "/" + m.Foto))" alt="@m.Nombre" onerror="this.src='/img/mascotas/default.png'" />
                     <h3>@m.Nombre</h3>
                     <p>@m.Especie - @m.Raza</p>
                 </div>

@@ -62,6 +62,19 @@ namespace Zooni.Controllers
     // Obtener el peso decimal para cálculos
     if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
     {
+        // ✅ Corrección: si el peso es >= 100 y no hay PesoDisplay, probablemente está mal parseado
+        // Dividir por 10 solo si no hay PesoDisplay y el peso parece incorrecto (>= 100 para perros/gatos normales)
+        if (pesoDecimal >= 100 && string.IsNullOrEmpty(pesoDisplayBD))
+        {
+            // Intentar corregir dividiendo por 10 (ej: 300 -> 30.0)
+            decimal pesoCorregido = pesoDecimal / 10;
+            if (pesoCorregido <= 100) // Validar que el peso corregido sea razonable
+            {
+                pesoDecimal = pesoCorregido;
+                pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
+            }
+        }
+        
         ViewBag.MascotaPeso = pesoDecimal;
         ViewBag.MascotaPesoDisplay = pesoDisplayBD ?? PesoHelper.FormatearPeso(pesoDecimal);
     }
@@ -76,18 +89,14 @@ namespace Zooni.Controllers
         ? mascota["Foto"].ToString()
         : "";
     
-    // 🎨 Avatar: usar el de sesión si existe, sino el básico
+    // 🎨 Avatar: usar el de sesión si existe, sino el básico (usando raza exacta de BD)
     var especie = mascota["Especie"]?.ToString()?.ToLower() ?? "perro";
     var raza = mascota["Raza"]?.ToString() ?? "basico";
-    var razaNormalizada = raza.ToLower();
-    if (razaNormalizada.Contains("jack russell")) razaNormalizada = "jack russell";
-    else if (razaNormalizada.Contains("caniche negro")) razaNormalizada = "caniche negro";
-    else razaNormalizada = razaNormalizada.Replace(" ", "");
     
     var avatarSesion = HttpContext.Session.GetString("MascotaAvatar");
     ViewBag.MascotaAvatar = !string.IsNullOrEmpty(avatarSesion) 
         ? avatarSesion 
-        : $"/img/mascotas/{especie}s/{razaNormalizada}/{especie}_basico.png";
+        : $"/img/mascotas/{especie}s/{raza}/{especie}_basico.png";
 }
 
 
@@ -789,15 +798,26 @@ public IActionResult DescargarPDF()
     string especie = mascota["Especie"].ToString();
     string raza = mascota["Raza"].ToString();
 
-    // ✅ Peso corregido (misma lógica que en las views)
-    string pesoStr = mascota["Peso"] == DBNull.Value ? "0" : mascota["Peso"].ToString();
-    decimal pesoNum = 0;
-    decimal.TryParse(pesoStr.Replace(',', '.'), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoNum);
-
-    if (pesoNum >= 100)
-        pesoNum /= 10;
-
-    string peso = $"{pesoNum:0.##}".Replace('.', ',') + " kg";
+    // ✅ Peso: usar PesoDisplay si está disponible, sino formatear el decimal
+    string? pesoDisplayBD = null;
+    if (mascota.Table.Columns.Contains("PesoDisplay") && mascota["PesoDisplay"] != DBNull.Value)
+    {
+        pesoDisplayBD = mascota["PesoDisplay"].ToString();
+    }
+    
+    decimal pesoDecimal = 0;
+    string peso;
+    if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
+    {
+        // Usar PesoDisplay si existe, sino formatear el decimal
+        peso = !string.IsNullOrEmpty(pesoDisplayBD) 
+            ? pesoDisplayBD 
+            : PesoHelper.FormatearPeso(pesoDecimal);
+    }
+    else
+    {
+        peso = pesoDisplayBD ?? PesoHelper.FormatearPeso(0.1M);
+    }
 
     // 🎂 Edad formateada
     int edadMeses = Convert.ToInt32(mascota["Edad"] ?? 0);
@@ -1004,31 +1024,209 @@ public IActionResult Perfil()
     }
 
     var p = dtPerfil.Rows[0];
-    ViewBag.Nombre = $"{p["Nombre"]} {p["Apellido"]}";
-    ViewBag.Pais = p["Pais"]?.ToString() ?? "Argentina";
-    ViewBag.Descripcion = p["Descripcion"]?.ToString() ?? "Amante de los animales ❤️";
-    ViewBag.FotoPerfil = p["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png";
+    
+    // ✅ Limpieza y validación exhaustiva de datos
+    string LimpiarTexto(string texto)
+    {
+        if (string.IsNullOrWhiteSpace(texto)) return "";
+        // Remover caracteres de control y caracteres problemáticos
+        return System.Text.RegularExpressions.Regex.Replace(
+            texto.Trim(), 
+            @"[\x00-\x1F\x7F-\x9F]", 
+            ""
+        ).Replace("??", "").Replace("?", "");
+    }
+    
+    var nombre = LimpiarTexto(p["Nombre"]?.ToString() ?? "");
+    var apellido = LimpiarTexto(p["Apellido"]?.ToString() ?? "");
+    
+    // Validar que los nombres no sean solo espacios o caracteres raros
+    if (string.IsNullOrWhiteSpace(nombre) || nombre.Length < 2 || nombre.All(c => !char.IsLetter(c)))
+        nombre = "";
+    if (string.IsNullOrWhiteSpace(apellido) || apellido.Length < 2 || apellido.All(c => !char.IsLetter(c)))
+        apellido = "";
+    
+    ViewBag.Nombre = string.IsNullOrWhiteSpace(nombre) && string.IsNullOrWhiteSpace(apellido) 
+        ? "Usuario" 
+        : $"{nombre} {apellido}".Trim();
+    ViewBag.Pais = LimpiarTexto(p["Pais"]?.ToString() ?? "Argentina");
+    if (string.IsNullOrWhiteSpace(ViewBag.Pais.ToString())) ViewBag.Pais = "Argentina";
+    
+    var descripcionRaw = p["Descripcion"]?.ToString() ?? "";
+    var descripcionLimpia = LimpiarTexto(descripcionRaw);
+    ViewBag.Descripcion = string.IsNullOrWhiteSpace(descripcionLimpia) 
+        ? "Amante de los animales ❤️" 
+        : descripcionLimpia;
+    
+    var fotoPerfilRaw = p["FotoPerfil"]?.ToString()?.Trim() ?? "";
+    ViewBag.FotoPerfil = string.IsNullOrWhiteSpace(fotoPerfilRaw) || !fotoPerfilRaw.StartsWith("/")
+        ? "/img/perfil/default.png"
+        : fotoPerfilRaw;
+    
+    ViewBag.NombreUsuario = nombre;
+    ViewBag.ApellidoUsuario = apellido;
 
-    // 🐾 Mascotas
-    string qMascotas = @"SELECT Id_Mascota, Nombre, Especie, Raza, Foto FROM Mascota WHERE Id_User = @Id";
+    // 🐾 Mascotas (filtrar duplicados: misma raza y nombre exacto)
+    string qMascotas = @"
+        SELECT Id_Mascota, Nombre, Especie, Raza, Foto,
+               ROW_NUMBER() OVER (PARTITION BY Nombre, Raza ORDER BY Id_Mascota DESC) as rn
+        FROM Mascota 
+        WHERE Id_User = @Id";
     var dtMascotas = BD.ExecuteQuery(qMascotas, new Dictionary<string, object> { { "@Id", userId.Value } });
 
     var mascotas = new List<Mascota>();
+    var mascotasVistas = new HashSet<string>(); // Para evitar duplicados
+    
+    // Función para limpiar nombres de mascotas
+    string LimpiarNombreMascota(string nombre)
+    {
+        if (string.IsNullOrWhiteSpace(nombre)) return "Sin nombre";
+        var limpio = System.Text.RegularExpressions.Regex.Replace(
+            nombre.Trim(), 
+            @"[\x00-\x1F\x7F-\x9F]", 
+            ""
+        ).Replace("??", "").Replace("?", "");
+        
+        // Validar que tenga al menos una letra
+        if (string.IsNullOrWhiteSpace(limpio) || limpio.All(c => !char.IsLetterOrDigit(c)))
+            return "Sin nombre";
+        
+        return limpio;
+    }
+    
     foreach (System.Data.DataRow m in dtMascotas.Rows)
     {
-        mascotas.Add(new Mascota
+        string nombreMascotaRaw = m["Nombre"]?.ToString() ?? "";
+        string nombreMascota = LimpiarNombreMascota(nombreMascotaRaw);
+        string razaMascota = m["Raza"]?.ToString()?.Trim() ?? "Sin raza";
+        string clave = $"{nombreMascota}|{razaMascota}"; // Clave única para nombre+raza
+        
+        // Solo agregar si no hemos visto esta combinación antes
+        if (!mascotasVistas.Contains(clave))
         {
-            Id_Mascota = Convert.ToInt32(m["Id_Mascota"]),
-            Nombre = m["Nombre"].ToString(),
-            Especie = m["Especie"].ToString(),
-            Raza = m["Raza"].ToString(),
-            Foto = m["Foto"] == DBNull.Value ? "/img/mascotas/default.png" : m["Foto"].ToString()
-        });
+            mascotasVistas.Add(clave);
+            
+            var fotoMascota = m["Foto"] == DBNull.Value || m["Foto"] == null 
+                ? "/img/mascotas/default.png" 
+                : m["Foto"].ToString()?.Trim() ?? "/img/mascotas/default.png";
+            
+            if (string.IsNullOrWhiteSpace(fotoMascota) || !fotoMascota.StartsWith("/"))
+                fotoMascota = "/img/mascotas/default.png";
+            
+            mascotas.Add(new Mascota
+            {
+                Id_Mascota = Convert.ToInt32(m["Id_Mascota"]),
+                Nombre = nombreMascota,
+                Especie = m["Especie"]?.ToString()?.Trim() ?? "Perro",
+                Raza = razaMascota,
+                Foto = fotoMascota
+            });
+        }
     }
 
     ViewBag.Mascotas = mascotas;
     return View("Perfil");
 }
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult ActualizarPerfil(string Nombre, string Apellido, string Pais, string Descripcion, IFormFile FotoPerfil)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    try
+    {
+        // ✅ Limpiar y validar datos antes de guardar
+        string LimpiarTexto(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto)) return "";
+            return System.Text.RegularExpressions.Regex.Replace(
+                texto.Trim(), 
+                @"[\x00-\x1F\x7F-\x9F]", 
+                ""
+            ).Replace("??", "").Replace("?", "");
+        }
+        
+        var nombreLimpio = LimpiarTexto(Nombre ?? "");
+        var apellidoLimpio = LimpiarTexto(Apellido ?? "");
+        var paisLimpio = LimpiarTexto(Pais ?? "Argentina");
+        var descripcionLimpia = LimpiarTexto(Descripcion ?? "");
+        
+        // Validar nombres (deben tener al menos 2 caracteres y al menos una letra)
+        if (string.IsNullOrWhiteSpace(nombreLimpio) || nombreLimpio.Length < 2 || nombreLimpio.All(c => !char.IsLetter(c)))
+            nombreLimpio = "";
+        if (string.IsNullOrWhiteSpace(apellidoLimpio) || apellidoLimpio.Length < 2 || apellidoLimpio.All(c => !char.IsLetter(c)))
+            apellidoLimpio = "";
+        
+        if (string.IsNullOrWhiteSpace(paisLimpio))
+            paisLimpio = "Argentina";
+        
+        if (string.IsNullOrWhiteSpace(descripcionLimpia))
+            descripcionLimpia = "Amante de los animales ❤️";
+        
+        // Actualizar datos del usuario
+        BD.ExecuteNonQuery(@"
+            UPDATE [User]
+            SET Nombre = @Nombre, Apellido = @Apellido, Pais = @Pais
+            WHERE Id_User = @Id", new Dictionary<string, object>
+        {
+            { "@Nombre", nombreLimpio },
+            { "@Apellido", apellidoLimpio },
+            { "@Pais", paisLimpio },
+            { "@Id", userId.Value }
+        });
+
+        // Manejar foto de perfil si se subió
+        string fotoPerfilPath = null;
+        if (FotoPerfil != null && FotoPerfil.Length > 0)
+        {
+            var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "perfiles");
+            if (!Directory.Exists(uploadsPath))
+                Directory.CreateDirectory(uploadsPath);
+
+            var fileName = $"perfil_{userId}_{Guid.NewGuid()}{Path.GetExtension(FotoPerfil.FileName)}";
+            var filePath = Path.Combine(uploadsPath, fileName);
+            
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                FotoPerfil.CopyTo(stream);
+            }
+            
+            fotoPerfilPath = $"/uploads/perfiles/{fileName}";
+        }
+
+        // Actualizar perfil
+        string queryUpdate = @"
+            UPDATE Perfil
+            SET Descripcion = @Descripcion" + (fotoPerfilPath != null ? ", FotoPerfil = @FotoPerfil" : "") + @"
+            WHERE Id_Usuario = @Id";
+
+        var parametros = new Dictionary<string, object>
+        {
+            { "@Descripcion", descripcionLimpia },
+            { "@Id", userId.Value }
+        };
+
+        if (fotoPerfilPath != null)
+        {
+            parametros.Add("@FotoPerfil", fotoPerfilPath);
+        }
+
+        BD.ExecuteNonQuery(queryUpdate, parametros);
+
+        TempData["Exito"] = "Perfil actualizado correctamente ✅";
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error ActualizarPerfil: " + ex.Message);
+        TempData["Error"] = "Error al actualizar el perfil. Intenta nuevamente.";
+    }
+
+    return RedirectToAction("Perfil");
+}
+
 [HttpPost]
 public IActionResult CambiarTema(string modo)
 {
@@ -1325,8 +1523,92 @@ public IActionResult GuardarMascotaEditada(Mascota model)
     });
 
     TempData["Exito"] = "Datos de la mascota guardados ✅";
-    return RedirectToAction("ConfigMascotas");
-}
+        return RedirectToAction("ConfigMascotas");
+    }
+
+    [HttpGet]
+    public IActionResult ServicioVeterinarios()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return RedirectToAction("Login", "Auth");
+
+        var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+        ViewBag.Tema = tema;
+
+        // Obtener veterinarios de emergencia o disponibles
+        try
+        {
+            string query = @"
+                SELECT TOP 10 
+                    V.Id_Vet, U.Nombre, U.Apellido, V.Especialidad, 
+                    V.Clinica, V.Horario_Atencion, V.Valoracion_Promedio,
+                    M.Correo, U.Telefono
+                FROM Veterinario V
+                INNER JOIN [User] U ON V.Id_User = U.Id_User
+                INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+                WHERE V.Valoracion_Promedio >= 4.0
+                ORDER BY V.Valoracion_Promedio DESC";
+
+            var dtVets = BD.ExecuteQuery(query, new Dictionary<string, object>());
+            
+            // Si no hay veterinarios en BD, cargar desde JSON
+            if (dtVets == null || dtVets.Rows.Count == 0)
+            {
+                var jsonPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "data", "veterinarios.json");
+                if (System.IO.File.Exists(jsonPath))
+                {
+                    var jsonContent = System.IO.File.ReadAllText(jsonPath);
+                    var veterinariosData = System.Text.Json.JsonSerializer.Deserialize<System.Text.Json.JsonElement>(jsonContent);
+                    
+                    // Crear DataTable desde JSON
+                    dtVets = new System.Data.DataTable();
+                    dtVets.Columns.Add("Nombre", typeof(string));
+                    dtVets.Columns.Add("Apellido", typeof(string));
+                    dtVets.Columns.Add("Especialidad", typeof(string));
+                    dtVets.Columns.Add("Clinica", typeof(string));
+                    dtVets.Columns.Add("Horario_Atencion", typeof(string));
+                    dtVets.Columns.Add("Valoracion_Promedio", typeof(decimal));
+                    dtVets.Columns.Add("Correo", typeof(string));
+                    dtVets.Columns.Add("Telefono", typeof(string));
+                    dtVets.Columns.Add("Direccion", typeof(string));
+                    dtVets.Columns.Add("Lat", typeof(double));
+                    dtVets.Columns.Add("Lng", typeof(double));
+                    dtVets.Columns.Add("GoogleMaps", typeof(string));
+                    
+                    if (veterinariosData.TryGetProperty("veterinarios", out var vets))
+                    {
+                        foreach (var vet in vets.EnumerateArray())
+                        {
+                            var row = dtVets.NewRow();
+                            row["Nombre"] = vet.TryGetProperty("nombre", out var nom) ? nom.GetString() : "";
+                            row["Apellido"] = vet.TryGetProperty("apellido", out var ape) ? ape.GetString() : "";
+                            row["Especialidad"] = vet.TryGetProperty("especialidad", out var esp) ? esp.GetString() : "";
+                            row["Clinica"] = vet.TryGetProperty("clinica", out var cli) ? cli.GetString() : "";
+                            row["Horario_Atencion"] = vet.TryGetProperty("horario", out var hor) ? hor.GetString() : "";
+                            row["Valoracion_Promedio"] = vet.TryGetProperty("valoracion", out var val) ? val.GetDecimal() : 0;
+                            row["Correo"] = vet.TryGetProperty("correo", out var cor) ? cor.GetString() : "";
+                            row["Telefono"] = vet.TryGetProperty("telefono", out var tel) ? tel.GetString() : "";
+                            row["Direccion"] = vet.TryGetProperty("direccion", out var dir) ? dir.GetString() : "";
+                            row["Lat"] = vet.TryGetProperty("lat", out var lat) ? lat.GetDouble() : 0.0;
+                            row["Lng"] = vet.TryGetProperty("lng", out var lng) ? lng.GetDouble() : 0.0;
+                            row["GoogleMaps"] = vet.TryGetProperty("googleMaps", out var maps) ? maps.GetString() : "";
+                            dtVets.Rows.Add(row);
+                        }
+                    }
+                }
+            }
+            
+            ViewBag.Veterinarios = dtVets;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error al cargar veterinarios: " + ex.Message);
+            ViewBag.Veterinarios = null;
+        }
+
+        return View();
+    }
 [HttpGet]
 public IActionResult ConfigTema()
 {
@@ -1356,17 +1638,11 @@ public IActionResult Closet()
     CargarViewBagMascota(mascota);
     
     var especie = mascota["Especie"]?.ToString()?.ToLower() ?? "perro";
-    var raza = mascota["Raza"]?.ToString() ?? "basico";
+    var raza = mascota["Raza"]?.ToString() ?? "basico"; // ✅ Usar raza exacta de la BD, sin normalizar
     
-    // Normalizar raza para la ruta (mapeo especial)
-    var razaNormalizada = raza.ToLower();
-    if (razaNormalizada.Contains("jack russell")) razaNormalizada = "jack russell";
-    else if (razaNormalizada.Contains("caniche negro")) razaNormalizada = "caniche negro";
-    else razaNormalizada = razaNormalizada.Replace(" ", "");
-    
-    // Obtener todos los avatares disponibles para esta especie/raza
+    // Obtener todos los avatares disponibles para esta especie/raza (usando raza exacta)
     var avataresDisponibles = new List<string>();
-    var avatarPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "mascotas", $"{especie}s", razaNormalizada);
+    var avatarPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "mascotas", $"{especie}s", raza);
     
     if (Directory.Exists(avatarPath))
     {
@@ -1374,7 +1650,7 @@ public IActionResult Closet()
         foreach (var archivo in archivos)
         {
             var nombreArchivo = Path.GetFileName(archivo);
-            var rutaRelativa = $"/img/mascotas/{especie}s/{razaNormalizada}/{nombreArchivo}";
+            var rutaRelativa = $"/img/mascotas/{especie}s/{raza}/{nombreArchivo}";
             avataresDisponibles.Add(rutaRelativa);
         }
     }
@@ -1382,11 +1658,12 @@ public IActionResult Closet()
     // Si no hay avatares específicos, usar el básico
     if (avataresDisponibles.Count == 0)
     {
-        avataresDisponibles.Add($"/img/mascotas/{especie}s/{razaNormalizada}/{especie}_basico.png");
+        avataresDisponibles.Add($"/img/mascotas/{especie}s/{raza}/{especie}_basico.png");
     }
     
     ViewBag.AvataresDisponibles = avataresDisponibles;
-    ViewBag.AvatarActual = HttpContext.Session.GetString("MascotaAvatar") ?? $"/img/mascotas/{especie}s/{razaNormalizada}/{especie}_basico.png";
+    // ✅ Usar MascotaAvatar del ViewBag si está disponible (ya calculado en CargarViewBagMascota)
+    ViewBag.AvatarActual = HttpContext.Session.GetString("MascotaAvatar") ?? ViewBag.MascotaAvatar ?? $"/img/mascotas/{especie}s/{raza}/{especie}_basico.png";
     
     return View();
 }

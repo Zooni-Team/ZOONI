@@ -2,7 +2,59 @@
 @{
     ViewData["Title"] = "Perfil - Zooni 👤";
     Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
     var mascotas = ViewBag.Mascotas as List<Mascota> ?? new List<Mascota>();
+    
+    // ✅ Manejo seguro y limpieza de valores
+    string LimpiarTexto(string texto)
+    {
+        if (string.IsNullOrWhiteSpace(texto)) return "";
+        return System.Text.RegularExpressions.Regex.Replace(
+            texto.Trim(), 
+            @"[\x00-\x1F\x7F-\x9F]", 
+            ""
+        ).Replace("??", "").Replace("?", "");
+    }
+    
+    var nombreCompletoRaw = ViewBag.Nombre?.ToString() ?? "Usuario";
+    var nombreCompleto = LimpiarTexto(nombreCompletoRaw);
+    if (string.IsNullOrWhiteSpace(nombreCompleto) || nombreCompleto.Length < 2)
+        nombreCompleto = "Usuario";
+    
+    var paisRaw = ViewBag.Pais?.ToString() ?? "Argentina";
+    var pais = LimpiarTexto(paisRaw);
+    if (string.IsNullOrWhiteSpace(pais))
+        pais = "Argentina";
+    
+    var descripcionRaw = ViewBag.Descripcion?.ToString() ?? "Amante de los animales ❤️";
+    var descripcion = LimpiarTexto(descripcionRaw);
+    if (string.IsNullOrWhiteSpace(descripcion))
+        descripcion = "Amante de los animales ❤️";
+    
+    var fotoPerfilRaw = ViewBag.FotoPerfil?.ToString() ?? "/img/perfil/default.png";
+    var fotoPerfil = LimpiarTexto(fotoPerfilRaw);
+    if (string.IsNullOrWhiteSpace(fotoPerfil) || !fotoPerfil.StartsWith("/"))
+        fotoPerfil = "/img/perfil/default.png";
+    
+    // Separar nombre y apellido de forma segura
+    var nombreUsuarioRaw = ViewBag.NombreUsuario?.ToString() ?? "";
+    var apellidoUsuarioRaw = ViewBag.ApellidoUsuario?.ToString() ?? "";
+    
+    var nombreUsuario = LimpiarTexto(nombreUsuarioRaw);
+    var apellidoUsuario = LimpiarTexto(apellidoUsuarioRaw);
+    
+    // Si no hay nombre/apellido separados, intentar separar del nombre completo
+    if (string.IsNullOrWhiteSpace(nombreUsuario) && !string.IsNullOrWhiteSpace(nombreCompleto))
+    {
+        var partesNombre = nombreCompleto.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+        nombreUsuario = partesNombre.Length > 0 ? LimpiarTexto(partesNombre[0]) : "";
+        apellidoUsuario = partesNombre.Length > 1 ? LimpiarTexto(partesNombre[1]) : "";
+    }
+    
+    if (string.IsNullOrWhiteSpace(nombreUsuario))
+        nombreUsuario = "";
+    if (string.IsNullOrWhiteSpace(apellidoUsuario))
+        apellidoUsuario = "";
 }
 
 <!DOCTYPE html>
@@ -14,24 +66,58 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
 :root {
-  --verde:#39b77c;
-  --amarillo:#FFD85A;
-  --marron:#3c2a1b;
-  --fondo:#f9f9f8;
-  --rojo:#ff6b6b;
-  --crema:#fffaf4;
+  --verde: #39b77c;
+  --amarillo: #FFD85A;
+  --marron: #3c2a1b;
+  --fondo-claro: #f9f9f8;
+  --fondo-oscuro: #121212;
+  --texto-claro: #3c2a1b;
+  --texto-oscuro: #ffffff;
+  --card-claro: rgba(255,255,255,0.95);
+  --card-oscuro: rgba(30,30,30,0.95);
+  --rojo: #ff6b6b;
+  --crema: #fffaf4;
 }
+
+* {
+  box-sizing: border-box;
+}
+
 html, body {
   margin: 0; padding: 0;
-  width: 100%; height: 100%;
-  background: var(--fondo) url('/img/fondos/consultorio.jpg') center/cover fixed no-repeat;
+  width: 100%; min-height: 100vh;
   font-family: 'Poppins', sans-serif;
-  color: var(--marron);
-  display: flex; flex-direction: column; align-items: center;
+  transition: background .4s ease, color .4s ease;
   overflow-x: hidden;
 }
-header { position: fixed; top: 15px; left: 20px; z-index: 10; }
-.menu-icon { width: 38px; cursor: pointer; transition: transform .25s ease; }
+
+body.tema-claro {
+  background: var(--fondo-claro) url('/img/fondos/consultorio.jpg') center/cover fixed no-repeat;
+  color: var(--texto-claro);
+}
+
+body.tema-oscuro {
+  background: var(--fondo-oscuro) url('/img/fondos/consultorio.jpg') center/cover fixed no-repeat;
+  background-color: rgba(0, 0, 0, 0.7);
+  background-blend-mode: overlay;
+  color: var(--texto-oscuro);
+}
+
+header { 
+  position: fixed; 
+  top: 15px; 
+  left: 20px; 
+  z-index: 10; 
+}
+.menu-icon { 
+  width: 38px; 
+  cursor: pointer; 
+  transition: transform .25s ease, filter .3s ease;
+  filter: brightness(0);
+}
+body.tema-oscuro .menu-icon {
+  filter: brightness(0) invert(1);
+}
 .menu-icon:hover { transform: scale(1.1); }
 
 .menu-lateral {
@@ -39,37 +125,63 @@ header { position: fixed; top: 15px; left: 20px; z-index: 10; }
   top: 0; left: 0;
   transform: translateX(-100%);
   width: 240px; height: 100%;
-  background: rgba(255,255,255,0.97);
   backdrop-filter: blur(16px);
   box-shadow: 4px 0 18px rgba(0,0,0,0.15);
   display: flex; flex-direction: column;
   padding: 2.5rem 1.2rem;
   gap: 1rem;
-  transition: transform 0.35s ease;
+  transition: transform 0.35s ease, background .4s ease, color .4s ease;
   border-top-right-radius: 18px;
   border-bottom-right-radius: 18px;
   z-index: 9999;
+}
+body.tema-claro .menu-lateral {
+  background: rgba(255,255,255,0.97);
+}
+body.tema-oscuro .menu-lateral {
+  background: rgba(30,30,30,0.97);
+  box-shadow: 4px 0 18px rgba(0,0,0,0.5);
 }
 .menu-lateral.abierto { transform: translateX(0); }
 .menu-lateral a {
   text-decoration: none;
   font-weight: 600;
-  color: var(--marron);
   font-size: 1.1rem;
   padding: 0.6rem 0.8rem;
   border-radius: 12px;
   transition: all .25s ease;
+  color: inherit;
 }
-.menu-lateral a:hover {
+body.tema-claro .menu-lateral a {
+  color: var(--marron);
+}
+body.tema-oscuro .menu-lateral a {
+  color: #ffffff;
+}
+body.tema-claro .menu-lateral a:hover {
   background: var(--amarillo);
   color: #3c2a00;
+}
+body.tema-oscuro .menu-lateral a:hover {
+  background: var(--verde);
+  color: #ffffff;
 }
 .cerrar-menu {
   align-self: flex-end;
   font-size: 1.6rem;
   cursor: pointer;
-  color: var(--marron);
   margin-bottom: 1.2rem;
+  transition: transform 0.2s ease, color .3s ease;
+  color: inherit;
+}
+body.tema-claro .cerrar-menu {
+  color: var(--marron);
+}
+body.tema-oscuro .cerrar-menu {
+  color: #ffffff;
+}
+.cerrar-menu:hover {
+  transform: scale(1.2);
 }
 .overlay {
   position: fixed; top:0; left:0;
@@ -84,99 +196,375 @@ header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 main {
   margin-top: 90px;
   width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-bottom: 60px;
-}
-
-section {
-  background: rgba(255,255,255,0.95);
-  border-radius: 28px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-  width: 90%;
-  max-width: 430px;
-  padding: 1.8rem 1.5rem;
-  margin-bottom: 25px;
-  backdrop-filter: blur(10px);
+  padding: 0 20px 60px 20px;
 }
 
 h1 {
   text-align:center;
-  margin-top:20px;
+  margin: 0 0 30px 0;
   font-size:1.9rem;
   font-weight:700;
+  color: inherit;
 }
-h2 { font-size:1.25rem; margin-bottom:14px; font-weight:600; }
+
+section {
+  border-radius: 28px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  width: 100%;
+  padding: 2rem 1.8rem;
+  margin-bottom: 25px;
+  backdrop-filter: blur(10px);
+  transition: background .4s ease, box-shadow .4s ease;
+}
+body.tema-claro section {
+  background: var(--card-claro);
+}
+body.tema-oscuro section {
+  background: var(--card-oscuro);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+h2 { 
+  font-size:1.3rem; 
+  margin: 0 0 20px 0; 
+  font-weight:600; 
+  color: inherit;
+}
 
 .avatar-usuario {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
+  position: relative;
+  padding-top: 10px;
 }
 .avatar-usuario img {
-  width:130px; height:130px;
-  border-radius:50%;
-  border:4px solid var(--verde);
-  object-fit:cover;
-  margin-bottom:10px;
-  background:white;
+  width: 140px; 
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid var(--verde);
+  object-fit: cover;
+  margin-bottom: 15px;
+  background: white;
+  cursor: pointer;
+  transition: transform .3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
-.nombre { font-size:1.3rem; font-weight:600; }
-.pais { color:var(--marron); font-weight:500; margin-bottom:6px; }
-.descripcion {
-  text-align:center;
-  font-size:0.95rem;
-  color:#555;
-  margin-bottom:16px;
+.avatar-usuario img:hover {
+  transform: scale(1.05);
+}
+.cambiar-foto {
+  position: absolute;
+  bottom: 15px;
+  right: calc(50% - 70px);
+  background: var(--verde);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  transition: all .3s ease;
+  z-index: 2;
+}
+.cambiar-foto:hover {
+  background: #2fa76b;
+  transform: scale(1.1);
+}
+.nombre { 
+  font-size: 1.4rem; 
+  font-weight: 700; 
+  color: inherit;
+  margin-bottom: 8px;
+  text-align: center;
+}
+.pais { 
+  color: inherit; 
+  font-weight: 500; 
+  margin-bottom: 0; 
+  opacity: 0.8;
+  font-size: 1rem;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: inherit;
+  font-size: 0.95rem;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: 12px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  transition: all .3s ease;
+  box-sizing: border-box;
+}
+body.tema-claro .form-group input,
+body.tema-claro .form-group textarea,
+body.tema-claro .form-group select {
+  background: white;
+  color: var(--texto-claro);
+  border-color: rgba(0,0,0,0.1);
+}
+body.tema-oscuro .form-group input,
+body.tema-oscuro .form-group textarea,
+body.tema-oscuro .form-group select {
+  background: rgba(40,40,40,0.8);
+  color: var(--texto-oscuro);
+  border-color: rgba(255,255,255,0.1);
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--verde);
+  box-shadow: 0 0 0 3px rgba(57, 195, 125, 0.1);
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.descripcion-vista {
+  padding: 15px 18px;
+  border-radius: 12px;
+  min-height: 80px;
+  line-height: 1.6;
+  color: inherit;
+}
+body.tema-claro .descripcion-vista {
+  background: rgba(0,0,0,0.03);
+}
+body.tema-oscuro .descripcion-vista {
+  background: rgba(255,255,255,0.05);
 }
 
 .mascotas-grid {
-  display:flex; flex-wrap:wrap;
-  justify-content:center;
-  gap:15px;
-  margin-top:10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+  width: 100%;
 }
 .mascota {
-  background:var(--crema);
-  border-radius:16px;
-  padding:10px;
-  width:95px;
-  text-align:center;
-  cursor:pointer;
-  transition:.25s;
-  box-shadow:0 3px 8px rgba(0,0,0,0.08);
+  background: var(--crema);
+  border-radius: 16px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .3s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  border: 2px solid transparent;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
-.mascota:hover { transform:scale(1.05); background:var(--amarillo); }
+body.tema-oscuro .mascota {
+  background: rgba(40,40,40,0.8);
+}
+.mascota:hover { 
+  transform: translateY(-3px) scale(1.02); 
+  background: var(--amarillo);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  border-color: var(--verde);
+}
+body.tema-oscuro .mascota:hover {
+  background: var(--amarillo);
+}
 .mascota img {
-  width:70px; height:70px;
-  border-radius:50%;
-  object-fit:cover;
-  background:white;
+  width: 75px; 
+  height: 75px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: white;
+  border: 2px solid var(--verde);
+  margin-bottom: 8px;
+  display: block;
 }
-.selector {
-  margin-top:20px;
-  background:var(--verde);
-  color:white;
-  font-weight:600;
-  padding:10px 14px;
-  border:none;
-  border-radius:12px;
-  cursor:pointer;
-  transition:.25s;
-  width:100%;
+.mascota p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: inherit;
+  word-break: break-word;
+  line-height: 1.2;
 }
-.selector:hover { background:#2fa76b; transform:translateY(-2px); }
 
-@@media (max-width:480px){
-  section { padding:1.2rem; }
-  .avatar-usuario img { width:100px; height:100px; }
+.btn {
+  background: var(--verde);
+  color: white;
+  font-weight: 600;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all .3s ease;
+  width: 100%;
+  font-size: 1rem;
+  margin-top: 10px;
+}
+.btn:hover { 
+  background: #2fa76b; 
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(57, 195, 125, 0.3);
+}
+.btn-secondary {
+  background: #888;
+}
+.btn-secondary:hover {
+  background: #666;
+}
+
+.modo-edicion {
+  display: none;
+}
+.modo-edicion.activo {
+  display: block;
+}
+.modo-vista {
+  display: block;
+}
+.modo-vista.oculto {
+  display: none;
+}
+
+.editar-btn {
+  background: var(--amarillo);
+  color: #3a2b00;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .3s ease;
+  width: 100%;
+  margin-top: 15px;
+  font-size: 1rem;
+}
+.editar-btn:hover {
+  background: #FFC93C;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 216, 90, 0.3);
+}
+
+.mensaje {
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+  text-align: center;
+  font-weight: 500;
+}
+.mensaje-exito {
+  background: rgba(57, 195, 125, 0.2);
+  color: #2d5a3d;
+  border: 1px solid var(--verde);
+}
+body.tema-oscuro .mensaje-exito {
+  background: rgba(57, 195, 125, 0.3);
+  color: #a8e6c7;
+}
+.mensaje-error {
+  background: rgba(255, 107, 107, 0.2);
+  color: #8b0000;
+  border: 1px solid var(--rojo);
+}
+body.tema-oscuro .mensaje-error {
+  background: rgba(255, 107, 107, 0.3);
+  color: #ffcccc;
+}
+
+input[type="file"] {
+  display: none;
+}
+
+.mensaje-vacio {
+  text-align: center;
+  padding: 30px 20px;
+  opacity: 0.7;
+  color: inherit;
+  font-size: 0.95rem;
+}
+
+@@media (max-width: 600px) {
+  main {
+    padding: 0 15px 60px 15px;
+  }
+  section {
+    padding: 1.5rem 1.3rem;
+  }
+  .avatar-usuario img { 
+    width: 120px; 
+    height: 120px; 
+  }
+  .cambiar-foto {
+    right: calc(50% - 60px);
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+  }
+  .mascotas-grid {
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 12px;
+  }
+  .mascota {
+    min-height: 110px;
+    padding: 10px;
+  }
+  .mascota img {
+    width: 65px;
+    height: 65px;
+  }
+}
+
+@@media (max-width: 480px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+  section {
+    padding: 1.3rem 1.1rem;
+  }
+  .avatar-usuario img { 
+    width: 100px; 
+    height: 100px; 
+  }
+  .cambiar-foto {
+    right: calc(50% - 50px);
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  .mascotas-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
 }
 </style>
 </head>
 
-<body>
+<body class="tema-@tema">
 <header>
   <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
 </header>
@@ -189,7 +577,7 @@ h2 { font-size:1.25rem; margin-bottom:14px; font-weight:600; }
     <a href="/home/FichaMedica">💉 Ficha médica</a>
     <a href="/home/calendario">📅 Calendario</a>
     <a href="/Chat/ChatZooni">💬 ChatBot</a>
-    <a href="/Closet">👕 Closet</a>
+    <a href="/Home/Closet">👕 Closet</a>
     <a href="/Home/Perfil">👤 Perfil</a>
     <a href="/Home/configuracion">⚙️ Configuración</a>
     <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
@@ -199,26 +587,118 @@ h2 { font-size:1.25rem; margin-bottom:14px; font-weight:600; }
 <main>
   <h1>Mi Perfil 👤</h1>
 
+  @if (TempData["Exito"] != null)
+  {
+      <section style="margin-bottom: 20px;">
+          <div class="mensaje mensaje-exito">@TempData["Exito"]</div>
+      </section>
+  }
+  @if (TempData["Error"] != null)
+  {
+      <section style="margin-bottom: 20px;">
+          <div class="mensaje mensaje-error">@TempData["Error"]</div>
+      </section>
+  }
+
   <section>
     <div class="avatar-usuario">
-      <img src="@ViewBag.FotoPerfil" alt="Avatar de perfil" />
-      <div class="nombre">@ViewBag.Nombre</div>
-      <div class="pais">🌎 @ViewBag.Pais</div>
-      <div class="descripcion">@ViewBag.Descripcion</div>
+      <img src="@fotoPerfil" alt="Avatar de perfil" id="fotoPerfilPreview" onerror="this.src='/img/perfil/default.png'" />
+      <button class="cambiar-foto" onclick="document.getElementById('fotoInput').click()" title="Cambiar foto">📷</button>
+      <input type="file" id="fotoInput" accept="image/*" />
+      <div class="nombre" id="nombreDisplay">@nombreCompleto</div>
+      <div class="pais">🌎 <span id="paisDisplay">@pais</span></div>
     </div>
 
+    <!-- Modo Vista -->
+    <div class="modo-vista" id="modoVista">
+      <div class="form-group">
+        <label>Descripción</label>
+        <div class="descripcion-vista">
+          <span id="descripcionDisplay">@descripcion</span>
+        </div>
+      </div>
+
+      <button class="editar-btn" onclick="activarEdicion()">✏️ Editar Perfil</button>
+    </div>
+
+    <!-- Modo Edición -->
+    <form method="post" action="/Home/ActualizarPerfil" enctype="multipart/form-data" class="modo-edicion" id="modoEdicion">
+      @Html.AntiForgeryToken()
+      
+      <div class="form-group">
+        <label for="Nombre">Nombre</label>
+        <input type="text" id="Nombre" name="Nombre" value="@nombreUsuario" required />
+      </div>
+
+      <div class="form-group">
+        <label for="Apellido">Apellido</label>
+        <input type="text" id="Apellido" name="Apellido" value="@apellidoUsuario" required />
+      </div>
+
+      <div class="form-group">
+        <label for="Pais">País</label>
+        <select id="Pais" name="Pais" required>
+          @{
+            var esArg = pais == "Argentina";
+            var esChi = pais == "Chile";
+            var esUru = pais == "Uruguay";
+            var esPar = pais == "Paraguay";
+            var esBra = pais == "Brasil";
+            var esMex = pais == "México";
+            var esCol = pais == "Colombia";
+            var esEsp = pais == "España";
+            var esOtr = !esArg && !esChi && !esUru && !esPar && !esBra && !esMex && !esCol && !esEsp;
+          }
+          @if (esArg) { <option value="Argentina" selected>Argentina</option> } else { <option value="Argentina">Argentina</option> }
+          @if (esChi) { <option value="Chile" selected>Chile</option> } else { <option value="Chile">Chile</option> }
+          @if (esUru) { <option value="Uruguay" selected>Uruguay</option> } else { <option value="Uruguay">Uruguay</option> }
+          @if (esPar) { <option value="Paraguay" selected>Paraguay</option> } else { <option value="Paraguay">Paraguay</option> }
+          @if (esBra) { <option value="Brasil" selected>Brasil</option> } else { <option value="Brasil">Brasil</option> }
+          @if (esMex) { <option value="México" selected>México</option> } else { <option value="México">México</option> }
+          @if (esCol) { <option value="Colombia" selected>Colombia</option> } else { <option value="Colombia">Colombia</option> }
+          @if (esEsp) { <option value="España" selected>España</option> } else { <option value="España">España</option> }
+          @if (esOtr) { <option value="Otro" selected>Otro</option> } else { <option value="Otro">Otro</option> }
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="Descripcion">Descripción</label>
+        <textarea id="Descripcion" name="Descripcion" maxlength="200" placeholder="Cuéntanos sobre ti y tus mascotas...">@descripcion</textarea>
+        <small style="color: inherit; opacity: 0.7; font-size: 0.85rem; display: block; margin-top: 5px;">@(descripcion?.Length ?? 0)/200 caracteres</small>
+      </div>
+
+      <div class="form-group">
+        <label>Foto de Perfil</label>
+        <input type="file" id="FotoPerfil" name="FotoPerfil" accept="image/*" onchange="previewFotoPerfil(this)" />
+        <button type="button" class="btn btn-secondary" onclick="document.getElementById('FotoPerfil').click()" style="margin-top: 5px;">📷 Seleccionar Imagen</button>
+        <small style="color: inherit; opacity: 0.7; font-size: 0.85rem; display: block; margin-top: 5px;">Formatos: JPG, PNG, GIF (máx. 5MB)</small>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 20px;">
+        <button type="submit" class="btn">💾 Guardar Cambios</button>
+        <button type="button" class="btn btn-secondary" onclick="cancelarEdicion()">❌ Cancelar</button>
+      </div>
+    </form>
+  </section>
+
+  <section>
     <h2>🐾 Mis Mascotas</h2>
-    <div class="mascotas-grid">
-      @foreach (var m in mascotas)
-      {
-          <div class="mascota" onclick="seleccionarMascota('@m.Id_Mascota')">
-              <img src="@m.Foto" alt="@m.Nombre" />
-              <p>@m.Nombre</p>
-          </div>
-      }
-    </div>
-
-    <button class="selector" onclick="abrirPersonalizador()">🎨 Personalizar Perfil</button>
+    @if (mascotas.Count > 0)
+    {
+        <div class="mascotas-grid">
+          @foreach (var m in mascotas)
+          {
+              <div class="mascota" onclick="seleccionarMascota('@m.Id_Mascota')" title="Hacé clic para seleccionar">
+                  <img src="@(string.IsNullOrEmpty(m.Foto) || m.Foto == "" ? "/img/mascotas/default.png" : (m.Foto.StartsWith("/") ? m.Foto : "/" + m.Foto))" alt="@(m.Nombre ?? "Mascota")" onerror="this.src='/img/mascotas/default.png'" />
+                  <p>@(m.Nombre ?? "Sin nombre")</p>
+              </div>
+          }
+        </div>
+    }
+    else
+    {
+        <p class="mensaje-vacio">No tenés mascotas registradas aún</p>
+    }
   </section>
 </main>
 
@@ -229,10 +709,67 @@ document.getElementById("cerrarMenu").onclick=cerrarMenu;overlay.onclick=cerrarM
 function cerrarMenu(){menu.classList.remove("abierto");overlay.classList.remove("activo");}
 
 function seleccionarMascota(id){
-    fetch(`/Home/CambiarMascota?MascotaId=${id}`,{method:'POST'}).then(()=>location.reload());
+    if (!id) return;
+    fetch(`/Home/CambiarMascota?MascotaId=${id}`,{method:'POST'})
+        .then(()=>location.reload())
+        .catch(err=>console.error('Error al cambiar mascota:', err));
 }
-function abrirPersonalizador(){
-    alert("✨ Próximamente: editor de avatar, accesorios y fondos personalizados 🐶");
+
+function activarEdicion() {
+    document.getElementById('modoVista').classList.add('oculto');
+    document.getElementById('modoEdicion').classList.add('activo');
+}
+
+function cancelarEdicion() {
+    document.getElementById('modoVista').classList.remove('oculto');
+    document.getElementById('modoEdicion').classList.remove('activo');
+    location.reload();
+}
+
+// Preview de foto del input pequeño
+const fotoInput = document.getElementById('fotoInput');
+if (fotoInput) {
+    fotoInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('fotoPerfilPreview');
+                if (preview) preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+}
+
+// Preview de foto del formulario
+function previewFotoPerfil(input) {
+    if (input.files && input.files[0]) {
+        const file = input.files[0];
+        if (file.size > 5 * 1024 * 1024) {
+            alert('La imagen es demasiado grande. Por favor selecciona una imagen menor a 5MB.');
+            input.value = '';
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const preview = document.getElementById('fotoPerfilPreview');
+            if (preview) preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+}
+
+// Contador de caracteres en descripción
+const descripcionTextarea = document.getElementById('Descripcion');
+if (descripcionTextarea) {
+    descripcionTextarea.addEventListener('input', function() {
+        const length = this.value.length;
+        const small = this.nextElementSibling;
+        if (small && small.tagName === 'SMALL') {
+            small.textContent = length + '/200 caracteres';
+        }
+    });
 }
 </script>
 </body>

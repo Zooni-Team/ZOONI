@@ -39,7 +39,11 @@ header {
 .menu-icon { 
     width: 38px; 
     cursor: pointer; 
-    transition: transform .25s ease; 
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0); /* negro en modo claro */
+}
+body.tema-oscuro .menu-icon {
+    filter: brightness(0) invert(1); /* blanco en modo oscuro */
 }
 .menu-icon:hover { 
     transform: scale(1.1); 
@@ -52,17 +56,23 @@ header {
     transform: translateX(-100%);
     width: 240px;
     height: 100%;
-    background: rgba(255,255,255,0.98);
     backdrop-filter: blur(16px);
     box-shadow: 4px 0 18px rgba(0,0,0,0.2);
     display: flex;
     flex-direction: column;
     padding: 2.5rem 1.2rem;
     gap: 1rem;
-    transition: transform 0.35s ease;
+    transition: transform 0.35s ease, background .4s ease, color .4s ease;
     border-top-right-radius: 18px;
     border-bottom-right-radius: 18px;
     z-index: 9999;
+}
+body.tema-claro .menu-lateral {
+    background: rgba(255,255,255,0.98);
+}
+body.tema-oscuro .menu-lateral {
+    background: rgba(30,30,30,0.98);
+    box-shadow: 4px 0 18px rgba(0,0,0,0.5);
 }
 
 .menu-lateral.abierto {
@@ -72,16 +82,25 @@ header {
 .menu-lateral a {
     text-decoration: none;
     font-weight: 600;
-    color: var(--marron);
     font-size: 1.1rem;
     padding: 0.6rem 0.8rem;
     border-radius: 12px;
     transition: all .25s ease;
+    color: inherit;
 }
-
-.menu-lateral a:hover {
+body.tema-claro .menu-lateral a {
+    color: var(--marron);
+}
+body.tema-oscuro .menu-lateral a {
+    color: #ffffff;
+}
+body.tema-claro .menu-lateral a:hover {
     background: var(--amarillo);
     color: #3c2a00;
+}
+body.tema-oscuro .menu-lateral a:hover {
+    background: var(--verde);
+    color: #ffffff;
 }
 
 .cerrar-menu {
@@ -195,8 +214,8 @@ h1 {
     <a href="/home/FichaMedica">💉 Ficha médica</a>
     <a href="/home/calendario">📅 Calendario</a>
     <a href="/Chat/ChatZooni">💬 ChatBot</a>
-    <a href="/Closet">👕 Closet</a>
-    <a href="/Perfil">👤Perfil<span class="arrow">›</span></a>
+    <a href="/Home/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤Perfil<span class="arrow">›</span></a>
     <a href="/Home/configuracion">⚙️ Configuración</a>
     <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
 </div>

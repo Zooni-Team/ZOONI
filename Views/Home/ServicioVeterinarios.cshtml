@@ -1,0 +1,668 @@
+@{
+    ViewData["Title"] = "S.O.S Veterinario 🚨";
+    Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
+    var veterinarios = ViewBag.Veterinarios as System.Data.DataTable;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+    --verde: #3ac37d;
+    --amarillo: #FFD85A;
+    --marron: #4B3B2B;
+    --rojo: #ff4444;
+    --fondo-claro: #f9f9f8;
+    --fondo-oscuro: #121212;
+    --texto-claro: #4B3B2B;
+    --texto-oscuro: #ffffff;
+    --card-claro: rgba(255,255,255,0.95);
+    --card-oscuro: rgba(30,30,30,0.95);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    transition: background .4s ease, color .4s ease;
+    overflow-x: hidden;
+}
+
+body.tema-claro {
+    background: var(--fondo-claro);
+    color: var(--texto-claro);
+}
+
+body.tema-oscuro {
+    background: var(--fondo-oscuro);
+    color: var(--texto-oscuro);
+}
+
+header {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    z-index: 10;
+}
+
+.menu-icon {
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0);
+}
+body.tema-oscuro .menu-icon {
+    filter: brightness(0) invert(1);
+}
+.menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 250px;
+    height: 100%;
+    box-shadow: 4px 0 14px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease, background .4s ease, color .4s ease;
+    z-index: 999;
+}
+body.tema-claro .menu-lateral {
+    background: rgba(255,255,255,0.96);
+}
+body.tema-oscuro .menu-lateral {
+    background: rgba(30,30,30,0.96);
+    box-shadow: 4px 0 14px rgba(0, 0, 0, 0.5);
+}
+.menu-lateral.abierto { transform: translateX(0); }
+
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
+    transition: all .25s ease;
+    color: inherit;
+}
+body.tema-claro .menu-lateral a {
+    color: var(--marron);
+}
+body.tema-oscuro .menu-lateral a {
+    color: #ffffff;
+}
+body.tema-claro .menu-lateral a:hover,
+body.tema-oscuro .menu-lateral a:hover {
+    background: var(--verde);
+    color: #fff;
+}
+
+.cerrar-menu {
+    align-self: flex-end;
+    font-size: 1.4rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    transition: transform 0.2s ease, color .3s ease;
+    color: inherit;
+}
+body.tema-claro .cerrar-menu {
+    color: var(--marron);
+}
+body.tema-oscuro .cerrar-menu {
+    color: #ffffff;
+}
+.cerrar-menu:hover {
+    transform: scale(1.2);
+}
+
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 998;
+}
+.overlay.activo {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+main {
+    width: 100%;
+    max-width: 700px;
+    margin: 100px auto 60px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    text-align: center;
+    color: inherit;
+}
+
+.sos-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+    color: white;
+    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+}
+
+.sos-header h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+}
+
+.sos-header p {
+    margin: 0;
+    opacity: 0.95;
+    font-size: 1rem;
+}
+
+.emergencia-box {
+    background: linear-gradient(135deg, #ff4444 0%, #cc0000 100%);
+    color: white;
+    padding: 25px;
+    border-radius: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+}
+
+.emergencia-box h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.3rem;
+}
+
+.btn-llamar {
+    background: white;
+    color: #ff4444;
+    border: none;
+    border-radius: 15px;
+    padding: 15px 30px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all .3s ease;
+    margin: 10px 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-llamar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+.veterinarios-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.vet-card {
+    border-radius: 20px;
+    padding: 20px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background .4s ease;
+    border: 2px solid transparent;
+}
+body.tema-claro .vet-card {
+    background: var(--card-claro);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+body.tema-oscuro .vet-card {
+    background: var(--card-oscuro);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+.vet-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--verde);
+}
+body.tema-claro .vet-card:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+}
+body.tema-oscuro .vet-card:hover {
+    box-shadow: 0 6px 18px rgba(0,0,0,0.7);
+}
+
+.vet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    margin-bottom: 15px;
+}
+
+.vet-nombre {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: inherit;
+    margin: 0;
+}
+
+.vet-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--amarillo);
+    font-weight: 600;
+}
+
+.vet-info {
+    margin-bottom: 15px;
+}
+
+.vet-info p {
+    margin: 8px 0;
+    color: inherit;
+    opacity: 0.9;
+    font-size: 0.95rem;
+}
+
+.vet-acciones {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-vet {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-llamar-vet {
+    background: var(--verde);
+    color: white;
+}
+.btn-llamar-vet:hover {
+    background: #2fa66a;
+    transform: translateY(-2px);
+}
+
+.btn-info {
+    background: var(--amarillo);
+    color: #3a2b00;
+}
+.btn-info:hover {
+    background: #FFC93C;
+    transform: translateY(-2px);
+}
+
+.mensaje-vacio {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.7;
+    color: inherit;
+    font-size: 1rem;
+}
+
+.buscar-box {
+    margin-bottom: 25px;
+    padding: 20px;
+    border-radius: 15px;
+}
+body.tema-claro .buscar-box {
+    background: var(--card-claro);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+body.tema-oscuro .buscar-box {
+    background: var(--card-oscuro);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.buscar-box input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: all .3s ease;
+}
+body.tema-claro .buscar-box input {
+    background: white;
+    color: var(--texto-claro);
+}
+body.tema-oscuro .buscar-box input {
+    background: rgba(40,40,40,0.8);
+    color: var(--texto-oscuro);
+    border-color: rgba(255,255,255,0.1);
+}
+.buscar-box input:focus {
+    outline: none;
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(57, 195, 125, 0.1);
+}
+
+@@media (max-width: 600px) {
+    main {
+        margin-top: 80px;
+        padding: 0 15px;
+    }
+    h1 {
+        font-size: 1.7rem;
+    }
+    .sos-header {
+        padding: 15px;
+    }
+    .sos-header h2 {
+        font-size: 1.3rem;
+    }
+    .vet-acciones {
+        flex-direction: column;
+    }
+    .btn-llamar {
+        padding: 12px 25px;
+        font-size: 1.1rem;
+    }
+}
+</style>
+</head>
+
+<body class="tema-@tema">
+<header>
+    <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/Home/FichaMedica">💉 Ficha médica</a>
+    <a href="/Home/Calendario">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 ChatBot</a>
+    <a href="/Home/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Home/Configuracion">⚙️ Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<main>
+    <h1>🚨 S.O.S Veterinario</h1>
+
+    <div class="sos-header">
+        <h2>Emergencia Veterinaria</h2>
+        <p>Si tu mascota necesita atención urgente, contactá inmediatamente</p>
+    </div>
+
+    <div class="emergencia-box">
+        <h3>📞 Líneas de Emergencia</h3>
+        <p style="margin-bottom: 15px;">Veterinarias de emergencia 24hs</p>
+        <a href="tel:0800-123-4567" class="btn-llamar">📞 Llamar: 0800-123-4567</a>
+        <a href="tel:911" class="btn-llamar">🚑 Emergencias: 911</a>
+    </div>
+
+    <div class="buscar-box">
+        <input type="text" id="buscarVet" placeholder="🔍 Buscar veterinario por nombre, especialidad o clínica..." />
+    </div>
+
+    <h2 style="font-size: 1.3rem; margin-bottom: 20px; color: inherit;">Veterinarios Disponibles</h2>
+
+    <div class="veterinarios-list" id="veterinariosList">
+        @if (veterinarios != null && veterinarios.Rows.Count > 0)
+        {
+            @foreach (System.Data.DataRow vet in veterinarios.Rows)
+            {
+                var nombre = vet["Nombre"]?.ToString() ?? "";
+                var apellido = vet["Apellido"]?.ToString() ?? "";
+                var nombreCompleto = $"{nombre} {apellido}".Trim();
+                var especialidad = vet["Especialidad"]?.ToString() ?? "General";
+                var clinica = vet["Clinica"]?.ToString() ?? "Sin clínica";
+                var horario = vet["Horario_Atencion"]?.ToString() ?? "Consultar";
+                var telefono = vet["Telefono"]?.ToString() ?? "";
+                var correo = vet["Correo"]?.ToString() ?? "";
+                var rating = vet["Valoracion_Promedio"] != DBNull.Value ? Convert.ToDecimal(vet["Valoracion_Promedio"]) : 0;
+                var direccion = vet.Table.Columns.Contains("Direccion") ? vet["Direccion"]?.ToString() ?? "" : "";
+                var lat = vet.Table.Columns.Contains("Lat") && vet["Lat"] != DBNull.Value ? Convert.ToDouble(vet["Lat"]) : 0.0;
+                var lng = vet.Table.Columns.Contains("Lng") && vet["Lng"] != DBNull.Value ? Convert.ToDouble(vet["Lng"]) : 0.0;
+                var googleMaps = vet.Table.Columns.Contains("GoogleMaps") ? vet["GoogleMaps"]?.ToString() ?? "" : "";
+                
+                <div class="vet-card" data-nombre="@nombreCompleto" data-especialidad="@especialidad" data-clinica="@clinica" data-lat="@lat" data-lng="@lng">
+                    <div class="vet-header">
+                        <h3 class="vet-nombre">@nombreCompleto</h3>
+                        <div class="vet-rating">
+                            ⭐ @rating.ToString("F1")
+                        </div>
+                    </div>
+                    <div class="vet-info">
+                        <p><strong>Especialidad:</strong> @especialidad</p>
+                        <p><strong>Clínica:</strong> @clinica</p>
+                        <p><strong>Horario:</strong> @horario</p>
+                        @if (!string.IsNullOrEmpty(direccion))
+                        {
+                            <p><strong>📍 Dirección:</strong> @direccion</p>
+                        }
+                        @if (!string.IsNullOrEmpty(telefono))
+                        {
+                            <p><strong>Teléfono:</strong> @telefono</p>
+                        }
+                    </div>
+                    <div class="vet-acciones">
+                        @if (!string.IsNullOrEmpty(telefono))
+                        {
+                            <a href="tel:@telefono" class="btn-vet btn-llamar-vet">📞 Llamar</a>
+                        }
+                        @if (!string.IsNullOrEmpty(correo))
+                        {
+                            <a href="mailto:@correo" class="btn-vet btn-info">✉️ Email</a>
+                        }
+                        @if ((lat != 0.0 && lng != 0.0) || !string.IsNullOrEmpty(googleMaps))
+                        {
+                            <a href="@(string.IsNullOrEmpty(googleMaps) ? $"https://www.google.com/maps/search/?api=1&query={lat},{lng}" : googleMaps)" target="_blank" class="btn-vet btn-info">📍 Ver en Maps</a>
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="mensaje-vacio">
+                <p>No hay veterinarios registrados en este momento.</p>
+                <p style="margin-top: 15px;">En caso de emergencia, llamá al 0800-123-4567 o 911</p>
+            </div>
+        }
+    </div>
+
+    <div style="margin-top: 40px; padding: 20px; border-radius: 15px; text-align: center;">
+        <p style="color: inherit; opacity: 0.8; margin-bottom: 15px;">¿Necesitás encontrar un veterinario cerca de tu ubicación?</p>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+            <button onclick="buscarVeterinariosCercanos()" class="btn-vet btn-llamar-vet" style="max-width: 300px; flex: 1;">
+                📍 Buscar Veterinarios Cercanos
+            </button>
+            <button onclick="mostrarTodosVeterinarios()" class="btn-vet btn-info" style="max-width: 200px; flex: 1;">
+                🔄 Ver Todos
+            </button>
+        </div>
+    </div>
+</main>
+
+<script>
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+document.getElementById("abrirMenu").onclick = () => {
+    menu.classList.add("abierto");
+    overlay.classList.add("activo");
+};
+document.getElementById("cerrarMenu").onclick = cerrarMenu;
+overlay.onclick = cerrarMenu;
+
+function cerrarMenu() {
+    menu.classList.remove("abierto");
+    overlay.classList.remove("activo");
+}
+
+// Búsqueda de veterinarios
+const buscarInput = document.getElementById('buscarVet');
+const veterinariosList = document.getElementById('veterinariosList');
+
+if (buscarInput && veterinariosList) {
+    buscarInput.addEventListener('input', function(e) {
+        const termino = e.target.value.toLowerCase();
+        const cards = veterinariosList.querySelectorAll('.vet-card');
+        
+        cards.forEach(card => {
+            const nombre = card.getAttribute('data-nombre')?.toLowerCase() || '';
+            const especialidad = card.getAttribute('data-especialidad')?.toLowerCase() || '';
+            const clinica = card.getAttribute('data-clinica')?.toLowerCase() || '';
+            
+            if (nombre.includes(termino) || especialidad.includes(termino) || clinica.includes(termino)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+}
+
+// Buscar veterinarios cercanos usando geolocalización
+function buscarVeterinariosCercanos() {
+    if (!navigator.geolocation) {
+        alert('Tu navegador no soporta geolocalización. Podés buscar manualmente en Google Maps.');
+        window.open('https://www.google.com/maps/search/veterinaria+emergencia', '_blank');
+        return;
+    }
+
+    const loadingMsg = document.createElement('div');
+    loadingMsg.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.3);z-index:10000;';
+    loadingMsg.innerHTML = '<p>📍 Obteniendo tu ubicación...</p>';
+    document.body.appendChild(loadingMsg);
+    
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            document.body.removeChild(loadingMsg);
+            const userLat = position.coords.latitude;
+            const userLng = position.coords.longitude;
+            
+            // Calcular distancias y ordenar veterinarios
+            const cards = document.querySelectorAll('.vet-card');
+            const veterinariosConDistancia = [];
+            
+            cards.forEach(card => {
+                const cardLat = parseFloat(card.getAttribute('data-lat')) || 0;
+                const cardLng = parseFloat(card.getAttribute('data-lng')) || 0;
+                
+                if (cardLat !== 0 && cardLng !== 0) {
+                    const distancia = calcularDistancia(userLat, userLng, cardLat, cardLng);
+                    veterinariosConDistancia.push({ card: card, distancia: distancia });
+                }
+            });
+            
+            // Ordenar por distancia
+            veterinariosConDistancia.sort((a, b) => a.distancia - b.distancia);
+            
+            // Ocultar todos primero
+            cards.forEach(card => card.style.display = 'none');
+            
+            // Mostrar los 5 más cercanos
+            const mostrar = Math.min(5, veterinariosConDistancia.length);
+            for (let i = 0; i < mostrar; i++) {
+                veterinariosConDistancia[i].card.style.display = 'block';
+                const distanciaKm = veterinariosConDistancia[i].distancia.toFixed(1);
+                const nombre = veterinariosConDistancia[i].card.querySelector('.vet-nombre')?.textContent || '';
+                
+                // Agregar badge de distancia
+                let badge = veterinariosConDistancia[i].card.querySelector('.distancia-badge');
+                if (!badge) {
+                    badge = document.createElement('span');
+                    badge.className = 'distancia-badge';
+                    badge.style.cssText = 'background:var(--verde);color:white;padding:4px 8px;border-radius:8px;font-size:0.85rem;margin-left:10px;';
+                    veterinariosConDistancia[i].card.querySelector('.vet-header')?.appendChild(badge);
+                }
+                badge.textContent = `📍 ${distanciaKm} km`;
+            }
+            
+            // Mostrar mensaje
+            const mensaje = document.createElement('div');
+            mensaje.style.cssText = 'background:var(--verde);color:white;padding:15px;border-radius:10px;margin:20px 0;text-align:center;';
+            mensaje.innerHTML = `<strong>📍 Mostrando los ${mostrar} veterinarios más cercanos a tu ubicación</strong><br><small>Tu ubicación: ${userLat.toFixed(4)}, ${userLng.toFixed(4)}</small>`;
+            const lista = document.getElementById('veterinariosList');
+            if (lista && lista.parentNode) {
+                lista.parentNode.insertBefore(mensaje, lista);
+                setTimeout(() => mensaje.remove(), 5000);
+            }
+            
+            // También abrir Google Maps con búsqueda
+            const mapsUrl = 'https://www.google.com/maps/search/veterinaria+emergencia/@@' + userLat + ',' + userLng + ',15z';
+            window.open(mapsUrl, '_blank');
+        },
+        function(error) {
+            document.body.removeChild(loadingMsg);
+            alert('No se pudo obtener tu ubicación. Podés buscar manualmente en Google Maps: "veterinaria emergencia"');
+            window.open('https://www.google.com/maps/search/veterinaria+emergencia', '_blank');
+        }
+    );
+}
+
+// Función para calcular distancia entre dos coordenadas (fórmula de Haversine)
+function calcularDistancia(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Radio de la Tierra en km
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    return R * c; // Distancia en km
+}
+
+// Función para mostrar todos los veterinarios
+function mostrarTodosVeterinarios() {
+    const cards = document.querySelectorAll('.vet-card');
+    cards.forEach(card => {
+        card.style.display = 'block';
+        // Remover badge de distancia si existe
+        const badge = card.querySelector('.distancia-badge');
+        if (badge) {
+            badge.remove();
+        }
+    });
+    
+    // Remover mensaje de ubicación si existe
+    const mensajes = document.querySelectorAll('[style*="background:var(--verde)"]');
+    mensajes.forEach(msg => {
+        if (msg.textContent.includes('veterinarios más cercanos')) {
+            msg.remove();
+        }
+    });
+}
+</script>
+</body>
+</html>
+

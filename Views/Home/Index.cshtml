@@ -1,11 +1,11 @@
 @{
     ViewData["Title"] = "Inicio - Zooni";
     Layout = null;
-    var tema = ViewBag.Tema ?? HttpContext.Session.GetString("Tema") ?? "claro";
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
 
     var mascotaNombre = ViewBag.MascotaNombre;
     var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
-    var mascotaRaza = ViewBag.MascotaRaza?.ToString()?.ToLower() ?? "basico";
+    var mascotaRaza = ViewBag.MascotaRaza?.ToString() ?? "basico";
     
     // Usar el avatar del ViewBag (ya calculado en CargarViewBagMascota)
     var rutaAnimada = ViewBag.MascotaAvatar ?? $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
@@ -50,9 +50,10 @@ body.tema-claro {
 
 body.tema-oscuro {
     background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+    background-color: rgba(0, 0, 0, 0.5);
     background-blend-mode: overlay;
     filter: brightness(0.6);
-    color: var(--texto-oscuro);
+    /* Los textos y elementos mantienen sus colores originales */
 }
 
 /* ----------------- HEADER Y MENÚ ------------------ */
@@ -98,6 +99,7 @@ body.tema-claro .menu-lateral {
 }
 body.tema-oscuro .menu-lateral {
     background: rgba(30, 30, 30, 0.97);
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
 }
 .menu-lateral.abierto { transform: translateX(0); }
 .menu-lateral a {
@@ -109,16 +111,33 @@ body.tema-oscuro .menu-lateral {
     transition: all .25s ease;
     color: inherit;
 }
-.menu-lateral a:hover {
+body.tema-claro .menu-lateral a {
+    color: var(--marron);
+}
+body.tema-oscuro .menu-lateral a {
+    color: #ffffff;
+}
+body.tema-claro .menu-lateral a:hover {
     background: var(--amarillo);
     color: #3c2a00;
+}
+body.tema-oscuro .menu-lateral a:hover {
+    background: var(--verde);
+    color: #ffffff;
 }
 .cerrar-menu {
     align-self: flex-end;
     font-size: 1.6rem;
     cursor: pointer;
     margin-bottom: 1.5rem;
+    transition: transform 0.2s ease;
     color: inherit;
+}
+body.tema-claro .cerrar-menu {
+    color: var(--marron);
+}
+body.tema-oscuro .cerrar-menu {
+    color: #ffffff;
 }
 .cerrar-menu:hover { transform: scale(1.2); }
 .overlay {
@@ -153,6 +172,10 @@ main {
                 -1px  1px 2px rgba(0,0,0,0.5),
                  1px  1px 2px rgba(0,0,0,0.5);
     margin-bottom: 5px;
+}
+/* En modo oscuro, mantener el color blanco del nombre */
+body.tema-oscuro .mascota-nombre {
+    color: #fff;
 }
 
 /* ----------------- FOTO CON FLECHAS ------------------ */
@@ -245,6 +268,7 @@ main {
     flex-direction: column;
     gap: 15px;
     width: 100%;
+    margin-top: -5%;
 }
 .boton {
     background: linear-gradient(180deg, #FFD85A 0%, #FFCA3B 100%);
@@ -257,10 +281,49 @@ main {
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     cursor: pointer;
     transition: all 0.2s ease;
+    text-decoration: none;
+    display: block;
+    width: 100%;
 }
 .boton:hover {
     background: linear-gradient(180deg, #FFE17C 0%, #FFD85A 100%);
     transform: translateY(-2px);
+}
+.boton-sos {
+    background: linear-gradient(180deg, #ff4444 0%, #cc0000 100%);
+    border: 2px solid rgba(255, 68, 68, 0.6);
+    color: #ffffff;
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+}
+.boton-sos:hover {
+    background: linear-gradient(180deg, #ff6666 0%, #ff2222 100%);
+    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.6);
+}
+@@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+.boton-logout {
+    background: linear-gradient(180deg, #888888 0%, #666666 100%);
+    border: 2px solid rgba(136, 136, 136, 0.6);
+    color: #ffffff;
+}
+.boton-logout:hover {
+    background: linear-gradient(180deg, #999999 0%, #777777 100%);
+}
+/* En modo oscuro, mantener los colores de los botones */
+body.tema-oscuro .boton {
+    background: linear-gradient(180deg, #FFD85A 0%, #FFCA3B 100%);
+    color: #3a2b00;
+}
+body.tema-oscuro .boton-sos {
+    background: linear-gradient(180deg, #ff4444 0%, #cc0000 100%);
+    color: #ffffff;
+}
+body.tema-oscuro .boton-logout {
+    background: linear-gradient(180deg, #888888 0%, #666666 100%);
+    color: #ffffff;
 }
 
 /* ----------------- FOOTER ------------------ */
@@ -272,6 +335,10 @@ footer {
     font-size: 1.2rem;
     color: #654b34;
     opacity: 0.8;
+}
+/* En modo oscuro, mantener el color del footer */
+body.tema-oscuro footer {
+    color: #654b34;
 }
 
 @@media (max-width: 480px) {
@@ -304,7 +371,7 @@ footer {
     <a href="/home/FichaMedica">💉 Ficha médica</a>
     <a href="/home/calendario">📅 Calendario</a>
     <a href="/Chat/ChatZooni">💬 ChatBot</a>
-    <a href="/Closet">👕 Closet</a>
+    <a href="/Home/Closet">👕 Closet</a>
     <a href="/Home/Perfil">👤 Perfil</a>
     <a href="/Home/configuracion">⚙️ Configuración</a>
     <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
@@ -340,10 +407,10 @@ footer {
 
     <div class="panel">
         <div class="botones">
-            <button class="boton" onclick="location.href='@Url.Action("Juegos", "Home")'">🎮 Juegos</button>
-            <button class="boton">💉 Historial</button>
-            <button class="boton">📅 Calendario</button>
-            <button class="boton">👕 Closet</button>
+            <button class="boton boton-sos" onclick="location.href='/Home/ServicioVeterinarios'">🚨 S.O.S Veterinario</button>
+            <button class="boton" onclick="location.href='@Url.Action("ConfigMascotas", "Home")'">🐾 Mis Mascotas</button>
+            <button class="boton" onclick="location.href='@Url.Action("Perfil", "Home")'">👤 Perfil</button>
+            <button class="boton boton-logout" onclick="location.href='@Url.Action("Logout", "Auth")'">🚪 Cerrar Sesión</button>
         </div>
     </div>
 }
@@ -353,7 +420,6 @@ else
 }
 </main>
 
-<footer>🐾 Zooni · Tu mascota, tu mundo.</footer>
 
 <script>
 const menu = document.getElementById("menuLateral");

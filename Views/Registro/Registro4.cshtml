@@ -2,7 +2,7 @@
     ViewData["Title"] = "Registro - Zooni";
     Layout = null;
     var especie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
-    var raza = ViewBag.MascotaRaza?.ToString()?.ToLower() ?? "basico";
+    var raza = ViewBag.MascotaRaza?.ToString() ?? "basico"; // ✅ Usar raza exacta, sin ToLower
     var rutaImagen = $"/img/mascotas/{especie}s/{raza}/{especie}_basico.png";
 }
 <!DOCTYPE html>

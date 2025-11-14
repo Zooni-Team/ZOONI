@@ -181,9 +181,17 @@ public IActionResult Registro2(string modo = "", string origen = "")
     if (!string.IsNullOrEmpty(origen))
         HttpContext.Session.SetString("OrigenRegistro", origen);
 
-    ViewBag.Modo = modo;
-    if (!string.IsNullOrEmpty(modo))
+    // ✅ Obtener el modo de la sesión si no viene como parámetro
+    if (string.IsNullOrEmpty(modo))
+    {
+        modo = HttpContext.Session.GetString("ModoRegistro") ?? "normal";
+    }
+    else
+    {
         HttpContext.Session.SetString("ModoRegistro", modo);
+    }
+    
+    ViewBag.Modo = modo;
 
     ViewBag.Origen = origen;
     return View(new Mascota());
@@ -246,7 +254,10 @@ public IActionResult Registro2(Mascota model, string modo = "")
 
         Console.WriteLine($"🚀 Registro2 completado parcialmente: {model.Nombre}, {model.Especie}, {model.Raza}, {pesoNormalizado}kg");
 
-return RedirectToAction("Registro3", new { modo = "normal" });
+        // ✅ Obtener el modo de la sesión (puede ser "nuevamascota" o "normal")
+        string modoRegistro = HttpContext.Session.GetString("ModoRegistro") ?? "normal";
+        
+        return RedirectToAction("Registro3", new { modo = modoRegistro });
     }
     catch (Exception ex)
     {
@@ -407,9 +418,12 @@ if (modoFinal == "nuevamascota")
     if (nuevaId != null && nuevaId != DBNull.Value)
         HttpContext.Session.SetInt32("MascotaId", Convert.ToInt32(nuevaId));
 
+    // ✅ Limpiar el modo de la sesión después de agregar la mascota
+    HttpContext.Session.Remove("ModoRegistro");
+
     TempData["Exito"] = $"Mascota {nombre} agregada correctamente 🐶";
-    Console.WriteLine("➡️ Mascota insertada y redirigiendo a Configuración");
-    return RedirectToAction("Configuracion", "Home");
+    Console.WriteLine("➡️ Mascota insertada y redirigiendo a ConfigMascotas");
+    return RedirectToAction("ConfigMascotas", "Home");
 }
 
 
@@ -684,6 +698,9 @@ public IActionResult NuevaMascota()
         return RedirectToAction("Login", "Auth");
     }
 
+    // ✅ Establecer modo "nuevamascota" en la sesión
+    HttpContext.Session.SetString("ModoRegistro", "nuevamascota");
+    
     return View("Registro2", new Mascota());
 }
 
