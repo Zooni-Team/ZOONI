@@ -1,0 +1,1309 @@
+@{
+    ViewData["Title"] = "Comunidad - Zooni";
+    Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<!-- Leaflet (OpenStreetMap) - Gratis y sin API Key -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+:root {
+    --verde: #39b77c;
+    --amarillo: #FFD85A;
+    --marron: #3c2a1b;
+    --fondo-claro: #f9f9f8;
+    --fondo-oscuro: #121212;
+    --texto-claro: #3c2a1b;
+    --texto-oscuro: #ffffff;
+    --card-claro: rgba(255,255,255,0.95);
+    --card-oscuro: rgba(30,30,30,0.95);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+body.tema-claro {
+    background: var(--fondo-claro);
+    color: var(--texto-claro);
+}
+
+body.tema-oscuro {
+    background: var(--fondo-oscuro);
+    color: var(--texto-oscuro);
+}
+
+header {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.menu-icon {
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0);
+}
+body.tema-oscuro .menu-icon {
+    filter: brightness(0) invert(1);
+}
+.menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 240px;
+    height: 100%;
+    box-shadow: 4px 0 18px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease, background .4s ease, color .4s ease;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    z-index: 9999;
+}
+body.tema-claro .menu-lateral {
+    background: #ffffff;
+}
+body.tema-oscuro .menu-lateral {
+    background: rgba(30,30,30,0.98);
+    box-shadow: 4px 0 18px rgba(0,0,0,0.5);
+}
+.menu-lateral.abierto { transform: translateX(0); }
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    transition: all .25s ease;
+    color: inherit;
+}
+body.tema-claro .menu-lateral a {
+    color: var(--marron);
+}
+body.tema-oscuro .menu-lateral a {
+    color: #ffffff;
+}
+body.tema-claro .menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+body.tema-oscuro .menu-lateral a:hover {
+    background: var(--verde);
+    color: #ffffff;
+}
+.cerrar-menu {
+    align-self: flex-end;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-bottom: 1.2rem;
+    transition: transform 0.2s ease, color .3s ease;
+    color: inherit;
+}
+body.tema-claro .cerrar-menu {
+    color: var(--marron);
+}
+body.tema-oscuro .cerrar-menu {
+    color: #ffffff;
+}
+.cerrar-menu:hover {
+    transform: scale(1.2);
+}
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 8;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+#map {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+/* Estilos para marcadores personalizados */
+.mi-ubicacion-marker,
+.amigo-marker {
+    background: transparent !important;
+    border: none !important;
+}
+
+.controles-mapa {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-control {
+    background: var(--card-claro);
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all .3s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    color: inherit;
+}
+body.tema-oscuro .btn-control {
+    background: var(--card-oscuro);
+    border-color: rgba(255,255,255,0.1);
+}
+.btn-control:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+.btn-control.activo {
+    background: var(--verde);
+    color: white;
+    border-color: var(--verde);
+}
+
+.panel-amigos {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    max-width: 400px;
+    background: var(--card-claro);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+}
+body.tema-oscuro .panel-amigos {
+    background: var(--card-oscuro);
+}
+.panel-amigos h3 {
+    margin: 0 0 15px 0;
+    font-size: 1.2rem;
+    color: inherit;
+}
+
+.tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+    padding-bottom: 10px;
+}
+body.tema-oscuro .tabs {
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+.tab-btn {
+    flex: 1;
+    padding: 8px 12px;
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all .2s ease;
+    opacity: 0.6;
+}
+.tab-btn.activo {
+    opacity: 1;
+    background: var(--verde);
+    color: white;
+}
+.tab-content {
+    display: block;
+}
+.tab-content.oculto {
+    display: none;
+}
+
+.input-buscar {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+body.tema-claro .input-buscar {
+    background: white;
+    color: var(--texto-claro);
+}
+body.tema-oscuro .input-buscar {
+    background: rgba(40,40,40,0.8);
+    color: var(--texto-oscuro);
+    border-color: rgba(255,255,255,0.1);
+}
+.input-buscar:focus {
+    outline: none;
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(57, 195, 125, 0.1);
+}
+
+.usuario-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.05);
+    margin-bottom: 10px;
+    transition: all .2s ease;
+}
+body.tema-oscuro .usuario-item {
+    background: rgba(255,255,255,0.05);
+}
+.usuario-item:hover {
+    background: var(--amarillo);
+    transform: translateX(5px);
+}
+.usuario-info {
+    flex: 1;
+}
+.usuario-nombre {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: inherit;
+    margin: 0 0 3px 0;
+}
+.usuario-email {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    color: inherit;
+    margin: 0;
+}
+.usuario-mascota {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    color: inherit;
+    margin: 3px 0 0 0;
+}
+.btn-agregar-usuario {
+    padding: 8px 16px;
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+.btn-agregar-usuario:hover {
+    background: #2fa76b;
+    transform: scale(1.05);
+}
+.btn-eliminar-amigo {
+    padding: 8px 16px;
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+.btn-eliminar-amigo:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
+.lista-amigos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.amigo-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: all .2s ease;
+}
+body.tema-oscuro .amigo-item {
+    background: rgba(255,255,255,0.05);
+}
+.amigo-item:hover {
+    background: var(--amarillo);
+    transform: translateX(5px);
+}
+.amigo-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--verde);
+}
+.amigo-info {
+    flex: 1;
+}
+.amigo-nombre {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: inherit;
+    margin: 0;
+}
+.amigo-mascota {
+    font-size: 0.85rem;
+    opacity: 0.7;
+    color: inherit;
+    margin: 0;
+}
+
+.modal-agregar-amigo {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+.modal-agregar-amigo.activo {
+    display: flex;
+}
+.modal-content {
+    background: var(--card-claro);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+body.tema-oscuro .modal-content {
+    background: var(--card-oscuro);
+}
+.modal-content h3 {
+    margin: 0 0 20px 0;
+    color: inherit;
+}
+.modal-content input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+body.tema-claro .modal-content input {
+    background: white;
+    color: var(--texto-claro);
+}
+body.tema-oscuro .modal-content input {
+    background: rgba(40,40,40,0.8);
+    color: var(--texto-oscuro);
+    border-color: rgba(255,255,255,0.1);
+}
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+}
+.btn-modal {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .3s ease;
+}
+.btn-primary {
+    background: var(--verde);
+    color: white;
+}
+.btn-primary:hover {
+    background: #2fa76b;
+}
+.btn-secondary {
+    background: #888;
+    color: white;
+}
+.btn-secondary:hover {
+    background: #666;
+}
+
+.mensaje {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    z-index: 10001;
+    animation: slideDown 0.3s ease;
+}
+.mensaje-exito {
+    background: var(--verde);
+    color: white;
+}
+.mensaje-error {
+    background: #ff4444;
+    color: white;
+}
+@@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@@media (max-width: 768px) {
+    .panel-amigos {
+        max-width: 100%;
+        left: 10px;
+        right: 10px;
+        bottom: 10px;
+    }
+    .controles-mapa {
+        top: 70px;
+        right: 10px;
+    }
+    .btn-control {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+}
+</style>
+</head>
+
+<body class="tema-@tema">
+<header>
+    <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/Home/FichaMedica">💉 Ficha médica</a>
+    <a href="/Home/Calendario">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 ChatBot</a>
+    <a href="/Home/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Home/Configuracion">⚙️ Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<div id="map"></div>
+
+<div class="controles-mapa">
+    <button class="btn-control" id="btnMiUbicacion" onclick="centrarEnMiUbicacion()">📍 Mi Ubicación</button>
+    <button class="btn-control" id="btnAgregarAmigo" onclick="mostrarModalAmigo()">➕ Agregar Amigo</button>
+    <button class="btn-control" id="btnActualizar" onclick="actualizarUbicacion()">🔄 Actualizar</button>
+</div>
+
+<div class="panel-amigos" id="panelAmigos">
+    <div class="tabs">
+        <button class="tab-btn activo" onclick="cambiarTab('amigos')">👥 Amigos</button>
+        <button class="tab-btn" onclick="cambiarTab('solicitudes')">📩 Solicitudes</button>
+        <button class="tab-btn" onclick="cambiarTab('buscar')">🔍 Buscar</button>
+        <button class="tab-btn" onclick="cambiarTab('sugeridos')">⭐ Sugeridos</button>
+    </div>
+    
+    <div class="tab-content" id="tabAmigos">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; flex-wrap: wrap; gap: 10px;">
+            <h3 style="margin: 0;">👥 Mis Amigos</h3>
+            <select id="selectUbicacion" onchange="cambiarEstadoUbicacion()" style="padding: 6px 10px; border-radius: 8px; border: 1px solid #ddd; font-size: 0.85rem; cursor: pointer; background: white;">
+                <option value="nadie">🔒 Para nadie</option>
+                <option value="amigos" selected>Solo para amigos</option>
+                <option value="todos">🌍 Para todos</option>
+            </select>
+        </div>
+        <div class="lista-amigos" id="listaAmigos">
+            <p style="text-align: center; opacity: 0.7; color: inherit;">Cargando amigos...</p>
+        </div>
+    </div>
+    
+    <div class="tab-content oculto" id="tabSolicitudes">
+        <h3>📩 Solicitudes de Amistad</h3>
+        <div class="lista-amigos" id="listaSolicitudes">
+            <p style="text-align: center; opacity: 0.7; color: inherit;">Cargando solicitudes...</p>
+        </div>
+    </div>
+    
+    <div class="tab-content oculto" id="tabBuscar">
+        <h3>🔍 Buscar Usuarios</h3>
+        <input type="text" id="inputBuscar" placeholder="Buscar por nombre o email..." class="input-buscar" onkeyup="buscarUsuarios()" />
+        <div class="lista-amigos" id="listaBusqueda">
+            <p style="text-align: center; opacity: 0.7; color: inherit;">Escribí para buscar usuarios...</p>
+        </div>
+    </div>
+    
+    <div class="tab-content oculto" id="tabSugeridos">
+        <h3>⭐ Usuarios Sugeridos</h3>
+        <div class="lista-amigos" id="listaSugeridos">
+            <p style="text-align: center; opacity: 0.7; color: inherit;">Cargando sugeridos...</p>
+        </div>
+    </div>
+</div>
+
+<div class="modal-agregar-amigo" id="modalAmigo">
+    <div class="modal-content">
+        <h3>➕ Agregar Nuevo Amigo</h3>
+        <input type="text" id="inputEmailAmigo" placeholder="Email del amigo" />
+        <div class="modal-buttons">
+            <button class="btn-modal btn-primary" onclick="agregarAmigo()">Agregar</button>
+            <button class="btn-modal btn-secondary" onclick="cerrarModalAmigo()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+let map;
+let miMarcador;
+let marcadoresAmigos = {};
+let miUbicacion = null;
+let watchId = null;
+
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+document.getElementById("abrirMenu").onclick = () => {
+    menu.classList.add("abierto");
+    overlay.classList.add("activo");
+};
+document.getElementById("cerrarMenu").onclick = cerrarMenu;
+overlay.onclick = cerrarMenu;
+
+function cerrarMenu() {
+    menu.classList.remove("abierto");
+    overlay.classList.remove("activo");
+}
+
+// Inicializar mapa cuando la página carga
+document.addEventListener('DOMContentLoaded', function() {
+    initMap();
+});
+
+function initMap() {
+    // Inicializar mapa con Leaflet (OpenStreetMap) centrado en Buenos Aires
+    map = L.map('map').setView([-34.6037, -58.3816], 13);
+    
+    // Agregar capa de OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors',
+        maxZoom: 19
+    }).addTo(map);
+
+    // Obtener ubicación del usuario
+    obtenerMiUbicacion();
+    
+    // Cargar amigos
+    cargarAmigos();
+    
+    // Cargar sugeridos
+    cargarSugeridos();
+    
+    // Cargar solicitudes
+    cargarSolicitudes();
+    
+    // Cargar estado de ubicación mostrable
+    cargarEstadoUbicacionMostrable();
+    
+    // Cargar puntos de interés
+    cargarPuntosInteres();
+    
+    // Actualizar ubicación cada 30 segundos
+    setInterval(actualizarUbicacion, 30000);
+}
+
+function obtenerMiUbicacion() {
+    if (!navigator.geolocation) {
+        mostrarMensaje("Tu navegador no soporta geolocalización", "error");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        function(position) {
+            miUbicacion = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+            
+            // Centrar mapa en mi ubicación
+            map.setView([miUbicacion.lat, miUbicacion.lng], 15);
+            
+            // Crear o actualizar mi marcador
+            if (miMarcador) {
+                miMarcador.setLatLng([miUbicacion.lat, miUbicacion.lng]);
+            } else {
+                // Icono personalizado para mi ubicación
+                const miIcono = L.divIcon({
+                    className: 'mi-ubicacion-marker',
+                    html: '<div style="background: #39b77c; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"></div>',
+                    iconSize: [20, 20],
+                    iconAnchor: [10, 10]
+                });
+                
+                miMarcador = L.marker([miUbicacion.lat, miUbicacion.lng], {
+                    icon: miIcono,
+                    title: "Tu ubicación"
+                }).addTo(map);
+            }
+            
+            // Guardar ubicación en el servidor
+            guardarUbicacion(miUbicacion.lat, miUbicacion.lng);
+            
+            // Iniciar seguimiento continuo
+            if (watchId) {
+                navigator.geolocation.clearWatch(watchId);
+            }
+            watchId = navigator.geolocation.watchPosition(
+                function(pos) {
+                    miUbicacion = {
+                        lat: pos.coords.latitude,
+                        lng: pos.coords.longitude
+                    };
+            if (miMarcador) {
+                miMarcador.setLatLng([miUbicacion.lat, miUbicacion.lng]);
+            }
+                    guardarUbicacion(miUbicacion.lat, miUbicacion.lng);
+                },
+                function(error) {
+                    console.error("Error en seguimiento:", error);
+                },
+                { enableHighAccuracy: true, maximumAge: 5000 }
+            );
+        },
+        function(error) {
+            mostrarMensaje("No se pudo obtener tu ubicación", "error");
+        },
+        { enableHighAccuracy: true, timeout: 10000 }
+    );
+}
+
+function centrarEnMiUbicacion() {
+    if (miUbicacion) {
+        map.setView([miUbicacion.lat, miUbicacion.lng], 15);
+    } else {
+        obtenerMiUbicacion();
+    }
+}
+
+function guardarUbicacion(lat, lng) {
+    fetch('/Home/GuardarUbicacion', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ lat: lat, lng: lng })
+    })
+    .catch(err => console.error('Error al guardar ubicación:', err));
+}
+
+function actualizarUbicacion() {
+    obtenerMiUbicacion();
+    cargarAmigos();
+    mostrarMensaje("Ubicación actualizada", "exito");
+}
+
+function cargarAmigos() {
+    fetch('/Home/ObtenerAmigos')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                mostrarAmigos(data.amigos);
+                actualizarMarcadoresAmigos(data.amigos);
+            } else {
+                document.getElementById('listaAmigos').innerHTML = 
+                    '<p style="text-align: center; opacity: 0.7; color: inherit;">No tenés amigos agregados aún</p>';
+            }
+        })
+        .catch(err => {
+            console.error('Error al cargar amigos:', err);
+            document.getElementById('listaAmigos').innerHTML = 
+                '<p style="text-align: center; opacity: 0.7; color: inherit;">Error al cargar amigos</p>';
+        });
+}
+
+function mostrarAmigos(amigos) {
+    const lista = document.getElementById('listaAmigos');
+    if (!amigos || amigos.length === 0) {
+        lista.innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">No tenés amigos agregados aún</p>';
+        return;
+    }
+    
+    lista.innerHTML = amigos.map(amigo => {
+        const nombreMostrar = amigo.nombreMostrar || amigo.nombre || 'Usuario';
+        const nombreEscapado = (amigo.nombre || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        return `
+        <div class="amigo-item">
+            <img src="${amigo.fotoPerfil || '/img/perfil/default.png'}" alt="${nombreMostrar}" class="amigo-avatar" onclick="centrarEnAmigo(${amigo.lat}, ${amigo.lng})" onerror="this.src='/img/perfil/default.png'" />
+            <div class="amigo-info" onclick="centrarEnAmigo(${amigo.lat}, ${amigo.lng})" style="flex: 1; cursor: pointer;">
+                <p class="amigo-nombre">${nombreMostrar}</p>
+                ${amigo.apodo ? `<p style="font-size: 0.75rem; opacity: 0.7; font-style: italic; margin: 0;">(${amigo.nombre})</p>` : ''}
+                <p class="amigo-mascota">🐾 ${amigo.mascotaNombre || 'Sin mascota'}</p>
+            </div>
+            <div style="display: flex; gap: 5px;">
+                <button class="btn-eliminar-amigo" onclick="editarApodo(${amigo.id}, '${nombreEscapado}')" style="background: #3498db; font-size: 0.7rem; padding: 4px 6px;">✏️</button>
+                <button class="btn-eliminar-amigo" onclick="eliminarAmigo(${amigo.id}, '${nombreEscapado}')">🗑️</button>
+            </div>
+        </div>
+    `}).join('');
+}
+
+function cambiarTab(tab) {
+    // Ocultar todos los tabs
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.add('oculto'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activo'));
+    
+    // Mostrar el tab seleccionado
+    document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.remove('oculto');
+    event.target.classList.add('activo');
+    
+    // Cargar datos según el tab
+    if (tab === 'sugeridos') {
+        cargarSugeridos();
+    } else if (tab === 'amigos') {
+        cargarAmigos();
+    } else if (tab === 'solicitudes') {
+        cargarSolicitudes();
+    }
+}
+
+let timeoutBusqueda;
+function buscarUsuarios() {
+    clearTimeout(timeoutBusqueda);
+    const query = document.getElementById('inputBuscar').value.trim();
+    
+    if (query.length < 2) {
+        document.getElementById('listaBusqueda').innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">Escribí al menos 2 caracteres para buscar...</p>';
+        return;
+    }
+    
+    timeoutBusqueda = setTimeout(() => {
+        fetch(`/Home/BuscarUsuarios?query=${encodeURIComponent(query)}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    mostrarResultadosBusqueda(data.usuarios);
+                } else {
+                    document.getElementById('listaBusqueda').innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">Error al buscar usuarios</p>';
+                }
+            })
+            .catch(err => {
+                console.error('Error:', err);
+                document.getElementById('listaBusqueda').innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">Error al buscar usuarios</p>';
+            });
+    }, 300);
+}
+
+function mostrarResultadosBusqueda(usuarios) {
+    const lista = document.getElementById('listaBusqueda');
+    if (!usuarios || usuarios.length === 0) {
+        lista.innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">No se encontraron usuarios</p>';
+        return;
+    }
+    
+    lista.innerHTML = usuarios.map(usuario => `
+        <div class="usuario-item">
+            <img src="${usuario.fotoPerfil || '/img/perfil/default.png'}" alt="${usuario.nombre}" class="amigo-avatar" />
+            <div class="usuario-info">
+                <p class="usuario-nombre">${usuario.nombre}</p>
+                <p class="usuario-email">${usuario.email}</p>
+                <p class="usuario-mascota">🐾 ${usuario.mascotaNombre || 'Sin mascota'}</p>
+            </div>
+            <button class="btn-agregar-usuario" onclick="agregarAmigoPorId(${usuario.id}, '${usuario.email}')">➕</button>
+        </div>
+    `).join('');
+}
+
+function cargarSugeridos() {
+    fetch('/Home/ObtenerUsuariosSugeridos')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                mostrarSugeridos(data.sugeridos);
+            } else {
+                document.getElementById('listaSugeridos').innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">Error al cargar sugeridos</p>';
+            }
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            document.getElementById('listaSugeridos').innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">Error al cargar sugeridos</p>';
+        });
+}
+
+function mostrarSugeridos(sugeridos) {
+    const lista = document.getElementById('listaSugeridos');
+    if (!sugeridos || sugeridos.length === 0) {
+        lista.innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">No hay usuarios sugeridos</p>';
+        return;
+    }
+    
+    lista.innerHTML = sugeridos.map(usuario => `
+        <div class="usuario-item">
+            <img src="${usuario.fotoPerfil || '/img/perfil/default.png'}" alt="${usuario.nombre}" class="amigo-avatar" />
+            <div class="usuario-info">
+                <p class="usuario-nombre">${usuario.nombre}</p>
+                <p class="usuario-email">${usuario.email}</p>
+                <p class="usuario-mascota">🐾 ${usuario.mascotaNombre || 'Sin mascota'}</p>
+            </div>
+            <button class="btn-agregar-usuario" onclick="agregarAmigoPorId(${usuario.id}, '${usuario.email}')">➕</button>
+        </div>
+    `).join('');
+}
+
+function agregarAmigoPorId(usuarioId, email) {
+    fetch('/Home/AgregarAmigo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarMensaje("Amigo agregado correctamente", "exito");
+            cargarAmigos();
+            cargarSugeridos();
+            if (document.getElementById('tabBuscar').classList.contains('oculto') === false) {
+                buscarUsuarios();
+            }
+        } else {
+            mostrarMensaje(data.message || "Error al agregar amigo", "error");
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        mostrarMensaje("Error al agregar amigo", "error");
+    });
+}
+
+function eliminarAmigo(amigoId, nombre) {
+    if (!confirm(`¿Estás seguro de que querés eliminar a ${nombre} de tus amigos?`)) {
+        return;
+    }
+    
+    fetch('/Home/EliminarAmigo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amigoId: amigoId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarMensaje("Amigo eliminado correctamente", "exito");
+            cargarAmigos();
+        } else {
+            mostrarMensaje(data.message || "Error al eliminar amigo", "error");
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        mostrarMensaje("Error al eliminar amigo", "error");
+    });
+}
+
+function actualizarMarcadoresAmigos(amigos) {
+    // Remover marcadores antiguos
+    Object.values(marcadoresAmigos).forEach(marker => map.removeLayer(marker));
+    marcadoresAmigos = {};
+    
+    if (!amigos || amigos.length === 0) return;
+    
+    // Agrupar amigos por ubicación (misma lat/lng)
+    const gruposUbicacion = {};
+    amigos.forEach(amigo => {
+        if (amigo.lat && amigo.lng) {
+            const key = `${amigo.lat.toFixed(6)}_${amigo.lng.toFixed(6)}`;
+            if (!gruposUbicacion[key]) {
+                gruposUbicacion[key] = [];
+            }
+            gruposUbicacion[key].push(amigo);
+        }
+    });
+    
+    // Crear marcadores, separando los que están en la misma ubicación
+    Object.keys(gruposUbicacion).forEach(key => {
+        const grupo = gruposUbicacion[key];
+        const latBase = parseFloat(grupo[0].lat);
+        const lngBase = parseFloat(grupo[0].lng);
+        
+        grupo.forEach((amigo, index) => {
+            // Separar marcadores: 1-2 metros de diferencia (aproximadamente 0.00001-0.00002 grados)
+            const offset = index * 0.000015; // ~1.5 metros por marcador
+            const lat = latBase + offset;
+            const lng = lngBase + offset;
+            
+            const nombreMostrar = amigo.nombreMostrar || amigo.nombre || 'Usuario';
+            const avatarUrl = amigo.mascotaAvatar || '/img/mascotas/default.png';
+            
+            const iconoAmigo = L.divIcon({
+                className: 'amigo-marker',
+                html: `
+                    <div style="position: relative; text-align: center;">
+                        <img src="${avatarUrl}" 
+                             alt="${amigo.mascotaNombre || 'Mascota'}" 
+                             style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); object-fit: cover; background: #fff;"
+                             onerror="this.onerror=null; this.src='/img/mascotas/default.png';" />
+                        <div style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; max-width: 80px; overflow: hidden; text-overflow: ellipsis;">
+                            ${nombreMostrar}
+                        </div>
+                    </div>
+                `,
+                iconSize: [60, 60],
+                iconAnchor: [30, 30],
+                popupAnchor: [0, -30]
+            });
+            
+            const marker = L.marker([lat, lng], {
+                icon: iconoAmigo,
+                title: `${nombreMostrar} - ${amigo.mascotaNombre || 'Sin mascota'}`
+            }).addTo(map);
+            
+            const popup = L.popup({
+                maxWidth: 200
+            }).setContent(`
+                <div style="padding: 8px; text-align: center;">
+                    <img src="${avatarUrl}" 
+                         alt="${amigo.mascotaNombre || 'Mascota'}" 
+                         style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #39b77c; object-fit: cover; margin-bottom: 8px;"
+                         onerror="this.onerror=null; this.src='/img/mascotas/default.png';" />
+                    <h4 style="margin: 0 0 5px 0; font-size: 1rem; font-weight: 600;">${nombreMostrar}</h4>
+                    ${amigo.apodo ? `<p style="margin: 0 0 5px 0; font-size: 0.75rem; color: #999; font-style: italic;">(${amigo.nombre})</p>` : ''}
+                    <p style="margin: 0; font-size: 0.85rem; color: #666;">🐾 ${amigo.mascotaNombre || 'Sin mascota'}</p>
+                    <button onclick="editarApodo(${amigo.id}, '${(amigo.nombre || '').replace(/'/g, "\\'")}')" 
+                            style="margin-top: 8px; padding: 4px 8px; background: #39b77c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">
+                        ✏️ Editar apodo
+                    </button>
+                </div>
+            `);
+            
+            marker.bindPopup(popup);
+            marcadoresAmigos[amigo.id] = marker;
+        });
+    });
+}
+
+function centrarEnAmigo(lat, lng) {
+    map.setView([lat, lng], 16);
+}
+
+function mostrarModalAmigo() {
+    document.getElementById('modalAmigo').classList.add('activo');
+    document.getElementById('inputEmailAmigo').focus();
+}
+
+function cerrarModalAmigo() {
+    document.getElementById('modalAmigo').classList.remove('activo');
+    document.getElementById('inputEmailAmigo').value = '';
+}
+
+function agregarAmigo() {
+    const email = document.getElementById('inputEmailAmigo').value.trim();
+    if (!email) {
+        mostrarMensaje("Por favor ingresá un email", "error");
+        return;
+    }
+    
+    fetch('/Home/AgregarAmigo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarMensaje("Amigo agregado correctamente", "exito");
+            cerrarModalAmigo();
+            cargarAmigos();
+        } else {
+            mostrarMensaje(data.message || "Error al agregar amigo", "error");
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        mostrarMensaje("Error al agregar amigo", "error");
+    });
+}
+
+function mostrarMensaje(texto, tipo) {
+    const mensaje = document.createElement('div');
+    mensaje.className = `mensaje mensaje-${tipo}`;
+    mensaje.textContent = texto;
+    document.body.appendChild(mensaje);
+    
+    setTimeout(() => {
+        mensaje.style.animation = 'slideDown 0.3s ease reverse';
+        setTimeout(() => mensaje.remove(), 300);
+    }, 3000);
+}
+
+// Cerrar modal al hacer clic fuera
+document.getElementById('modalAmigo').addEventListener('click', function(e) {
+    if (e.target === this) {
+        cerrarModalAmigo();
+    }
+});
+
+function cargarSolicitudes() {
+    fetch('/Home/ObtenerSolicitudes')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                mostrarSolicitudes(data.solicitudes);
+            } else {
+                document.getElementById('listaSolicitudes').innerHTML = 
+                    '<p style="text-align: center; opacity: 0.7; color: inherit;">Error al cargar solicitudes</p>';
+            }
+        })
+        .catch(err => {
+            console.error('Error al cargar solicitudes:', err);
+            document.getElementById('listaSolicitudes').innerHTML = 
+                '<p style="text-align: center; opacity: 0.7; color: inherit;">Error al cargar solicitudes</p>';
+        });
+}
+
+function mostrarSolicitudes(solicitudes) {
+    const lista = document.getElementById('listaSolicitudes');
+    if (!solicitudes || solicitudes.length === 0) {
+        lista.innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">No tenés solicitudes pendientes</p>';
+        return;
+    }
+    
+    lista.innerHTML = solicitudes.map(solicitud => `
+        <div class="usuario-item">
+            <img src="${solicitud.fotoPerfil || '/img/perfil/default.png'}" alt="${solicitud.nombre}" class="amigo-avatar" />
+            <div class="usuario-info">
+                <p class="usuario-nombre">${solicitud.nombre}</p>
+                <p class="usuario-email" style="font-size: 0.75rem; opacity: 0.7;">${solicitud.fecha}</p>
+            </div>
+            <div style="display: flex; gap: 5px;">
+                <button class="btn-agregar-usuario" onclick="aceptarSolicitud(${solicitud.idInvitacion})" style="background: #39b77c;">✓</button>
+                <button class="btn-agregar-usuario" onclick="rechazarSolicitud(${solicitud.idInvitacion})" style="background: #e74c3c;">✗</button>
+            </div>
+        </div>
+    `).join('');
+}
+
+function aceptarSolicitud(invitacionId) {
+    fetch('/Home/AceptarSolicitud', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ invitacionId: invitacionId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarMensaje("Solicitud aceptada", "exito");
+            cargarSolicitudes();
+            cargarAmigos();
+        } else {
+            mostrarMensaje(data.message || "Error al aceptar solicitud", "error");
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        mostrarMensaje("Error al aceptar solicitud", "error");
+    });
+}
+
+function rechazarSolicitud(invitacionId) {
+    fetch('/Home/RechazarSolicitud', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ invitacionId: invitacionId })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarMensaje("Solicitud rechazada", "exito");
+            cargarSolicitudes();
+        } else {
+            mostrarMensaje(data.message || "Error al rechazar solicitud", "error");
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        mostrarMensaje("Error al rechazar solicitud", "error");
+    });
+}
+
+function cambiarEstadoUbicacion() {
+    const select = document.getElementById('selectUbicacion');
+    const estado = select.value;
+    
+    fetch('/Home/ActualizarUbicacionMostrable', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ estado: estado })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const mensajes = {
+                'nadie': 'Tu ubicación ahora es privada',
+                'amigos': 'Tu ubicación ahora es visible solo para tus amigos',
+                'todos': 'Tu ubicación ahora es visible para todos los usuarios'
+            };
+            mostrarMensaje(mensajes[estado] || "Configuración actualizada", "exito");
+            cargarAmigos(); // Recargar amigos para actualizar visibilidad
+        } else {
+            mostrarMensaje("Error al actualizar configuración", "error");
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        mostrarMensaje("Error al actualizar configuración", "error");
+    });
+}
+
+function cargarEstadoUbicacionMostrable() {
+    fetch('/Home/ObtenerEstadoUbicacionMostrable')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const select = document.getElementById('selectUbicacion');
+                if (select) {
+                    select.value = data.estado || 'amigos';
+                }
+            }
+        })
+        .catch(err => console.error('Error al cargar estado:', err));
+}
+
+function editarApodo(amigoId, nombreOriginal) {
+    const apodoActual = prompt(`Ingresá un apodo para ${nombreOriginal}:`, '');
+    if (apodoActual === null) return; // Usuario canceló
+    
+    fetch('/Home/ActualizarApodoAmigo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amigoId: amigoId, apodo: apodoActual.trim() })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarMensaje("Apodo actualizado", "exito");
+            cargarAmigos(); // Recargar para ver el cambio
+        } else {
+            mostrarMensaje(data.message || "Error al actualizar apodo", "error");
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        mostrarMensaje("Error al actualizar apodo", "error");
+    });
+}
+
+function cargarPuntosInteres() {
+    // Cargar veterinarias desde el JSON o base de datos
+    fetch('/data/veterinarios.json')
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.veterinarios) {
+                data.veterinarios.forEach(vet => {
+                    const lat = vet.lat || vet.latitud;
+                    const lng = vet.lng || vet.longitud;
+                    const nombre = vet.nombre || vet.clinica || 'Veterinaria';
+                    
+                    if (lat && lng) {
+                        // Icono para veterinaria
+                        const iconoVet = L.divIcon({
+                            className: 'punto-interes-marker',
+                            html: '<div style="background: #e74c3c; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">🏥</div>',
+                            iconSize: [24, 24],
+                            iconAnchor: [12, 12]
+                        });
+                        
+                        const marker = L.marker([parseFloat(lat), parseFloat(lng)], {
+                            icon: iconoVet,
+                            title: nombre
+                        }).addTo(map);
+                        
+                        const popup = L.popup({
+                            maxWidth: 250
+                        }).setContent(`
+                            <div style="padding: 8px;">
+                                <h4 style="margin: 0 0 8px 0; font-size: 1rem; font-weight: 600;">${nombre}</h4>
+                                ${vet.direccion ? `<p style="margin: 0 0 5px 0; font-size: 0.85rem; color: #666;">📍 ${vet.direccion}</p>` : ''}
+                                ${vet.telefono ? `<p style="margin: 0 0 5px 0; font-size: 0.85rem; color: #666;">📞 ${vet.telefono}</p>` : ''}
+                                ${vet.especialidad ? `<p style="margin: 0 0 5px 0; font-size: 0.85rem; color: #666;">⚕️ ${vet.especialidad}</p>` : ''}
+                                <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(lat + ',' + lng)}" 
+                                   target="_blank" 
+                                   style="display: inline-block; margin-top: 8px; padding: 6px 12px; background: #39b77c; color: white; text-decoration: none; border-radius: 5px; font-size: 0.85rem; font-weight: 600; cursor: pointer;">
+                                    Ver en Google Maps
+                                </a>
+                            </div>
+                        `);
+                        
+                        marker.bindPopup(popup);
+                    }
+                });
+            }
+        })
+        .catch(err => {
+            console.error('Error al cargar puntos de interés:', err);
+        });
+}
+</script>
+</body>
+</html>
+

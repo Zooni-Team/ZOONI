@@ -120,7 +120,7 @@ input:focus,select:focus{border-color:var(--verde);}
             <select id="CodigoPais" name="CodigoPais" required>
                 <option value="">Código</option>
             </select>
-            <input type="tel" name="Telefono" placeholder="Teléfono" required autocomplete="off" />
+            <input type="tel" id="Telefono" name="Telefono" placeholder="Teléfono" required autocomplete="off" pattern="[0-9]*" inputmode="numeric" onkeypress="return soloNumeros(event)" />
         </div>
 
         <button type="submit" class="btn-principal">Continuar</button>
@@ -161,6 +161,21 @@ document.addEventListener("DOMContentLoaded",()=>{
       const cities=City.getCitiesOfState(isoP,isoProv);
       ciudad.innerHTML='<option value="">Ciudad / Barrio</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join("");
       ciudad.disabled=cities.length===0;
+  });
+  
+  // Solo permitir números en el campo teléfono
+  function soloNumeros(event) {
+      const char = String.fromCharCode(event.which);
+      if (!/[0-9]/.test(char)) {
+          event.preventDefault();
+          return false;
+      }
+      return true;
+  }
+  
+  // También validar en tiempo real
+  tel.addEventListener('input', function(e) {
+      this.value = this.value.replace(/[^0-9]/g, '');
   });
 });
 </script>

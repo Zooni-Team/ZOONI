@@ -1,282 +1,735 @@
 @{
-    ViewData["Title"] = "Tema de la Aplicación 🎨";
+    ViewData["Title"] = "Configuración de Usuario 👤";
     Layout = null;
-    var tema = ViewBag.Tema ?? "claro";
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
+    
+    var nombre = ViewBag.Nombre?.ToString() ?? "";
+    var apellido = ViewBag.Apellido?.ToString() ?? "";
+    var correo = ViewBag.Mail?.ToString() ?? "";
+    var telefono = ViewBag.Telefono?.ToString() ?? "";
 }
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>@ViewData["Title"]</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <style>
 :root {
-  --verde: #3ac37d;
-  --amarillo: #FFD85A;
-  --marron: #3a2a1b;
-  --texto-claro: #3a2a1b;
-  --texto-oscuro: #ffffff;
-  --fondo-claro: #ffffff;
-  --fondo-oscuro: #0f0f0f;
+    --verde: #39b77c;
+    --amarillo: #FFD85A;
+    --marron: #3c2a1b;
+    --rojo: #ff4444;
+    --fondo-claro: #f9f9f8;
+    --fondo-oscuro: #121212;
+    --texto-claro: #3c2a1b;
+    --texto-oscuro: #ffffff;
+    --card-claro: rgba(255,255,255,0.95);
+    --card-oscuro: rgba(30,30,30,0.95);
 }
 
-/* ===== GENERAL ===== */
-body {
-  margin: 0;
-  font-family: 'Poppins', sans-serif;
-  background: @(tema == "oscuro" ? "var(--fondo-oscuro)" : "var(--fondo-claro)");
-  color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
-  transition: background .4s ease, color .4s ease;
-  overflow-x: hidden;
+* {
+    box-sizing: border-box;
 }
 
-/* ===== HEADER ===== */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    transition: background .4s ease, color .4s ease;
+    overflow-x: hidden;
+}
+
+body.tema-claro {
+    background: var(--fondo-claro);
+    color: var(--texto-claro);
+}
+
+body.tema-oscuro {
+    background: var(--fondo-oscuro);
+    color: var(--texto-oscuro);
+}
+
 header {
-  position: fixed;
-  top: 15px;
-  left: 20px;
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    z-index: 10;
 }
 
 .menu-icon {
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  transition: transform .25s ease, filter .3s ease;
-  filter: brightness(0); /* negro en modo claro */
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0);
 }
 body.tema-oscuro .menu-icon {
-  filter: brightness(0) invert(1); /* blanco en modo oscuro */
+    filter: brightness(0) invert(1);
 }
 .menu-icon:hover { transform: scale(1.1); }
 
-.back {
-  font-size: 1.8rem;
-  text-decoration: none;
-  font-weight: 700;
-  margin-left: 8px;
-  transition: color .3s ease;
-  color: inherit;
-}
-body.tema-claro .back {
-  color: var(--marron);
-}
-body.tema-oscuro .back {
-  color: #ffffff;
-}
-
-/* ===== MENÚ LATERAL ===== */
 .menu-lateral {
-  position: fixed;
-  top: 0;
-  left: 0;
-  transform: translateX(-100%);
-  width: 250px;
-  height: 100%;
-  backdrop-filter: blur(12px);
-  border-right: 2px solid rgba(255,255,255,0.15);
-  box-shadow: 4px 0 14px rgba(0,0,0,0.25);
-  display: flex;
-  flex-direction: column;
-  padding: 2.5rem 1.2rem;
-  gap: 1rem;
-  transition: transform 0.35s ease, background .4s ease, color .4s ease;
-  z-index: 999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 240px;
+    height: 100%;
+    box-shadow: 4px 0 18px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease, background .4s ease, color .4s ease;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    z-index: 9999;
 }
 body.tema-claro .menu-lateral {
-  background: rgba(253,253,253,0.96);
+    background: rgba(255,255,255,0.98);
 }
 body.tema-oscuro .menu-lateral {
-  background: rgba(30,30,30,0.96);
-  box-shadow: 4px 0 14px rgba(0,0,0,0.5);
+    background: rgba(30,30,30,0.98);
+    box-shadow: 4px 0 18px rgba(0,0,0,0.5);
 }
 .menu-lateral.abierto { transform: translateX(0); }
-
 .menu-lateral a {
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 1.05rem;
-  padding: 0.5rem 0.8rem;
-  border-radius: 10px;
-  transition: all .25s ease;
-  color: inherit;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    transition: all .25s ease;
+    color: inherit;
 }
 body.tema-claro .menu-lateral a {
-  color: #2c2c2c;
+    color: var(--marron);
 }
 body.tema-oscuro .menu-lateral a {
-  color: #f1f1f1;
+    color: #ffffff;
 }
-body.tema-claro .menu-lateral a:hover,
+body.tema-claro .menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
 body.tema-oscuro .menu-lateral a:hover {
-  background: var(--verde);
-  color: #fff !important;
+    background: var(--verde);
+    color: #ffffff;
 }
-
 .cerrar-menu {
-  align-self: flex-end;
-  font-size: 1.4rem;
-  cursor: pointer;
-  margin-bottom: 1.5rem;
-  transition: transform 0.2s ease, color .3s ease;
-  color: inherit;
+    align-self: flex-end;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-bottom: 1.2rem;
+    transition: transform 0.2s ease, color .3s ease;
+    color: inherit;
 }
 body.tema-claro .cerrar-menu {
-  color: #2c2c2c;
+    color: var(--marron);
 }
 body.tema-oscuro .cerrar-menu {
-  color: #f1f1f1;
+    color: #ffffff;
 }
 .cerrar-menu:hover {
-  transform: scale(1.2);
+    transform: scale(1.2);
 }
-
 .overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.45);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .3s ease;
-  z-index: 998;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 8;
 }
 .overlay.activo { opacity: 1; pointer-events: auto; }
 
-/* ===== CONTENIDO PRINCIPAL ===== */
 main {
-  margin: 100px auto 50px auto;
-  max-width: 460px;
-  background: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
-  border-radius: 22px;
-  padding: 30px;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.15);
-  text-align: center;
-  transition: background .4s ease, color .4s ease;
+    margin-top: 90px;
+    width: 100%;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 20px 60px 20px;
 }
 
 h1 {
-  font-size: 1.8rem;
-  font-weight: 700;
-  margin-bottom: 15px;
-  color: @(tema == "oscuro" ? "#ffffff" : "var(--marron)");
+    text-align: center;
+    margin: 0 0 30px 0;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: inherit;
 }
 
-p {
-  font-size: 1rem;
-  font-weight: 500;
-  color: inherit;
-  margin-bottom: 35px;
+section {
+    border-radius: 28px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    width: 100%;
+    padding: 2rem 1.8rem;
+    margin-bottom: 25px;
+    backdrop-filter: blur(10px);
+    transition: background .4s ease, box-shadow .4s ease;
+}
+body.tema-claro section {
+    background: var(--card-claro);
+}
+body.tema-oscuro section {
+    background: var(--card-oscuro);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
 }
 
-/* ===== BOTONES ===== */
-.opciones {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 25px;
+h2 {
+    font-size: 1.3rem;
+    margin: 0 0 20px 0;
+    font-weight: 600;
+    color: inherit;
+    border-bottom: 2px solid var(--verde);
+    padding-bottom: 10px;
 }
 
-button {
-  background: var(--verde);
-  color: white;
-  border: none;
-  border-radius: 30px;
-  padding: 14px 22px;
-  font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  width: 80%;
-  max-width: 280px;
-  margin: 8px 0;
-  transition: background .3s ease, transform .2s ease;
+.form-group {
+    margin-bottom: 20px;
 }
-button:hover {
-  background: #2fa66a;
-  transform: translateY(-2px);
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: inherit;
+    font-size: 0.95rem;
 }
-button:active { transform: scale(0.97); }
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: all .3s ease;
+    box-sizing: border-box;
+}
+body.tema-claro .form-group input,
+body.tema-claro .form-group select {
+    background: white;
+    color: var(--texto-claro);
+    border-color: rgba(0,0,0,0.1);
+}
+body.tema-oscuro .form-group input,
+body.tema-oscuro .form-group select {
+    background: rgba(40,40,40,0.8);
+    color: var(--texto-oscuro);
+    border-color: rgba(255,255,255,0.1);
+}
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(57, 195, 125, 0.1);
+}
+.form-group input[type="password"] {
+    font-family: 'Courier New', monospace;
+    letter-spacing: 2px;
+}
 
-/* ===== RESPONSIVE ===== */
+.input-group {
+    position: relative;
+}
+.input-group .toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: inherit;
+    opacity: 0.7;
+    padding: 5px;
+    transition: opacity .2s ease;
+}
+.input-group .toggle-password:hover {
+    opacity: 1;
+}
+
+.btn {
+    background: var(--verde);
+    color: white;
+    font-weight: 600;
+    padding: 14px 24px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all .3s ease;
+    width: 100%;
+    font-size: 1rem;
+    margin-top: 10px;
+}
+.btn:hover {
+    background: #2fa76b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(57, 195, 125, 0.3);
+}
+.btn-secondary {
+    background: #888;
+}
+.btn-secondary:hover {
+    background: #666;
+}
+.btn-danger {
+    background: var(--rojo);
+}
+.btn-danger:hover {
+    background: #cc0000;
+}
+.btn-warning {
+    background: var(--amarillo);
+    color: #3a2b00;
+}
+.btn-warning:hover {
+    background: #FFC93C;
+}
+
+.mensaje {
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+    text-align: center;
+    font-weight: 500;
+}
+.mensaje-exito {
+    background: rgba(57, 195, 125, 0.2);
+    color: #2d5a3d;
+    border: 1px solid var(--verde);
+}
+body.tema-oscuro .mensaje-exito {
+    background: rgba(57, 195, 125, 0.3);
+    color: #a8e6c7;
+}
+.mensaje-error {
+    background: rgba(255, 107, 107, 0.2);
+    color: #8b0000;
+    border: 1px solid var(--rojo);
+}
+body.tema-oscuro .mensaje-error {
+    background: rgba(255, 107, 107, 0.3);
+    color: #ffcccc;
+}
+.mensaje-info {
+    background: rgba(58, 195, 125, 0.1);
+    color: #2d5a3d;
+    border: 1px solid var(--verde);
+}
+body.tema-oscuro .mensaje-info {
+    background: rgba(58, 195, 125, 0.2);
+    color: #a8e6c7;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+.modal.activo {
+    display: flex;
+}
+.modal-content {
+    background: var(--card-claro);
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+body.tema-oscuro .modal-content {
+    background: var(--card-oscuro);
+}
+.modal-content h3 {
+    margin: 0 0 20px 0;
+    color: inherit;
+    font-size: 1.4rem;
+}
+.modal-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+.modal-buttons .btn {
+    flex: 1;
+    margin-top: 0;
+}
+
+.seguridad-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    background: rgba(0,0,0,0.03);
+    transition: all .2s ease;
+}
+body.tema-oscuro .seguridad-item {
+    background: rgba(255,255,255,0.05);
+}
+.seguridad-item:hover {
+    background: rgba(0,0,0,0.05);
+}
+body.tema-oscuro .seguridad-item:hover {
+    background: rgba(255,255,255,0.08);
+}
+.seguridad-item-info {
+    flex: 1;
+}
+.seguridad-item-info h4 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    color: inherit;
+}
+.seguridad-item-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.7;
+    color: inherit;
+}
+.seguridad-item-accion {
+    margin-left: 15px;
+}
+
+.contrasena-revelada {
+    font-family: 'Courier New', monospace;
+    font-size: 1.1rem;
+    letter-spacing: 3px;
+    padding: 15px;
+    background: rgba(0,0,0,0.05);
+    border-radius: 10px;
+    text-align: center;
+    margin: 15px 0;
+    word-break: break-all;
+    border: 2px dashed var(--verde);
+}
+body.tema-oscuro .contrasena-revelada {
+    background: rgba(255,255,255,0.05);
+}
+
+.info-box {
+    background: rgba(58, 195, 125, 0.1);
+    border-left: 4px solid var(--verde);
+    padding: 12px 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    font-size: 0.9rem;
+    color: inherit;
+}
+body.tema-oscuro .info-box {
+    background: rgba(58, 195, 125, 0.15);
+}
+
 @@media (max-width: 600px) {
-  main { margin-top: 80px; padding: 25px 20px; }
-  h1 { font-size: 1.6rem; }
-  p { font-size: 0.95rem; }
-  .menu-lateral { width: 220px; padding: 2rem 1rem; }
-  .opciones { gap: 20px; }
-  button { width: 100%; }
+    main {
+        padding: 0 15px 60px 15px;
+    }
+    section {
+        padding: 1.5rem 1.3rem;
+    }
+    h1 {
+        font-size: 1.6rem;
+    }
+    .modal-content {
+        padding: 20px;
+    }
 }
 </style>
 </head>
 
 <body class="tema-@tema">
 <header>
-  <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
-  <a href="/Home/Configuracion" class="back">‹</a>
+    <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
 </header>
 
 <div class="menu-lateral" id="menuLateral">
-  <div class="cerrar-menu" id="cerrarMenu">✖</div>
-  <a href="/Home/Index">🏠 Inicio</a>
-  <a href="/Comunidad">👥 Comunidad</a>
-  <a href="/Marketplace">🛒 Marketplace</a>
-  <a href="/Home/FichaMedica">💉 Ficha médica</a>
-  <a href="/Home/Calendario">📅 Calendario</a>
-  <a href="/Chat/ChatZooni">💬 ChatBot</a>
-  <a href="/Home/Closet">👕 Closet</a>
-  <a href="/Home/Perfil">👤 Perfil</a>
-  <a href="/Home/Configuracion">⚙️ Configuración</a>
-  <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/Home/FichaMedica">💉 Ficha médica</a>
+    <a href="/Home/Calendario">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 ChatBot</a>
+    <a href="/Home/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Home/Configuracion">⚙️ Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
 </div>
 <div class="overlay" id="overlay"></div>
 
 <main>
-  <h1>Tema de la aplicación 🎨</h1>
-  <p>Seleccioná cómo querés ver Zooni:</p>
+    <h1>⚙️ Configuración de Usuario</h1>
 
-  <div class="opciones">
-    <form method="post" action="/Home/CambiarTema">
-      <button type="submit" name="modo" value="claro">☀️ Modo Claro</button>
-      <button type="submit" name="modo" value="oscuro">🌙 Modo Oscuro</button>
-    </form>
-  </div>
+    @if (TempData["Exito"] != null)
+    {
+        <section style="margin-bottom: 20px;">
+            <div class="mensaje mensaje-exito">@TempData["Exito"]</div>
+        </section>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <section style="margin-bottom: 20px;">
+            <div class="mensaje mensaje-error">@TempData["Error"]</div>
+        </section>
+    }
+
+    <!-- Datos Personales -->
+    <section>
+        <h2>👤 Datos Personales</h2>
+        <form method="post" action="/Home/ActualizarDatosUsuario">
+            @Html.AntiForgeryToken()
+            
+            <div class="form-group">
+                <label for="Nombre">Nombre</label>
+                <input type="text" id="Nombre" name="Nombre" value="@nombre" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Apellido">Apellido</label>
+                <input type="text" id="Apellido" name="Apellido" value="@apellido" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Correo">Correo Electrónico</label>
+                <input type="email" id="Correo" name="Correo" value="@correo" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Telefono">Teléfono</label>
+                <input type="tel" id="Telefono" name="Telefono" value="@telefono" placeholder="5491112345678" pattern="[0-9]*" inputmode="numeric" onkeypress="return soloNumeros(event)" />
+            </div>
+
+            <button type="submit" class="btn">💾 Guardar Cambios</button>
+        </form>
+    </section>
+
+    <!-- Seguridad y Contraseña -->
+    <section>
+        <h2>🔒 Seguridad</h2>
+        
+        <div class="seguridad-item">
+            <div class="seguridad-item-info">
+                <h4>Cambiar Contraseña</h4>
+                <p>Actualizar tu contraseña de acceso</p>
+            </div>
+            <div class="seguridad-item-accion">
+                <button class="btn btn-secondary" onclick="mostrarModalCambiarContrasena()" style="width: auto; padding: 10px 20px; margin: 0;">
+                    🔑 Cambiar
+                </button>
+            </div>
+        </div>
+
+        <div class="info-box">
+            💡 <strong>Consejo de seguridad:</strong> Usá una contraseña única y segura. No la compartas con nadie.
+        </div>
+    </section>
+
+    <!-- Configuraciones Adicionales -->
+    <section>
+        <h2>⚙️ Configuraciones Adicionales</h2>
+        
+        <div class="seguridad-item">
+            <div class="seguridad-item-info">
+                <h4>Eliminar Cuenta</h4>
+                <p>Eliminar permanentemente tu cuenta y todos tus datos</p>
+            </div>
+            <div class="seguridad-item-accion">
+                <button class="btn btn-danger" onclick="mostrarModalEliminarCuenta()" style="width: auto; padding: 10px 20px; margin: 0;">
+                    🗑️ Eliminar
+                </button>
+            </div>
+        </div>
+
+        <div class="info-box">
+            ⚠️ <strong>Atención:</strong> La eliminación de cuenta es permanente e irreversible.
+        </div>
+    </section>
 </main>
 
+<!-- Modal Cambiar Contraseña -->
+<div class="modal" id="modalCambiarContrasena">
+    <div class="modal-content">
+        <h3>🔑 Cambiar Contraseña</h3>
+        <form method="post" action="/Home/CambiarContrasena" id="formCambiarContrasena">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="ContrasenaActualCambiar">Contraseña Actual</label>
+                <div class="input-group">
+                    <input type="password" id="ContrasenaActualCambiar" name="ContrasenaActual" required autocomplete="current-password" />
+                    <button type="button" class="toggle-password" onclick="togglePassword('ContrasenaActualCambiar', this)">👁️</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="NuevaContrasena">Nueva Contraseña</label>
+                <div class="input-group">
+                    <input type="password" id="NuevaContrasena" name="NuevaContrasena" required autocomplete="new-password" minlength="6" />
+                    <button type="button" class="toggle-password" onclick="togglePassword('NuevaContrasena', this)">👁️</button>
+                </div>
+                <small style="color: inherit; opacity: 0.7; font-size: 0.85rem;">Mínimo 6 caracteres</small>
+            </div>
+            <div class="form-group">
+                <label for="ConfirmarContrasena">Confirmar Nueva Contraseña</label>
+                <div class="input-group">
+                    <input type="password" id="ConfirmarContrasena" name="ConfirmarContrasena" required autocomplete="new-password" minlength="6" />
+                    <button type="button" class="toggle-password" onclick="togglePassword('ConfirmarContrasena', this)">👁️</button>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button type="submit" class="btn">Cambiar Contraseña</button>
+                <button type="button" class="btn btn-secondary" onclick="cerrarModal('modalCambiarContrasena')">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Eliminar Cuenta -->
+<div class="modal" id="modalEliminarCuenta">
+    <div class="modal-content">
+        <h3>🗑️ Eliminar Cuenta</h3>
+        <div class="mensaje mensaje-error" style="margin-bottom: 20px;">
+            ⚠️ Esta acción es permanente e irreversible. Todos tus datos serán eliminados.
+        </div>
+        <p style="color: inherit; opacity: 0.8; margin-bottom: 20px;">
+            Para confirmar, ingresá tu contraseña:
+        </p>
+        <form method="post" action="/Home/EliminarCuenta" id="formEliminarCuenta">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="ContrasenaEliminar">Contraseña</label>
+                <div class="input-group">
+                    <input type="password" id="ContrasenaEliminar" name="Contrasena" required autocomplete="current-password" />
+                    <button type="button" class="toggle-password" onclick="togglePassword('ContrasenaEliminar', this)">👁️</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="ConfirmarEliminar" required style="margin-right: 8px;" />
+                    Confirmo que quiero eliminar mi cuenta permanentemente
+                </label>
+            </div>
+            <div class="modal-buttons">
+                <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+                <button type="button" class="btn btn-secondary" onclick="cerrarModal('modalEliminarCuenta')">Cancelar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script>
-// ===== MENÚ LATERAL =====
 const menu = document.getElementById("menuLateral");
 const overlay = document.getElementById("overlay");
 document.getElementById("abrirMenu").onclick = () => {
-  menu.classList.add("abierto");
-  overlay.classList.add("activo");
+    menu.classList.add("abierto");
+    overlay.classList.add("activo");
 };
 document.getElementById("cerrarMenu").onclick = cerrarMenu;
 overlay.onclick = cerrarMenu;
+
 function cerrarMenu() {
-  menu.classList.remove("abierto");
-  overlay.classList.remove("activo");
+    menu.classList.remove("abierto");
+    overlay.classList.remove("activo");
 }
 
-// ===== EFECTO FADE =====
-document.querySelectorAll("button[name='modo']").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const fade = document.createElement("div");
-    fade.style.position = "fixed";
-    fade.style.inset = "0";
-    fade.style.background = "rgba(0,0,0,0.5)";
-    fade.style.zIndex = "9999";
-    fade.style.opacity = "0";
-    fade.style.transition = "opacity 0.4s ease";
-    document.body.appendChild(fade);
-    requestAnimationFrame(() => fade.style.opacity = "1");
-    setTimeout(() => fade.remove(), 600);
-  });
+function mostrarModalCambiarContrasena() {
+    document.getElementById('modalCambiarContrasena').classList.add('activo');
+    overlay.classList.add('activo');
+    document.getElementById('ContrasenaActualCambiar').focus();
+}
+
+function mostrarModalEliminarCuenta() {
+    document.getElementById('modalEliminarCuenta').classList.add('activo');
+    overlay.classList.add('activo');
+    document.getElementById('ContrasenaEliminar').focus();
+}
+
+function cerrarModal(modalId) {
+    document.getElementById(modalId).classList.remove('activo');
+    overlay.classList.remove('activo');
+    // Limpiar formularios
+    const form = document.querySelector(`#${modalId} form`);
+    if (form) form.reset();
+}
+
+function togglePassword(inputId, button) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        button.textContent = '🙈';
+    } else {
+        input.type = 'password';
+        button.textContent = '👁️';
+    }
+}
+
+// Validar que las contraseñas coincidan al cambiar
+document.getElementById('formCambiarContrasena')?.addEventListener('submit', function(e) {
+    const nueva = document.getElementById('NuevaContrasena').value;
+    const confirmar = document.getElementById('ConfirmarContrasena').value;
+    
+    if (nueva !== confirmar) {
+        e.preventDefault();
+        alert('Las contraseñas no coinciden');
+        return false;
+    }
+    
+    if (nueva.length < 6) {
+        e.preventDefault();
+        alert('La contraseña debe tener al menos 6 caracteres');
+        return false;
+    }
+    
+    return true;
 });
+
+// Cerrar modales al hacer clic fuera
+document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            cerrarModal(this.id);
+        }
+    });
+});
+
+// Solo permitir números en el campo teléfono
+function soloNumeros(event) {
+    const char = String.fromCharCode(event.which);
+    if (!/[0-9]/.test(char)) {
+        event.preventDefault();
+        return false;
+    }
+    return true;
+}
+
+// También validar en tiempo real
+document.getElementById('Telefono')?.addEventListener('input', function(e) {
+    this.value = this.value.replace(/[^0-9]/g, '');
+});
+
 </script>
 </body>
 </html>
+

@@ -243,12 +243,25 @@
     @Html.AntiForgeryToken()
 
     <div class="fila">
-        <input type="text" name="nombre" placeholder="Nombre" required autocomplete="off" />
-        <input type="text" name="apellido" placeholder="Apellido" required autocomplete="off" />
+        <input type="text" name="nombre" placeholder="Nombre" required autocomplete="off" value="@(ViewBag.Nombre ?? "")" />
+        <input type="text" name="apellido" placeholder="Apellido" required autocomplete="off" value="@(ViewBag.Apellido ?? "")" />
     </div>
 
-    <input type="email" id="mail" name="mail" placeholder="Mail" required autocomplete="off" onblur="verificarMail()" />
+    <input type="email" id="mail" name="mail" placeholder="Mail" required autocomplete="off" value="@(ViewBag.Mail ?? "")" onblur="verificarMail()" />
     <p id="errorMail" style="color:red; font-weight:600; display:none;">Este correo ya está registrado.</p>
+    
+    @if (TempData["Error"] != null)
+    {
+        <div id="mensajeError" style="background: #ffebee; color: #c62828; padding: 12px; border-radius: 10px; margin-top: 10px; font-weight: 600; text-align: center;">
+            @TempData["Error"]
+        </div>
+    }
+    @if (TempData["Exito"] != null)
+    {
+        <div style="background: #e8f5e9; color: #2e7d32; padding: 12px; border-radius: 10px; margin-top: 10px; font-weight: 600; text-align: center;">
+            @TempData["Exito"]
+        </div>
+    }
 
     <input type="password" id="Contrasena" name="contrasena" placeholder="Contraseña" required autocomplete="off" />
     <input type="password" id="ConfirmarContrasena" name="confirmarContrasena" placeholder="Confirmar contraseña" required autocomplete="off" />
@@ -275,19 +288,42 @@ async function verificarMail() {
 }
 
 function validarFormulario() {
+    console.log("🔵 validarFormulario() llamado");
+    
+    const nombre = document.querySelector('input[name="nombre"]').value.trim();
+    const apellido = document.querySelector('input[name="apellido"]').value.trim();
+    const mail = document.getElementById("mail").value.trim();
     const pass = document.getElementById("Contrasena").value;
     const confirm = document.getElementById("ConfirmarContrasena").value;
     const error = document.getElementById("errorMail");
 
+    console.log("🔵 Datos del formulario:", { nombre, apellido, mail, passLength: pass.length, confirmLength: confirm.length });
+
+    if (!nombre || !apellido || !mail) {
+        alert("Por favor completá todos los campos.");
+        console.log("❌ Campos vacíos");
+        return false;
+    }
+
     if (error.style.display === "block") {
         alert("Ese correo ya está registrado. Por favor, usá otro.");
+        console.log("❌ Correo ya registrado");
         return false;
     }
 
     if (pass !== confirm) {
         alert("Las contraseñas no coinciden. Intentá nuevamente.");
+        console.log("❌ Contraseñas no coinciden");
         return false;
     }
+    
+    if (pass.length < 6) {
+        alert("La contraseña debe tener al menos 6 caracteres.");
+        console.log("❌ Contraseña muy corta");
+        return false;
+    }
+    
+    console.log("✅ Validación exitosa, enviando formulario");
     return true;
 }
 </script>

@@ -459,6 +459,11 @@ public IActionResult Registro4(string modo = "")
 
     Console.WriteLine($"🐾 [REGISTRO4 GET] Datos recibidos → Nombre: {nombreMascota}, Especie: {especie}, Raza: {raza}, Peso: {peso}");
 
+    // Cargar datos del usuario si existen en sesión
+    ViewBag.Nombre = HttpContext.Session.GetString("UserNombre") ?? "";
+    ViewBag.Apellido = HttpContext.Session.GetString("UserApellido") ?? "";
+    ViewBag.Mail = HttpContext.Session.GetString("UserMail") ?? "";
+
     ViewBag.MascotaNombre = nombreMascota;
     ViewBag.MascotaEspecie = especie;
     ViewBag.MascotaRaza = raza;
@@ -474,11 +479,14 @@ public IActionResult Registro4(string modo = "")
 [Route("Registro/Registro4")]
 public IActionResult Registro4(string nombre, string apellido, string mail, string contrasena, string confirmarContrasena, string modo = "")
 {
+    Console.WriteLine($"🔵 Registro4 POST recibido - nombre: {nombre}, apellido: {apellido}, mail: {mail}");
+    
     if (HttpContext.Session.GetString("MascotaNombre") == null)
-{
-    TempData["Error"] = "Faltan datos de la mascota. Volvé a completar los pasos anteriores 🐾";
-    return RedirectToAction("Registro2");
-}
+    {
+        Console.WriteLine("❌ MascotaNombre es null en sesión");
+        TempData["Error"] = "Faltan datos de la mascota. Volvé a completar los pasos anteriores 🐾";
+        return RedirectToAction("Registro2");
+    }
     try
     {
         var userId = HttpContext.Session.GetInt32("UserId");
@@ -504,12 +512,53 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             return RedirectToAction("Registro4");
         }
 
+        // ✅ Validar formato de email (con manejo de excepciones)
+        try
+        {
+            Console.WriteLine($"🔍 Validando formato de email: {mail}");
+            if (!EmailHelper.ValidarFormatoEmail(mail))
+            {
+                Console.WriteLine("❌ Formato de email inválido");
+                TempData["Error"] = "El formato del correo electrónico no es válido.";
+                return RedirectToAction("Registro4");
+            }
+            Console.WriteLine("✅ Formato de email válido");
+
+            // ✅ Verificar que el dominio del email existe (opcional, no bloqueante)
+            try
+            {
+                if (!EmailHelper.VerificarDominioEmail(mail))
+                {
+                    Console.WriteLine("⚠️ Dominio de email no verificado, pero continuando");
+                    // No bloqueamos el registro si falla la verificación de dominio
+                }
+                else
+                {
+                    Console.WriteLine("✅ Dominio de email verificado");
+                }
+            }
+            catch (Exception dominioEx)
+            {
+                Console.WriteLine("⚠️ Error al verificar dominio (continuando): " + dominioEx.Message);
+                // Continuar con el registro aunque falle la validación de dominio
+            }
+        }
+        catch (Exception emailEx)
+        {
+            Console.WriteLine("⚠️ Error en validación de email (continuando): " + emailEx.Message);
+            // Continuar con el registro aunque falle la validación de dominio
+        }
+
+        Console.WriteLine($"🔍 Verificando contraseñas...");
         if (contrasena != confirmarContrasena)
         {
+            Console.WriteLine("❌ Las contraseñas no coinciden");
             TempData["Error"] = "Las contraseñas no coinciden.";
             return RedirectToAction("Registro4");
         }
+        Console.WriteLine("✅ Contraseñas coinciden");
 
+        Console.WriteLine($"🔍 Verificando si el correo ya existe...");
         string checkQuery = @"
             SELECT COUNT(*) 
             FROM Mail M 
@@ -523,16 +572,16 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             { "@Id_User", userId.Value }
         }));
 
+        Console.WriteLine($"🔍 Resultado verificación correo: existe = {existe}");
         if (existe > 0)
         {
-            ViewBag.Error = "Este correo ya está registrado 🐾. Iniciá sesión o usá otro.";
-            ViewBag.Nombre = nombre;
-            ViewBag.Apellido = apellido;
-            ViewBag.Mail = mail;
-            ViewBag.Modo = modo;
-            return View("Registro4");
+            Console.WriteLine("❌ El correo ya está registrado");
+            TempData["Error"] = "Este correo ya está registrado 🐾. Iniciá sesión o usá otro.";
+            return RedirectToAction("Registro4");
         }
+        Console.WriteLine("✅ Correo disponible");
 
+        Console.WriteLine($"💾 Actualizando datos del usuario...");
         string updateUserQuery = @"
             UPDATE [User]
             SET Nombre = @Nombre,
@@ -545,6 +594,7 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             { "@Apellido", apellido },
             { "@Id_User", userId.Value }
         });
+        Console.WriteLine("✅ Usuario actualizado");
 
         string updateMailQuery = @"
             UPDATE M
@@ -560,21 +610,46 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
             { "@Contrasena", contrasena },
             { "@Id_User", userId.Value }
         });
+        Console.WriteLine("✅ Mail actualizado");
 
         HttpContext.Session.SetString("UserNombre", nombre);
         HttpContext.Session.SetString("UserApellido", apellido);
         HttpContext.Session.SetString("UserMail", mail);
         HttpContext.Session.SetString("UserContrasena", contrasena);
 
+        // ✅ Verificar que los datos de la mascota estén en sesión antes de redirigir
+        var mascotaNombreCheck = HttpContext.Session.GetString("MascotaNombre");
+        var mascotaEspecieCheck = HttpContext.Session.GetString("MascotaEspecie");
+        
         Console.WriteLine($"✅ Registro4 (POST): usuario {nombre} {apellido}, mail {mail}");
+        Console.WriteLine($"🔍 Verificación sesión - MascotaNombre: {mascotaNombreCheck}, MascotaEspecie: {mascotaEspecieCheck}");
+
+        if (string.IsNullOrEmpty(mascotaNombreCheck) || string.IsNullOrEmpty(mascotaEspecieCheck))
+        {
+            Console.WriteLine("⚠️ ADVERTENCIA: Datos de mascota faltantes en sesión, redirigiendo a Registro3");
+            TempData["Error"] = "Faltan datos de la mascota. Volvé a completar los pasos anteriores 🐾";
+            return RedirectToAction("Registro3");
+        }
 
         TempData["Exito"] = "Datos guardados correctamente 🦮";
-        return RedirectToAction("Registro5", "Registro");
+        Console.WriteLine($"➡️ Redirigiendo a Registro5 - TODO OK");
+        Console.WriteLine($"➡️ URL de redirección: /Registro/Registro5");
+        
+        // Forzar redirección explícita
+        return Redirect("/Registro/Registro5");
+    }
+    catch (Microsoft.AspNetCore.Antiforgery.AntiforgeryValidationException afEx)
+    {
+        Console.WriteLine("❌ Error de validación antifalsificación: " + afEx.Message);
+        TempData["Error"] = "Error de seguridad. Por favor, recargá la página e intentá nuevamente.";
+        return RedirectToAction("Registro4");
     }
     catch (Exception ex)
     {
         Console.WriteLine("❌ Error en Registro4 POST: " + ex.Message);
-        TempData["Error"] = "Error al guardar los datos del usuario.";
+        Console.WriteLine("❌ Tipo de excepción: " + ex.GetType().Name);
+        Console.WriteLine("❌ StackTrace: " + ex.StackTrace);
+        TempData["Error"] = $"Error al guardar los datos del usuario: {ex.Message}";
         return RedirectToAction("Registro4");
     }
 }
@@ -585,21 +660,42 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
 [Route("Registro/Registro5")]
 public IActionResult Registro5()
 {
-    var mascotaNombre = HttpContext.Session.GetString("MascotaNombre");
-    var mascotaEspecie = HttpContext.Session.GetString("MascotaEspecie");
-    var mascotaRaza = HttpContext.Session.GetString("MascotaRaza");
-
-    if (string.IsNullOrEmpty(mascotaNombre) || string.IsNullOrEmpty(mascotaEspecie))
+    try
     {
-        TempData["Error"] = "Faltan datos de la mascota.";
-        return RedirectToAction("Registro3");
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+        {
+            TempData["Error"] = "Sesión expirada. Volvé a iniciar sesión 🐾";
+            return RedirectToAction("Registro1");
+        }
+
+        var mascotaNombre = HttpContext.Session.GetString("MascotaNombre");
+        var mascotaEspecie = HttpContext.Session.GetString("MascotaEspecie");
+        var mascotaRaza = HttpContext.Session.GetString("MascotaRaza");
+
+        Console.WriteLine($"🔍 Registro5 GET - MascotaNombre: {mascotaNombre}, MascotaEspecie: {mascotaEspecie}, MascotaRaza: {mascotaRaza}");
+
+        if (string.IsNullOrEmpty(mascotaNombre) || string.IsNullOrEmpty(mascotaEspecie))
+        {
+            Console.WriteLine("⚠️ Registro5 GET: Faltan datos de la mascota, redirigiendo a Registro3");
+            TempData["Error"] = "Faltan datos de la mascota. Volvé a completar los pasos anteriores 🐾";
+            return RedirectToAction("Registro3");
+        }
+
+        ViewBag.MascotaNombre = mascotaNombre;
+        ViewBag.MascotaEspecie = mascotaEspecie;
+        ViewBag.MascotaRaza = mascotaRaza ?? "";
+
+        Console.WriteLine($"✅ Registro5 GET: Datos cargados correctamente, mostrando vista");
+        return View();
     }
-
-    ViewBag.MascotaNombre = mascotaNombre;
-    ViewBag.MascotaEspecie = mascotaEspecie;
-    ViewBag.MascotaRaza = mascotaRaza;
-
-    return View();
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error en Registro5 GET: " + ex.Message);
+        Console.WriteLine("❌ StackTrace: " + ex.StackTrace);
+        TempData["Error"] = "Error al cargar la página de registro.";
+        return RedirectToAction("Registro4");
+    }
 }
 
 [HttpPost]
@@ -650,21 +746,31 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
         // Insert definitivo
         if (!string.IsNullOrEmpty(nombre) && !string.IsNullOrEmpty(especie))
         {
+            // ✅ Obtener foto de sesión (puede ser null/vacío)
+            string foto = HttpContext.Session.GetString("MascotaFoto") ?? "";
+            
             string insert = @"
-                INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Fecha_Nacimiento, PesoDisplay)
-                VALUES (@Id_User, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, SYSDATETIME(), @PesoDisplay)";
+                INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Foto, Fecha_Nacimiento, PesoDisplay)
+                VALUES (@Id_User, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, @Foto, SYSDATETIME(), @PesoDisplay)";
 
             BD.ExecuteNonQuery(insert, new Dictionary<string, object>
             {
                 { "@Id_User", userId.Value },
                 { "@Nombre", nombre },
                 { "@Especie", especie },
-                { "@Raza", raza },
-                { "@Sexo", sexo },
+                { "@Raza", raza ?? "" },
+                { "@Sexo", sexo ?? "" },
                 { "@Peso", peso },
-                { "@PesoDisplay", HttpContext.Session.GetString("MascotaPesoDisplay") ?? (peso.ToString("F2") + " kg") },
-                { "@Edad", edad }
+                { "@Edad", edad },
+                { "@Foto", foto }, // ✅ Permite null/vacío
+                { "@PesoDisplay", HttpContext.Session.GetString("MascotaPesoDisplay") ?? (peso.ToString("F2") + " kg") }
             });
+            
+            Console.WriteLine($"✅ Mascota insertada: {nombre} ({especie}), Foto: {(string.IsNullOrEmpty(foto) ? "Sin foto" : foto)}");
+        }
+        else
+        {
+            Console.WriteLine("⚠️ No se insertó mascota: nombre o especie vacíos");
         }
 
         // Limpieza final de sesión

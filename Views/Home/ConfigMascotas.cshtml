@@ -503,7 +503,7 @@ body.tema-oscuro .card:hover {
             @foreach (var m in mascotasActivas)
             {
                 <div class="card">
-                    <img src="@(string.IsNullOrEmpty(m.Foto) || m.Foto == "" ? "/img/mascotas/default.png" : (m.Foto.StartsWith("/") ? m.Foto : "/" + m.Foto))" alt="@m.Nombre" onerror="this.src='/img/mascotas/default.png'" />
+                    <img src="@(string.IsNullOrWhiteSpace(m.Foto) ? "/img/mascotas/default.png" : m.Foto)" alt="@(m.Nombre ?? "Mascota")" onerror="this.src='/img/mascotas/default.png'" />
                     <h3>@m.Nombre</h3>
                     <p>@m.Especie - @m.Raza</p>
                     <div class="acciones">
@@ -533,7 +533,7 @@ body.tema-oscuro .card:hover {
             @foreach (var m in mascotasArchivadas)
             {
                 <div class="card archivada">
-                    <img src="@(string.IsNullOrEmpty(m.Foto) || m.Foto == "" ? "/img/mascotas/default.png" : (m.Foto.StartsWith("/") ? m.Foto : "/" + m.Foto))" alt="@m.Nombre" onerror="this.src='/img/mascotas/default.png'" />
+                    <img src="@(string.IsNullOrWhiteSpace(m.Foto) ? "/img/mascotas/default.png" : m.Foto)" alt="@(m.Nombre ?? "Mascota")" onerror="this.src='/img/mascotas/default.png'" />
                     <h3>@m.Nombre</h3>
                     <p>@m.Especie - @m.Raza</p>
                 </div>

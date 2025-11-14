@@ -62,13 +62,14 @@ namespace Zooni.Controllers
     // Obtener el peso decimal para cálculos
     if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
     {
-        // ✅ Corrección: si el peso es >= 100 y no hay PesoDisplay, probablemente está mal parseado
-        // Dividir por 10 solo si no hay PesoDisplay y el peso parece incorrecto (>= 100 para perros/gatos normales)
-        if (pesoDecimal >= 100 && string.IsNullOrEmpty(pesoDisplayBD))
+        // ✅ Corrección global: dividir por 10 si no hay PesoDisplay y el peso parece incorrecto (>= 10)
+        // Esto corrige casos como 400 -> 40.0, 300 -> 30.0, etc.
+        if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal >= 10)
         {
-            // Intentar corregir dividiendo por 10 (ej: 300 -> 30.0)
+            // Dividir por 10 para corregir el error de parseo
             decimal pesoCorregido = pesoDecimal / 10;
-            if (pesoCorregido <= 100) // Validar que el peso corregido sea razonable
+            // Validar que el peso corregido sea razonable (menor a 200kg para cualquier mascota)
+            if (pesoCorregido <= 200)
             {
                 pesoDecimal = pesoCorregido;
                 pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
@@ -89,14 +90,29 @@ namespace Zooni.Controllers
         ? mascota["Foto"].ToString()
         : "";
     
-    // 🎨 Avatar: usar el de sesión si existe, sino el básico (usando raza exacta de BD)
+    // 🎨 Avatar: usar el de sesión si existe, sino construir con la raza exacta de BD
     var especie = mascota["Especie"]?.ToString()?.ToLower() ?? "perro";
-    var raza = mascota["Raza"]?.ToString() ?? "basico";
+    var raza = mascota["Raza"]?.ToString() ?? "";
     
     var avatarSesion = HttpContext.Session.GetString("MascotaAvatar");
-    ViewBag.MascotaAvatar = !string.IsNullOrEmpty(avatarSesion) 
-        ? avatarSesion 
-        : $"/img/mascotas/{especie}s/{raza}/{especie}_basico.png";
+    if (!string.IsNullOrEmpty(avatarSesion))
+    {
+        ViewBag.MascotaAvatar = avatarSesion;
+    }
+    else
+    {
+        // Construir ruta: carpeta de la raza, pero archivo siempre _basico.png
+        if (string.IsNullOrWhiteSpace(raza))
+        {
+            // Si no hay raza, usar "basico" como fallback
+            ViewBag.MascotaAvatar = $"/img/mascotas/{especie}s/basico/{especie}_basico.png";
+        }
+        else
+        {
+            // Carpeta de la raza exacta de la BD, pero archivo siempre _basico.png
+            ViewBag.MascotaAvatar = $"/img/mascotas/{especie}s/{raza}/{especie}_basico.png";
+        }
+    }
 }
 
 
@@ -809,6 +825,17 @@ public IActionResult DescargarPDF()
     string peso;
     if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
     {
+        // ✅ Corrección global: dividir por 10 si no hay PesoDisplay y el peso parece incorrecto (>= 10)
+        if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal >= 10)
+        {
+            decimal pesoCorregido = pesoDecimal / 10;
+            if (pesoCorregido <= 200)
+            {
+                pesoDecimal = pesoCorregido;
+                pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
+            }
+        }
+        
         // Usar PesoDisplay si existe, sino formatear el decimal
         peso = !string.IsNullOrEmpty(pesoDisplayBD) 
             ? pesoDisplayBD 
@@ -1230,7 +1257,7 @@ public IActionResult ActualizarPerfil(string Nombre, string Apellido, string Pai
 [HttpPost]
 public IActionResult CambiarTema(string modo)
 {
-    if (modo != "claro" && modo != "oscuro") modo = "claro";
+    if (modo != "claro" && modo != "oscuro" && modo != "duelo") modo = "claro";
     HttpContext.Session.SetString("Tema", modo);
     return RedirectToAction("ConfigTema");
 }
@@ -1261,13 +1288,24 @@ public IActionResult ConfigMascotas()
     var dtAct = BD.ExecuteQuery(qActivas, new Dictionary<string, object> { { "@U", userId.Value } });
     var listaAct = new List<Mascota>();
     foreach (System.Data.DataRow r in dtAct.Rows)
+    {
+        string fotoRaw = r["Foto"]?.ToString()?.Trim() ?? "";
+        string fotoFinal = "/img/mascotas/default.png";
+        
+        if (!string.IsNullOrWhiteSpace(fotoRaw))
+        {
+            // Asegurar que la ruta empiece con /
+            fotoFinal = fotoRaw.StartsWith("/") ? fotoRaw : "/" + fotoRaw;
+        }
+        
         listaAct.Add(new Mascota {
             Id_Mascota = Convert.ToInt32(r["Id_Mascota"]),
-            Nombre = r["Nombre"].ToString(),
-            Especie = r["Especie"].ToString(),
-            Raza = r["Raza"].ToString(),
-            Foto = r["Foto"]?.ToString() ?? "/img/mascotas/default.png"
+            Nombre = r["Nombre"]?.ToString() ?? "Sin nombre",
+            Especie = r["Especie"]?.ToString() ?? "Perro",
+            Raza = r["Raza"]?.ToString() ?? "Sin raza",
+            Foto = fotoFinal
         });
+    }
 
     // 🗃 Archivadas también sin duplicados
     string qArch = @"
@@ -1285,13 +1323,24 @@ public IActionResult ConfigMascotas()
     var dtArch = BD.ExecuteQuery(qArch, new Dictionary<string, object> { { "@U", userId.Value } });
     var listaArch = new List<Mascota>();
     foreach (System.Data.DataRow r in dtArch.Rows)
+    {
+        string fotoRaw = r["Foto"]?.ToString()?.Trim() ?? "";
+        string fotoFinal = "/img/mascotas/default.png";
+        
+        if (!string.IsNullOrWhiteSpace(fotoRaw))
+        {
+            // Asegurar que la ruta empiece con /
+            fotoFinal = fotoRaw.StartsWith("/") ? fotoRaw : "/" + fotoRaw;
+        }
+        
         listaArch.Add(new Mascota {
             Id_Mascota = Convert.ToInt32(r["Id_Mascota"]),
-            Nombre = r["Nombre"].ToString(),
-            Especie = r["Especie"].ToString(),
-            Raza = r["Raza"].ToString(),
-            Foto = r["Foto"]?.ToString() ?? "/img/mascotas/default.png"
+            Nombre = r["Nombre"]?.ToString() ?? "Sin nombre",
+            Especie = r["Especie"]?.ToString() ?? "Perro",
+            Raza = r["Raza"]?.ToString() ?? "Sin raza",
+            Foto = fotoFinal
         });
+    }
 
     ViewBag.MascotasActivas = listaAct;
     ViewBag.MascotasArchivadas = listaArch;
@@ -1341,9 +1390,11 @@ public IActionResult ConfigUsuario()
         TempData["Error"] = "Error al cargar los datos del usuario.";
         return RedirectToAction("Configuracion");
     }
-}[HttpPost]
+}
+
+[HttpPost]
 [ValidateAntiForgeryToken]
-public IActionResult ActualizarUsuario(string nombre, string apellido, string correo, string telefono, string actualContrasena, string contrasena)
+public IActionResult ActualizarDatosUsuario(string Nombre, string Apellido, string Correo, string Telefono)
 {
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null)
@@ -1351,55 +1402,163 @@ public IActionResult ActualizarUsuario(string nombre, string apellido, string co
 
     try
     {
-        // ✅ Verificar contraseña actual
+        // Verificar que el correo no esté en uso por otro usuario
+        string qVerificarCorreo = @"
+            SELECT COUNT(*) 
+            FROM Mail M 
+            INNER JOIN [User] U ON M.Id_Mail = U.Id_Mail
+            WHERE M.Correo = @Correo AND U.Id_User <> @Id";
+        
+        int correoEnUso = Convert.ToInt32(BD.ExecuteScalar(qVerificarCorreo, new Dictionary<string, object>
+        {
+            { "@Correo", Correo?.Trim() ?? "" },
+            { "@Id", userId.Value }
+        }));
+
+        if (correoEnUso > 0)
+        {
+            TempData["Error"] = "Este correo electrónico ya está en uso por otro usuario";
+            return RedirectToAction("ConfigUsuario");
+        }
+
+        // Actualizar datos del usuario
+        BD.ExecuteNonQuery(@"
+            UPDATE [User]
+            SET Nombre = @N, Apellido = @A, Telefono = @T
+            WHERE Id_User = @Id", new Dictionary<string, object>
+        {
+            { "@N", Nombre?.Trim() ?? "" },
+            { "@A", Apellido?.Trim() ?? "" },
+            { "@T", Telefono?.Trim() ?? "" },
+            { "@Id", userId.Value }
+        });
+
+        // Actualizar correo
+        BD.ExecuteNonQuery(@"
+            UPDATE M
+            SET M.Correo = @Correo
+            FROM Mail M
+            INNER JOIN [User] U ON M.Id_Mail = U.Id_Mail
+            WHERE U.Id_User = @Id_User", new Dictionary<string, object>
+        {
+            { "@Correo", Correo?.Trim() ?? "" },
+            { "@Id_User", userId.Value }
+        });
+
+        TempData["Exito"] = "Datos personales actualizados correctamente ✅";
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error ActualizarDatosUsuario: " + ex.Message);
+        TempData["Error"] = "Error al actualizar los datos.";
+    }
+
+    return RedirectToAction("ConfigUsuario");
+}
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult CambiarContrasena(string ContrasenaActual, string NuevaContrasena, string ConfirmarContrasena)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    try
+    {
+        // Validaciones
+        if (string.IsNullOrWhiteSpace(NuevaContrasena) || NuevaContrasena.Length < 6)
+        {
+            TempData["Error"] = "La nueva contraseña debe tener al menos 6 caracteres";
+            return RedirectToAction("ConfigUsuario");
+        }
+
+        if (NuevaContrasena != ConfirmarContrasena)
+        {
+            TempData["Error"] = "Las contraseñas no coinciden";
+            return RedirectToAction("ConfigUsuario");
+        }
+
+        // Verificar contraseña actual
         string qCheck = @"
             SELECT M.Contrasena
             FROM Mail M 
             INNER JOIN [User] U ON M.Id_Mail = U.Id_Mail
             WHERE U.Id_User = @Id";
-        var actual = BD.ExecuteScalar(qCheck, new Dictionary<string, object> { { "@Id", userId.Value } })?.ToString();
+        var contrasenaBD = BD.ExecuteScalar(qCheck, new Dictionary<string, object> { { "@Id", userId.Value } })?.ToString();
 
-        if (string.IsNullOrEmpty(actualContrasena) || actual != actualContrasena)
+        if (string.IsNullOrEmpty(ContrasenaActual) || contrasenaBD != ContrasenaActual)
         {
-            TempData["Error"] = "La contraseña actual no coincide ❌";
+            TempData["Error"] = "La contraseña actual no es correcta ❌";
             return RedirectToAction("ConfigUsuario");
         }
 
-        // ✅ Solo guarda si se presiona el botón
-        if (Request.Form.ContainsKey("nombre") && Request.Form.ContainsKey("correo"))
+        // Actualizar contraseña
+        BD.ExecuteNonQuery(@"
+            UPDATE M
+            SET M.Contrasena = @NuevaContrasena
+            FROM Mail M
+            INNER JOIN [User] U ON M.Id_Mail = U.Id_Mail
+            WHERE U.Id_User = @Id_User", new Dictionary<string, object>
         {
-            BD.ExecuteNonQuery(@"
-                UPDATE [User]
-                SET Nombre = @N, Apellido = @A, Telefono = @T
-                WHERE Id_User = @Id", new Dictionary<string, object>
-            {
-                { "@N", nombre },
-                { "@A", apellido },
-                { "@T", telefono ?? "" },
-                { "@Id", userId.Value }
-            });
+            { "@NuevaContrasena", NuevaContrasena },
+            { "@Id_User", userId.Value }
+        });
 
-            BD.ExecuteNonQuery(@"
-                UPDATE M
-                SET M.Correo = @Correo, M.Contrasena = @Contrasena
-                FROM Mail M
-                INNER JOIN [User] U ON M.Id_Mail = U.Id_Mail
-                WHERE U.Id_User = @Id_User", new Dictionary<string, object>
-            {
-                { "@Correo", correo },
-                { "@Contrasena", contrasena },
-                { "@Id_User", userId.Value }
-            });
-
-            TempData["Exito"] = "Datos actualizados correctamente ✅";
-        }
-
-        return RedirectToAction("ConfigUsuario");
+        TempData["Exito"] = "Contraseña cambiada correctamente ✅";
     }
     catch (Exception ex)
     {
-        Console.WriteLine("❌ Error ActualizarUsuario: " + ex.Message);
-        TempData["Error"] = "Error al actualizar los datos.";
+        Console.WriteLine("❌ Error CambiarContrasena: " + ex.Message);
+        TempData["Error"] = "Error al cambiar la contraseña.";
+    }
+
+    return RedirectToAction("ConfigUsuario");
+}
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult EliminarCuenta(string Contrasena)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    try
+    {
+        // Verificar contraseña
+        string qCheck = @"
+            SELECT M.Contrasena
+            FROM Mail M 
+            INNER JOIN [User] U ON M.Id_Mail = U.Id_Mail
+            WHERE U.Id_User = @Id";
+        var contrasenaBD = BD.ExecuteScalar(qCheck, new Dictionary<string, object> { { "@Id", userId.Value } })?.ToString();
+
+        if (string.IsNullOrEmpty(Contrasena) || contrasenaBD != Contrasena)
+        {
+            TempData["Error"] = "La contraseña no es correcta ❌";
+            return RedirectToAction("ConfigUsuario");
+        }
+
+        // Desactivar cuenta (soft delete)
+        BD.ExecuteNonQuery(@"
+            UPDATE [User]
+            SET Estado = 0
+            WHERE Id_User = @Id", new Dictionary<string, object>
+        {
+            { "@Id", userId.Value }
+        });
+
+        // Limpiar sesión
+        HttpContext.Session.Clear();
+
+        TempData["Exito"] = "Tu cuenta ha sido eliminada. Gracias por usar Zooni.";
+        return RedirectToAction("Login", "Auth");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("❌ Error EliminarCuenta: " + ex.Message);
+        TempData["Error"] = "Error al eliminar la cuenta.";
         return RedirectToAction("ConfigUsuario");
     }
 }
@@ -1691,5 +1850,799 @@ public IActionResult CambiarAvatar(string avatarRuta)
     TempData["Exito"] = "Avatar cambiado exitosamente ✅";
     return RedirectToAction("Closet");
 }
-}   
+
+[HttpGet]
+public IActionResult Comunidad()
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+    ViewBag.Tema = tema;
+    return View();
+}
+
+[HttpPost]
+public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return Json(new { success = false, message = "No autenticado" });
+
+    try
+    {
+        // Obtener Id_Ubicacion del usuario
+        string qUser = "SELECT Id_Ubicacion FROM [User] WHERE Id_User = @Id";
+        var dtUser = BD.ExecuteQuery(qUser, new Dictionary<string, object> { { "@Id", userId.Value } });
+        
+        int ubicacionId = 0;
+        if (dtUser.Rows.Count > 0 && dtUser.Rows[0]["Id_Ubicacion"] != DBNull.Value)
+        {
+            ubicacionId = Convert.ToInt32(dtUser.Rows[0]["Id_Ubicacion"]);
+        }
+
+        if (ubicacionId > 0)
+        {
+            // Actualizar ubicación existente
+            string qUpdate = @"
+                UPDATE Ubicacion 
+                SET Latitud = @Lat, Longitud = @Lng, Tipo = 'Usuario'
+                WHERE Id_Ubicacion = @Id";
+            BD.ExecuteNonQuery(qUpdate, new Dictionary<string, object>
+            {
+                { "@Lat", request.Lat },
+                { "@Lng", request.Lng },
+                { "@Id", ubicacionId }
+            });
+        }
+        else
+        {
+            // Crear nueva ubicación
+            string qInsert = @"
+                INSERT INTO Ubicacion (Latitud, Longitud, Tipo)
+                VALUES (@Lat, @Lng, 'Usuario');
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+            ubicacionId = Convert.ToInt32(BD.ExecuteScalar(qInsert, new Dictionary<string, object>
+            {
+                { "@Lat", request.Lat },
+                { "@Lng", request.Lng }
+            }));
+
+            // Actualizar usuario con la nueva ubicación
+            string qUpdateUser = "UPDATE [User] SET Id_Ubicacion = @UbicacionId WHERE Id_User = @UserId";
+            BD.ExecuteNonQuery(qUpdateUser, new Dictionary<string, object>
+            {
+                { "@UbicacionId", ubicacionId },
+                { "@UserId", userId.Value }
+            });
+        }
+
+        return Json(new { success = true });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error GuardarUbicacion: " + ex.Message);
+        return Json(new { success = false, message = ex.Message });
+    }
+}
+
+    private void AsegurarTablaConfiguracionUsuario()
+    {
+        try
+        {
+            // Verificar si la tabla existe
+            string qCheck = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'ConfiguracionUsuario')
+                BEGIN
+                    CREATE TABLE ConfiguracionUsuario (
+                        Id_Config INT IDENTITY(1,1) PRIMARY KEY,
+                        Id_User INT NOT NULL,
+                        MostrableUbicacion NVARCHAR(20) DEFAULT 'amigos',
+                        Apodo NVARCHAR(100) NULL,
+                        FOREIGN KEY (Id_User) REFERENCES [User](Id_User)
+                    )
+                END";
+
+            BD.ExecuteNonQuery(qCheck, new Dictionary<string, object>());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error al crear tabla ConfiguracionUsuario: " + ex.Message);
+        }
+    }
+
+    [HttpGet]
+    public IActionResult ObtenerAmigos()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Asegurar que la tabla existe
+            AsegurarTablaConfiguracionUsuario();
+
+            // Obtener amigos del círculo de confianza (solo los que tienen solicitud aceptada)
+            // Verificar que existe una invitación aceptada o están en CirculoConfianza
+            // Solo mostrar ubicación según el estado de MostrableUbicacion (nadie/amigos/todos)
+            // Por defecto es 'amigos' si no está configurado
+            string qAmigos = @"
+                SELECT DISTINCT
+                    U.Id_User,
+                    U.Nombre + ' ' + U.Apellido as NombreCompleto,
+                    P.FotoPerfil,
+                    UB.Latitud as Lat,
+                    UB.Longitud as Lng,
+                    (SELECT TOP 1 Nombre FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaNombre,
+                    (SELECT TOP 1 Foto FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaFoto,
+                    (SELECT TOP 1 Especie FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaEspecie,
+                    (SELECT TOP 1 Raza FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaRaza,
+                    ISNULL(CU.MostrableUbicacion, 'amigos') as MostrableUbicacion,
+                    CU.Apodo as Apodo
+                FROM (
+                    SELECT Id_Amigo as Id_User FROM CirculoConfianza WHERE Id_User = @UserId
+                    UNION
+                    SELECT Id_Receptor as Id_User FROM Invitacion 
+                    WHERE Id_Emisor = @UserId AND Rol = 'Amigo' AND Estado = 'Aceptada'
+                    UNION
+                    SELECT Id_Emisor as Id_User FROM Invitacion 
+                    WHERE Id_Receptor = @UserId AND Rol = 'Amigo' AND Estado = 'Aceptada'
+                ) AS AmigosIds
+                INNER JOIN [User] U ON AmigosIds.Id_User = U.Id_User
+                LEFT JOIN Perfil P ON P.Id_Usuario = U.Id_User
+                LEFT JOIN Ubicacion UB ON UB.Id_Ubicacion = U.Id_Ubicacion
+                LEFT JOIN ConfiguracionUsuario CU ON CU.Id_User = U.Id_User
+                WHERE U.Estado = 1
+                AND (ISNULL(CU.MostrableUbicacion, 'amigos') IN ('amigos', 'todos'))
+                AND UB.Latitud IS NOT NULL
+                AND UB.Longitud IS NOT NULL";
+
+        var dtAmigos = BD.ExecuteQuery(qAmigos, new Dictionary<string, object> { { "@UserId", userId.Value } });
+
+        // Obtener apodos
+        var apodos = new Dictionary<int, string>();
+        try
+        {
+            string qApodos = @"
+                SELECT Id_Amigo, Apodo FROM ApodoAmigo WHERE Id_User = @UserId";
+            var dtApodos = BD.ExecuteQuery(qApodos, new Dictionary<string, object> { { "@UserId", userId.Value } });
+            foreach (System.Data.DataRow rowApodo in dtApodos.Rows)
+            {
+                int amigoId = Convert.ToInt32(rowApodo["Id_Amigo"]);
+                string apodo = rowApodo["Apodo"]?.ToString() ?? "";
+                if (!string.IsNullOrEmpty(apodo))
+                    apodos[amigoId] = apodo;
+            }
+        }
+        catch { } // Si la tabla no existe aún, continuar sin apodos
+
+        var amigos = new List<object>();
+        foreach (System.Data.DataRow row in dtAmigos.Rows)
+        {
+            var especie = row["MascotaEspecie"]?.ToString()?.ToLower() ?? "perro";
+            var raza = row["MascotaRaza"]?.ToString() ?? "";
+            var mascotaFoto = row["MascotaFoto"]?.ToString();
+            int amigoId = Convert.ToInt32(row["Id_User"]);
+            
+            string avatarMascota;
+            if (!string.IsNullOrEmpty(mascotaFoto) && mascotaFoto != "null")
+            {
+                avatarMascota = mascotaFoto.StartsWith("/") ? mascotaFoto : "/" + mascotaFoto;
+            }
+            else
+            {
+                if (string.IsNullOrWhiteSpace(raza))
+                {
+                    avatarMascota = $"/img/mascotas/{especie}s/basico/{especie}_basico.png";
+                }
+                else
+                {
+                    // Usar la raza exacta de la BD, pero verificar si existe
+                    // Si no existe, usar el básico de la especie
+                    string rutaRaza = $"/img/mascotas/{especie}s/{raza}/{especie}_basico.png";
+                    string rutaFisica = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "mascotas", $"{especie}s", raza, $"{especie}_basico.png");
+                    
+                    if (System.IO.File.Exists(rutaFisica))
+                    {
+                        avatarMascota = rutaRaza;
+                    }
+                    else
+                    {
+                        // Fallback: usar el básico de la especie
+                        avatarMascota = $"/img/mascotas/{especie}s/basico/{especie}_basico.png";
+                    }
+                }
+            }
+            
+            string nombreMostrar = apodos.ContainsKey(amigoId) && !string.IsNullOrEmpty(apodos[amigoId])
+                ? apodos[amigoId]
+                : (row["NombreCompleto"]?.ToString() ?? "Usuario");
+            
+            amigos.Add(new
+            {
+                id = amigoId,
+                nombre = row["NombreCompleto"]?.ToString() ?? "Usuario",
+                nombreMostrar = nombreMostrar,
+                apodo = apodos.ContainsKey(amigoId) ? apodos[amigoId] : "",
+                fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png",
+                lat = row["Lat"] != DBNull.Value ? Convert.ToDouble(row["Lat"]) : (double?)null,
+                lng = row["Lng"] != DBNull.Value ? Convert.ToDouble(row["Lng"]) : (double?)null,
+                mascotaNombre = row["MascotaNombre"]?.ToString() ?? "Sin mascota",
+                mascotaAvatar = avatarMascota
+            });
+        }
+
+        return Json(new { success = true, amigos = amigos });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error ObtenerAmigos: " + ex.Message);
+        return Json(new { success = false, message = ex.Message });
+    }
+}
+
+[HttpPost]
+public IActionResult AgregarAmigo([FromBody] AgregarAmigoRequest request)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return Json(new { success = false, message = "No autenticado" });
+
+    try
+    {
+        // Buscar usuario por email
+        string qBuscar = @"
+            SELECT U.Id_User
+            FROM [User] U
+            INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+            WHERE M.Correo = @Email AND U.Estado = 1";
+
+        var dtUsuario = BD.ExecuteQuery(qBuscar, new Dictionary<string, object> { { "@Email", request.Email } });
+
+        if (dtUsuario.Rows.Count == 0)
+            return Json(new { success = false, message = "No se encontró un usuario con ese email" });
+
+        int amigoId = Convert.ToInt32(dtUsuario.Rows[0]["Id_User"]);
+
+        if (amigoId == userId.Value)
+            return Json(new { success = false, message = "No podés agregarte a vos mismo" });
+
+        // Verificar si ya es amigo (en CirculoConfianza)
+        string qVerificar = @"
+            SELECT COUNT(*) FROM CirculoConfianza 
+            WHERE Id_User = @UserId AND Id_Amigo = @AmigoId";
+
+        int existe = Convert.ToInt32(BD.ExecuteScalar(qVerificar, new Dictionary<string, object>
+        {
+            { "@UserId", userId.Value },
+            { "@AmigoId", amigoId }
+        }));
+
+        if (existe > 0)
+            return Json(new { success = false, message = "Este usuario ya está en tu círculo de confianza" });
+
+        // Verificar si ya hay una solicitud pendiente
+        string qVerificarSolicitud = @"
+            SELECT COUNT(*) FROM Invitacion 
+            WHERE ((Id_Emisor = @UserId AND Id_Receptor = @AmigoId) OR (Id_Emisor = @AmigoId AND Id_Receptor = @UserId))
+            AND Rol = 'Amigo' AND Estado = 'Pendiente'";
+
+        int existeSolicitud = Convert.ToInt32(BD.ExecuteScalar(qVerificarSolicitud, new Dictionary<string, object>
+        {
+            { "@UserId", userId.Value },
+            { "@AmigoId", amigoId }
+        }));
+
+        if (existeSolicitud > 0)
+            return Json(new { success = false, message = "Ya existe una solicitud pendiente con este usuario" });
+
+        // Obtener la primera mascota del usuario emisor (requerido por la tabla Invitacion)
+        string qMascota = @"
+            SELECT TOP 1 Id_Mascota FROM Mascota WHERE Id_User = @UserId ORDER BY Id_Mascota";
+
+        var dtMascota = BD.ExecuteQuery(qMascota, new Dictionary<string, object> { { "@UserId", userId.Value } });
+        
+        if (dtMascota.Rows.Count == 0)
+            return Json(new { success = false, message = "Necesitás tener al menos una mascota para agregar amigos" });
+
+        int mascotaId = Convert.ToInt32(dtMascota.Rows[0]["Id_Mascota"]);
+
+        // Crear solicitud de amistad en lugar de agregar directamente
+        string qInsert = @"
+            INSERT INTO Invitacion (Id_Mascota, Id_Emisor, Id_Receptor, Rol, Estado, Fecha)
+            VALUES (@MascotaId, @UserId, @AmigoId, 'Amigo', 'Pendiente', GETDATE())";
+
+        BD.ExecuteNonQuery(qInsert, new Dictionary<string, object>
+        {
+            { "@MascotaId", mascotaId },
+            { "@UserId", userId.Value },
+            { "@AmigoId", amigoId }
+        });
+
+        return Json(new { success = true, message = "Solicitud de amistad enviada" });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error AgregarAmigo: " + ex.Message);
+        return Json(new { success = false, message = "Error al agregar amigo: " + ex.Message });
+    }
+}
+
+    public class UbicacionRequest
+    {
+        public double Lat { get; set; }
+        public double Lng { get; set; }
+    }
+
+    public class AgregarAmigoRequest
+    {
+        public string Email { get; set; }
+    }
+
+[HttpGet]
+public IActionResult BuscarUsuarios(string query)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return Json(new { success = false, message = "No autenticado" });
+
+    try
+    {
+        if (string.IsNullOrWhiteSpace(query) || query.Length < 2)
+            return Json(new { success = true, usuarios = new List<object>() });
+
+        string qBuscar = @"
+            SELECT DISTINCT TOP 20
+                U.Id_User,
+                U.Nombre + ' ' + U.Apellido as NombreCompleto,
+                M.Correo as Email,
+                P.FotoPerfil,
+                (SELECT TOP 1 Nombre FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaNombre
+            FROM [User] U
+            INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+            LEFT JOIN Perfil P ON P.Id_Usuario = U.Id_User
+            WHERE U.Estado = 1
+            AND U.Id_User <> @UserId
+            AND (
+                U.Nombre LIKE @Query OR
+                U.Apellido LIKE @Query OR
+                M.Correo LIKE @Query OR
+                U.Nombre + ' ' + U.Apellido LIKE @Query
+            )
+            AND NOT EXISTS (
+                SELECT 1 FROM CirculoConfianza CC 
+                WHERE CC.Id_User = @UserId AND CC.Id_Amigo = U.Id_User
+            )";
+
+        var dt = BD.ExecuteQuery(qBuscar, new Dictionary<string, object>
+        {
+            { "@UserId", userId.Value },
+            { "@Query", "%" + query.Trim() + "%" }
+        });
+
+        var usuarios = new List<object>();
+        foreach (System.Data.DataRow row in dt.Rows)
+        {
+            usuarios.Add(new
+            {
+                id = Convert.ToInt32(row["Id_User"]),
+                nombre = row["NombreCompleto"]?.ToString() ?? "Usuario",
+                email = row["Email"]?.ToString() ?? "",
+                fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png",
+                mascotaNombre = row["MascotaNombre"]?.ToString() ?? "Sin mascota"
+            });
+        }
+
+        return Json(new { success = true, usuarios = usuarios });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error BuscarUsuarios: " + ex.Message);
+        return Json(new { success = false, message = ex.Message });
+    }
+}
+
+[HttpGet]
+public IActionResult ObtenerUsuariosSugeridos()
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return Json(new { success = false, message = "No autenticado" });
+
+    try
+    {
+        // Obtener usuarios que no son amigos aún (sugeridos)
+        // Excluir usuarios que ya son amigos o tienen solicitudes pendientes
+        string qSugeridos = @"
+            SELECT TOP 10
+                U.Id_User,
+                U.Nombre + ' ' + U.Apellido as NombreCompleto,
+                M.Correo as Email,
+                P.FotoPerfil,
+                (SELECT TOP 1 Nombre FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaNombre
+            FROM [User] U
+            INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+            LEFT JOIN Perfil P ON P.Id_Usuario = U.Id_User
+            WHERE U.Estado = 1
+            AND U.Id_User <> @UserId
+            AND NOT EXISTS (
+                SELECT 1 FROM CirculoConfianza CC 
+                WHERE CC.Id_User = @UserId AND CC.Id_Amigo = U.Id_User
+            )
+            AND NOT EXISTS (
+                SELECT 1 FROM Invitacion I
+                WHERE ((I.Id_Emisor = @UserId AND I.Id_Receptor = U.Id_User) OR (I.Id_Emisor = U.Id_User AND I.Id_Receptor = @UserId))
+                AND I.Rol = 'Amigo' AND I.Estado IN ('Pendiente', 'Aceptada')
+            )
+            ORDER BY NEWID()";
+
+        var dt = BD.ExecuteQuery(qSugeridos, new Dictionary<string, object> { { "@UserId", userId.Value } });
+
+        var sugeridos = new List<object>();
+        foreach (System.Data.DataRow row in dt.Rows)
+        {
+            sugeridos.Add(new
+            {
+                id = Convert.ToInt32(row["Id_User"]),
+                nombre = row["NombreCompleto"]?.ToString() ?? "Usuario",
+                email = row["Email"]?.ToString() ?? "",
+                fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png",
+                mascotaNombre = row["MascotaNombre"]?.ToString() ?? "Sin mascota"
+            });
+        }
+
+        return Json(new { success = true, sugeridos = sugeridos });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error ObtenerUsuariosSugeridos: " + ex.Message);
+        return Json(new { success = false, message = ex.Message });
+    }
+}
+
+[HttpPost]
+public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return Json(new { success = false, message = "No autenticado" });
+
+    try
+    {
+        string qEliminar = @"
+            DELETE FROM CirculoConfianza 
+            WHERE Id_User = @UserId AND Id_Amigo = @AmigoId";
+
+        BD.ExecuteNonQuery(qEliminar, new Dictionary<string, object>
+        {
+            { "@UserId", userId.Value },
+            { "@AmigoId", request.AmigoId }
+        });
+
+        return Json(new { success = true, message = "Amigo eliminado correctamente" });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Error EliminarAmigo: " + ex.Message);
+        return Json(new { success = false, message = "Error al eliminar amigo" });
+    }
+}
+
+    [HttpPost]
+    public IActionResult AceptarSolicitud([FromBody] AceptarSolicitudRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Actualizar el estado de la solicitud a "Aceptada"
+            string qUpdate = @"
+                UPDATE Invitacion 
+                SET Estado = 'Aceptada'
+                WHERE Id_Invitacion = @InvitacionId 
+                AND Id_Receptor = @UserId 
+                AND Estado = 'Pendiente'";
+
+            int filas = BD.ExecuteNonQuery(qUpdate, new Dictionary<string, object>
+            {
+                { "@InvitacionId", request.InvitacionId },
+                { "@UserId", userId.Value }
+            });
+
+            if (filas == 0)
+                return Json(new { success = false, message = "No se encontró la solicitud o ya fue procesada" });
+
+            // Obtener el Id_Emisor de la solicitud
+            string qObtenerEmisor = @"
+                SELECT Id_Emisor FROM Invitacion WHERE Id_Invitacion = @InvitacionId";
+
+            var dtEmisor = BD.ExecuteQuery(qObtenerEmisor, new Dictionary<string, object> { { "@InvitacionId", request.InvitacionId } });
+            
+            if (dtEmisor.Rows.Count > 0)
+            {
+                int emisorId = Convert.ToInt32(dtEmisor.Rows[0]["Id_Emisor"]);
+                
+                // Agregar a CirculoConfianza (bidireccional)
+                string qInsert1 = @"
+                    IF NOT EXISTS (SELECT 1 FROM CirculoConfianza WHERE Id_User = @UserId AND Id_Amigo = @EmisorId)
+                    INSERT INTO CirculoConfianza (Id_User, Id_Amigo, Rol, Latitud, Longitud, UltimaConexion)
+                    VALUES (@UserId, @EmisorId, 'Amigo', 0, 0, GETDATE())";
+
+                BD.ExecuteNonQuery(qInsert1, new Dictionary<string, object>
+                {
+                    { "@UserId", userId.Value },
+                    { "@EmisorId", emisorId }
+                });
+
+                string qInsert2 = @"
+                    IF NOT EXISTS (SELECT 1 FROM CirculoConfianza WHERE Id_User = @EmisorId AND Id_Amigo = @UserId)
+                    INSERT INTO CirculoConfianza (Id_User, Id_Amigo, Rol, Latitud, Longitud, UltimaConexion)
+                    VALUES (@EmisorId, @UserId, 'Amigo', 0, 0, GETDATE())";
+
+                BD.ExecuteNonQuery(qInsert2, new Dictionary<string, object>
+                {
+                    { "@EmisorId", emisorId },
+                    { "@UserId", userId.Value }
+                });
+            }
+
+            return Json(new { success = true, message = "Solicitud aceptada" });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error AceptarSolicitud: " + ex.Message);
+            return Json(new { success = false, message = "Error al aceptar solicitud: " + ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult RechazarSolicitud([FromBody] RechazarSolicitudRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            string qUpdate = @"
+                UPDATE Invitacion 
+                SET Estado = 'Rechazada'
+                WHERE Id_Invitacion = @InvitacionId 
+                AND Id_Receptor = @UserId 
+                AND Estado = 'Pendiente'";
+
+            int filas = BD.ExecuteNonQuery(qUpdate, new Dictionary<string, object>
+            {
+                { "@InvitacionId", request.InvitacionId },
+                { "@UserId", userId.Value }
+            });
+
+            if (filas == 0)
+                return Json(new { success = false, message = "No se encontró la solicitud o ya fue procesada" });
+
+            return Json(new { success = true, message = "Solicitud rechazada" });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error RechazarSolicitud: " + ex.Message);
+            return Json(new { success = false, message = "Error al rechazar solicitud: " + ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public IActionResult ObtenerSolicitudes()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            string qSolicitudes = @"
+                SELECT 
+                    I.Id_Invitacion,
+                    I.Id_Emisor,
+                    U.Nombre + ' ' + U.Apellido as NombreCompleto,
+                    P.FotoPerfil,
+                    I.Fecha
+                FROM Invitacion I
+                INNER JOIN [User] U ON I.Id_Emisor = U.Id_User
+                LEFT JOIN Perfil P ON P.Id_Usuario = U.Id_User
+                WHERE I.Id_Receptor = @UserId 
+                AND I.Rol = 'Amigo' 
+                AND I.Estado = 'Pendiente'
+                ORDER BY I.Fecha DESC";
+
+            var dtSolicitudes = BD.ExecuteQuery(qSolicitudes, new Dictionary<string, object> { { "@UserId", userId.Value } });
+
+            var solicitudes = new List<object>();
+            foreach (System.Data.DataRow row in dtSolicitudes.Rows)
+            {
+                solicitudes.Add(new
+                {
+                    idInvitacion = Convert.ToInt32(row["Id_Invitacion"]),
+                    idEmisor = Convert.ToInt32(row["Id_Emisor"]),
+                    nombre = row["NombreCompleto"]?.ToString() ?? "Usuario",
+                    fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png",
+                    fecha = Convert.ToDateTime(row["Fecha"]).ToString("dd/MM/yyyy HH:mm")
+                });
+            }
+
+            return Json(new { success = true, solicitudes = solicitudes });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error ObtenerSolicitudes: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult ActualizarUbicacionMostrable([FromBody] UbicacionMostrableRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Asegurar que la tabla existe
+            AsegurarTablaConfiguracionUsuario();
+
+            // Validar el valor (debe ser: 'nadie', 'amigos', o 'todos')
+            string estado = request.Estado?.ToLower() ?? "amigos";
+            if (estado != "nadie" && estado != "amigos" && estado != "todos")
+                estado = "amigos";
+
+            string qUpsert = @"
+                IF EXISTS (SELECT 1 FROM ConfiguracionUsuario WHERE Id_User = @UserId)
+                    UPDATE ConfiguracionUsuario SET MostrableUbicacion = @Estado WHERE Id_User = @UserId
+                ELSE
+                    INSERT INTO ConfiguracionUsuario (Id_User, MostrableUbicacion) VALUES (@UserId, @Estado)";
+
+            BD.ExecuteNonQuery(qUpsert, new Dictionary<string, object>
+            {
+                { "@UserId", userId.Value },
+                { "@Estado", estado }
+            });
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error ActualizarUbicacionMostrable: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public IActionResult ObtenerEstadoUbicacionMostrable()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Asegurar que la tabla existe
+            AsegurarTablaConfiguracionUsuario();
+
+            string qObtener = @"
+                SELECT MostrableUbicacion FROM ConfiguracionUsuario WHERE Id_User = @UserId";
+
+            var dt = BD.ExecuteQuery(qObtener, new Dictionary<string, object> { { "@UserId", userId.Value } });
+
+            string estado = "amigos"; // Por defecto, solo para amigos
+            if (dt.Rows.Count > 0 && dt.Rows[0]["MostrableUbicacion"] != DBNull.Value)
+            {
+                estado = dt.Rows[0]["MostrableUbicacion"]?.ToString() ?? "amigos";
+            }
+
+            return Json(new { success = true, estado = estado });
+        }
+        catch (Exception ex)
+        {
+            return Json(new { success = true, estado = "amigos" });
+        }
+    }
+
+    public class EliminarAmigoRequest
+    {
+        public int AmigoId { get; set; }
+    }
+
+    public class AceptarSolicitudRequest
+    {
+        public int InvitacionId { get; set; }
+    }
+
+    public class RechazarSolicitudRequest
+    {
+        public int InvitacionId { get; set; }
+    }
+
+    [HttpPost]
+    public IActionResult ActualizarApodoAmigo([FromBody] ActualizarApodoRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Crear tabla ApodoAmigo si no existe
+            string qCreateApodoTable = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'ApodoAmigo')
+                BEGIN
+                    CREATE TABLE ApodoAmigo (
+                        Id_Apodo INT IDENTITY(1,1) PRIMARY KEY,
+                        Id_User INT NOT NULL,
+                        Id_Amigo INT NOT NULL,
+                        Apodo NVARCHAR(100) NULL,
+                        FOREIGN KEY (Id_User) REFERENCES [User](Id_User),
+                        FOREIGN KEY (Id_Amigo) REFERENCES [User](Id_User),
+                        UNIQUE (Id_User, Id_Amigo)
+                    )
+                END";
+
+            BD.ExecuteNonQuery(qCreateApodoTable, new Dictionary<string, object>());
+
+            // Verificar que el amigo existe en el círculo de confianza o invitación aceptada
+            string qVerificar = @"
+                SELECT COUNT(*) FROM (
+                    SELECT Id_Amigo as Id_User FROM CirculoConfianza WHERE Id_User = @UserId AND Id_Amigo = @AmigoId
+                    UNION
+                    SELECT Id_Receptor as Id_User FROM Invitacion 
+                    WHERE Id_Emisor = @UserId AND Id_Receptor = @AmigoId AND Rol = 'Amigo' AND Estado = 'Aceptada'
+                    UNION
+                    SELECT Id_Emisor as Id_User FROM Invitacion 
+                    WHERE Id_Receptor = @UserId AND Id_Emisor = @AmigoId AND Rol = 'Amigo' AND Estado = 'Aceptada'
+                ) AS Amigos";
+
+            int existe = Convert.ToInt32(BD.ExecuteScalar(qVerificar, new Dictionary<string, object>
+            {
+                { "@UserId", userId.Value },
+                { "@AmigoId", request.AmigoId }
+            }));
+
+            if (existe == 0)
+                return Json(new { success = false, message = "Este usuario no es tu amigo" });
+
+            string qUpsertApodo = @"
+                IF EXISTS (SELECT 1 FROM ApodoAmigo WHERE Id_User = @UserId AND Id_Amigo = @AmigoId)
+                    UPDATE ApodoAmigo SET Apodo = @Apodo WHERE Id_User = @UserId AND Id_Amigo = @AmigoId
+                ELSE
+                    INSERT INTO ApodoAmigo (Id_User, Id_Amigo, Apodo) VALUES (@UserId, @AmigoId, @Apodo)";
+
+            BD.ExecuteNonQuery(qUpsertApodo, new Dictionary<string, object>
+            {
+                { "@UserId", userId.Value },
+                { "@AmigoId", request.AmigoId },
+                { "@Apodo", request.Apodo ?? "" }
+            });
+
+            return Json(new { success = true, message = "Apodo actualizado" });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error ActualizarApodoAmigo: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    public class UbicacionMostrableRequest
+    {
+        public string Estado { get; set; } // "nadie", "amigos", "todos"
+    }
+
+    public class ActualizarApodoRequest
+    {
+        public int AmigoId { get; set; }
+        public string Apodo { get; set; }
+    }
+}
 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "vfGjTY9YQA6SutTzWUx1kxflIdRzEER+Ko7aUoCHWWI=",
+  "Hash": "B/Xnhf+dsUXQ4uLKey2P7seqXNcN59z0K/rGRvbBILI=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -1480,12 +1480,12 @@
       "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png"
     },
     {
-      "Identity": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\perros\\Jack Russell\\perro_basico.png",
+      "Identity": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\perros\\Jack Russell Terrier\\perro_basico.png",
       "SourceId": "Zooni",
       "SourceType": "Discovered",
       "ContentRoot": "C:\\Users\\49374119\\zooni\\wwwroot\\",
       "BasePath": "_content/Zooni",
-      "RelativePath": "img/mascotas/perros/Jack Russell/perro_basico.png",
+      "RelativePath": "img/mascotas/perros/Jack Russell Terrier/perro_basico.png",
       "AssetKind": "All",
       "AssetMode": "All",
       "AssetRole": "Primary",
@@ -1496,7 +1496,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Jack Russell\\perro_basico.png"
+      "OriginalItemSpec": "wwwroot\\img\\mascotas\\perros\\Jack Russell Terrier\\perro_basico.png"
     },
     {
       "Identity": "C:\\Users\\49374119\\zooni\\wwwroot\\img\\mascotas\\perros\\labrador retriever\\perro_basico.png",

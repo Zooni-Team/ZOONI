@@ -48,6 +48,27 @@ body.tema-claro {
     color: var(--texto-claro);
 }
 
+body.tema-duelo {
+    background: linear-gradient(135deg, #2d1b3d 0%, #1a0f26 100%);
+    color: #e8d5e8;
+    position: relative;
+}
+body.tema-duelo::before {
+    content: '🕯️';
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 10rem;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+}
+body.tema-duelo main {
+    position: relative;
+    z-index: 1;
+}
+
 body.tema-oscuro {
     background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
     background-color: rgba(0, 0, 0, 0.5);
@@ -74,6 +95,19 @@ header {
 }
 body.tema-oscuro .menu-icon {
     filter: brightness(0) invert(1); /* blanco en modo oscuro */
+}
+body.tema-duelo .menu-icon {
+    filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(280deg);
+}
+body.tema-duelo .menu-lateral {
+    background: rgba(45, 27, 61, 0.98);
+    box-shadow: 4px 0 14px rgba(139, 90, 155, 0.3);
+}
+body.tema-duelo .mascota-nombre::before {
+    content: '🕯️ ';
+}
+body.tema-duelo .mascota-nombre::after {
+    content: ' 🕯️';
 }
 .menu-icon:hover { transform: scale(1.1); }
 
