@@ -1,11 +1,14 @@
 @{
     ViewData["Title"] = "Inicio - Zooni";
     Layout = null;
+    var tema = ViewBag.Tema ?? HttpContext.Session.GetString("Tema") ?? "claro";
 
     var mascotaNombre = ViewBag.MascotaNombre;
     var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
     var mascotaRaza = ViewBag.MascotaRaza?.ToString()?.ToLower() ?? "basico";
-    var rutaAnimada = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
+    
+    // Usar el avatar del ViewBag (ya calculado en CargarViewBagMascota)
+    var rutaAnimada = ViewBag.MascotaAvatar ?? $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
     var rutaFoto = ViewBag.MascotaFoto ?? "";
 }
 <!DOCTYPE html>
@@ -21,6 +24,10 @@
     --amarillo: #FFD85A;
     --marron: #4B3B2B;
     --blanco: #ffffff;
+    --fondo-claro: rgba(255,255,255,0.1);
+    --fondo-oscuro: rgba(0,0,0,0.3);
+    --texto-claro: #4B3B2B;
+    --texto-oscuro: #ffffff;
 }
 
 html, body {
@@ -29,11 +36,23 @@ html, body {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
     font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: background .4s ease, color .4s ease;
+}
+
+body.tema-claro {
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+    color: var(--texto-claro);
+}
+
+body.tema-oscuro {
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+    background-blend-mode: overlay;
+    filter: brightness(0.6);
+    color: var(--texto-oscuro);
 }
 
 /* ----------------- HEADER Y MENÚ ------------------ */
@@ -49,7 +68,11 @@ header {
     height: 38px;
     display: block;
     cursor: pointer;
-    transition: transform .25s ease;
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0); /* negro en modo claro */
+}
+body.tema-oscuro .menu-icon {
+    filter: brightness(0) invert(1); /* blanco en modo oscuro */
 }
 .menu-icon:hover { transform: scale(1.1); }
 
@@ -60,26 +83,31 @@ header {
     transform: translateX(-100%);
     width: 240px;
     height: 100%;
-    background: rgba(255, 255, 255, 0.97);
     backdrop-filter: blur(12px);
     box-shadow: 4px 0 12px rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
     padding: 2.5rem 1.2rem;
     gap: 1rem;
-    transition: transform 0.35s ease;
+    transition: transform 0.35s ease, background .4s ease, color .4s ease;
     z-index: 999;
     border-right: none;
+}
+body.tema-claro .menu-lateral {
+    background: rgba(255, 255, 255, 0.97);
+}
+body.tema-oscuro .menu-lateral {
+    background: rgba(30, 30, 30, 0.97);
 }
 .menu-lateral.abierto { transform: translateX(0); }
 .menu-lateral a {
     text-decoration: none;
     font-weight: 600;
-    color: var(--marron);
     font-size: 1.1rem;
     padding: 0.6rem 0.8rem;
     border-radius: 12px;
     transition: all .25s ease;
+    color: inherit;
 }
 .menu-lateral a:hover {
     background: var(--amarillo);
@@ -90,7 +118,7 @@ header {
     font-size: 1.6rem;
     cursor: pointer;
     margin-bottom: 1.5rem;
-    color: var(--marron);
+    color: inherit;
 }
 .cerrar-menu:hover { transform: scale(1.2); }
 .overlay {
@@ -263,7 +291,7 @@ footer {
 
 </style>
 </head>
-<body>
+<body class="tema-@tema">
 <header>
     <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
 </header>
@@ -296,11 +324,14 @@ footer {
              class="mascota-img fade visible"
              id="fotoAnimada"/>
 
-        <!-- Foto real -->
-        <img src="@(string.IsNullOrEmpty(rutaFoto) ? "" : rutaFoto)"
-             alt="Foto real de @mascotaNombre"
-             class="mascota-img fade"
-             id="fotoReal"/>
+        <!-- Foto real (solo si existe) -->
+        @if (!string.IsNullOrEmpty(rutaFoto))
+        {
+            <img src="@rutaFoto"
+                 alt="Foto real de @mascotaNombre"
+                 class="mascota-img fade"
+                 id="fotoReal"/>
+        }
 
         <!-- Flechas -->
         <button class="arrow arrow-left" id="prevFoto">⮜</button>
@@ -318,7 +349,7 @@ footer {
 }
 else
 {
-    <p style="color:#4b3b2b;font-weight:500;background:rgba(255,255,255,0.8);padding:1rem 1.5rem;border-radius:16px;">No tenés mascota registrada aún 🐶</p>
+    <p class="no-mascota-msg">No tenés mascota registrada aún 🐶</p>
 }
 </main>
 
@@ -348,7 +379,16 @@ const prev = document.getElementById("prevFoto");
 const next = document.getElementById("nextFoto");
 let mostrandoReal = false;
 
+// Solo mostrar flechas si hay foto real
+const tieneFoto = "@(string.IsNullOrEmpty(rutaFoto) ? "false" : "true")" === "true";
+if (!tieneFoto) {
+    if (prev) prev.style.display = "none";
+    if (next) next.style.display = "none";
+}
+
 function alternarFoto(direccion) {
+    if (!tieneFoto) return;
+    
     if (mostrandoReal) {
         real.classList.remove("visible");
         real.classList.add(direccion === "left" ? "hidden-left" : "hidden-right");
@@ -362,8 +402,11 @@ function alternarFoto(direccion) {
     }
     mostrandoReal = !mostrandoReal;
 }
-prev.addEventListener("click", () => alternarFoto("left"));
-next.addEventListener("click", () => alternarFoto("right"));
+
+if (tieneFoto) {
+    if (prev) prev.addEventListener("click", () => alternarFoto("left"));
+    if (next) next.addEventListener("click", () => alternarFoto("right"));
+}
 </script>
 
 </body>

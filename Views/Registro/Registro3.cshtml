@@ -300,10 +300,14 @@
 
     <!-- FOTO -->
     <div class="foto-container">
-        <label for="fotoMascota" class="foto-label">📸 Sacale una foto a tu mascota</label>
+        <label for="fotoMascota" class="foto-label">📸 Agregá una foto de tu mascota</label>
+        <input type="file" id="inputArchivo" accept="image/*" style="display:none;" />
         <video id="video" autoplay playsinline style="display:none;"></video>
         <canvas id="canvas" style="display:none;"></canvas>
-        <button type="button" id="btnIniciarCamara" class="btn-secundario">Abrir cámara</button>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; justify-content:center;">
+            <button type="button" id="btnSeleccionarArchivo" class="btn-secundario">📁 Seleccionar archivo</button>
+            <button type="button" id="btnIniciarCamara" class="btn-secundario">📷 Abrir cámara</button>
+        </div>
         <button type="button" id="btnTomarFoto" class="btn-principal" style="display:none;">Tomar foto</button>
         <img id="fotoPreview" alt="Foto de mascota" style="max-width:150px; margin-top:10px; border-radius:15px; display:none;" />
         <input type="hidden" name="Foto" id="fotoBase64" />
@@ -323,18 +327,72 @@ const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const fotoPreview = document.getElementById("fotoPreview");
 const btnIniciarCamara = document.getElementById("btnIniciarCamara");
+const btnSeleccionarArchivo = document.getElementById("btnSeleccionarArchivo");
+const inputArchivo = document.getElementById("inputArchivo");
 const btnTomarFoto = document.getElementById("btnTomarFoto");
 const fotoBase64 = document.getElementById("fotoBase64");
 let stream = null;
 
+// 🔹 Seleccionar archivo
+btnSeleccionarArchivo.addEventListener("click", () => {
+  inputArchivo.click();
+});
+
+inputArchivo.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  // Validar que sea una imagen
+  if (!file.type.startsWith("image/")) {
+    alert("Por favor, seleccioná un archivo de imagen 😿");
+    return;
+  }
+  
+  // Validar tamaño (max 5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    alert("El archivo es demasiado grande. Por favor, seleccioná una imagen menor a 5MB 😿");
+    return;
+  }
+  
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const dataUrl = event.target.result;
+    fotoBase64.value = dataUrl;
+    fotoPreview.src = dataUrl;
+    fotoPreview.style.display = "block";
+    
+    // Ocultar botones de cámara si están activos
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+    }
+    video.style.display = "none";
+    btnTomarFoto.style.display = "none";
+    btnIniciarCamara.style.display = "inline-block";
+    btnSeleccionarArchivo.style.display = "inline-block";
+  };
+  reader.readAsDataURL(file);
+});
+
 // 🔹 Abrir cámara
 btnIniciarCamara.addEventListener("click", async () => {
   try {
+    // Detener stream anterior si existe
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+    }
+    
     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" } });
     video.srcObject = stream;
     video.style.display = "block";
     btnIniciarCamara.style.display = "none";
+    btnSeleccionarArchivo.style.display = "none";
     btnTomarFoto.style.display = "inline-block";
+    
+    // Limpiar preview de archivo si existe
+    fotoPreview.style.display = "none";
+    fotoBase64.value = "";
+    inputArchivo.value = "";
   } catch (err) {
     alert("No se pudo acceder a la cámara 😿. Revisá los permisos del navegador.");
     console.error(err);
@@ -354,6 +412,9 @@ btnTomarFoto.addEventListener("click", () => {
   video.style.display = "none";
   btnTomarFoto.style.display = "none";
   if (stream) stream.getTracks().forEach(track => track.stop());
+  stream = null;
+  btnIniciarCamara.style.display = "inline-block";
+  btnSeleccionarArchivo.style.display = "inline-block";
 });
 
 // ⚙️ Resto del código (raza, peso, edad)

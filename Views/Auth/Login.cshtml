@@ -180,7 +180,7 @@
         <h1>Zooni</h1>
 
         <!-- Imagen -->
-        <img src="~/img/mascotas-bienvenida.png" alt="Zooni mascotas" class="illustration" />
+        <img src="~/img/mascotas-bienvenida.png" alt="Zooni mascotas" class="illustration" loading="eager" />
 
         <h2>Iniciá sesión</h2>
 @if (TempData["CuentaCreada"] != null)
@@ -208,9 +208,9 @@
         </a>
 
         <div class="socials">
-            <img src="~/img/google-icon.png" alt="Google" />
-            <img src="~/img/facebook-icon.png" alt="Facebook" />
-            <img src="~/img/apple-icon.png" alt="Apple" />
+            <img src="~/img/google-icon.png" alt="Google" loading="eager" />
+            <img src="~/img/facebook-icon.png" alt="Facebook" loading="eager" />
+            <img src="~/img/apple-icon.png" alt="Apple" loading="eager" />
         </div>
     </div>
     <script>
@@ -252,11 +252,32 @@ document.addEventListener("DOMContentLoaded", () => {
         reptil: ["Iguana", "Camaleón", "Tortuga", "Gecko", "Otra raza"]
     };
 
+    // Función para normalizar nombres de razas a la estructura de carpetas
+    function normalizarRaza(raza) {
+        // Mapeo específico para casos especiales
+        const mapeoEspecial = {
+            "Jack Russell Terrier": "Jack Russell",
+            "Caniche negro": "caniche negro"
+        };
+        
+        if (mapeoEspecial[raza]) {
+            return mapeoEspecial[raza];
+        }
+        
+        // Normalizar: minúsculas, sin acentos, mantener espacios
+        return raza.toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+    }
+
     const imagenes = [];
+    let imagenesPrecargadas = 0;
+    let imagenesError = 0;
 
     for (const especie in razasPorEspecie) {
         razasPorEspecie[especie].forEach(raza => {
-            const ruta = `/img/mascotas/${especie}s/${raza}/${especie}_basico.png`;
+            const razaNormalizada = normalizarRaza(raza);
+            const ruta = `/img/mascotas/${especie}s/${razaNormalizada}/${especie}_basico.png`;
             imagenes.push(ruta);
         });
     }
@@ -264,16 +285,18 @@ document.addEventListener("DOMContentLoaded", () => {
     function precargarImagenes() {
         imagenes.forEach(ruta => {
             const img = new Image();
+            img.onload = () => {
+                imagenesPrecargadas++;
+            };
+            img.onerror = () => {
+                imagenesError++;
+            };
             img.src = ruta;
         });
-        console.log(`🖼️ Precargadas ${imagenes.length} imágenes (${Object.keys(razasPorEspecie).length} especies).`);
     }
 
-    if ("requestIdleCallback" in window) {
-        requestIdleCallback(precargarImagenes);
-    } else {
-        setTimeout(precargarImagenes, 500);
-    }
+    // Precargar imágenes inmediatamente, no esperar idle
+    precargarImagenes();
 });
 </script>
 <script>

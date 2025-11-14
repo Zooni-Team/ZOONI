@@ -68,7 +68,7 @@ header {
   filter: brightness(0); /* negro en modo claro */
 }
 body.tema-oscuro .menu-icon {
-  filter: brightness(10); /* blanco total en oscuro */
+  filter: brightness(0) invert(1); /* blanco en modo oscuro */
 }
 .menu-icon:hover { transform: scale(1.1); }
 
@@ -212,7 +212,7 @@ button:active { transform: scale(0.97); }
   <p>Seleccioná cómo querés ver Zooni:</p>
 
   <div class="opciones">
-    <form method="post" action="/Home/CambiarTema">
+    <form method="post" action="/Home/CambiarTema" style="display: flex; flex-direction: column; gap: 20px; width: 100%; align-items: center;">
       <button type="submit" name="modo" value="claro">☀️ Modo Claro</button>
       <button type="submit" name="modo" value="oscuro">🌙 Modo Oscuro</button>
     </form>

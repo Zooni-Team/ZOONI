@@ -1,0 +1,370 @@
+@{
+    ViewData["Title"] = "Closet de Avatares - Zooni";
+    Layout = null;
+    var tema = ViewBag.Tema ?? HttpContext.Session.GetString("Tema") ?? "claro";
+    
+    var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
+    var avataresDisponibles = ViewBag.AvataresDisponibles as List<string> ?? new List<string>();
+    var avatarActual = ViewBag.AvatarActual ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+    --verde: #3ac37d;
+    --amarillo: #FFD85A;
+    --marron: #4B3B2B;
+    --fondo-claro: #f9f9f8;
+    --fondo-oscuro: #121212;
+    --texto-claro: #4B3B2B;
+    --texto-oscuro: #ffffff;
+    --card-claro: rgba(255,255,255,0.95);
+    --card-oscuro: rgba(30,30,30,0.95);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    transition: background .4s ease, color .4s ease;
+}
+
+body.tema-claro {
+    background: var(--fondo-claro);
+    color: var(--texto-claro);
+}
+
+body.tema-oscuro {
+    background: var(--fondo-oscuro);
+    color: var(--texto-oscuro);
+}
+
+header {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    z-index: 10;
+}
+
+.menu-icon {
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0);
+}
+body.tema-oscuro .menu-icon {
+    filter: brightness(0) invert(1);
+}
+.menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 250px;
+    height: 100%;
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 14px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease, background .4s ease, color .4s ease;
+    z-index: 999;
+}
+body.tema-claro .menu-lateral {
+    background: rgba(255,255,255,0.96);
+}
+body.tema-oscuro .menu-lateral {
+    background: rgba(30,30,30,0.96);
+}
+.menu-lateral.abierto { transform: translateX(0); }
+
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    color: inherit;
+    font-size: 1.05rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
+    transition: all .25s ease;
+}
+.menu-lateral a:hover {
+    background: var(--verde);
+    color: #fff !important;
+}
+
+.cerrar-menu {
+    align-self: flex-end;
+    font-size: 1.4rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
+    color: inherit;
+}
+
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 998;
+}
+.overlay.activo {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+main {
+    width: 100%;
+    max-width: 500px;
+    margin: 100px auto 60px auto;
+    padding: 0 20px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: inherit;
+}
+
+.subtitulo {
+    font-size: 1rem;
+    margin-bottom: 30px;
+    opacity: 0.8;
+    color: inherit;
+}
+
+.avatar-actual {
+    margin: 30px 0;
+    padding: 20px;
+    border-radius: 20px;
+    transition: background .4s ease;
+}
+body.tema-claro .avatar-actual {
+    background: var(--card-claro);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+body.tema-oscuro .avatar-actual {
+    background: var(--card-oscuro);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.avatar-actual img {
+    width: 200px;
+    height: auto;
+    border-radius: 15px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+.avatar-actual p {
+    margin-top: 15px;
+    font-weight: 600;
+    color: inherit;
+}
+
+.avatares-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.avatar-item {
+    position: relative;
+    cursor: pointer;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform .2s ease, box-shadow .2s ease;
+    border: 3px solid transparent;
+}
+body.tema-claro .avatar-item {
+    background: var(--card-claro);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+body.tema-oscuro .avatar-item {
+    background: var(--card-oscuro);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.avatar-item:hover {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+.avatar-item.seleccionado {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(58, 195, 125, 0.3);
+}
+
+.avatar-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.btn-aplicar {
+    margin-top: 30px;
+    background: var(--verde);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 14px 40px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background .3s ease, transform .2s ease;
+    box-shadow: 0 4px 12px rgba(58, 195, 125, 0.3);
+}
+.btn-aplicar:hover {
+    background: #2fa66a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(58, 195, 125, 0.4);
+}
+.btn-aplicar:disabled {
+    background: #999;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.mensaje-exito {
+    background: var(--verde);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.mensaje-vacio {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.7;
+    color: inherit;
+}
+
+@@media (max-width: 600px) {
+    main { margin-top: 80px; }
+    h1 { font-size: 1.6rem; }
+    .avatares-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 12px; }
+    .avatar-actual img { width: 160px; }
+}
+</style>
+</head>
+
+<body class="tema-@tema">
+<header>
+    <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/Home/FichaMedica">💉 Ficha médica</a>
+    <a href="/Home/Calendario">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 ChatBot</a>
+    <a href="/Home/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Home/Configuracion">⚙️ Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+<div class="overlay" id="overlay"></div>
+
+<main>
+    <h1>👕 Closet de Avatares</h1>
+    <p class="subtitulo">Elegí el avatar para @mascotaNombre</p>
+
+    @if (TempData["Exito"] != null)
+    {
+        <div class="mensaje-exito">@TempData["Exito"]</div>
+    }
+
+    <div class="avatar-actual">
+        <img src="@avatarActual" alt="Avatar actual" id="avatarPreview" />
+        <p>Avatar actual</p>
+    </div>
+
+    @if (avataresDisponibles.Count > 0)
+    {
+        <form method="post" action="/Home/CambiarAvatar" id="formAvatar">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="avatarRuta" id="avatarSeleccionado" value="" />
+            
+            <div class="avatares-grid">
+                @foreach (var avatar in avataresDisponibles)
+                {
+                    <div class="avatar-item @(avatar == avatarActual ? "seleccionado" : "")" 
+                         data-avatar="@avatar" 
+                         onclick="seleccionarAvatar('@avatar')">
+                        <img src="@avatar" alt="Avatar" />
+                    </div>
+                }
+            </div>
+
+            <button type="submit" class="btn-aplicar" id="btnAplicar" disabled>
+                Aplicar Avatar
+            </button>
+        </form>
+    }
+    else
+    {
+        <div class="mensaje-vacio">
+            No hay avatares disponibles para esta mascota 😔
+        </div>
+    }
+</main>
+
+<script>
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+document.getElementById("abrirMenu").onclick = () => {
+    menu.classList.add("abierto");
+    overlay.classList.add("activo");
+};
+document.getElementById("cerrarMenu").onclick = cerrarMenu;
+overlay.onclick = cerrarMenu;
+
+function cerrarMenu() {
+    menu.classList.remove("abierto");
+    overlay.classList.remove("activo");
+}
+
+let avatarSeleccionado = '@avatarActual';
+
+function seleccionarAvatar(ruta) {
+    // Remover selección anterior
+    document.querySelectorAll('.avatar-item').forEach(item => {
+        item.classList.remove('seleccionado');
+    });
+    
+    // Marcar como seleccionado
+    event.currentTarget.classList.add('seleccionado');
+    
+    // Actualizar preview
+    document.getElementById('avatarPreview').src = ruta;
+    
+    // Guardar selección
+    avatarSeleccionado = ruta;
+    document.getElementById('avatarSeleccionado').value = ruta;
+    document.getElementById('btnAplicar').disabled = false;
+}
+</script>
+</body>
+</html>
+

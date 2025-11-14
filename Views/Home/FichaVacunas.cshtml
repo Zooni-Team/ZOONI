@@ -4,22 +4,18 @@
 @{
     ViewData["Title"] = "Ficha de Vacunas - Zooni";
     Layout = null;
+    var tema = ViewBag.Tema ?? HttpContext.Session.GetString("Tema") ?? "claro";
 
     var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
     var mascotaEspecie = (ViewBag.MascotaEspecie?.ToString() ?? "perro").ToLower();
     var mascotaRaza = (ViewBag.MascotaRaza ?? "Desconocida").ToString();
     var mascotaEdadMeses = Convert.ToInt32(ViewBag.MascotaEdad ?? 0);
 
-    // ✅ Peso con corrección automática
-    var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
-decimal mascotaPeso;
-
-if (!decimal.TryParse(pesoStr, NumberStyles.Any, CultureInfo.InvariantCulture, out mascotaPeso))
-{
-    mascotaPeso = 0;
-}
-
-string pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
+    // ✅ Peso con corrección automática usando PesoHelper
+    decimal mascotaPeso = 0;
+    decimal.TryParse(ViewBag.MascotaPeso?.ToString() ?? "0", NumberStyles.Any, CultureInfo.InvariantCulture, out mascotaPeso);
+    string? pesoDisplay = ViewBag.MascotaPesoDisplay?.ToString();
+    string pesoFormateado = PesoHelper.FormatearPeso(mascotaPeso, pesoDisplay);
 
     // 🖼️ Ruta de imagen
     var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
@@ -42,22 +38,30 @@ string pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
     <style>
     :root { --verde:#39b77c; --amarillo:#FFD85A; --rojo:#ff6767; --celeste:#c6f1ff; --marron:#3c2a1b; --blanco:#fff; --fondo:#fffaf4; }
     *{box-sizing:border-box}
-    body{margin:0;font-family:'Poppins',sans-serif;background:var(--fondo);color:var(--marron);display:flex;flex-direction:column;align-items:center}
-    .ficha-top{background:var(--blanco);width:90%;max-width:430px;margin-top:20px;border-radius:24px;box-shadow:0 6px 18px rgba(0,0,0,.12);text-align:center;padding:1.6rem}
+    body{margin:0;font-family:'Poppins',sans-serif;display:flex;flex-direction:column;align-items:center;transition:background .4s ease, color .4s ease}
+    body.tema-claro{background:var(--fondo);color:var(--marron);}
+    body.tema-oscuro{background:#121212;color:#ffffff;}
+    .ficha-top{width:90%;max-width:430px;margin-top:20px;border-radius:24px;box-shadow:0 6px 18px rgba(0,0,0,.12);text-align:center;padding:1.6rem;transition:background .4s ease, color .4s ease}
+    body.tema-claro .ficha-top{background:var(--blanco);}
+    body.tema-oscuro .ficha-top{background:rgba(30,30,30,0.95);box-shadow:0 6px 18px rgba(0,0,0,.5);}
     .ficha-top img{width:140px;height:auto;animation:flotar 3s ease-in-out infinite;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))}
     @@keyframes flotar{0%,100%{transform:translateY(-5px)}50%{transform:translateY(5px)}}
-    .ficha-top h2{font-weight:700;color:var(--marron);font-size:1.8rem;margin:.2rem 0}
-    .ficha-top .info{font-size:.95rem;line-height:1.4}
-    .vacunas-card{background:rgba(255,255,255,.96);width:90%;max-width:450px;margin:18px 0 40px;border-radius:24px;box-shadow:0 6px 18px rgba(0,0,0,.1);padding:1.4rem}
+    .ficha-top h2{font-weight:700;font-size:1.8rem;margin:.2rem 0;color:inherit}
+    .ficha-top .info{font-size:.95rem;line-height:1.4;color:inherit}
+    .vacunas-card{width:90%;max-width:450px;margin:18px 0 40px;border-radius:24px;box-shadow:0 6px 18px rgba(0,0,0,.1);padding:1.4rem;transition:background .4s ease, color .4s ease}
+    body.tema-claro .vacunas-card{background:rgba(255,255,255,.96);}
+    body.tema-oscuro .vacunas-card{background:rgba(30,30,30,.96);box-shadow:0 6px 18px rgba(0,0,0,.5);}
     .vacunas-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-    .vacunas-header h3{font-weight:700;color:var(--marron);font-size:1.4rem;margin:0}
+    .vacunas-header h3{font-weight:700;font-size:1.4rem;margin:0;color:inherit}
     .vacunas-header button{background:var(--verde);border:none;color:#fff;font-weight:600;padding:8px 14px;border-radius:12px;cursor:pointer;transition:.2s}
     .vacunas-header button:hover{background:#2fa567;transform:scale(1.05)}
-    .vacuna-item{background:var(--blanco);border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.1);margin-bottom:10px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;transition:background-color .3s ease,transform .2s}
+    .vacuna-item{border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.1);margin-bottom:10px;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;transition:background-color .3s ease,transform .2s, background .4s ease, color .4s ease}
+    body.tema-claro .vacuna-item{background:var(--blanco);}
+    body.tema-oscuro .vacuna-item{background:rgba(40,40,40,0.8);box-shadow:0 2px 8px rgba(0,0,0,.3);}
     .vacuna-item:hover{transform:translateY(-2px)}
     .vacuna-info{display:flex;flex-direction:column;gap:4px}
-    .vacuna-nombre{font-weight:600;font-size:1rem;color:var(--marron)}
-    .vacuna-fecha{font-size:.9rem;color:#666}
+    .vacuna-nombre{font-weight:600;font-size:1rem;color:inherit}
+    .vacuna-fecha{font-size:.9rem;color:inherit;opacity:0.8}
     .vacuna-botones{display:flex;gap:6px;align-items:center}
     .btn-eliminar{border:none;cursor:pointer;padding:7px 9px;border-radius:8px;background:var(--rojo);color:#fff;transition:.2s}
     .btn-eliminar:hover{background:#ff5252}
@@ -66,8 +70,12 @@ string pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
     .vacuna-roja{background-color:#ffd0d0!important}
     .modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);display:none;justify-content:center;align-items:center;z-index:999}
     .modal.activo{display:flex}
-    .modal-content{background:#fff;padding:1.8rem;border-radius:18px;box-shadow:0 5px 14px rgba(0,0,0,.3);width:90%;max-width:360px;text-align:center}
-    .modal-content input,.modal-content button{margin-top:10px;width:80%;padding:10px;border-radius:10px;border:1px solid #ccc}
+    .modal-content{padding:1.8rem;border-radius:18px;box-shadow:0 5px 14px rgba(0,0,0,.3);width:90%;max-width:360px;text-align:center;transition:background .4s ease, color .4s ease}
+    body.tema-claro .modal-content{background:#fff;}
+    body.tema-oscuro .modal-content{background:rgba(30,30,30,0.98);}
+    .modal-content input,.modal-content button{margin-top:10px;width:80%;padding:10px;border-radius:10px;transition:background .4s ease, color .4s ease, border .4s ease}
+    body.tema-claro .modal-content input{border:1px solid #ccc;background:#fff;color:#333}
+    body.tema-oscuro .modal-content input{border:1px solid #555;background:rgba(40,40,40,0.8);color:#fff}
     .modal-content button{background:var(--verde);color:#fff;font-weight:600;border:none;cursor:pointer}
     .modal-content button:hover{background:#2fa567}
     .badge-progreso{display:inline-block;font-size:.85rem;background:#eaf8f2;border-radius:999px;padding:6px 10px;margin-bottom:8px}
@@ -237,7 +245,11 @@ string pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
     outline: none;
     padding: 0;
     margin: 0;
-    transition: transform 0.25s ease;
+    transition: transform 0.25s ease, filter .3s ease;
+    filter: brightness(0); /* negro en modo claro */
+    }
+    body.tema-oscuro .menu-icon {
+        filter: brightness(0) invert(1); /* blanco en modo oscuro */
     }
     .menu-icon:hover { transform: scale(1.1); }
 
@@ -397,7 +409,7 @@ string pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
     </head>
 
 
-    <body>
+    <body class="tema-@tema">
     <header>
     <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
     </header>
@@ -423,7 +435,7 @@ string pesoFormateado = $"{mascotaPeso:0.##}".Replace('.', ',');
         <h2>Vacunas de @mascotaNombre</h2>
         <div class="info">
             <div class="edad">Edad: @edadFormateada</div>
-            <div class="peso">Peso: @mascotaPeso kg</div>
+            <div class="peso">Peso: @pesoFormateado</div>
             <div class="raza">Raza: @mascotaRaza</div>
         </div>
     </div>

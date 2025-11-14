@@ -1,9 +1,10 @@
+@using Zooni.Models
 @model decimal?
 
 @{
-    var peso = Model ?? 0.1M;
-    peso = Math.Max(0.1M, Math.Min(300M, Math.Round(peso, 2)));
-    var pesoFormateado = peso.ToString("F2", new System.Globalization.CultureInfo("es-ES"));
+    var pesoDecimal = Model ?? 0.1M;
+    var pesoDisplay = ViewBag.MascotaPesoDisplay as string;
+    var pesoFormateado = PesoHelper.FormatearPeso(pesoDecimal, pesoDisplay);
 }
 
-@pesoFormateado kg
+@pesoFormateado

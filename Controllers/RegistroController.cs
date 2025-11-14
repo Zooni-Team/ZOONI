@@ -347,21 +347,19 @@ public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int E
                 HttpContext.Session.SetString("MascotaFoto", "");
             }
         }
-
-        // 🟢 Normalizar peso
-var (pesoNormalizado, pesoDisplayFinal) = PesoHelper.NormalizarPeso(Peso.ToString());
-        string especie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
-        if (!string.IsNullOrEmpty(especie) && !PesoHelper.ValidarPesoParaEspecie(pesoNormalizado, especie))
+        else
         {
-            TempData["Error"] = $"El peso ingresado es demasiado alto para un {especie}";
-            return RedirectToAction("Registro3");
+            HttpContext.Session.SetString("MascotaFoto", "");
         }
 
+        // 🟢 Normalizar peso
+        var (pesoNormalizado, pesoDisplayFinal) = PesoHelper.NormalizarPeso(Peso.ToString());
+
         // 🧠 Guardar en sesión
-        HttpContext.Session.SetString("MascotaSexo", Sexo);
-        HttpContext.Session.SetString("MascotaRaza", Raza);
+        HttpContext.Session.SetString("MascotaSexo", Sexo ?? "");
+        HttpContext.Session.SetString("MascotaRaza", Raza ?? "");
         HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString("F2", CultureInfo.InvariantCulture));
-HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplayFinal);
+        HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplayFinal);
         HttpContext.Session.SetInt32("MascotaEdad", Edad);
 
         // 🧩 Definir modo final con fallback
@@ -377,13 +375,13 @@ Console.WriteLine($"🐾 [DEBUG] Modo final resuelto: {modoFinal}");
 if (modoFinal == "nuevamascota")
 {
     string nombre = HttpContext.Session.GetString("MascotaNombre") ?? "MiMascota";
-    string tipo = HttpContext.Session.GetString("MascotaEspecie") ?? "";
+    string especie = HttpContext.Session.GetString("MascotaEspecie") ?? "";
     string raza = HttpContext.Session.GetString("MascotaRaza") ?? "";
     string sexo = HttpContext.Session.GetString("MascotaSexo") ?? "";
     decimal.TryParse(HttpContext.Session.GetString("MascotaPeso"), out decimal peso);
     int edad = HttpContext.Session.GetInt32("MascotaEdad") ?? 0;
     string foto = HttpContext.Session.GetString("MascotaFoto") ?? "";
-HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplayFinal);
+    HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplayFinal);
 
     string queryInsert = @"
         INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Foto, Fecha_Nacimiento, PesoDisplay)

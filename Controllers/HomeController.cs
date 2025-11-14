@@ -50,18 +50,44 @@ namespace Zooni.Controllers
     ViewBag.MascotaEdad = mascota["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(mascota["Edad"]);
     
     // Manejo mejorado del peso usando PesoHelper
-    decimal peso = 0;
-    if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), out peso))
+    decimal pesoDecimal = 0;
+    string? pesoDisplayBD = null;
+    
+    // Priorizar PesoDisplay de la BD si existe
+    if (mascota.Table.Columns.Contains("PesoDisplay") && mascota["PesoDisplay"] != DBNull.Value)
     {
-        var (pesoNormalizado, pesoDisplay) = PesoHelper.NormalizarPeso(peso.ToString("0.####"));
-        ViewBag.MascotaPeso = pesoNormalizado;
-        ViewBag.MascotaPesoDisplay = pesoDisplay;
+        pesoDisplayBD = mascota["PesoDisplay"].ToString();
+    }
+    
+    // Obtener el peso decimal para cálculos
+    if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
+    {
+        ViewBag.MascotaPeso = pesoDecimal;
+        ViewBag.MascotaPesoDisplay = pesoDisplayBD ?? PesoHelper.FormatearPeso(pesoDecimal);
+    }
+    else
+    {
+        ViewBag.MascotaPeso = 0.1M;
+        ViewBag.MascotaPesoDisplay = pesoDisplayBD ?? "0,10 kg";
     }
 
     // 🟢 NUEVO: agregar la foto si existe
     ViewBag.MascotaFoto = mascota.Table.Columns.Contains("Foto") && mascota["Foto"] != DBNull.Value
         ? mascota["Foto"].ToString()
         : "";
+    
+    // 🎨 Avatar: usar el de sesión si existe, sino el básico
+    var especie = mascota["Especie"]?.ToString()?.ToLower() ?? "perro";
+    var raza = mascota["Raza"]?.ToString() ?? "basico";
+    var razaNormalizada = raza.ToLower();
+    if (razaNormalizada.Contains("jack russell")) razaNormalizada = "jack russell";
+    else if (razaNormalizada.Contains("caniche negro")) razaNormalizada = "caniche negro";
+    else razaNormalizada = razaNormalizada.Replace(" ", "");
+    
+    var avatarSesion = HttpContext.Session.GetString("MascotaAvatar");
+    ViewBag.MascotaAvatar = !string.IsNullOrEmpty(avatarSesion) 
+        ? avatarSesion 
+        : $"/img/mascotas/{especie}s/{razaNormalizada}/{especie}_basico.png";
 }
 
 
@@ -594,6 +620,9 @@ if (TempData["Exito"] != null && TempData["Exito"].ToString().Contains("Mascota 
                 HttpContext.Session.SetString("MascotaNombre", m["Nombre"].ToString());
                 HttpContext.Session.SetString("MascotaEspecie", m["Especie"].ToString());
                 HttpContext.Session.SetString("MascotaRaza", m["Raza"].ToString());
+                
+                // Limpiar avatar de sesión al cambiar de mascota (cada mascota tiene su propio avatar)
+                HttpContext.Session.Remove("MascotaAvatar");
 
                 TempData["Exito"] = $"Mascota activa: {m["Nombre"]} 🐾";
                 return RedirectToAction("Configuracion");
@@ -1308,6 +1337,82 @@ public IActionResult ConfigTema()
     var tema = HttpContext.Session.GetString("Tema") ?? "claro";
     ViewBag.Tema = tema;
     return View();
-}   
 }
+
+[HttpGet]
+public IActionResult Closet()
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+    ViewBag.Tema = tema;
+
+    var mascota = ObtenerMascotaActiva(userId.Value);
+    if (mascota == null)
+        return RedirectToAction("Index");
+
+    CargarViewBagMascota(mascota);
+    
+    var especie = mascota["Especie"]?.ToString()?.ToLower() ?? "perro";
+    var raza = mascota["Raza"]?.ToString() ?? "basico";
+    
+    // Normalizar raza para la ruta (mapeo especial)
+    var razaNormalizada = raza.ToLower();
+    if (razaNormalizada.Contains("jack russell")) razaNormalizada = "jack russell";
+    else if (razaNormalizada.Contains("caniche negro")) razaNormalizada = "caniche negro";
+    else razaNormalizada = razaNormalizada.Replace(" ", "");
+    
+    // Obtener todos los avatares disponibles para esta especie/raza
+    var avataresDisponibles = new List<string>();
+    var avatarPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "img", "mascotas", $"{especie}s", razaNormalizada);
+    
+    if (Directory.Exists(avatarPath))
+    {
+        var archivos = Directory.GetFiles(avatarPath, "*.png");
+        foreach (var archivo in archivos)
+        {
+            var nombreArchivo = Path.GetFileName(archivo);
+            var rutaRelativa = $"/img/mascotas/{especie}s/{razaNormalizada}/{nombreArchivo}";
+            avataresDisponibles.Add(rutaRelativa);
+        }
+    }
+    
+    // Si no hay avatares específicos, usar el básico
+    if (avataresDisponibles.Count == 0)
+    {
+        avataresDisponibles.Add($"/img/mascotas/{especie}s/{razaNormalizada}/{especie}_basico.png");
+    }
+    
+    ViewBag.AvataresDisponibles = avataresDisponibles;
+    ViewBag.AvatarActual = HttpContext.Session.GetString("MascotaAvatar") ?? $"/img/mascotas/{especie}s/{razaNormalizada}/{especie}_basico.png";
+    
+    return View();
+}
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult CambiarAvatar(string avatarRuta)
+{
+    var userId = HttpContext.Session.GetInt32("UserId");
+    if (userId == null)
+        return RedirectToAction("Login", "Auth");
+
+    var mascota = ObtenerMascotaActiva(userId.Value);
+    if (mascota == null)
+        return RedirectToAction("Index");
+
+    var mascotaId = Convert.ToInt32(mascota["Id_Mascota"]);
+    
+    // Guardar el avatar en la sesión
+    HttpContext.Session.SetString("MascotaAvatar", avatarRuta);
+    
+    // Actualizar la mascota activa en sesión
+    HttpContext.Session.SetInt32("MascotaId", mascotaId);
+    
+    TempData["Exito"] = "Avatar cambiado exitosamente ✅";
+    return RedirectToAction("Closet");
+}
+}   
 }

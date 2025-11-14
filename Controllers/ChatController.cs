@@ -32,7 +32,7 @@ namespace Zooni.Controllers
 
                 string query = @"
                     SELECT TOP 1 
-                        M.Id_Mascota, M.Nombre, M.Especie, M.Raza, M.Peso, M.Edad, M.Sexo, 
+                        M.Id_Mascota, M.Nombre, M.Especie, M.Raza, M.Peso, M.PesoDisplay, M.Edad, M.Sexo, 
                         M.Esterilizado, M.Color, M.Chip
                     FROM Mascota M
                     WHERE M.Id_User = @UserId
@@ -139,6 +139,8 @@ namespace Zooni.Controllers
                     ? null
                     : JsonSerializer.Deserialize<Dictionary<string, object>>(datosJson);
 
+                string pesoTexto = datos?["peso"]?.ToString() ?? "0,10 kg";
+                
                 string sys = $"""
 Eres ZooniVet, el asistente veterinario empático y profesional de la app Zooni.
 Responde de forma breve, clara y directa, como si chatearas con el dueño de la mascota.
@@ -150,7 +152,7 @@ Información actual de la mascota:
 - Especie: {datos?["especie"]}
 - Raza: {datos?["raza"]}
 - Edad: {datos?["edad"]} meses
-- Peso: {datos?["peso"]} kg
+- Peso: {pesoTexto}
 - Sexo: {datos?["sexo"]}
 - Vacunas: {datos?["vacunas"]}
 - Tratamientos: {datos?["tratamientos"]}

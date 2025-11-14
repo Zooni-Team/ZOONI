@@ -3,13 +3,15 @@
 @{
     ViewData["Title"] = "Ficha de Tratamientos - Zooni";
     Layout = null;
+    var tema = ViewBag.Tema ?? HttpContext.Session.GetString("Tema") ?? "claro";
 
     var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
     var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
     var mascotaRaza = (ViewBag.MascotaRaza ?? "desconocida").ToString();
-var pesoStr = ViewBag.MascotaPeso?.ToString() ?? "0";
-var mascotaPeso = PesoHelper.NormalizarPeso(pesoStr);
-var pesoFormateado = PesoHelper.FormatearPeso(mascotaPeso);
+decimal mascotaPeso = 0;
+decimal.TryParse(ViewBag.MascotaPeso?.ToString() ?? "0", System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out mascotaPeso);
+string? pesoDisplay = ViewBag.MascotaPesoDisplay?.ToString();
+string pesoFormateado = PesoHelper.FormatearPeso(mascotaPeso, pesoDisplay);
     var mascotaEdad = ViewBag.MascotaEdad ?? 0;
     var rutaMascota = $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza.ToLower()}/{mascotaEspecie}_basico.png";
     int años = Convert.ToInt32(mascotaEdad) / 12;
@@ -34,11 +36,18 @@ var pesoFormateado = PesoHelper.FormatearPeso(mascotaPeso);
 body {
   margin: 0;
   font-family: "Poppins", sans-serif;
-  background: var(--fondo);
-  color: var(--marron);
   display: flex;
   flex-direction: column;
   align-items: center;
+  transition: background .4s ease, color .4s ease;
+}
+body.tema-claro {
+  background: var(--fondo);
+  color: var(--marron);
+}
+body.tema-oscuro {
+  background: #121212;
+  color: #ffffff;
 }
 
 /* 🐾 HEADER Y MENÚ LATERAL */
@@ -53,7 +62,11 @@ header {
   width: 38px;
   height: 38px;
   cursor: pointer;
-  transition: transform 0.25s ease;
+  transition: transform 0.25s ease, filter .3s ease;
+  filter: brightness(0); /* negro en modo claro */
+}
+body.tema-oscuro .menu-icon {
+  filter: brightness(0) invert(1); /* blanco en modo oscuro */
 }
 .menu-icon:hover {
   transform: scale(1.1);
@@ -65,17 +78,22 @@ header {
   left: -260px;
   width: 240px;
   height: 100%;
-  background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(12px);
   box-shadow: 4px 0 14px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   padding: 2.5rem 1.2rem;
   gap: 1rem;
-  transition: all 0.35s ease;
+  transition: all 0.35s ease, background .4s ease, color .4s ease;
   z-index: 9;
   border-top-right-radius: 18px;
   border-bottom-right-radius: 18px;
+}
+body.tema-claro .menu-lateral {
+  background: rgba(255, 255, 255, 0.96);
+}
+body.tema-oscuro .menu-lateral {
+  background: rgba(30, 30, 30, 0.96);
 }
 .menu-lateral.abierto {
   left: 0;
@@ -84,11 +102,11 @@ header {
 .menu-lateral a {
   text-decoration: none;
   font-weight: 600;
-  color: var(--marron);
   font-size: 1.1rem;
   padding: 0.6rem 0.8rem;
   border-radius: 12px;
   transition: all 0.25s ease;
+  color: inherit;
 }
 .menu-lateral a:hover {
   background: var(--amarillo);
@@ -100,7 +118,7 @@ header {
   font-size: 1.6rem;
   cursor: pointer;
   margin-bottom: 1.5rem;
-  color: var(--marron);
+  color: inherit;
 }
 .cerrar-menu:hover {
   transform: scale(1.2);
@@ -426,7 +444,7 @@ header {
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="~/css/fichavacunas.css" />
 </head>
-<body>
+<body class="tema-@tema">
 <header>
     <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
 </header>
@@ -453,7 +471,7 @@ header {
     <h2>Tratamientos de @mascotaNombre</h2>
     <div class="info">
         <div>Edad: @edadFormateada</div>
-        <div>Peso: @pesoFormateado kg</div>
+        <div>Peso: @pesoFormateado</div>
         <div>Raza: @mascotaRaza</div>
     </div>
 </div>
