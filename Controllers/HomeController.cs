@@ -4,6 +4,7 @@ using System.Data;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using System.Linq;
 using iText.Kernel.Pdf;
 using iText.Layout;
 using iText.Layout.Element;
@@ -15,18 +16,37 @@ namespace Zooni.Controllers
     {
        private DataRow ObtenerMascotaActiva(int userId)
 {
+    // Asegurar que la tabla existe
+    AsegurarTablaMascotaCompartida();
+
     int? mascotaId = HttpContext.Session.GetInt32("MascotaId");
     string query;
     Dictionary<string, object> param;
 
     if (mascotaId != null)
     {
-        query = "SELECT TOP 1 * FROM Mascota WHERE Id_Mascota = @Id";
-        param = new Dictionary<string, object> { { "@Id", mascotaId.Value } };
+        // Incluir mascotas propias y compartidas
+        query = @"SELECT TOP 1 m.*, 
+                    CASE WHEN m.PesoDisplay IS NULL OR m.PesoDisplay = '' THEN NULL ELSE m.PesoDisplay END AS PesoDisplay,
+                    CASE WHEN m.Id_User = @UserId THEN 1 ELSE 0 END AS EsPropietario,
+                    mc.Permiso_Edicion
+                  FROM Mascota m
+                  LEFT JOIN MascotaCompartida mc ON m.Id_Mascota = mc.Id_Mascota AND mc.Id_UsuarioCompartido = @UserId AND mc.Activo = 1
+                  WHERE m.Id_Mascota = @Id 
+                    AND (m.Id_User = @UserId OR mc.Id_UsuarioCompartido = @UserId)";
+        param = new Dictionary<string, object> { { "@Id", mascotaId.Value }, { "@UserId", userId } };
     }
     else
     {
-        query = @"SELECT TOP 1 * FROM Mascota WHERE Id_User = @UserId ORDER BY Id_Mascota DESC";
+        // Incluir mascotas propias y compartidas
+        query = @"SELECT TOP 1 m.*, 
+                    CASE WHEN m.PesoDisplay IS NULL OR m.PesoDisplay = '' THEN NULL ELSE m.PesoDisplay END AS PesoDisplay,
+                    CASE WHEN m.Id_User = @UserId THEN 1 ELSE 0 END AS EsPropietario,
+                    mc.Permiso_Edicion
+                  FROM Mascota m
+                  LEFT JOIN MascotaCompartida mc ON m.Id_Mascota = mc.Id_Mascota AND mc.Id_UsuarioCompartido = @UserId AND mc.Activo = 1
+                  WHERE (m.Id_User = @UserId OR mc.Id_UsuarioCompartido = @UserId)
+                  ORDER BY m.Id_Mascota DESC";
         param = new Dictionary<string, object> { { "@UserId", userId } };
     }
 
@@ -47,7 +67,21 @@ namespace Zooni.Controllers
     ViewBag.MascotaNombre = mascota["Nombre"]?.ToString() ?? "Sin nombre";
     ViewBag.MascotaEspecie = mascota["Especie"]?.ToString() ?? "Desconocida";
     ViewBag.MascotaRaza = mascota["Raza"]?.ToString() ?? "";
+    
+    // 🎂 Calcular edad automáticamente desde Fecha_Nacimiento si existe
+    DateTime? fechaNacimiento = null;
+    if (mascota.Table.Columns.Contains("Fecha_Nacimiento") && mascota["Fecha_Nacimiento"] != DBNull.Value)
+    {
+        fechaNacimiento = Convert.ToDateTime(mascota["Fecha_Nacimiento"]);
+        ViewBag.MascotaFechaNacimiento = fechaNacimiento.Value.ToString("yyyy-MM-dd");
+        // Calcular edad automáticamente
+        ViewBag.MascotaEdad = EdadHelper.CalcularEdadEnMeses(fechaNacimiento);
+    }
+    else
+    {
+        ViewBag.MascotaFechaNacimiento = null;
     ViewBag.MascotaEdad = mascota["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(mascota["Edad"]);
+    }
     
     // Manejo mejorado del peso usando PesoHelper
     decimal pesoDecimal = 0;
@@ -131,6 +165,21 @@ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
                 if (userDt.Rows.Count == 0) return RedirectToAction("Login", "Auth");
                 ViewBag.UserNombre = userDt.Rows[0]["Nombre"].ToString();
 
+                // 🟢 Actualizar última actividad del usuario
+                try
+                {
+                    AsegurarColumnasEstadoOnline();
+                    string qUpdateActividad = @"
+                        UPDATE [User] 
+                        SET UltimaActividad = GETDATE(), EstadoOnline = 1
+                        WHERE Id_User = @UserId";
+                    BD.ExecuteNonQuery(qUpdateActividad, param);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("⚠️ Error al actualizar actividad: " + ex.Message);
+                }
+
                 var mascota = ObtenerMascotaActiva(userId.Value);
                 CargarViewBagMascota(mascota);
                 ViewBag.MascotaFoto = HttpContext.Session.GetString("MascotaFoto");
@@ -160,6 +209,8 @@ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
                 }
 
                 CargarViewBagMascota(mascota);
+                if (mascota != null)
+                    ViewBag.MascotaId = Convert.ToInt32(mascota["Id_Mascota"]); // Para el polling
                 return View("FichaMedica");
             }
             catch (Exception ex)
@@ -1637,27 +1688,61 @@ public IActionResult EditarMascota(int id)
         return RedirectToAction("ConfigMascotas");
 
     var r = dt.Rows[0];
+    
+    // 🎂 Cargar Fecha_Nacimiento
+    DateTime? fechaNac = null;
+    if (r["Fecha_Nacimiento"] != DBNull.Value)
+    {
+        fechaNac = Convert.ToDateTime(r["Fecha_Nacimiento"]);
+    }
+    
+    // Calcular edad automáticamente desde Fecha_Nacimiento si existe
+    int edadCalculada = fechaNac.HasValue ? EdadHelper.CalcularEdadEnMeses(fechaNac) : 
+                        (r["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(r["Edad"]));
+    
     var m = new Mascota {
         Id_Mascota = id,
         Nombre     = r["Nombre"].ToString(),
         Especie    = r["Especie"].ToString(),
         Raza       = r["Raza"].ToString(),
-        Edad       = r["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(r["Edad"]),
+        Edad       = edadCalculada,
         Peso       = r["Peso"] == DBNull.Value ? 0 : Convert.ToDecimal(r["Peso"]),
         Sexo       = r["Sexo"].ToString(),
-        Foto       = r["Foto"]?.ToString()
+        Foto       = r["Foto"]?.ToString(),
+        Fecha_Nacimiento = fechaNac
     };
+    
+    // Cargar PesoDisplay si existe
+    if (dt.Columns.Contains("PesoDisplay") && r["PesoDisplay"] != DBNull.Value)
+    {
+        ViewBag.PesoDisplay = r["PesoDisplay"].ToString();
+    }
+    
     ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
     return View(m);
 }
 
 // 4) POST (o PUT) para cambiar color o editar datos (simplificado)
 [HttpPost]
-public IActionResult GuardarMascotaEditada(Mascota model)
+public IActionResult GuardarMascotaEditada(Mascota model, string PesoDisplay, DateTime? Fecha_Nacimiento)
 {
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null)
         return RedirectToAction("Login", "Auth");
+
+    // 🎂 Calcular edad automáticamente desde Fecha_Nacimiento si existe
+    int edadFinal = model.Edad;
+    if (Fecha_Nacimiento.HasValue && Fecha_Nacimiento.Value != DateTime.MinValue)
+    {
+        edadFinal = EdadHelper.CalcularEdadEnMeses(Fecha_Nacimiento);
+    }
+
+    // Normalizar peso
+    var (pesoNormalizado, pesoDisplayFinal) = PesoHelper.NormalizarPeso(PesoDisplay ?? model.Peso.ToString());
+    if (model.Peso > 0)
+    {
+        pesoNormalizado = model.Peso;
+    }
 
     string q = @"
         UPDATE Mascota
@@ -1667,22 +1752,131 @@ public IActionResult GuardarMascotaEditada(Mascota model)
             Peso   = @Peso,
             Sexo   = @Sexo,
             Foto   = @Foto,
-            TagColor = @TagColor
+            TagColor = @TagColor,
+            Fecha_Nacimiento = @FechaNac,
+            PesoDisplay = @PesoDisplay
         WHERE Id_Mascota = @Id AND Id_User = @U";
     BD.ExecuteNonQuery(q, new Dictionary<string,object> {
         { "@Nombre", model.Nombre },
         { "@Raza", model.Raza },
-        { "@Edad", model.Edad },
-        { "@Peso", model.Peso },
+        { "@Edad", edadFinal },
+        { "@Peso", pesoNormalizado },
         { "@Sexo", model.Sexo },
-        { "@Foto", model.Foto },
-        { "@TagColor", model.TagColor },
+        { "@Foto", model.Foto ?? "" },
+        { "@TagColor", model.TagColor ?? "" },
+        { "@FechaNac", Fecha_Nacimiento.HasValue && Fecha_Nacimiento.Value != DateTime.MinValue ? (object)Fecha_Nacimiento.Value : DBNull.Value },
+        { "@PesoDisplay", pesoDisplayFinal ?? "" },
         { "@Id", model.Id_Mascota },
         { "@U", userId.Value }
     });
 
     TempData["Exito"] = "Datos de la mascota guardados ✅";
         return RedirectToAction("ConfigMascotas");
+    }
+
+    // 🎂 POST: Actualizar peso desde FichaMedica
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult ActualizarPesoMascota(string peso)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autorizado" });
+
+        try
+        {
+            var mascota = ObtenerMascotaActiva(userId.Value);
+            if (mascota == null)
+                return Json(new { success = false, message = "Mascota no encontrada" });
+
+            int idMascota = Convert.ToInt32(mascota["Id_Mascota"]);
+            bool esPropietario = mascota.Table.Columns.Contains("EsPropietario") && 
+                                 Convert.ToInt32(mascota["EsPropietario"]) == 1;
+            bool permisoEdicion = !mascota.Table.Columns.Contains("Permiso_Edicion") || 
+                                 mascota["Permiso_Edicion"] == DBNull.Value ||
+                                 Convert.ToBoolean(mascota["Permiso_Edicion"]);
+            
+            // Verificar permisos: solo propietario o usuario compartido con permiso de edición
+            if (!esPropietario && !permisoEdicion)
+                return Json(new { success = false, message = "No tenés permisos para editar esta mascota" });
+            
+            // Normalizar peso
+            var (pesoNormalizado, pesoDisplay) = PesoHelper.NormalizarPeso(peso);
+
+            // Si es propietario, actualizar directamente. Si no, también puede actualizar si tiene permiso
+            string q = @"
+                UPDATE Mascota
+                SET Peso = @Peso, PesoDisplay = @PesoDisplay
+                WHERE Id_Mascota = @Id";
+            BD.ExecuteNonQuery(q, new Dictionary<string, object> {
+                { "@Peso", pesoNormalizado },
+                { "@PesoDisplay", pesoDisplay ?? "" },
+                { "@Id", idMascota }
+            });
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en ActualizarPesoMascota: " + ex.Message);
+            return Json(new { success = false, message = "Error al actualizar el peso" });
+        }
+    }
+
+    // 🎂 POST: Actualizar fecha de nacimiento desde FichaMedica
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult ActualizarFechaNacimientoMascota(string fechaNacimiento)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autorizado" });
+
+        try
+        {
+            var mascota = ObtenerMascotaActiva(userId.Value);
+            if (mascota == null)
+                return Json(new { success = false, message = "Mascota no encontrada" });
+
+            int idMascota = Convert.ToInt32(mascota["Id_Mascota"]);
+            bool esPropietario = mascota.Table.Columns.Contains("EsPropietario") && 
+                                 Convert.ToInt32(mascota["EsPropietario"]) == 1;
+            bool permisoEdicion = !mascota.Table.Columns.Contains("Permiso_Edicion") || 
+                                 mascota["Permiso_Edicion"] == DBNull.Value ||
+                                 Convert.ToBoolean(mascota["Permiso_Edicion"]);
+            
+            // Verificar permisos: solo propietario o usuario compartido con permiso de edición
+            if (!esPropietario && !permisoEdicion)
+                return Json(new { success = false, message = "No tenés permisos para editar esta mascota" });
+            
+            // Parsear fecha de nacimiento
+            DateTime? fechaNac = null;
+            if (!string.IsNullOrEmpty(fechaNacimiento) && DateTime.TryParse(fechaNacimiento, out DateTime fecha))
+            {
+                fechaNac = fecha;
+            }
+
+            // Calcular edad automáticamente desde fecha de nacimiento
+            int edadCalculada = fechaNac.HasValue ? EdadHelper.CalcularEdadEnMeses(fechaNac) : 
+                                (mascota["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(mascota["Edad"]));
+
+            string q = @"
+                UPDATE Mascota
+                SET Fecha_Nacimiento = @FechaNac, Edad = @Edad
+                WHERE Id_Mascota = @Id";
+            BD.ExecuteNonQuery(q, new Dictionary<string, object> {
+                { "@FechaNac", fechaNac.HasValue ? (object)fechaNac.Value : DBNull.Value },
+                { "@Edad", edadCalculada },
+                { "@Id", idMascota }
+            });
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en ActualizarFechaNacimientoMascota: " + ex.Message);
+            return Json(new { success = false, message = "Error al actualizar la fecha de nacimiento" });
+        }
     }
 
     [HttpGet]
@@ -1952,6 +2146,92 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
         }
     }
 
+    private void AsegurarTablaApodoAmigo()
+    {
+        try
+        {
+            // Verificar si la tabla existe y crearla si no
+            string qCheck = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'ApodoAmigo')
+                BEGIN
+                    CREATE TABLE ApodoAmigo (
+                        Id_Apodo INT IDENTITY(1,1) PRIMARY KEY,
+                        Id_User INT NOT NULL,
+                        Id_Amigo INT NOT NULL,
+                        Apodo NVARCHAR(100) NULL,
+                        FOREIGN KEY (Id_User) REFERENCES [User](Id_User),
+                        FOREIGN KEY (Id_Amigo) REFERENCES [User](Id_User),
+                        UNIQUE (Id_User, Id_Amigo)
+                    )
+                END";
+
+            BD.ExecuteNonQuery(qCheck, new Dictionary<string, object>());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error al crear tabla ApodoAmigo: " + ex.Message);
+        }
+    }
+
+    private void AsegurarColumnasEstadoOnline()
+    {
+        try
+        {
+            // Verificar y crear columna EstadoOnline
+            string qEstadoOnline = @"
+                IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = N'EstadoOnline' AND Object_ID = Object_ID(N'[User]'))
+                BEGIN
+                    ALTER TABLE [User] ADD EstadoOnline BIT NOT NULL DEFAULT 0;
+                END";
+
+            BD.ExecuteNonQuery(qEstadoOnline, new Dictionary<string, object>());
+
+            // Verificar y crear columna UltimaActividad
+            string qUltimaActividad = @"
+                IF NOT EXISTS (SELECT * FROM sys.columns WHERE Name = N'UltimaActividad' AND Object_ID = Object_ID(N'[User]'))
+                BEGIN
+                    ALTER TABLE [User] ADD UltimaActividad DATETIME2 NULL;
+                END";
+
+            BD.ExecuteNonQuery(qUltimaActividad, new Dictionary<string, object>());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error al crear columnas EstadoOnline/UltimaActividad: " + ex.Message);
+        }
+    }
+
+    private void AsegurarTablaMascotaCompartida()
+    {
+        try
+        {
+            // Verificar si la tabla existe y crearla si no
+            string qCheck = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'MascotaCompartida')
+                BEGIN
+                    CREATE TABLE MascotaCompartida (
+                        Id_MascotaCompartida INT IDENTITY(1,1) PRIMARY KEY,
+                        Id_Mascota INT NOT NULL,
+                        Id_Propietario INT NOT NULL,
+                        Id_UsuarioCompartido INT NOT NULL,
+                        Permiso_Edicion BIT NOT NULL DEFAULT 0,
+                        Fecha_Compartido DATETIME2 NOT NULL DEFAULT GETDATE(),
+                        Activo BIT NOT NULL DEFAULT 1,
+                        FOREIGN KEY (Id_Mascota) REFERENCES Mascota(Id_Mascota),
+                        FOREIGN KEY (Id_Propietario) REFERENCES [User](Id_User),
+                        FOREIGN KEY (Id_UsuarioCompartido) REFERENCES [User](Id_User),
+                        UNIQUE (Id_Mascota, Id_UsuarioCompartido)
+                    )
+                END";
+
+            BD.ExecuteNonQuery(qCheck, new Dictionary<string, object>());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error al crear tabla MascotaCompartida: " + ex.Message);
+        }
+    }
+
     [HttpGet]
     public IActionResult ObtenerAmigos()
     {
@@ -1961,8 +2241,10 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
 
         try
         {
-            // Asegurar que la tabla existe
+            // Asegurar que las tablas y columnas existen
             AsegurarTablaConfiguracionUsuario();
+            AsegurarTablaApodoAmigo();
+            AsegurarColumnasEstadoOnline();
 
             // Obtener amigos del círculo de confianza (solo los que tienen solicitud aceptada)
             // Verificar que existe una invitación aceptada o están en CirculoConfianza
@@ -1980,7 +2262,12 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                     (SELECT TOP 1 Especie FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaEspecie,
                     (SELECT TOP 1 Raza FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaRaza,
                     ISNULL(CU.MostrableUbicacion, 'amigos') as MostrableUbicacion,
-                    CU.Apodo as Apodo
+                    CU.Apodo as Apodo,
+                    CASE 
+                        WHEN U.EstadoOnline = 1 AND U.UltimaActividad >= DATEADD(MINUTE, -5, GETDATE()) THEN 1
+                        ELSE 0
+                    END as EstaOnline,
+                    U.UltimaActividad
                 FROM (
                     SELECT Id_Amigo as Id_User FROM CirculoConfianza WHERE Id_User = @UserId
                     UNION
@@ -2001,12 +2288,13 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
 
         var dtAmigos = BD.ExecuteQuery(qAmigos, new Dictionary<string, object> { { "@UserId", userId.Value } });
 
-        // Obtener apodos
+        // Obtener apodos (la tabla ya está asegurada arriba)
         var apodos = new Dictionary<int, string>();
         try
         {
             string qApodos = @"
                 SELECT Id_Amigo, Apodo FROM ApodoAmigo WHERE Id_User = @UserId";
+            
             var dtApodos = BD.ExecuteQuery(qApodos, new Dictionary<string, object> { { "@UserId", userId.Value } });
             foreach (System.Data.DataRow rowApodo in dtApodos.Rows)
             {
@@ -2016,7 +2304,11 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                     apodos[amigoId] = apodo;
             }
         }
-        catch { } // Si la tabla no existe aún, continuar sin apodos
+        catch (Exception ex)
+        { 
+            // Si hay error, continuar sin apodos
+            Console.WriteLine("⚠️ Error al obtener apodos: " + ex.Message);
+        }
 
         var amigos = new List<object>();
         foreach (System.Data.DataRow row in dtAmigos.Rows)
@@ -2025,6 +2317,19 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
             var raza = row["MascotaRaza"]?.ToString() ?? "";
             var mascotaFoto = row["MascotaFoto"]?.ToString();
             int amigoId = Convert.ToInt32(row["Id_User"]);
+            
+            // 🟢 Determinar si está online
+            bool estaOnline = false;
+            if (row.Table.Columns.Contains("EstaOnline"))
+            {
+                estaOnline = Convert.ToInt32(row["EstaOnline"]) == 1;
+            }
+            else if (row.Table.Columns.Contains("UltimaActividad") && row["UltimaActividad"] != DBNull.Value)
+            {
+                // Calcular si está online basado en última actividad (últimos 5 minutos)
+                DateTime ultimaActividad = Convert.ToDateTime(row["UltimaActividad"]);
+                estaOnline = (DateTime.Now - ultimaActividad).TotalMinutes <= 5;
+            }
             
             string avatarMascota;
             if (!string.IsNullOrEmpty(mascotaFoto) && mascotaFoto != "null")
@@ -2070,7 +2375,8 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                 lat = row["Lat"] != DBNull.Value ? Convert.ToDouble(row["Lat"]) : (double?)null,
                 lng = row["Lng"] != DBNull.Value ? Convert.ToDouble(row["Lng"]) : (double?)null,
                 mascotaNombre = row["MascotaNombre"]?.ToString() ?? "Sin mascota",
-                mascotaAvatar = avatarMascota
+                mascotaAvatar = avatarMascota,
+                estaOnline = estaOnline
             });
         }
 
@@ -2225,13 +2531,17 @@ public IActionResult BuscarUsuarios(string query)
         var usuarios = new List<object>();
         foreach (System.Data.DataRow row in dt.Rows)
         {
+            bool estaOnline = row.Table.Columns.Contains("EstaOnline") && 
+                             Convert.ToInt32(row["EstaOnline"]) == 1;
+            
             usuarios.Add(new
             {
                 id = Convert.ToInt32(row["Id_User"]),
                 nombre = row["NombreCompleto"]?.ToString() ?? "Usuario",
                 email = row["Email"]?.ToString() ?? "",
                 fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png",
-                mascotaNombre = row["MascotaNombre"]?.ToString() ?? "Sin mascota"
+                mascotaNombre = row["MascotaNombre"]?.ToString() ?? "Sin mascota",
+                estaOnline = estaOnline
             });
         }
 
@@ -2644,5 +2954,402 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
         public int AmigoId { get; set; }
         public string Apodo { get; set; }
     }
-}
-}
+
+    // 🐾 Request classes para compartir mascotas
+    public class EnviarSolicitudCompartirRequest
+    {
+        public int MascotaId { get; set; }
+        public string Email { get; set; }
+        public string Mensaje { get; set; }
+    }
+
+    public class ProcesarSolicitudRequest
+    {
+        public int IdSolicitud { get; set; }
+    }
+
+    // 💬 Mensajería entre amigos
+    [HttpGet]
+    public IActionResult Mensajes(int? amigoId)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return RedirectToAction("Login", "Auth");
+
+        var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+        ViewBag.Tema = tema;
+        ViewBag.AmigoId = amigoId;
+
+        if (amigoId.HasValue)
+        {
+            // Obtener información del amigo
+            string qAmigo = @"
+                SELECT U.Id_User, U.Nombre + ' ' + U.Apellido as NombreCompleto, P.FotoPerfil
+                FROM [User] U
+                LEFT JOIN Perfil P ON P.Id_Usuario = U.Id_User
+                WHERE U.Id_User = @AmigoId";
+
+            var dtAmigo = BD.ExecuteQuery(qAmigo, new Dictionary<string, object> { { "@AmigoId", amigoId.Value } });
+            if (dtAmigo.Rows.Count > 0)
+            {
+                ViewBag.AmigoNombre = dtAmigo.Rows[0]["NombreCompleto"]?.ToString() ?? "Amigo";
+                ViewBag.AmigoFoto = dtAmigo.Rows[0]["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png";
+            }
+        }
+
+        return View();
+    }
+
+    [HttpPost]
+    public IActionResult ObtenerOCrearChat([FromBody] int amigoId)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Verificar que el amigo existe en el círculo de confianza o invitación aceptada
+            string qVerificar = @"
+                SELECT COUNT(*) FROM (
+                    SELECT Id_Amigo as Id_User FROM CirculoConfianza WHERE Id_User = @UserId AND Id_Amigo = @AmigoId
+                    UNION
+                    SELECT Id_Receptor as Id_User FROM Invitacion 
+                    WHERE Id_Emisor = @UserId AND Id_Receptor = @AmigoId AND Rol = 'Amigo' AND Estado = 'Aceptada'
+                    UNION
+                    SELECT Id_Emisor as Id_User FROM Invitacion 
+                    WHERE Id_Receptor = @UserId AND Id_Emisor = @AmigoId AND Rol = 'Amigo' AND Estado = 'Aceptada'
+                ) AS Amigos";
+
+            int existe = Convert.ToInt32(BD.ExecuteScalar(qVerificar, new Dictionary<string, object>
+            {
+                { "@UserId", userId.Value },
+                { "@AmigoId", amigoId }
+            }));
+
+            if (existe == 0)
+                return Json(new { success = false, message = "No podés chatear con este usuario" });
+
+            // Buscar chat existente entre estos dos usuarios
+            string qChatExistente = @"
+                SELECT TOP 1 c.Id_Chat
+                FROM Chat c
+                INNER JOIN ParticipanteChat pc1 ON c.Id_Chat = pc1.Id_Chat AND pc1.Id_User = @UserId
+                INNER JOIN ParticipanteChat pc2 ON c.Id_Chat = pc2.Id_Chat AND pc2.Id_User = @AmigoId
+                WHERE c.EsGrupo = 0";
+
+            var dtChat = BD.ExecuteQuery(qChatExistente, new Dictionary<string, object>
+            {
+                { "@UserId", userId.Value },
+                { "@AmigoId", amigoId }
+            });
+
+            int chatId;
+            if (dtChat.Rows.Count > 0)
+            {
+                chatId = Convert.ToInt32(dtChat.Rows[0]["Id_Chat"]);
+            }
+            else
+            {
+                // Crear nuevo chat individual
+                string qCrearChat = @"
+                    INSERT INTO Chat (Nombre, EsGrupo, FechaCreacion)
+                    VALUES (NULL, 0, GETDATE());
+                    SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                chatId = Convert.ToInt32(BD.ExecuteScalar(qCrearChat, new Dictionary<string, object>()));
+
+                // Agregar participantes
+                BD.ExecuteNonQuery(@"
+                    INSERT INTO ParticipanteChat (Id_Chat, Id_User, Administrador, FechaIngreso)
+                    VALUES (@ChatId, @UserId, 0, GETDATE())",
+                    new Dictionary<string, object> { { "@ChatId", chatId }, { "@UserId", userId.Value } });
+
+                BD.ExecuteNonQuery(@"
+                    INSERT INTO ParticipanteChat (Id_Chat, Id_User, Administrador, FechaIngreso)
+                    VALUES (@ChatId, @AmigoId, 0, GETDATE())",
+                    new Dictionary<string, object> { { "@ChatId", chatId }, { "@AmigoId", amigoId } });
+            }
+
+            return Json(new { success = true, chatId = chatId });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en ObtenerOCrearChat: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public IActionResult ObtenerMensajes(int chatId)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Verificar que el usuario es participante del chat
+            string qVerificar = @"
+                SELECT COUNT(*) FROM ParticipanteChat 
+                WHERE Id_Chat = @ChatId AND Id_User = @UserId";
+            int esParticipante = Convert.ToInt32(BD.ExecuteScalar(qVerificar, new Dictionary<string, object>
+            {
+                { "@ChatId", chatId },
+                { "@UserId", userId.Value }
+            }));
+
+            if (esParticipante == 0)
+                return Json(new { success = false, message = "No tenés acceso a este chat" });
+
+            // Obtener mensajes
+            string qMensajes = @"
+                SELECT m.Id_Mensaje, m.Id_User, m.Contenido, m.Fecha, m.Leido,
+                       U.Nombre + ' ' + U.Apellido as NombreUsuario,
+                       P.FotoPerfil
+                FROM Mensaje m
+                INNER JOIN [User] U ON m.Id_User = U.Id_User
+                LEFT JOIN Perfil P ON P.Id_Usuario = U.Id_User
+                WHERE m.Id_Chat = @ChatId
+                ORDER BY m.Fecha ASC";
+
+            var dtMensajes = BD.ExecuteQuery(qMensajes, new Dictionary<string, object> { { "@ChatId", chatId } });
+
+            var mensajes = new List<object>();
+            foreach (DataRow row in dtMensajes.Rows)
+            {
+                mensajes.Add(new
+                {
+                    id = Convert.ToInt32(row["Id_Mensaje"]),
+                    userId = Convert.ToInt32(row["Id_User"]),
+                    esMio = Convert.ToInt32(row["Id_User"]) == userId.Value,
+                    contenido = row["Contenido"]?.ToString() ?? "",
+                    fecha = Convert.ToDateTime(row["Fecha"]).ToString("yyyy-MM-ddTHH:mm:ss"),
+                    leido = Convert.ToBoolean(row["Leido"]),
+                    nombreUsuario = row["NombreUsuario"]?.ToString() ?? "",
+                    fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png"
+                });
+            }
+
+            // Marcar mensajes como leídos
+            BD.ExecuteNonQuery(@"
+                UPDATE Mensaje SET Leido = 1 
+                WHERE Id_Chat = @ChatId AND Id_User != @UserId AND Leido = 0",
+                new Dictionary<string, object> { { "@ChatId", chatId }, { "@UserId", userId.Value } });
+
+            return Json(new { success = true, mensajes = mensajes });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en ObtenerMensajes: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult EnviarMensaje([FromBody] EnviarMensajeRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Verificar que el usuario es participante del chat
+            string qVerificar = @"
+                SELECT COUNT(*) FROM ParticipanteChat 
+                WHERE Id_Chat = @ChatId AND Id_User = @UserId";
+            int esParticipante = Convert.ToInt32(BD.ExecuteScalar(qVerificar, new Dictionary<string, object>
+            {
+                { "@ChatId", request.ChatId },
+                { "@UserId", userId.Value }
+            }));
+
+            if (esParticipante == 0)
+                return Json(new { success = false, message = "No tenés acceso a este chat" });
+
+            // Insertar mensaje
+            string qInsertar = @"
+                INSERT INTO Mensaje (Id_Chat, Id_User, Contenido, Fecha, Leido)
+                VALUES (@ChatId, @UserId, @Contenido, GETDATE(), 0);
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+            int mensajeId = Convert.ToInt32(BD.ExecuteScalar(qInsertar, new Dictionary<string, object>
+            {
+                { "@ChatId", request.ChatId },
+                { "@UserId", userId.Value },
+                { "@Contenido", request.Contenido ?? "" }
+            }));
+
+            return Json(new { success = true, mensajeId = mensajeId });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en EnviarMensaje: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public IActionResult ObtenerChats()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Obtener chats del usuario con último mensaje
+            string qChats = @"
+                SELECT DISTINCT
+                    c.Id_Chat,
+                    c.Nombre,
+                    c.EsGrupo,
+                    c.FechaCreacion,
+                    (SELECT TOP 1 Contenido FROM Mensaje WHERE Id_Chat = c.Id_Chat ORDER BY Fecha DESC) as UltimoMensaje,
+                    (SELECT TOP 1 Fecha FROM Mensaje WHERE Id_Chat = c.Id_Chat ORDER BY Fecha DESC) as FechaUltimoMensaje,
+                    (SELECT COUNT(*) FROM Mensaje WHERE Id_Chat = c.Id_Chat AND Id_User != @UserId AND Leido = 0) as MensajesNoLeidos
+                FROM Chat c
+                INNER JOIN ParticipanteChat pc ON c.Id_Chat = pc.Id_Chat
+                WHERE pc.Id_User = @UserId
+                ORDER BY FechaUltimoMensaje DESC";
+
+            var dtChats = BD.ExecuteQuery(qChats, new Dictionary<string, object> { { "@UserId", userId.Value } });
+
+            var chats = new List<object>();
+            foreach (DataRow row in dtChats.Rows)
+            {
+                int chatId = Convert.ToInt32(row["Id_Chat"]);
+                
+                // Obtener el otro participante si es chat individual
+                string otroParticipante = "";
+                string fotoOtroParticipante = "/img/perfil/default.png";
+                if (!Convert.ToBoolean(row["EsGrupo"]))
+                {
+                    string qOtro = @"
+                        SELECT U.Id_User, U.Nombre + ' ' + U.Apellido as NombreCompleto, P.FotoPerfil
+                        FROM ParticipanteChat pc
+                        INNER JOIN [User] U ON pc.Id_User = U.Id_User
+                        LEFT JOIN Perfil P ON P.Id_Usuario = U.Id_User
+                        WHERE pc.Id_Chat = @ChatId AND pc.Id_User != @UserId";
+
+                    var dtOtro = BD.ExecuteQuery(qOtro, new Dictionary<string, object>
+                    {
+                        { "@ChatId", chatId },
+                        { "@UserId", userId.Value }
+                    });
+
+                    if (dtOtro.Rows.Count > 0)
+                    {
+                        otroParticipante = dtOtro.Rows[0]["NombreCompleto"]?.ToString() ?? "";
+                        fotoOtroParticipante = dtOtro.Rows[0]["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png";
+                    }
+                }
+
+                chats.Add(new
+                {
+                    id = chatId,
+                    nombre = row["Nombre"]?.ToString() ?? otroParticipante,
+                    esGrupo = Convert.ToBoolean(row["EsGrupo"]),
+                    ultimoMensaje = row["UltimoMensaje"]?.ToString() ?? "",
+                    fechaUltimoMensaje = row["FechaUltimoMensaje"] != DBNull.Value 
+                        ? Convert.ToDateTime(row["FechaUltimoMensaje"]).ToString("yyyy-MM-ddTHH:mm:ss")
+                        : "",
+                    mensajesNoLeidos = Convert.ToInt32(row["MensajesNoLeidos"]),
+                    foto = fotoOtroParticipante
+                });
+            }
+
+            return Json(new { success = true, chats = chats });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en ObtenerChats: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    public class EnviarMensajeRequest
+    {
+        public int ChatId { get; set; }
+        public string Contenido { get; set; }
+    }
+
+    // 🟢 Heartbeat para mantener el estado online
+    [HttpPost]
+    public IActionResult Heartbeat()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            AsegurarColumnasEstadoOnline();
+            string qUpdate = @"
+                UPDATE [User] 
+                SET UltimaActividad = GETDATE(), EstadoOnline = 1
+                WHERE Id_User = @UserId";
+            BD.ExecuteNonQuery(qUpdate, new Dictionary<string, object> { { "@UserId", userId.Value } });
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en Heartbeat: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    // 🟢 Obtener estado online de usuarios
+    [HttpGet]
+    public IActionResult ObtenerEstadoOnline([FromQuery] string userIds)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            AsegurarColumnasEstadoOnline();
+            
+            if (string.IsNullOrWhiteSpace(userIds))
+                return Json(new { success = true, estados = new Dictionary<int, bool>() });
+
+            // Parsear IDs desde string separado por comas
+            var ids = userIds.Split(',').Select(id => int.Parse(id.Trim())).ToArray();
+            
+            if (ids.Length == 0)
+                return Json(new { success = true, estados = new Dictionary<int, bool>() });
+
+            // Crear lista de IDs para la query
+            string idsString = string.Join(",", ids);
+            
+            string q = $@"
+                SELECT 
+                    Id_User,
+                    CASE 
+                        WHEN EstadoOnline = 1 AND UltimaActividad >= DATEADD(MINUTE, -5, GETDATE()) THEN 1
+                        ELSE 0
+                    END as EstaOnline
+                FROM [User]
+                WHERE Id_User IN ({idsString})";
+
+            var dt = BD.ExecuteQuery(q, new Dictionary<string, object>());
+            var estados = new Dictionary<int, bool>();
+
+            foreach (System.Data.DataRow row in dt.Rows)
+            {
+                int id = Convert.ToInt32(row["Id_User"]);
+                bool online = Convert.ToInt32(row["EstaOnline"]) == 1;
+                estados[id] = online;
+            }
+
+            return Json(new { success = true, estados = estados });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en ObtenerEstadoOnline: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+}}      

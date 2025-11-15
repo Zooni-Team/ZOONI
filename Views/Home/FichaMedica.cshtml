@@ -26,6 +26,9 @@
     string edadFormateada =
         $"{(años > 0 ? $"{años} año{(años > 1 ? "s" : "")}" : "")}" +
         $"{(meses > 0 ? $" y {meses} mes{(meses > 1 ? "es" : "")}" : "")}";
+    
+    // 🎂 Fecha de nacimiento
+    var fechaNacimientoStr = ViewBag.MascotaFechaNacimiento?.ToString() ?? "";
 }
 
 <!DOCTYPE html>
@@ -248,6 +251,27 @@ body.tema-oscuro .dato {
     color: inherit;
 }
 
+.editable-dato {
+    display: flex;
+    flex-direction: column;
+}
+
+.btn-editar-mini {
+    background: transparent;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    opacity: 0.6;
+}
+.btn-editar-mini:hover {
+    opacity: 1;
+    background: rgba(57, 183, 124, 0.1);
+    transform: scale(1.1);
+}
+
 
 .historial {
     width: 90%; max-width: 430px;
@@ -401,7 +425,7 @@ body.tema-oscuro .consejo {
 <div class="menu-lateral" id="menuLateral">
     <div class="cerrar-menu" id="cerrarMenu">✖</div>
     <a href="/Home/Index">🏠 Inicio</a>
-    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Home/Comunidad">👥 Comunidad</a>
     <a href="/Marketplace">🛒 Marketplace</a>
     <a href="/home/FichaMedica">💉 Ficha médica</a>
     <a href="/home/calendario">📅 Calendario</a>
@@ -417,13 +441,37 @@ body.tema-oscuro .consejo {
 <div class="overlay" id="overlay"></div>
 
 <main>
+    @Html.AntiForgeryToken()
     <div class="ficha-card">
         <h2>@mascotaNombre</h2>
         <img src="@rutaMascota" alt="Mascota" class="mascota-img" />
         <div class="dato">🐾 <span>Especie:</span> @mascotaEspecie</div>
         <div class="dato">📜 <span>Raza:</span> @mascotaRaza</div>
-<div class="dato">⚖️ <span>Peso:</span> @pesoFormateado</div>
-        <div class="dato">🎂 <span>Edad:</span> @edadFormateada</div>
+        <div class="dato editable-dato">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span style="flex: 1;">⚖️ <span>Peso:</span> <span id="pesoDisplay">@pesoFormateado</span></span>
+                <button class="btn-editar-mini" onclick="editarPeso()" title="Editar peso">✏️</button>
+            </div>
+            <div id="pesoEditForm" style="display: none; margin-top: 10px;">
+                <input type="text" id="pesoInput" value="@(pesoDisplay?.Replace(" kg", "") ?? pesoDecimal.ToString("F2", System.Globalization.CultureInfo.InvariantCulture))" 
+                       placeholder="Ej: 5.5" style="padding: 8px; border-radius: 8px; border: 2px solid var(--verde); width: 60%; margin-right: 5px;" />
+                <button onclick="guardarPeso()" style="padding: 8px 15px; background: var(--verde); color: white; border: none; border-radius: 8px; cursor: pointer;">Guardar</button>
+                <button onclick="cancelarEditarPeso()" style="padding: 8px 15px; background: #ccc; color: var(--marron); border: none; border-radius: 8px; cursor: pointer; margin-left: 5px;">Cancelar</button>
+            </div>
+        </div>
+        <div class="dato editable-dato">
+            <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                <span style="flex: 1;">🎂 <span>Edad:</span> <span id="edadDisplay">@edadFormateada</span></span>
+                <button class="btn-editar-mini" onclick="editarFechaNacimiento()" title="Editar fecha de nacimiento">✏️</button>
+            </div>
+            <div id="fechaEditForm" style="display: none; margin-top: 10px;">
+                <input type="date" id="fechaNacimientoInput" value="@fechaNacimientoStr" 
+                       style="padding: 8px; border-radius: 8px; border: 2px solid var(--verde); width: 60%; margin-right: 5px;" />
+                <button onclick="guardarFechaNacimiento()" style="padding: 8px 15px; background: var(--verde); color: white; border: none; border-radius: 8px; cursor: pointer;">Guardar</button>
+                <button onclick="cancelarEditarFecha()" style="padding: 8px 15px; background: #ccc; color: var(--marron); border: none; border-radius: 8px; cursor: pointer; margin-left: 5px;">Cancelar</button>
+                <small style="display: block; margin-top: 5px; opacity: 0.7; font-size: 0.85rem;">Si ingresás la fecha de nacimiento, la edad se calculará automáticamente día tras día.</small>
+            </div>
+        </div>
     </div>
 <div class="bloque-pdf">
     <button id="btnDescargarPDF">📄 Descargar PDF</button>
@@ -452,10 +500,85 @@ const raza = "@mascotaRaza".toLowerCase();
 const edad = parseInt("@mascotaEdadMeses");
 const peso = parseFloat("@mascotaPeso.ToString(System.Globalization.CultureInfo.InvariantCulture)");
 
+// Funciones para editar peso
+function editarPeso() {
+    document.getElementById("pesoEditForm").style.display = "block";
+    document.getElementById("pesoInput").focus();
+}
+
+function cancelarEditarPeso() {
+    document.getElementById("pesoEditForm").style.display = "none";
+}
+
+function guardarPeso() {
+    const pesoInput = document.getElementById("pesoInput").value;
+    if (!pesoInput || isNaN(pesoInput.replace(",", "."))) {
+        alert("Por favor, ingresá un peso válido.");
+        return;
+    }
+
+    const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || "";
+    const formData = new FormData();
+    formData.append("peso", pesoInput);
+    formData.append("__RequestVerificationToken", token);
+
+    fetch("/Home/ActualizarPesoMascota", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            location.reload();
+        } else {
+            alert("Error al actualizar el peso. Por favor, intentá de nuevo.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Error al actualizar el peso. Por favor, intentá de nuevo.");
+    });
+}
+
+// Funciones para editar fecha de nacimiento
+function editarFechaNacimiento() {
+    document.getElementById("fechaEditForm").style.display = "block";
+    document.getElementById("fechaNacimientoInput").focus();
+}
+
+function cancelarEditarFecha() {
+    document.getElementById("fechaEditForm").style.display = "none";
+}
+
+function guardarFechaNacimiento() {
+    const fechaInput = document.getElementById("fechaNacimientoInput").value;
+    
+    const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value || "";
+    const formData = new FormData();
+    formData.append("fechaNacimiento", fechaInput);
+    formData.append("__RequestVerificationToken", token);
+
+    fetch("/Home/ActualizarFechaNacimientoMascota", {
+        method: "POST",
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            location.reload();
+        } else {
+            alert("Error al actualizar la fecha de nacimiento. Por favor, intentá de nuevo.");
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        alert("Error al actualizar la fecha de nacimiento. Por favor, intentá de nuevo.");
+    });
+}
+
 fetch("/data/consejos.json")
 .then(r => r.json())
 .then(data => {
     const div = document.getElementById("listaConsejos");
+    if (!div) return;
     const filtrados = data.filter(c =>
         (c.especie === especie || c.especie === "general") &&
         (c.raza === raza || c.raza === "general") &&
@@ -473,6 +596,81 @@ fetch("/data/consejos.json")
         });
     }
 });
+
+// 🐾 Polling para actualizaciones en tiempo real de mascotas compartidas
+let ultimaActualizacion = new Date().toISOString();
+let intervaloActualizacion = null;
+
+function iniciarPolling() {
+    // Obtener el ID de la mascota actual desde ViewBag
+    const mascotaId = @(ViewBag.MascotaId ?? -1);
+    if (mascotaId <= 0) return;
+    
+    // Polling cada 5 segundos para verificar actualizaciones
+    intervaloActualizacion = setInterval(() => {
+        fetch(`/Home/VerificarActualizacionMascota?idMascota=${mascotaId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success && data.mascota) {
+                    const mascota = data.mascota;
+                    
+                    // Actualizar peso si cambió
+                    if (mascota.pesoDisplay) {
+                        const pesoDisplayEl = document.getElementById("pesoDisplay");
+                        if (pesoDisplayEl) {
+                            pesoDisplayEl.textContent = mascota.pesoDisplay;
+                        }
+                    }
+                    
+                    // Actualizar edad si cambió
+                    if (mascota.edad) {
+                        const edadMeses = parseInt(mascota.edad);
+                        const años = Math.floor(edadMeses / 12);
+                        const meses = edadMeses % 12;
+                        let edadTexto = "";
+                        if (años > 0) {
+                            edadTexto += años + " año" + (años > 1 ? "s" : "");
+                        }
+                        if (meses > 0) {
+                            if (años > 0) edadTexto += " y ";
+                            edadTexto += meses + " mes" + (meses > 1 ? "es" : "");
+                        }
+                        if (edadTexto === "") edadTexto = "0 meses";
+                        
+                        const edadDisplayEl = document.getElementById("edadDisplay");
+                        if (edadDisplayEl) {
+                            edadDisplayEl.textContent = edadTexto;
+                        }
+                    }
+                    
+                    // Actualizar fecha de nacimiento si existe
+                    if (mascota.fechaNacimiento) {
+                        const fechaInput = document.getElementById("fechaNacimientoInput");
+                        if (fechaInput) {
+                            fechaInput.value = mascota.fechaNacimiento;
+                        }
+                    }
+                }
+            })
+            .catch(error => {
+                console.error("Error en polling:", error);
+            });
+    }, 5000); // Cada 5 segundos
+}
+
+// Iniciar polling cuando se carga la página
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', iniciarPolling);
+} else {
+    iniciarPolling();
+}
+
+// Detener polling cuando se sale de la página
+window.addEventListener('beforeunload', () => {
+    if (intervaloActualizacion) {
+        clearInterval(intervaloActualizacion);
+    }
+});
 </script>
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -485,6 +683,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 </script>
 
+<script src="/js/heartbeat.js"></script>
 </body>
 </html>
 <!-- © 2025 Zooni Team

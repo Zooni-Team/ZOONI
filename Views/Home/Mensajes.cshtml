@@ -1,0 +1,565 @@
+@{
+    ViewData["Title"] = "Mensajes - Zooni";
+    Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
+    var amigoId = ViewBag.AmigoId as int?;
+    var amigoNombre = ViewBag.AmigoNombre as string ?? "Amigo";
+    var amigoFoto = ViewBag.AmigoFoto as string ?? "/img/perfil/default.png";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+    --verde: #39b77c;
+    --amarillo: #FFD85A;
+    --marron: #3c2a1b;
+    --fondo-claro: #f9f9f8;
+    --fondo-oscuro: #121212;
+    --texto-claro: #3c2a1b;
+    --texto-oscuro: #ffffff;
+    --card-claro: rgba(255,255,255,0.95);
+    --card-oscuro: rgba(30,30,30,0.95);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+
+body.tema-claro {
+    background: var(--fondo-claro);
+    color: var(--texto-claro);
+}
+
+body.tema-oscuro {
+    background: var(--fondo-oscuro);
+    color: var(--texto-oscuro);
+}
+
+header {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.menu-icon {
+    width: 38px;
+    height: 38px;
+    cursor: pointer;
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0);
+}
+body.tema-oscuro .menu-icon {
+    filter: brightness(0) invert(1);
+}
+.menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 240px;
+    height: 100%;
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 14px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease, background .4s ease, color .4s ease;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
+    z-index: 9999;
+}
+body.tema-claro .menu-lateral {
+    background: rgba(255,255,255,0.96);
+}
+body.tema-oscuro .menu-lateral {
+    background: rgba(30,30,30,0.96);
+    box-shadow: 4px 0 14px rgba(0,0,0,0.5);
+}
+.menu-lateral.abierto { transform: translateX(0); }
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
+    transition: all .25s ease;
+    color: inherit;
+}
+body.tema-claro .menu-lateral a {
+    color: var(--marron);
+}
+body.tema-oscuro .menu-lateral a {
+    color: #ffffff;
+}
+body.tema-claro .menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+body.tema-oscuro .menu-lateral a:hover {
+    background: var(--verde);
+    color: #ffffff;
+}
+.cerrar-menu {
+    align-self: flex-end;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-bottom: 1.2rem;
+    transition: transform 0.2s ease, color .3s ease;
+    color: inherit;
+}
+body.tema-claro .cerrar-menu {
+    color: var(--marron);
+}
+body.tema-oscuro .cerrar-menu {
+    color: #ffffff;
+}
+.cerrar-menu:hover {
+    transform: scale(1.2);
+}
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 8;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+main {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding-top: 70px;
+    padding-bottom: 80px;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+    height: 100%;
+}
+
+.chat-header {
+    padding: 15px 20px;
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: var(--card-claro);
+}
+body.tema-oscuro .chat-header {
+    background: var(--card-oscuro);
+    border-bottom-color: rgba(255,255,255,0.1);
+}
+
+.chat-header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.chat-header h2 {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.mensaje-item {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+}
+
+.mensaje-item.mio {
+    flex-direction: row-reverse;
+}
+
+.mensaje-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.mensaje-contenido {
+    max-width: 70%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    word-wrap: break-word;
+}
+
+.mensaje-item.mio .mensaje-contenido {
+    background: var(--verde);
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+
+.mensaje-item:not(.mio) .mensaje-contenido {
+    background: var(--card-claro);
+    color: var(--texto-claro);
+    border-bottom-left-radius: 4px;
+}
+body.tema-oscuro .mensaje-item:not(.mio) .mensaje-contenido {
+    background: var(--card-oscuro);
+    color: var(--texto-oscuro);
+}
+
+.mensaje-fecha {
+    font-size: 0.75rem;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+.chat-input-container {
+    padding: 15px 20px;
+    border-top: 2px solid rgba(0,0,0,0.1);
+    background: var(--card-claro);
+    display: flex;
+    gap: 10px;
+}
+body.tema-oscuro .chat-input-container {
+    background: var(--card-oscuro);
+    border-top-color: rgba(255,255,255,0.1);
+}
+
+.chat-input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 24px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    background: var(--fondo-claro);
+    color: var(--texto-claro);
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+body.tema-oscuro .chat-input {
+    background: var(--fondo-oscuro);
+    color: var(--texto-oscuro);
+    border-color: rgba(255,255,255,0.1);
+}
+
+.chat-input:focus {
+    border-color: var(--verde);
+}
+
+.btn-enviar {
+    padding: 12px 24px;
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 24px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-enviar:hover {
+    transform: scale(1.05);
+}
+
+.btn-enviar:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.sin-chat {
+    text-align: center;
+    padding: 40px 20px;
+    opacity: 0.7;
+}
+
+@{
+    var mediaQuery = "@media";
+}
+@Html.Raw(mediaQuery) (max-width: 768px) {
+    .mensaje-contenido {
+        max-width: 85%;
+    }
+}
+</style>
+</head>
+
+<body class="tema-@tema">
+<header>
+    <button onclick="window.history.back()" style="background: none; border: none; cursor: pointer; margin-right: 10px; padding: 5px;">
+        <span style="font-size: 1.5rem;">←</span>
+    </button>
+    <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Home/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/Home/FichaMedica">💉 Ficha médica</a>
+    <a href="/Home/Calendario">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 ChatBot</a>
+    <a href="/Home/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Home/Configuracion">⚙️ Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<main>
+    <div class="chat-container">
+        @if (amigoId.HasValue)
+        {
+            <div class="chat-header">
+                <img src="@amigoFoto" alt="@amigoNombre" onerror="this.src='/img/perfil/default.png'" />
+                <h2>@amigoNombre</h2>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <!-- Mensajes se cargarán aquí -->
+            </div>
+            <div class="chat-input-container">
+                <input type="text" class="chat-input" id="mensajeInput" placeholder="Escribí un mensaje..." />
+                <button class="btn-enviar" id="btnEnviar">Enviar</button>
+            </div>
+        }
+        else
+        {
+            <div class="sin-chat">
+                <h2>💬 Mensajes</h2>
+                <p>Seleccioná un amigo desde la página de Comunidad para comenzar a chatear.</p>
+                <a href="/Home/Comunidad" style="color: var(--verde); text-decoration: underline;">Ir a Comunidad</a>
+            </div>
+        }
+    </div>
+</main>
+
+<script>
+let chatId = null;
+let intervaloPolling = null;
+
+// Esperar a que el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    // Menu lateral
+    const abrirMenu = document.getElementById('abrirMenu');
+    const cerrarMenu = document.getElementById('cerrarMenu');
+    const menuLateral = document.getElementById('menuLateral');
+    const overlay = document.getElementById('overlay');
+    
+    if (abrirMenu) {
+        abrirMenu.addEventListener('click', function() {
+            if (menuLateral) menuLateral.classList.add('abierto');
+            if (overlay) overlay.classList.add('activo');
+        });
+    }
+    
+    if (cerrarMenu) {
+        cerrarMenu.addEventListener('click', function() {
+            if (menuLateral) menuLateral.classList.remove('abierto');
+            if (overlay) overlay.classList.remove('activo');
+        });
+    }
+    
+    if (overlay) {
+        overlay.addEventListener('click', function() {
+            if (menuLateral) menuLateral.classList.remove('abierto');
+            if (overlay) overlay.classList.remove('activo');
+        });
+    }
+
+    // Inicializar chat
+    @if (amigoId.HasValue)
+    {
+        var amigoIdValue = amigoId.Value;
+        <text>
+        const amigoIdValue = @amigoIdValue;
+        
+        // Funciones del chat
+        function cargarMensajes() {
+            if (!chatId) return;
+            
+            fetch('/Home/ObtenerMensajes?chatId=' + chatId)
+                .then(function(response) { return response.json(); })
+                .then(function(data) {
+                    if (data.success) {
+                        mostrarMensajes(data.mensajes);
+                    }
+                })
+                .catch(function(err) {
+                    console.error('Error al cargar mensajes:', err);
+                });
+        }
+        
+        function mostrarMensajes(mensajes) {
+            const container = document.getElementById('chatMessages');
+            if (!container) return;
+            
+            container.innerHTML = mensajes.map(function(m) {
+                return '<div class="mensaje-item ' + (m.esMio ? 'mio' : '') + '">' +
+                    '<img src="' + (m.fotoPerfil || '/img/perfil/default.png') + '" alt="' + (m.nombreUsuario || 'Usuario') + '" class="mensaje-avatar" onerror="this.src=\'/img/perfil/default.png\'" />' +
+                    '<div class="mensaje-contenido">' +
+                    '<div>' + (m.contenido || '') + '</div>' +
+                    '<div class="mensaje-fecha">' + formatearFecha(m.fecha) + '</div>' +
+                    '</div>' +
+                    '</div>';
+            }).join('');
+            
+            // Scroll al final
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        function formatearFecha(fechaStr) {
+            const fecha = new Date(fechaStr);
+            const ahora = new Date();
+            const diff = ahora - fecha;
+            const minutos = Math.floor(diff / 60000);
+            
+            if (minutos &lt; 1) return 'Ahora';
+            if (minutos &lt; 60) return 'Hace ' + minutos + ' min';
+            if (minutos &lt; 1440) return 'Hace ' + Math.floor(minutos / 60) + ' h';
+            return fecha.toLocaleDateString('es-AR');
+        }
+        
+        function iniciarPolling() {
+            if (intervaloPolling) {
+                clearInterval(intervaloPolling);
+            }
+            intervaloPolling = setInterval(function() {
+                cargarMensajes();
+            }, 3000);
+        }
+        
+        function enviarMensaje() {
+            const mensajeInput = document.getElementById('mensajeInput');
+            const btnEnviar = document.getElementById('btnEnviar');
+            
+            if (!mensajeInput || !btnEnviar) return;
+            
+            const contenido = mensajeInput.value.trim();
+            if (!contenido || !chatId) return;
+            
+            btnEnviar.disabled = true;
+            
+            fetch('/Home/EnviarMensaje', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chatId: chatId,
+                    contenido: contenido
+                })
+            })
+            .then(function(response) { return response.json(); })
+            .then(function(data) {
+                if (data.success) {
+                    mensajeInput.value = '';
+                    cargarMensajes();
+                } else {
+                    alert('Error al enviar mensaje: ' + (data.message || 'Error desconocido'));
+                }
+                btnEnviar.disabled = false;
+            })
+            .catch(function(err) {
+                console.error('Error:', err);
+                alert('Error al enviar mensaje');
+                btnEnviar.disabled = false;
+            });
+        }
+        
+        // Obtener o crear chat
+        fetch('/Home/ObtenerOCrearChat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(amigoIdValue)
+        })
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+            if (data.success) {
+                chatId = data.chatId;
+                cargarMensajes();
+                iniciarPolling();
+            } else {
+                const chatMessages = document.getElementById('chatMessages');
+                if (chatMessages) {
+                    chatMessages.innerHTML = '<div class="sin-chat"><p>Error al inicializar chat: ' + (data.message || 'Error desconocido') + '</p></div>';
+                }
+            }
+        })
+        .catch(function(err) {
+            console.error('Error:', err);
+            const chatMessages = document.getElementById('chatMessages');
+            if (chatMessages) {
+                chatMessages.innerHTML = '<div class="sin-chat"><p>Error al inicializar chat</p></div>';
+            }
+        });
+        
+        // Configurar botones de envío
+        setTimeout(function() {
+            const mensajeInput = document.getElementById('mensajeInput');
+            const btnEnviar = document.getElementById('btnEnviar');
+            
+            if (btnEnviar) {
+                btnEnviar.addEventListener('click', enviarMensaje);
+            }
+            
+            if (mensajeInput) {
+                mensajeInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        enviarMensaje();
+                    }
+                });
+            }
+        }, 100);
+        
+        // Limpiar polling al salir
+        window.addEventListener('beforeunload', function() {
+            if (intervaloPolling) {
+                clearInterval(intervaloPolling);
+            }
+        });
+        </text>
+    }
+});
+</script>
+</body>
+</html>
+

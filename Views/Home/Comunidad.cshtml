@@ -160,6 +160,59 @@ body.tema-oscuro .cerrar-menu {
     border: none !important;
 }
 
+/* Estilos para controles de zoom de Leaflet */
+.leaflet-control-zoom {
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+.leaflet-control-zoom a {
+    width: 40px !important;
+    height: 40px !important;
+    line-height: 40px !important;
+    font-size: 22px !important;
+    font-weight: bold !important;
+    background: var(--card-claro) !important;
+    color: var(--texto-claro) !important;
+    border: 2px solid rgba(0,0,0,0.1) !important;
+    transition: all 0.3s ease !important;
+}
+
+body.tema-oscuro .leaflet-control-zoom a {
+    background: var(--card-oscuro) !important;
+    color: var(--texto-oscuro) !important;
+    border-color: rgba(255,255,255,0.1) !important;
+}
+
+.leaflet-control-zoom a:hover {
+    background: var(--verde) !important;
+    color: white !important;
+    transform: scale(1.05) !important;
+}
+
+.leaflet-control-zoom-in {
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+    border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+}
+
+body.tema-oscuro .leaflet-control-zoom-in {
+    border-bottom-color: rgba(255,255,255,0.1) !important;
+}
+
+.leaflet-control-zoom-out {
+    border-bottom-left-radius: 12px !important;
+    border-bottom-right-radius: 12px !important;
+}
+
+.leaflet-control-zoom a.leaflet-disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    background: rgba(0,0,0,0.1) !important;
+}
+
 .controles-mapa {
     position: fixed;
     top: 80px;
@@ -526,7 +579,7 @@ body.tema-oscuro .modal-content input {
 <div class="menu-lateral" id="menuLateral">
     <div class="cerrar-menu" id="cerrarMenu">✖</div>
     <a href="/Home/Index">🏠 Inicio</a>
-    <a href="/Comunidad">👥 Comunidad</a>
+    <a href="/Home/Comunidad">👥 Comunidad</a>
     <a href="/Marketplace">🛒 Marketplace</a>
     <a href="/Home/FichaMedica">💉 Ficha médica</a>
     <a href="/Home/Calendario">📅 Calendario</a>
@@ -629,8 +682,8 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initMap() {
-    // Inicializar mapa con Leaflet (OpenStreetMap) centrado en Buenos Aires
-    map = L.map('map').setView([-34.6037, -58.3816], 13);
+    // Inicializar mapa con Leaflet (OpenStreetMap) centrado en Buenos Aires con zoom más cercano
+    map = L.map('map').setView([-34.6037, -58.3816], 17);
     
     // Agregar capa de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -673,19 +726,19 @@ function obtenerMiUbicacion() {
                 lng: position.coords.longitude
             };
             
-            // Centrar mapa en mi ubicación
-            map.setView([miUbicacion.lat, miUbicacion.lng], 15);
+            // Centrar mapa en mi ubicación con zoom más cercano
+            map.setView([miUbicacion.lat, miUbicacion.lng], 17);
             
             // Crear o actualizar mi marcador
             if (miMarcador) {
                 miMarcador.setLatLng([miUbicacion.lat, miUbicacion.lng]);
             } else {
-                // Icono personalizado para mi ubicación
+                // Icono personalizado para mi ubicación (más grande)
                 const miIcono = L.divIcon({
                     className: 'mi-ubicacion-marker',
-                    html: '<div style="background: #39b77c; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"></div>',
-                    iconSize: [20, 20],
-                    iconAnchor: [10, 10]
+                    html: '<div style="background: #39b77c; width: 35px; height: 35px; border-radius: 50%; border: 4px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.4);"></div>',
+                    iconSize: [35, 35],
+                    iconAnchor: [17.5, 17.5]
                 });
                 
                 miMarcador = L.marker([miUbicacion.lat, miUbicacion.lng], {
@@ -727,7 +780,7 @@ function obtenerMiUbicacion() {
 
 function centrarEnMiUbicacion() {
     if (miUbicacion) {
-        map.setView([miUbicacion.lat, miUbicacion.lng], 15);
+        map.setView([miUbicacion.lat, miUbicacion.lng], 17);
     } else {
         obtenerMiUbicacion();
     }
@@ -781,16 +834,20 @@ function mostrarAmigos(amigos) {
         const nombreEscapado = (amigo.nombre || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
         return `
         <div class="amigo-item">
-            <img src="${amigo.fotoPerfil || '/img/perfil/default.png'}" alt="${nombreMostrar}" class="amigo-avatar" onclick="centrarEnAmigo(${amigo.lat}, ${amigo.lng})" onerror="this.src='/img/perfil/default.png'" />
+            <div style="position: relative; display: inline-block;">
+                <img src="${amigo.fotoPerfil || '/img/perfil/default.png'}" alt="${nombreMostrar}" class="amigo-avatar" onclick="centrarEnAmigo(${amigo.lat}, ${amigo.lng})" onerror="this.src='/img/perfil/default.png'" />
+                ${amigo.estaOnline ? '<span class="estado-online" style="position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #2ecc71; border: 2px solid white; border-radius: 50%;"></span>' : '<span class="estado-offline" style="position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #95a5a6; border: 2px solid white; border-radius: 50%;"></span>'}
+            </div>
             <div class="amigo-info" onclick="centrarEnAmigo(${amigo.lat}, ${amigo.lng})" style="flex: 1; cursor: pointer;">
-                <p class="amigo-nombre">${nombreMostrar}</p>
+                <p class="amigo-nombre">${nombreMostrar} ${amigo.estaOnline ? '<span style="color: #2ecc71; font-size: 0.7rem;">🟢</span>' : '<span style="color: #95a5a6; font-size: 0.7rem;">⚫</span>'}</p>
                 ${amigo.apodo ? `<p style="font-size: 0.75rem; opacity: 0.7; font-style: italic; margin: 0;">(${amigo.nombre})</p>` : ''}
                 <p class="amigo-mascota">🐾 ${amigo.mascotaNombre || 'Sin mascota'}</p>
             </div>
-            <div style="display: flex; gap: 5px;">
-                <button class="btn-eliminar-amigo" onclick="editarApodo(${amigo.id}, '${nombreEscapado}')" style="background: #3498db; font-size: 0.7rem; padding: 4px 6px;">✏️</button>
-                <button class="btn-eliminar-amigo" onclick="eliminarAmigo(${amigo.id}, '${nombreEscapado}')">🗑️</button>
-            </div>
+           <div style="display: flex; gap: 5px;">
+               <button class="btn-eliminar-amigo" onclick="abrirChat(${amigo.id})" style="background: #39b77c; font-size: 0.7rem; padding: 4px 6px;" title="Enviar mensaje">💬</button>
+               <button class="btn-eliminar-amigo" onclick="editarApodo(${amigo.id}, '${nombreEscapado}')" style="background: #3498db; font-size: 0.7rem; padding: 4px 6px;" title="Editar apodo">✏️</button>
+               <button class="btn-eliminar-amigo" onclick="eliminarAmigo(${amigo.id}, '${nombreEscapado}')" title="Eliminar amigo">🗑️</button>
+           </div>
         </div>
     `}).join('');
 }
@@ -976,11 +1033,47 @@ function actualizarMarcadoresAmigos(amigos) {
         const latBase = parseFloat(grupo[0].lat);
         const lngBase = parseFloat(grupo[0].lng);
         
+        // Verificar si están cerca de la ubicación del usuario
+        let separarDeUsuario = false;
+        if (miUbicacion) {
+            const distanciaUsuario = Math.sqrt(
+                Math.pow(latBase - miUbicacion.lat, 2) + 
+                Math.pow(lngBase - miUbicacion.lng, 2)
+            );
+            // Si están a menos de ~25 metros del usuario, separarlos
+            if (distanciaUsuario < 0.00025) {
+                separarDeUsuario = true;
+            }
+        }
+        
         grupo.forEach((amigo, index) => {
-            // Separar marcadores: 1-2 metros de diferencia (aproximadamente 0.00001-0.00002 grados)
-            const offset = index * 0.000015; // ~1.5 metros por marcador
-            const lat = latBase + offset;
-            const lng = lngBase + offset;
+            // Separar marcadores en patrón circular para que se vean bien
+            let lat, lng;
+            // Si hay más de 1 amigo en la misma ubicación o están cerca del usuario, usar patrón circular
+            if (grupo.length > 1 || separarDeUsuario) {
+                // Radio de separación más grande para que se vean bien separados
+                // ~25-30 metros si está cerca del usuario (para separarlo del círculo verde)
+                // ~20 metros entre amigos en la misma ubicación
+                const radio = separarDeUsuario ? 0.00025 : 0.0002; // ~25 metros del usuario, ~20 metros entre amigos
+                // Ángulo en radianes para distribuir en círculo
+                // Si está cerca del usuario, usar 4 posiciones fijas (norte, sur, este, oeste)
+                // Si hay múltiples amigos, distribuir en círculo
+                let angulo;
+                if (separarDeUsuario && grupo.length === 1) {
+                    // Separar del usuario en una de las 4 direcciones cardinales
+                    angulo = (index % 4) * (Math.PI / 2); // 0, 90, 180, 270 grados
+                } else {
+                    // Distribuir en círculo
+                    angulo = (index * 2 * Math.PI) / (grupo.length > 1 ? grupo.length : 4);
+                }
+                // Offset circular
+                lat = latBase + (radio * Math.cos(angulo));
+                lng = lngBase + (radio * Math.sin(angulo));
+            } else {
+                // Si solo hay uno y no está cerca del usuario, usar la ubicación original
+                lat = latBase;
+                lng = lngBase;
+            }
             
             const nombreMostrar = amigo.nombreMostrar || amigo.nombre || 'Usuario';
             const avatarUrl = amigo.mascotaAvatar || '/img/mascotas/default.png';
@@ -991,16 +1084,16 @@ function actualizarMarcadoresAmigos(amigos) {
                     <div style="position: relative; text-align: center;">
                         <img src="${avatarUrl}" 
                              alt="${amigo.mascotaNombre || 'Mascota'}" 
-                             style="width: 40px; height: 40px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); object-fit: cover; background: #fff;"
+                             style="width: 60px; height: 60px; border-radius: 50%; border: 4px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.4); object-fit: cover; background: #fff;"
                              onerror="this.onerror=null; this.src='/img/mascotas/default.png';" />
-                        <div style="position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%); white-space: nowrap; background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; max-width: 80px; overflow: hidden; text-overflow: ellipsis;">
+                        <div style="position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); white-space: nowrap; background: rgba(0,0,0,0.8); color: white; padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; max-width: 100px; overflow: hidden; text-overflow: ellipsis;">
                             ${nombreMostrar}
                         </div>
                     </div>
                 `,
-                iconSize: [60, 60],
-                iconAnchor: [30, 30],
-                popupAnchor: [0, -30]
+                iconSize: [80, 80],
+                iconAnchor: [40, 40],
+                popupAnchor: [0, -40]
             });
             
             const marker = L.marker([lat, lng], {
@@ -1014,7 +1107,7 @@ function actualizarMarcadoresAmigos(amigos) {
                 <div style="padding: 8px; text-align: center;">
                     <img src="${avatarUrl}" 
                          alt="${amigo.mascotaNombre || 'Mascota'}" 
-                         style="width: 50px; height: 50px; border-radius: 50%; border: 2px solid #39b77c; object-fit: cover; margin-bottom: 8px;"
+                         style="width: 70px; height: 70px; border-radius: 50%; border: 3px solid #39b77c; object-fit: cover; margin-bottom: 8px;"
                          onerror="this.onerror=null; this.src='/img/mascotas/default.png';" />
                     <h4 style="margin: 0 0 5px 0; font-size: 1rem; font-weight: 600;">${nombreMostrar}</h4>
                     ${amigo.apodo ? `<p style="margin: 0 0 5px 0; font-size: 0.75rem; color: #999; font-style: italic;">(${amigo.nombre})</p>` : ''}
@@ -1033,7 +1126,7 @@ function actualizarMarcadoresAmigos(amigos) {
 }
 
 function centrarEnAmigo(lat, lng) {
-    map.setView([lat, lng], 16);
+    map.setView([lat, lng], 18);
 }
 
 function mostrarModalAmigo() {
@@ -1182,6 +1275,11 @@ function rechazarSolicitud(invitacionId) {
     });
 }
 
+function abrirChat(amigoId) {
+    // Redirigir a la página de mensajes con el ID del amigo
+    window.location.href = `/Home/Mensajes?amigoId=${amigoId}`;
+}
+
 function cambiarEstadoUbicacion() {
     const select = document.getElementById('selectUbicacion');
     const estado = select.value;
@@ -1265,12 +1363,12 @@ function cargarPuntosInteres() {
                     const nombre = vet.nombre || vet.clinica || 'Veterinaria';
                     
                     if (lat && lng) {
-                        // Icono para veterinaria
+                        // Icono para veterinaria (más grande)
                         const iconoVet = L.divIcon({
                             className: 'punto-interes-marker',
-                            html: '<div style="background: #e74c3c; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 14px;">🏥</div>',
-                            iconSize: [24, 24],
-                            iconAnchor: [12, 12]
+                            html: '<div style="background: #e74c3c; width: 40px; height: 40px; border-radius: 50%; border: 4px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 22px;">🏥</div>',
+                            iconSize: [40, 40],
+                            iconAnchor: [20, 20]
                         });
                         
                         const marker = L.marker([parseFloat(lat), parseFloat(lng)], {

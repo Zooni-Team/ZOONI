@@ -1,0 +1,541 @@
+@using Zooni.Models
+@model Mascota
+@{
+    ViewData["Title"] = "Editar Mascota 🐾";
+    Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
+    var pesoDisplay = ViewBag.PesoDisplay as string ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+    --verde: #3ac37d;
+    --amarillo: #FFD85A;
+    --marron: #4B3B2B;
+    --fondo-claro: #f9f9f8;
+    --fondo-oscuro: #121212;
+    --texto-claro: #4B3B2B;
+    --texto-oscuro: #ffffff;
+    --card-claro: rgba(255,255,255,0.95);
+    --card-oscuro: rgba(30,30,30,0.95);
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    transition: background .4s ease, color .4s ease;
+}
+
+body.tema-claro {
+    background: var(--fondo-claro);
+    color: var(--texto-claro);
+}
+
+body.tema-oscuro {
+    background: var(--fondo-oscuro);
+    color: var(--texto-oscuro);
+}
+
+header {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    z-index: 10;
+}
+
+.menu-icon {
+    width: 34px;
+    height: 34px;
+    cursor: pointer;
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0);
+}
+body.tema-oscuro .menu-icon {
+    filter: brightness(0) invert(1);
+}
+.menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 250px;
+    height: 100%;
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 14px rgba(0,0,0,0.25);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease, background .4s ease, color .4s ease;
+    z-index: 999;
+}
+body.tema-claro .menu-lateral {
+    background: rgba(255,255,255,0.96);
+}
+body.tema-oscuro .menu-lateral {
+    background: rgba(30,30,30,0.96);
+    box-shadow: 4px 0 14px rgba(0, 0, 0, 0.5);
+}
+.menu-lateral.abierto { transform: translateX(0); }
+
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 10px;
+    transition: all .25s ease;
+    color: inherit;
+}
+body.tema-claro .menu-lateral a {
+    color: var(--marron);
+}
+body.tema-oscuro .menu-lateral a {
+    color: #ffffff;
+}
+body.tema-claro .menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+body.tema-oscuro .menu-lateral a:hover {
+    background: var(--verde);
+    color: #ffffff;
+}
+
+.cerrar-menu {
+    align-self: flex-end;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-bottom: 1.2rem;
+    transition: transform 0.2s ease;
+    color: inherit;
+}
+body.tema-claro .cerrar-menu {
+    color: var(--marron);
+}
+body.tema-oscuro .cerrar-menu {
+    color: #ffffff;
+}
+.cerrar-menu:hover {
+    transform: scale(1.2);
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 998;
+}
+.overlay.activo {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+main {
+    margin-top: 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    padding-bottom: 60px;
+}
+
+.form-card {
+    border-radius: 28px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    width: 90%;
+    max-width: 500px;
+    padding: 2rem 1.6rem;
+    text-align: center;
+    backdrop-filter: blur(12px);
+    transition: background .4s ease, color .4s ease;
+}
+body.tema-claro .form-card {
+    background: rgba(255,255,255,0.95);
+}
+body.tema-oscuro .form-card {
+    background: rgba(30,30,30,0.95);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+.form-card h2 {
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    font-size: 1.9rem;
+    color: inherit;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: inherit;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid rgba(0,0,0,0.1);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    transition: all .25s ease;
+    background: inherit;
+    color: inherit;
+}
+body.tema-claro .form-group input,
+body.tema-claro .form-group select {
+    background: white;
+    color: var(--texto-claro);
+}
+body.tema-oscuro .form-group input,
+body.tema-oscuro .form-group select {
+    background: rgba(50,50,50,0.8);
+    color: var(--texto-oscuro);
+    border-color: rgba(255,255,255,0.1);
+}
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--verde);
+}
+
+.slider-container {
+    margin-top: 0.5rem;
+}
+
+.slider-container input[type="range"] {
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    outline: none;
+    -webkit-appearance: none;
+}
+body.tema-claro .slider-container input[type="range"] {
+    background: #ddd;
+}
+body.tema-oscuro .slider-container input[type="range"] {
+    background: #444;
+}
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--verde);
+    cursor: pointer;
+}
+.slider-container input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--verde);
+    cursor: pointer;
+    border: none;
+}
+
+.valor-display {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    color: var(--verde);
+}
+
+.btn-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.btn {
+    flex: 1;
+    padding: 0.9rem 1.5rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .25s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+.btn-guardar {
+    background: var(--verde);
+    color: white;
+}
+.btn-guardar:hover {
+    background: #2ea065;
+    transform: translateY(-2px);
+}
+
+.btn-cancelar {
+    background: #ccc;
+    color: var(--marron);
+}
+body.tema-oscuro .btn-cancelar {
+    background: #444;
+    color: white;
+}
+.btn-cancelar:hover {
+    background: #bbb;
+    transform: translateY(-2px);
+}
+body.tema-oscuro .btn-cancelar:hover {
+    background: #555;
+}
+
+@@media (max-width: 480px) {
+    main {
+        margin-top: 70px;       
+        padding: 15px;
+    }
+    .form-card {
+        padding: 1.5rem 1.2rem;
+    }
+    .form-card h2 {
+        font-size: 1.5rem;
+    }
+    .btn-group {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body class="tema-@tema">
+<header>
+    <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+<div class="menu-lateral" id="menuLateral">
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Home/Comunidad">👥 Comunidad</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/Home/FichaMedica">💉 Ficha médica</a>
+    <a href="/Home/Calendario">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 ChatBot</a>
+    <a href="/Home/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Home/Configuracion">⚙️ Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<main>
+    <div class="form-card">
+        <h2>Editar Mascota 🐾</h2>
+        
+        <form asp-action="GuardarMascotaEditada" asp-controller="Home" method="post">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="Id_Mascota" />
+            
+            <div class="form-group">
+                <label for="Nombre">Nombre</label>
+                <input type="text" asp-for="Nombre" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Raza">Raza</label>
+                <input type="text" asp-for="Raza" />
+            </div>
+
+            <div class="form-group">
+                <label for="Sexo">Sexo</label>
+                <select asp-for="Sexo">
+                    <option value="">Seleccionar</option>
+                    <option value="Macho">Macho</option>
+                    <option value="Hembra">Hembra</option>
+                    <option value="No definido">No definido</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="Fecha_Nacimiento">🎂 Fecha de Nacimiento</label>
+                <input type="date" id="Fecha_Nacimiento" name="Fecha_Nacimiento" 
+                       value="@(Model.Fecha_Nacimiento?.ToString("yyyy-MM-dd") ?? "")" />
+                <small style="display: block; margin-top: 0.5rem; opacity: 0.7;">
+                    Si ingresás la fecha de nacimiento, la edad se calculará automáticamente día tras día.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="PesoDisplay">⚖️ Peso (kg)</label>
+                <input type="text" id="PesoDisplay" name="PesoDisplay" 
+                       value="@(string.IsNullOrEmpty(pesoDisplay) ? Model.Peso.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) : pesoDisplay.Replace(" kg", ""))" 
+                       placeholder="Ej: 5.5 o 5,5" />
+                <small style="display: block; margin-top: 0.5rem; opacity: 0.7;">
+                    También podés usar un slider más abajo
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="Peso">⚖️ Peso (slider)</label>
+                <div class="slider-container">
+                    <input type="range" id="Peso" name="Peso" min="0.1" max="80" step="0.1" 
+                           value="@Model.Peso.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)" />
+                    <div class="valor-display" id="pesoTexto">@Model.Peso.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) kg</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="Edad">🎂 Edad (meses)</label>
+                <small style="display: block; margin-bottom: 0.5rem; opacity: 0.7;">
+                    Si tenés fecha de nacimiento, la edad se calcula automáticamente. Podés editarla manualmente aquí si no tenés fecha de nacimiento.
+                </small>
+                <div class="slider-container">
+                    <input type="range" id="Edad" name="Edad" min="0" max="240" 
+                           value="@Model.Edad" />
+                    <div class="valor-display" id="edadTexto">
+                        @{
+                            int años = Model.Edad / 12;
+                            int meses = Model.Edad % 12;
+                            string edadText = $"{(años > 0 ? $"{años} año{(años > 1 ? "s" : "")}" : "")}";
+                            if (meses > 0)
+                            {
+                                edadText += $"{(años > 0 ? " y " : "")}{meses} mes{(meses > 1 ? "es" : "")}";
+                            }
+                            if (string.IsNullOrEmpty(edadText)) edadText = "0 meses";
+                        }
+                        @edadText
+                    </div>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button type="button" class="btn btn-cancelar" onclick="window.history.back()">Cancelar</button>
+                <button type="submit" class="btn btn-guardar">Guardar</button>
+            </div>
+        </form>
+    </div>
+</main>
+
+<script>
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+document.getElementById("abrirMenu").onclick = () => {
+    menu.classList.add("abierto");
+    overlay.classList.add("activo");
+};
+document.getElementById("cerrarMenu").onclick = cerrarMenu;
+overlay.onclick = cerrarMenu;
+
+function cerrarMenu() {
+    menu.classList.remove("abierto");
+    overlay.classList.remove("activo");
+}
+
+// Slider de peso
+const pesoSlider = document.getElementById("Peso");
+const pesoTexto = document.getElementById("pesoTexto");
+const pesoInput = document.getElementById("PesoDisplay");
+
+function formatearPeso(valor) {
+    valor = parseFloat(valor);
+    let decimales = valor <= 1 ? 2 : 1;
+    return valor.toFixed(decimales).replace(".", ",") + " kg";
+}
+
+pesoSlider.addEventListener("input", () => {
+    const valor = parseFloat(pesoSlider.value);
+    pesoTexto.textContent = formatearPeso(valor);
+    pesoInput.value = valor.toFixed(2);
+});
+
+pesoInput.addEventListener("input", () => {
+    const valor = pesoInput.value.replace(",", ".");
+    if (!isNaN(valor) && valor !== "") {
+        const numValor = parseFloat(valor);
+        if (numValor >= 0.1 && numValor <= 300) {
+            pesoSlider.value = numValor;
+            pesoTexto.textContent = formatearPeso(numValor);
+        }
+    }
+});
+
+// Slider de edad
+const edadSlider = document.getElementById("Edad");
+const edadTexto = document.getElementById("edadTexto");
+
+edadSlider.addEventListener("input", () => {
+    const m = parseInt(edadSlider.value);
+    const años = Math.floor(m / 12);
+    const meses = m % 12;
+    let texto = "";
+    if (años > 0) {
+        texto += años + " año" + (años > 1 ? "s" : "");
+    }
+    if (meses > 0) {
+        if (años > 0) texto += " y ";
+        texto += meses + " mes" + (meses > 1 ? "es" : "");
+    }
+    if (texto === "") texto = "0 meses";
+    edadTexto.textContent = texto;
+});
+
+// Actualizar edad automáticamente cuando cambia la fecha de nacimiento
+const fechaNacimiento = document.getElementById("Fecha_Nacimiento");
+fechaNacimiento.addEventListener("change", () => {
+    if (fechaNacimiento.value) {
+        const fecha = new Date(fechaNacimiento.value);
+        const hoy = new Date();
+        let años = hoy.getFullYear() - fecha.getFullYear();
+        let meses = hoy.getMonth() - fecha.getMonth();
+        
+        if (hoy.getDate() < fecha.getDate()) {
+            meses--;
+        }
+        
+        if (meses < 0) {
+            años--;
+            meses += 12;
+        }
+        
+        const edadMeses = (años * 12) + meses;
+        edadSlider.value = edadMeses;
+        
+        let texto = "";
+        if (años > 0) {
+            texto += años + " año" + (años > 1 ? "s" : "");
+        }
+        if (meses > 0) {
+            if (años > 0) texto += " y ";
+            texto += meses + " mes" + (meses > 1 ? "es" : "");
+        }
+        if (texto === "") texto = "0 meses";
+        edadTexto.textContent = texto;
+    }
+});
+</script>
+</body>
+</html>
+
