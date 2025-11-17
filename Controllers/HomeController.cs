@@ -96,17 +96,62 @@ namespace Zooni.Controllers
     // Obtener el peso decimal para cálculos
     if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
     {
+        bool pesoCorregido = false;
+        decimal pesoOriginal = pesoDecimal;
+        
         // ✅ Corrección global: dividir por 10 si no hay PesoDisplay y el peso parece incorrecto (>= 10)
         // Esto corrige casos como 400 -> 40.0, 300 -> 30.0, etc.
+        // También corregir si el peso es muy alto (más de 100kg es poco común para mascotas)
         if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal >= 10)
         {
             // Dividir por 10 para corregir el error de parseo
-            decimal pesoCorregido = pesoDecimal / 10;
+            decimal pesoCorregidoTemp = pesoDecimal / 10;
             // Validar que el peso corregido sea razonable (menor a 200kg para cualquier mascota)
-            if (pesoCorregido <= 200)
+            if (pesoCorregidoTemp <= 200 && pesoCorregidoTemp >= 0.1M)
             {
-                pesoDecimal = pesoCorregido;
+                pesoDecimal = pesoCorregidoTemp;
                 pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
+                pesoCorregido = true;
+            }
+        }
+        // Si el peso es muy alto incluso después de dividir, aplicar corrección adicional
+        else if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal > 200)
+        {
+            // Intentar dividir por 10 o 100 según el caso
+            decimal pesoCorregidoTemp = pesoDecimal / 10;
+            if (pesoCorregidoTemp > 200)
+            {
+                pesoCorregidoTemp = pesoDecimal / 100;
+            }
+            if (pesoCorregidoTemp <= 200 && pesoCorregidoTemp >= 0.1M)
+            {
+                pesoDecimal = pesoCorregidoTemp;
+                pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
+                pesoCorregido = true;
+            }
+        }
+        
+        // Si se corrigió el peso, actualizar la base de datos
+        if (pesoCorregido)
+        {
+            try
+            {
+                int idMascota = Convert.ToInt32(mascota["Id_Mascota"]);
+                string qActualizar = @"
+                    UPDATE Mascota
+                    SET Peso = @Peso, PesoDisplay = @PesoDisplay
+                    WHERE Id_Mascota = @Id";
+                BD.ExecuteNonQuery(qActualizar, new Dictionary<string, object>
+                {
+                    { "@Peso", pesoDecimal },
+                    { "@PesoDisplay", pesoDisplayBD },
+                    { "@Id", idMascota }
+                });
+                Console.WriteLine($"✅ Peso corregido en BD: {pesoOriginal} -> {pesoDecimal} kg (Mascota ID: {idMascota})");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"⚠️ Error al actualizar peso corregido en BD: {ex.Message}");
             }
         }
         
@@ -880,7 +925,21 @@ public IActionResult DescargarPDF()
         if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal >= 10)
         {
             decimal pesoCorregido = pesoDecimal / 10;
-            if (pesoCorregido <= 200)
+            if (pesoCorregido <= 200 && pesoCorregido >= 0.1M)
+            {
+                pesoDecimal = pesoCorregido;
+                pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
+            }
+        }
+        // Si el peso es muy alto incluso después de dividir, aplicar corrección adicional
+        else if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal > 200)
+        {
+            decimal pesoCorregido = pesoDecimal / 10;
+            if (pesoCorregido > 200)
+            {
+                pesoCorregido = pesoDecimal / 100;
+            }
+            if (pesoCorregido <= 200 && pesoCorregido >= 0.1M)
             {
                 pesoDecimal = pesoCorregido;
                 pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
@@ -1074,12 +1133,29 @@ public IActionResult DescargarPDF()
     return File(memory.ToArray(), "application/pdf", $"{nombre}_FichaMedica_Zooni.pdf");
 }
 [HttpGet]
-public IActionResult Perfil()
+public IActionResult Perfil(int? id = null)
 {
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null) return RedirectToAction("Login", "Auth");
-  var tema = HttpContext.Session.GetString("Tema") ?? "claro";
-        ViewBag.Tema = tema;
+    
+    // ✅ Crear tablas si no existen
+    try
+    {
+        CrearTablasPerfilSocial();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("⚠️ Error al crear tablas (puede ser normal si ya existen): " + ex.Message);
+    }
+    
+    var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+    ViewBag.Tema = tema;
+    
+    // Si se especifica un id, ver ese perfil, sino ver el propio
+    int perfilId = id ?? userId.Value;
+    bool esMiPerfil = perfilId == userId.Value;
+    ViewBag.EsMiPerfil = esMiPerfil;
+    ViewBag.PerfilId = perfilId;
     // 🔍 Intentar obtener perfil
     string qPerfil = @"
         SELECT TOP 1 P.Id_Perfil, U.Nombre, U.Apellido, U.Pais, P.Descripcion, P.FotoPerfil
@@ -1087,7 +1163,7 @@ public IActionResult Perfil()
         INNER JOIN [User] U ON P.Id_Usuario = U.Id_User
         WHERE U.Id_User = @Id";
 
-    var dtPerfil = BD.ExecuteQuery(qPerfil, new Dictionary<string, object> { { "@Id", userId.Value } });
+    var dtPerfil = BD.ExecuteQuery(qPerfil, new Dictionary<string, object> { { "@Id", perfilId } });
 
     // 🧩 Si no hay perfil, crear uno por defecto
     if (dtPerfil.Rows.Count == 0)
@@ -1095,10 +1171,10 @@ public IActionResult Perfil()
         string qInsert = @"
             INSERT INTO Perfil (Id_Usuario, FotoPerfil, Descripcion, AniosVigencia)
             VALUES (@U, '/img/perfil/default.png', 'Amante de los animales ❤️', 1)";
-        BD.ExecuteNonQuery(qInsert, new Dictionary<string, object> { { "@U", userId.Value } });
+        BD.ExecuteNonQuery(qInsert, new Dictionary<string, object> { { "@U", perfilId } });
 
         // volver a consultar
-        dtPerfil = BD.ExecuteQuery(qPerfil, new Dictionary<string, object> { { "@Id", userId.Value } });
+        dtPerfil = BD.ExecuteQuery(qPerfil, new Dictionary<string, object> { { "@Id", perfilId } });
     }
 
     var p = dtPerfil.Rows[0];
@@ -1133,7 +1209,7 @@ public IActionResult Perfil()
     var descripcionRaw = p["Descripcion"]?.ToString() ?? "";
     var descripcionLimpia = LimpiarTexto(descripcionRaw);
     ViewBag.Descripcion = string.IsNullOrWhiteSpace(descripcionLimpia) 
-        ? "Amante de los animales ❤️" 
+        ? "Amante de los animales" 
         : descripcionLimpia;
     
     var fotoPerfilRaw = p["FotoPerfil"]?.ToString()?.Trim() ?? "";
@@ -1144,13 +1220,62 @@ public IActionResult Perfil()
     ViewBag.NombreUsuario = nombre;
     ViewBag.ApellidoUsuario = apellido;
 
+    // 🔍 Verificar si es amigo
+    string qEsAmigo = @"
+        SELECT COUNT(*) as EsAmigo
+        FROM CirculoConfianza
+        WHERE (Id_User = @UserId AND Id_Amigo = @PerfilId)
+           OR (Id_User = @PerfilId AND Id_Amigo = @UserId)";
+    var dtEsAmigo = BD.ExecuteQuery(qEsAmigo, new Dictionary<string, object> 
+    { 
+        { "@UserId", userId.Value },
+        { "@PerfilId", perfilId }
+    });
+    bool esAmigo = dtEsAmigo.Rows.Count > 0 && Convert.ToInt32(dtEsAmigo.Rows[0]["EsAmigo"]) > 0;
+    ViewBag.EsAmigo = esAmigo;
+    
+    // 🔍 Verificar si hay solicitud pendiente
+    string qSolicitud = @"
+        SELECT COUNT(*) as TieneSolicitud
+        FROM Invitacion
+        WHERE ((Id_Emisor = @UserId AND Id_Receptor = @PerfilId)
+            OR (Id_Emisor = @PerfilId AND Id_Receptor = @UserId))
+        AND Rol = 'Amigo' AND Estado = 'Pendiente'";
+    var dtSolicitud = BD.ExecuteQuery(qSolicitud, new Dictionary<string, object>
+    {
+        { "@UserId", userId.Value },
+        { "@PerfilId", perfilId }
+    });
+    bool tieneSolicitud = dtSolicitud.Rows.Count > 0 && Convert.ToInt32(dtSolicitud.Rows[0]["TieneSolicitud"]) > 0;
+    ViewBag.TieneSolicitud = tieneSolicitud;
+    
+    // 📊 Contar publicaciones, seguidores, seguidos
+    string qStats = @"
+        SELECT 
+            (SELECT COUNT(*) FROM Publicacion WHERE Id_User = @Id AND Eliminada = 0) as Publicaciones,
+            (SELECT COUNT(*) FROM CirculoConfianza WHERE Id_Amigo = @Id) as Seguidores,
+            (SELECT COUNT(*) FROM CirculoConfianza WHERE Id_User = @Id) as Siguiendo";
+    var dtStats = BD.ExecuteQuery(qStats, new Dictionary<string, object> { { "@Id", perfilId } });
+    if (dtStats.Rows.Count > 0)
+    {
+        ViewBag.CantidadPublicaciones = Convert.ToInt32(dtStats.Rows[0]["Publicaciones"]);
+        ViewBag.CantidadSeguidores = Convert.ToInt32(dtStats.Rows[0]["Seguidores"]);
+        ViewBag.CantidadSiguiendo = Convert.ToInt32(dtStats.Rows[0]["Siguiendo"]);
+    }
+    else
+    {
+        ViewBag.CantidadPublicaciones = 0;
+        ViewBag.CantidadSeguidores = 0;
+        ViewBag.CantidadSiguiendo = 0;
+    }
+    
     // 🐾 Mascotas (filtrar duplicados: misma raza y nombre exacto)
     string qMascotas = @"
         SELECT Id_Mascota, Nombre, Especie, Raza, Foto,
                ROW_NUMBER() OVER (PARTITION BY Nombre, Raza ORDER BY Id_Mascota DESC) as rn
         FROM Mascota 
         WHERE Id_User = @Id";
-    var dtMascotas = BD.ExecuteQuery(qMascotas, new Dictionary<string, object> { { "@Id", userId.Value } });
+    var dtMascotas = BD.ExecuteQuery(qMascotas, new Dictionary<string, object> { { "@Id", perfilId } });
 
     var mascotas = new List<Mascota>();
     var mascotasVistas = new HashSet<string>(); // Para evitar duplicados
@@ -1203,6 +1328,135 @@ public IActionResult Perfil()
     }
 
     ViewBag.Mascotas = mascotas;
+    
+    // 📸 Obtener publicaciones (ancladas primero, luego por fecha)
+    string qPublicaciones = @"
+        SELECT P.*, 
+               U.Nombre + ' ' + U.Apellido as NombreUsuario,
+               PR.FotoPerfil as FotoPerfilUsuario,
+               M.Nombre as NombreMascota,
+               (SELECT COUNT(*) FROM LikePublicacion WHERE Id_Publicacion = P.Id_Publicacion) as CantidadLikes,
+               (SELECT COUNT(*) FROM ComentarioPublicacion WHERE Id_Publicacion = P.Id_Publicacion AND Eliminado = 0) as CantidadComentarios,
+               (SELECT COUNT(*) FROM CompartirPublicacion WHERE Id_Publicacion = P.Id_Publicacion) as CantidadCompartidos,
+               CASE WHEN EXISTS (SELECT 1 FROM LikePublicacion WHERE Id_Publicacion = P.Id_Publicacion AND Id_User = @UserId) THEN 1 ELSE 0 END as MeGusta,
+               CASE WHEN EXISTS (SELECT 1 FROM CompartirPublicacion WHERE Id_Publicacion = P.Id_Publicacion AND Id_User = @UserId) THEN 1 ELSE 0 END as Compartida
+        FROM Publicacion P
+        INNER JOIN [User] U ON P.Id_User = U.Id_User
+        LEFT JOIN Perfil PR ON PR.Id_Usuario = U.Id_User
+        LEFT JOIN Mascota M ON P.Id_Mascota = M.Id_Mascota
+        WHERE P.Id_User = @PerfilId AND P.Eliminada = 0
+        ORDER BY P.Anclada DESC, P.Fecha DESC";
+    var dtPublicaciones = BD.ExecuteQuery(qPublicaciones, new Dictionary<string, object>
+    {
+        { "@PerfilId", perfilId },
+        { "@UserId", userId.Value }
+    });
+    
+    var publicaciones = new List<Publicacion>();
+    foreach (System.Data.DataRow row in dtPublicaciones.Rows)
+    {
+        publicaciones.Add(new Publicacion
+        {
+            Id_Publicacion = Convert.ToInt32(row["Id_Publicacion"]),
+            Id_User = Convert.ToInt32(row["Id_User"]),
+            Id_Mascota = row["Id_Mascota"] == DBNull.Value ? null : Convert.ToInt32(row["Id_Mascota"]),
+            ImagenUrl = row["ImagenUrl"]?.ToString(),
+            Descripcion = row["Descripcion"]?.ToString(),
+            Fecha = Convert.ToDateTime(row["Fecha"]),
+            Anclada = Convert.ToBoolean(row["Anclada"]),
+            NombreUsuario = row["NombreUsuario"]?.ToString(),
+            FotoPerfilUsuario = row["FotoPerfilUsuario"]?.ToString() ?? "/img/perfil/default.png",
+            NombreMascota = row["NombreMascota"]?.ToString(),
+            CantidadLikes = Convert.ToInt32(row["CantidadLikes"]),
+            CantidadComentarios = Convert.ToInt32(row["CantidadComentarios"]),
+            CantidadCompartidos = Convert.ToInt32(row["CantidadCompartidos"]),
+            MeGusta = Convert.ToInt32(row["MeGusta"]) == 1,
+            Compartida = Convert.ToInt32(row["Compartida"]) == 1
+        });
+    }
+    ViewBag.Publicaciones = publicaciones;
+    
+    // 📱 Obtener historias activas (no expiradas)
+    string qHistorias = @"
+        SELECT H.*,
+               U.Nombre + ' ' + U.Apellido as NombreUsuario,
+               PR.FotoPerfil as FotoPerfilUsuario,
+               M.Nombre as NombreMascota
+        FROM Historia H
+        INNER JOIN [User] U ON H.Id_User = U.Id_User
+        LEFT JOIN Perfil PR ON PR.Id_Usuario = U.Id_User
+        LEFT JOIN Mascota M ON H.Id_Mascota = M.Id_Mascota
+        WHERE H.Id_User = @PerfilId 
+        AND H.Eliminada = 0 
+        AND H.Expiracion > GETDATE()
+        ORDER BY H.Fecha DESC";
+    var dtHistorias = BD.ExecuteQuery(qHistorias, new Dictionary<string, object> { { "@PerfilId", perfilId } });
+    
+    var historias = new List<Historia>();
+    foreach (System.Data.DataRow row in dtHistorias.Rows)
+    {
+        historias.Add(new Historia
+        {
+            Id_Historia = Convert.ToInt32(row["Id_Historia"]),
+            Id_User = Convert.ToInt32(row["Id_User"]),
+            Id_Mascota = row["Id_Mascota"] == DBNull.Value ? null : Convert.ToInt32(row["Id_Mascota"]),
+            ImagenUrl = row["ImagenUrl"]?.ToString() ?? "",
+            Texto = row["Texto"]?.ToString(),
+            Fecha = Convert.ToDateTime(row["Fecha"]),
+            Expiracion = Convert.ToDateTime(row["Expiracion"]),
+            NombreUsuario = row["NombreUsuario"]?.ToString(),
+            FotoPerfilUsuario = row["FotoPerfilUsuario"]?.ToString() ?? "/img/perfil/default.png",
+            NombreMascota = row["NombreMascota"]?.ToString()
+        });
+    }
+    ViewBag.Historias = historias;
+    
+    // ⭐ Obtener historias destacadas
+    string qDestacadas = @"
+        SELECT HD.*, H.ImagenUrl
+        FROM HistoriaDestacada HD
+        INNER JOIN Historia H ON HD.Id_Historia = H.Id_Historia
+        WHERE HD.Id_User = @PerfilId
+        ORDER BY HD.Fecha DESC";
+    var dtDestacadas = BD.ExecuteQuery(qDestacadas, new Dictionary<string, object> { { "@PerfilId", perfilId } });
+    
+    var destacadas = new List<HistoriaDestacada>();
+    foreach (System.Data.DataRow row in dtDestacadas.Rows)
+    {
+        destacadas.Add(new HistoriaDestacada
+        {
+            Id_Destacada = Convert.ToInt32(row["Id_Destacada"]),
+            Id_User = Convert.ToInt32(row["Id_User"]),
+            Id_Historia = Convert.ToInt32(row["Id_Historia"]),
+            Titulo = row["Titulo"]?.ToString(),
+            Fecha = Convert.ToDateTime(row["Fecha"]),
+            ImagenUrl = row["ImagenUrl"]?.ToString()
+        });
+    }
+    ViewBag.HistoriasDestacadas = destacadas;
+    
+    // 👥 Obtener amigos (para mostrar en el perfil)
+    string qAmigos = @"
+        SELECT TOP 6 U.Id_User, U.Nombre + ' ' + U.Apellido as NombreCompleto, PR.FotoPerfil
+        FROM CirculoConfianza CC
+        INNER JOIN [User] U ON CC.Id_Amigo = U.Id_User
+        LEFT JOIN Perfil PR ON PR.Id_Usuario = U.Id_User
+        WHERE CC.Id_User = @PerfilId
+        ORDER BY CC.UltimaConexion DESC";
+    var dtAmigos = BD.ExecuteQuery(qAmigos, new Dictionary<string, object> { { "@PerfilId", perfilId } });
+    
+    var amigos = new List<object>();
+    foreach (System.Data.DataRow row in dtAmigos.Rows)
+    {
+        amigos.Add(new
+        {
+            Id = Convert.ToInt32(row["Id_User"]),
+            Nombre = row["NombreCompleto"]?.ToString() ?? "Usuario",
+            FotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png"
+        });
+    }
+    ViewBag.Amigos = amigos;
+    
     return View("Perfil");
 }
 
@@ -1242,7 +1496,7 @@ public IActionResult ActualizarPerfil(string Nombre, string Apellido, string Pai
             paisLimpio = "Argentina";
         
         if (string.IsNullOrWhiteSpace(descripcionLimpia))
-            descripcionLimpia = "Amante de los animales ❤️";
+            descripcionLimpia = "Amante de los animales";
         
         // Actualizar datos del usuario
         BD.ExecuteNonQuery(@"
@@ -1294,11 +1548,11 @@ public IActionResult ActualizarPerfil(string Nombre, string Apellido, string Pai
 
         BD.ExecuteNonQuery(queryUpdate, parametros);
 
-        TempData["Exito"] = "Perfil actualizado correctamente ✅";
+        TempData["Exito"] = "Perfil actualizado correctamente";
     }
     catch (Exception ex)
     {
-        Console.WriteLine("❌ Error ActualizarPerfil: " + ex.Message);
+            Console.WriteLine("Error ActualizarPerfil: " + ex.Message);
         TempData["Error"] = "Error al actualizar el perfil. Intenta nuevamente.";
     }
 
@@ -1341,19 +1595,33 @@ public IActionResult ConfigMascotas()
     foreach (System.Data.DataRow r in dtAct.Rows)
     {
         string fotoRaw = r["Foto"]?.ToString()?.Trim() ?? "";
-        string fotoFinal = "/img/mascotas/default.png";
+        string especie = (r["Especie"]?.ToString() ?? "perro").ToLower();
+        string raza = r["Raza"]?.ToString()?.Trim() ?? "";
+        string fotoFinal = "";
         
+        // Si hay foto en BD, usarla (asegurando que empiece con /)
         if (!string.IsNullOrWhiteSpace(fotoRaw))
         {
-            // Asegurar que la ruta empiece con /
             fotoFinal = fotoRaw.StartsWith("/") ? fotoRaw : "/" + fotoRaw;
+        }
+        else
+        {
+            // Si no hay foto, construir ruta basada en especie/raza como en otras vistas
+            if (string.IsNullOrWhiteSpace(raza))
+            {
+                fotoFinal = $"/img/mascotas/{especie}s/basico/{especie}_basico.png";
+            }
+            else
+            {
+                fotoFinal = $"/img/mascotas/{especie}s/{raza}/{especie}_basico.png";
+            }
         }
         
         listaAct.Add(new Mascota {
             Id_Mascota = Convert.ToInt32(r["Id_Mascota"]),
             Nombre = r["Nombre"]?.ToString() ?? "Sin nombre",
             Especie = r["Especie"]?.ToString() ?? "Perro",
-            Raza = r["Raza"]?.ToString() ?? "Sin raza",
+            Raza = raza,
             Foto = fotoFinal
         });
     }
@@ -1376,19 +1644,33 @@ public IActionResult ConfigMascotas()
     foreach (System.Data.DataRow r in dtArch.Rows)
     {
         string fotoRaw = r["Foto"]?.ToString()?.Trim() ?? "";
-        string fotoFinal = "/img/mascotas/default.png";
+        string especie = (r["Especie"]?.ToString() ?? "perro").ToLower();
+        string raza = r["Raza"]?.ToString()?.Trim() ?? "";
+        string fotoFinal = "";
         
+        // Si hay foto en BD, usarla (asegurando que empiece con /)
         if (!string.IsNullOrWhiteSpace(fotoRaw))
         {
-            // Asegurar que la ruta empiece con /
             fotoFinal = fotoRaw.StartsWith("/") ? fotoRaw : "/" + fotoRaw;
+        }
+        else
+        {
+            // Si no hay foto, construir ruta basada en especie/raza como en otras vistas
+            if (string.IsNullOrWhiteSpace(raza))
+            {
+                fotoFinal = $"/img/mascotas/{especie}s/basico/{especie}_basico.png";
+            }
+            else
+            {
+                fotoFinal = $"/img/mascotas/{especie}s/{raza}/{especie}_basico.png";
+            }
         }
         
         listaArch.Add(new Mascota {
             Id_Mascota = Convert.ToInt32(r["Id_Mascota"]),
             Nombre = r["Nombre"]?.ToString() ?? "Sin nombre",
             Especie = r["Especie"]?.ToString() ?? "Perro",
-            Raza = r["Raza"]?.ToString() ?? "Sin raza",
+            Raza = raza,
             Foto = fotoFinal
         });
     }
@@ -1700,23 +1982,57 @@ public IActionResult EditarMascota(int id)
     int edadCalculada = fechaNac.HasValue ? EdadHelper.CalcularEdadEnMeses(fechaNac) : 
                         (r["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(r["Edad"]));
     
+    // Manejo mejorado del peso usando PesoHelper
+    decimal pesoDecimal = 0;
+    string? pesoDisplayBD = null;
+    
+    if (dt.Columns.Contains("PesoDisplay") && r["PesoDisplay"] != DBNull.Value)
+    {
+        pesoDisplayBD = r["PesoDisplay"].ToString();
+    }
+    
+    if (r["Peso"] != DBNull.Value && decimal.TryParse(r["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
+    {
+        // ✅ Corrección global: dividir por 10 si no hay PesoDisplay y el peso parece incorrecto (>= 10)
+        if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal >= 10)
+        {
+            decimal pesoCorregido = pesoDecimal / 10;
+            if (pesoCorregido <= 200 && pesoCorregido >= 0.1M)
+            {
+                pesoDecimal = pesoCorregido;
+                pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
+            }
+        }
+        // Si el peso es muy alto incluso después de dividir, aplicar corrección adicional
+        else if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal > 200)
+        {
+            decimal pesoCorregido = pesoDecimal / 10;
+            if (pesoCorregido > 200)
+            {
+                pesoCorregido = pesoDecimal / 100;
+            }
+            if (pesoCorregido <= 200 && pesoCorregido >= 0.1M)
+            {
+                pesoDecimal = pesoCorregido;
+                pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
+            }
+        }
+    }
+    
     var m = new Mascota {
         Id_Mascota = id,
         Nombre     = r["Nombre"].ToString(),
         Especie    = r["Especie"].ToString(),
         Raza       = r["Raza"].ToString(),
         Edad       = edadCalculada,
-        Peso       = r["Peso"] == DBNull.Value ? 0 : Convert.ToDecimal(r["Peso"]),
+        Peso       = pesoDecimal > 0 ? pesoDecimal : (r["Peso"] == DBNull.Value ? 0.1M : Convert.ToDecimal(r["Peso"])),
         Sexo       = r["Sexo"].ToString(),
         Foto       = r["Foto"]?.ToString(),
         Fecha_Nacimiento = fechaNac
     };
     
-    // Cargar PesoDisplay si existe
-    if (dt.Columns.Contains("PesoDisplay") && r["PesoDisplay"] != DBNull.Value)
-    {
-        ViewBag.PesoDisplay = r["PesoDisplay"].ToString();
-    }
+    // Cargar PesoDisplay (ya corregido si fue necesario)
+    ViewBag.PesoDisplay = pesoDisplayBD ?? PesoHelper.FormatearPeso(m.Peso);
     
     ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
     return View(m);
@@ -2282,9 +2598,7 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                 LEFT JOIN Ubicacion UB ON UB.Id_Ubicacion = U.Id_Ubicacion
                 LEFT JOIN ConfiguracionUsuario CU ON CU.Id_User = U.Id_User
                 WHERE U.Estado = 1
-                AND (ISNULL(CU.MostrableUbicacion, 'amigos') IN ('amigos', 'todos'))
-                AND UB.Latitud IS NOT NULL
-                AND UB.Longitud IS NOT NULL";
+                AND (ISNULL(CU.MostrableUbicacion, 'amigos') IN ('amigos', 'todos'))";
 
         var dtAmigos = BD.ExecuteQuery(qAmigos, new Dictionary<string, object> { { "@UserId", userId.Value } });
 
@@ -2621,15 +2935,37 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
 
     try
     {
+        // Eliminar relación bidireccional de CirculoConfianza
         string qEliminar = @"
             DELETE FROM CirculoConfianza 
-            WHERE Id_User = @UserId AND Id_Amigo = @AmigoId";
+            WHERE (Id_User = @UserId AND Id_Amigo = @AmigoId)
+               OR (Id_User = @AmigoId AND Id_Amigo = @UserId)";
 
         BD.ExecuteNonQuery(qEliminar, new Dictionary<string, object>
         {
             { "@UserId", userId.Value },
             { "@AmigoId", request.AmigoId }
         });
+
+        // También eliminar apodos relacionados
+        try
+        {
+            string qEliminarApodos = @"
+                DELETE FROM ApodoAmigo 
+                WHERE (Id_User = @UserId AND Id_Amigo = @AmigoId)
+                   OR (Id_User = @AmigoId AND Id_Amigo = @UserId)";
+            
+            BD.ExecuteNonQuery(qEliminarApodos, new Dictionary<string, object>
+            {
+                { "@UserId", userId.Value },
+                { "@AmigoId", request.AmigoId }
+            });
+        }
+        catch (Exception ex)
+        {
+            // Si la tabla no existe, continuar sin error
+            Console.WriteLine("⚠️ Error al eliminar apodos (puede ser normal si la tabla no existe): " + ex.Message);
+        }
 
         return Json(new { success = true, message = "Amigo eliminado correctamente" });
     }
@@ -3350,6 +3686,736 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
         {
             Console.WriteLine("❌ Error en ObtenerEstadoOnline: " + ex.Message);
             return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    // ========== PUBLICACIONES ==========
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult CrearPublicacion(IFormFile imagen, string descripcion, int? idMascota)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        if (imagen == null || imagen.Length == 0)
+        {
+            return Json(new { success = false, message = "Debes seleccionar una imagen" });
+        }
+
+        try
+        {
+            string imagenUrl = "";
+            if (imagen != null && imagen.Length > 0)
+            {
+                var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "publicaciones");
+                if (!Directory.Exists(uploadsPath))
+                    Directory.CreateDirectory(uploadsPath);
+                
+                var fileName = $"pub_{Guid.NewGuid()}{Path.GetExtension(imagen.FileName)}";
+                var filePath = Path.Combine(uploadsPath, fileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    imagen.CopyTo(stream);
+                }
+                imagenUrl = $"/uploads/publicaciones/{fileName}";
+            }
+
+            string q = @"
+                INSERT INTO Publicacion (Id_User, Id_Mascota, ImagenUrl, Descripcion, Fecha)
+                VALUES (@UserId, @IdMascota, @ImagenUrl, @Descripcion, GETDATE());
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+            int publicacionId = Convert.ToInt32(BD.ExecuteScalar(q, new Dictionary<string, object>
+            {
+                { "@UserId", userId.Value },
+                { "@IdMascota", idMascota ?? (object)DBNull.Value },
+                { "@ImagenUrl", imagenUrl },
+                { "@Descripcion", descripcion ?? "" }
+            }));
+
+            return Json(new { success = true, publicacionId = publicacionId });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error en CrearPublicacion: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult LikePublicacion([FromBody] LikePublicacionRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Verificar si ya le dio like
+            string qVerificar = @"
+                SELECT COUNT(*) FROM LikePublicacion 
+                WHERE Id_Publicacion = @PublicacionId AND Id_User = @UserId";
+            int existe = Convert.ToInt32(BD.ExecuteScalar(qVerificar, new Dictionary<string, object>
+            {
+                { "@PublicacionId", request.PublicacionId },
+                { "@UserId", userId.Value }
+            }));
+
+            if (existe > 0)
+            {
+                // Quitar like
+                string qEliminar = @"
+                    DELETE FROM LikePublicacion 
+                    WHERE Id_Publicacion = @PublicacionId AND Id_User = @UserId";
+                BD.ExecuteNonQuery(qEliminar, new Dictionary<string, object>
+                {
+                    { "@PublicacionId", request.PublicacionId },
+                    { "@UserId", userId.Value }
+                });
+            }
+            else
+            {
+                // Agregar like
+                string qInsertar = @"
+                    INSERT INTO LikePublicacion (Id_Publicacion, Id_User, Fecha)
+                    VALUES (@PublicacionId, @UserId, GETDATE())";
+                BD.ExecuteNonQuery(qInsertar, new Dictionary<string, object>
+                {
+                    { "@PublicacionId", request.PublicacionId },
+                    { "@UserId", userId.Value }
+                });
+            }
+
+            // Obtener cantidad de likes actualizada
+            string qCount = @"
+                SELECT COUNT(*) FROM LikePublicacion 
+                WHERE Id_Publicacion = @PublicacionId";
+            int cantidadLikes = Convert.ToInt32(BD.ExecuteScalar(qCount, new Dictionary<string, object>
+            {
+                { "@PublicacionId", request.PublicacionId }
+            }));
+
+            return Json(new { success = true, cantidadLikes = cantidadLikes, meGusta = existe == 0 });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en LikePublicacion: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult ComentarPublicacion([FromBody] ComentarRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            string q = @"
+                INSERT INTO ComentarioPublicacion (Id_Publicacion, Id_User, Contenido, Fecha)
+                VALUES (@PublicacionId, @UserId, @Contenido, GETDATE());
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+            int comentarioId = Convert.ToInt32(BD.ExecuteScalar(q, new Dictionary<string, object>
+            {
+                { "@PublicacionId", request.PublicacionId },
+                { "@UserId", userId.Value },
+                { "@Contenido", request.Contenido ?? "" }
+            }));
+
+            // Obtener comentario con datos del usuario
+            string qComentario = @"
+                SELECT C.*, U.Nombre + ' ' + U.Apellido as NombreUsuario, PR.FotoPerfil
+                FROM ComentarioPublicacion C
+                INNER JOIN [User] U ON C.Id_User = U.Id_User
+                LEFT JOIN Perfil PR ON PR.Id_Usuario = U.Id_User
+                WHERE C.Id_Comentario = @ComentarioId";
+            var dt = BD.ExecuteQuery(qComentario, new Dictionary<string, object> { { "@ComentarioId", comentarioId } });
+            
+            if (dt.Rows.Count > 0)
+            {
+                var row = dt.Rows[0];
+                return Json(new
+                {
+                    success = true,
+                    comentario = new
+                    {
+                        id = comentarioId,
+                        contenido = row["Contenido"]?.ToString(),
+                        fecha = Convert.ToDateTime(row["Fecha"]).ToString("yyyy-MM-ddTHH:mm:ss"),
+                        nombreUsuario = row["NombreUsuario"]?.ToString(),
+                        fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png"
+                    }
+                });
+            }
+
+            return Json(new { success = true, comentarioId = comentarioId });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en ComentarPublicacion: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public IActionResult ObtenerComentarios(int publicacionId)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            string q = @"
+                SELECT C.*, U.Nombre + ' ' + U.Apellido as NombreUsuario, PR.FotoPerfil
+                FROM ComentarioPublicacion C
+                INNER JOIN [User] U ON C.Id_User = U.Id_User
+                LEFT JOIN Perfil PR ON PR.Id_Usuario = U.Id_User
+                WHERE C.Id_Publicacion = @PublicacionId AND C.Eliminado = 0
+                ORDER BY C.Fecha ASC";
+            
+            var dt = BD.ExecuteQuery(q, new Dictionary<string, object> { { "@PublicacionId", publicacionId } });
+            var comentarios = new List<object>();
+            
+            foreach (System.Data.DataRow row in dt.Rows)
+            {
+                comentarios.Add(new
+                {
+                    id = Convert.ToInt32(row["Id_Comentario"]),
+                    contenido = row["Contenido"]?.ToString(),
+                    fecha = Convert.ToDateTime(row["Fecha"]).ToString("yyyy-MM-ddTHH:mm:ss"),
+                    nombreUsuario = row["NombreUsuario"]?.ToString(),
+                    fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png"
+                });
+            }
+
+            return Json(new { success = true, comentarios = comentarios });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en ObtenerComentarios: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult CompartirPublicacion([FromBody] CompartirRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Verificar si ya compartió
+            string qVerificar = @"
+                SELECT COUNT(*) FROM CompartirPublicacion 
+                WHERE Id_Publicacion = @PublicacionId AND Id_User = @UserId";
+            int existe = Convert.ToInt32(BD.ExecuteScalar(qVerificar, new Dictionary<string, object>
+            {
+                { "@PublicacionId", request.PublicacionId },
+                { "@UserId", userId.Value }
+            }));
+
+            if (existe == 0)
+            {
+                string q = @"
+                    INSERT INTO CompartirPublicacion (Id_Publicacion, Id_User, Fecha)
+                    VALUES (@PublicacionId, @UserId, GETDATE())";
+                BD.ExecuteNonQuery(q, new Dictionary<string, object>
+                {
+                    { "@PublicacionId", request.PublicacionId },
+                    { "@UserId", userId.Value }
+                });
+            }
+
+            // Obtener cantidad de compartidos
+            string qCount = @"
+                SELECT COUNT(*) FROM CompartirPublicacion 
+                WHERE Id_Publicacion = @PublicacionId";
+            int cantidad = Convert.ToInt32(BD.ExecuteScalar(qCount, new Dictionary<string, object>
+            {
+                { "@PublicacionId", request.PublicacionId }
+            }));
+
+            return Json(new { success = true, cantidadCompartidos = cantidad });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en CompartirPublicacion: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult AnclarPublicacion([FromBody] AnclarRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Verificar que la publicación es del usuario
+            string qVerificar = @"
+                SELECT Id_User FROM Publicacion 
+                WHERE Id_Publicacion = @PublicacionId";
+            var dt = BD.ExecuteQuery(qVerificar, new Dictionary<string, object> { { "@PublicacionId", request.PublicacionId } });
+            
+            if (dt.Rows.Count == 0 || Convert.ToInt32(dt.Rows[0]["Id_User"]) != userId.Value)
+                return Json(new { success = false, message = "No tenés permisos para anclar esta publicación" });
+
+            // Si se ancla, desanclar las demás
+            if (request.Anclar)
+            {
+                string qDesanclar = @"
+                    UPDATE Publicacion 
+                    SET Anclada = 0, FechaAnclada = NULL
+                    WHERE Id_User = @UserId AND Id_Publicacion != @PublicacionId";
+                BD.ExecuteNonQuery(qDesanclar, new Dictionary<string, object>
+                {
+                    { "@UserId", userId.Value },
+                    { "@PublicacionId", request.PublicacionId }
+                });
+            }
+
+            string q = @"
+                UPDATE Publicacion 
+                SET Anclada = @Anclar, FechaAnclada = @FechaAnclada
+                WHERE Id_Publicacion = @PublicacionId";
+            BD.ExecuteNonQuery(q, new Dictionary<string, object>
+            {
+                { "@Anclar", request.Anclar },
+                { "@FechaAnclada", request.Anclar ? DateTime.Now : (object)DBNull.Value },
+                { "@PublicacionId", request.PublicacionId }
+            });
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en AnclarPublicacion: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    // ========== HISTORIAS ==========
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult CrearHistoria(IFormFile imagen, string texto, int? idMascota)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            if (imagen == null || imagen.Length == 0)
+                return Json(new { success = false, message = "Debés subir una imagen" });
+
+            var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "historias");
+            if (!Directory.Exists(uploadsPath))
+                Directory.CreateDirectory(uploadsPath);
+            
+            var fileName = $"hist_{Guid.NewGuid()}{Path.GetExtension(imagen.FileName)}";
+            var filePath = Path.Combine(uploadsPath, fileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                imagen.CopyTo(stream);
+            }
+            string imagenUrl = $"/uploads/historias/{fileName}";
+
+            string q = @"
+                INSERT INTO Historia (Id_User, Id_Mascota, ImagenUrl, Texto, Fecha, Expiracion)
+                VALUES (@UserId, @IdMascota, @ImagenUrl, @Texto, GETDATE(), DATEADD(HOUR, 24, GETDATE()));
+                SELECT CAST(SCOPE_IDENTITY() AS INT);";
+
+            int historiaId = Convert.ToInt32(BD.ExecuteScalar(q, new Dictionary<string, object>
+            {
+                { "@UserId", userId.Value },
+                { "@IdMascota", idMascota ?? (object)DBNull.Value },
+                { "@ImagenUrl", imagenUrl },
+                { "@Texto", texto ?? "" }
+            }));
+
+            return Json(new { success = true, historiaId = historiaId });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en CrearHistoria: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpPost]
+    public IActionResult AgregarHistoriaDestacada([FromBody] DestacadaRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Verificar que la historia es del usuario
+            string qVerificar = @"
+                SELECT Id_User FROM Historia 
+                WHERE Id_Historia = @HistoriaId";
+            var dt = BD.ExecuteQuery(qVerificar, new Dictionary<string, object> { { "@HistoriaId", request.HistoriaId } });
+            
+            if (dt.Rows.Count == 0 || Convert.ToInt32(dt.Rows[0]["Id_User"]) != userId.Value)
+                return Json(new { success = false, message = "No tenés permisos para destacar esta historia" });
+
+            string q = @"
+                INSERT INTO HistoriaDestacada (Id_User, Id_Historia, Titulo, Fecha)
+                VALUES (@UserId, @HistoriaId, @Titulo, GETDATE())";
+            BD.ExecuteNonQuery(q, new Dictionary<string, object>
+            {
+                { "@UserId", userId.Value },
+                { "@HistoriaId", request.HistoriaId },
+                { "@Titulo", request.Titulo ?? "" }
+            });
+
+            return Json(new { success = true });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en AgregarHistoriaDestacada: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    // ========== MENCIONES Y REPOST ==========
+
+    [HttpPost]
+    public IActionResult RepostearMencion([FromBody] RepostRequest request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Verificar que existe la mención
+            string qVerificar = @"
+                SELECT Id_Publicacion, Id_Historia, Id_User_Mencionado
+                FROM Mencion 
+                WHERE Id_Mencion = @MencionId AND Id_User_Mencionado = @UserId";
+            var dt = BD.ExecuteQuery(qVerificar, new Dictionary<string, object>
+            {
+                { "@MencionId", request.MencionId },
+                { "@UserId", userId.Value }
+            });
+
+            if (dt.Rows.Count == 0)
+                return Json(new { success = false, message = "Mención no encontrada" });
+
+            var row = dt.Rows[0];
+            int? publicacionId = row["Id_Publicacion"] == DBNull.Value ? null : Convert.ToInt32(row["Id_Publicacion"]);
+            int? historiaId = row["Id_Historia"] == DBNull.Value ? null : Convert.ToInt32(row["Id_Historia"]);
+
+            if (publicacionId.HasValue)
+            {
+                // Repostear publicación: crear una nueva publicación compartiendo la original
+                string qPublicacion = @"
+                    SELECT ImagenUrl, Descripcion FROM Publicacion 
+                    WHERE Id_Publicacion = @PublicacionId";
+                var dtPub = BD.ExecuteQuery(qPublicacion, new Dictionary<string, object> { { "@PublicacionId", publicacionId.Value } });
+                
+                if (dtPub.Rows.Count > 0)
+                {
+                    var pubRow = dtPub.Rows[0];
+                    string nuevaDescripcion = $"📢 Reposteado: {pubRow["Descripcion"]?.ToString()}";
+                    
+                    string qRepost = @"
+                        INSERT INTO Publicacion (Id_User, ImagenUrl, Descripcion, Fecha)
+                        VALUES (@UserId, @ImagenUrl, @Descripcion, GETDATE());
+                        SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                    int nuevaPubId = Convert.ToInt32(BD.ExecuteScalar(qRepost, new Dictionary<string, object>
+                    {
+                        { "@UserId", userId.Value },
+                        { "@ImagenUrl", pubRow["ImagenUrl"]?.ToString() ?? "" },
+                        { "@Descripcion", nuevaDescripcion }
+                    }));
+
+                    // Marcar mención como reposteada
+                    string qUpdate = @"
+                        UPDATE Mencion 
+                        SET Reposteada = 1 
+                        WHERE Id_Mencion = @MencionId";
+                    BD.ExecuteNonQuery(qUpdate, new Dictionary<string, object> { { "@MencionId", request.MencionId } });
+
+                    return Json(new { success = true, publicacionId = nuevaPubId });
+                }
+            }
+
+            return Json(new { success = false, message = "No se pudo repostear" });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en RepostearMencion: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public IActionResult ObtenerMenciones()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            string q = @"
+                SELECT M.*, 
+                       U.Nombre + ' ' + U.Apellido as NombreUsuarioMenciona,
+                       PR.FotoPerfil as FotoPerfilUsuarioMenciona,
+                       P.ImagenUrl as ImagenPublicacion,
+                       P.Descripcion as DescripcionPublicacion,
+                       H.ImagenUrl as ImagenHistoria
+                FROM Mencion M
+                INNER JOIN [User] U ON M.Id_User_Menciona = U.Id_User
+                LEFT JOIN Perfil PR ON PR.Id_Usuario = U.Id_User
+                LEFT JOIN Publicacion P ON M.Id_Publicacion = P.Id_Publicacion
+                LEFT JOIN Historia H ON M.Id_Historia = H.Id_Historia
+                WHERE M.Id_User_Mencionado = @UserId
+                ORDER BY M.Fecha DESC";
+            
+            var dt = BD.ExecuteQuery(q, new Dictionary<string, object> { { "@UserId", userId.Value } });
+            var menciones = new List<object>();
+            
+            foreach (System.Data.DataRow row in dt.Rows)
+            {
+                menciones.Add(new
+                {
+                    id = Convert.ToInt32(row["Id_Mencion"]),
+                    tipo = row["Id_Publicacion"] != DBNull.Value ? "publicacion" : "historia",
+                    nombreUsuario = row["NombreUsuarioMenciona"]?.ToString(),
+                    fotoPerfil = row["FotoPerfilUsuarioMenciona"]?.ToString() ?? "/img/perfil/default.png",
+                    imagenPublicacion = row["ImagenPublicacion"]?.ToString(),
+                    imagenHistoria = row["ImagenHistoria"]?.ToString(),
+                    descripcion = row["DescripcionPublicacion"]?.ToString(),
+                    fecha = Convert.ToDateTime(row["Fecha"]).ToString("yyyy-MM-ddTHH:mm:ss"),
+                    vista = Convert.ToBoolean(row["Vista"]),
+                    reposteada = Convert.ToBoolean(row["Reposteada"])
+                });
+            }
+
+            return Json(new { success = true, menciones = menciones });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en ObtenerMenciones: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    // Clases de request
+    public class LikePublicacionRequest
+    {
+        public int PublicacionId { get; set; }
+    }
+
+    public class ComentarRequest
+    {
+        public int PublicacionId { get; set; }
+        public string? Contenido { get; set; }
+    }
+
+    public class CompartirRequest
+    {
+        public int PublicacionId { get; set; }
+    }
+
+    public class AnclarRequest
+    {
+        public int PublicacionId { get; set; }
+        public bool Anclar { get; set; }
+    }
+
+    public class DestacadaRequest
+    {
+        public int HistoriaId { get; set; }
+        public string? Titulo { get; set; }
+    }
+
+    public class RepostRequest
+    {
+        public int MencionId { get; set; }
+    }
+
+    // ========== CREAR TABLAS ==========
+    private void CrearTablasPerfilSocial()
+    {
+        try
+        {
+            // Tabla Publicacion
+            string qPublicacion = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'Publicacion')
+                BEGIN
+                    CREATE TABLE [dbo].[Publicacion](
+                        [Id_Publicacion] [int] IDENTITY(1,1) NOT NULL,
+                        [Id_User] [int] NOT NULL,
+                        [Id_Mascota] [int] NULL,
+                        [ImagenUrl] [nvarchar](500) NULL,
+                        [Descripcion] [nvarchar](2000) NULL,
+                        [Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                        [Anclada] [bit] NOT NULL DEFAULT 0,
+                        [FechaAnclada] [datetime2](7) NULL,
+                        [Eliminada] [bit] NOT NULL DEFAULT 0,
+                        CONSTRAINT [PK_Publicacion] PRIMARY KEY CLUSTERED ([Id_Publicacion] ASC),
+                        CONSTRAINT [FK_Publicacion_User] FOREIGN KEY ([Id_User]) REFERENCES [dbo].[User]([Id_User]),
+                        CONSTRAINT [FK_Publicacion_Mascota] FOREIGN KEY ([Id_Mascota]) REFERENCES [dbo].[Mascota]([Id_Mascota])
+                    ) ON [PRIMARY]
+                END";
+            BD.ExecuteNonQuery(qPublicacion);
+
+            // Tabla LikePublicacion
+            string qLike = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'LikePublicacion')
+                BEGIN
+                    CREATE TABLE [dbo].[LikePublicacion](
+                        [Id_Like] [int] IDENTITY(1,1) NOT NULL,
+                        [Id_Publicacion] [int] NOT NULL,
+                        [Id_User] [int] NOT NULL,
+                        [Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                        CONSTRAINT [PK_LikePublicacion] PRIMARY KEY CLUSTERED ([Id_Like] ASC),
+                        CONSTRAINT [FK_LikePublicacion_Publicacion] FOREIGN KEY ([Id_Publicacion]) REFERENCES [dbo].[Publicacion]([Id_Publicacion]) ON DELETE CASCADE,
+                        CONSTRAINT [FK_LikePublicacion_User] FOREIGN KEY ([Id_User]) REFERENCES [dbo].[User]([Id_User]),
+                        CONSTRAINT [UQ_LikePublicacion_User_Publicacion] UNIQUE ([Id_User], [Id_Publicacion])
+                    ) ON [PRIMARY]
+                END";
+            BD.ExecuteNonQuery(qLike);
+
+            // Tabla ComentarioPublicacion
+            string qComentario = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'ComentarioPublicacion')
+                BEGIN
+                    CREATE TABLE [dbo].[ComentarioPublicacion](
+                        [Id_Comentario] [int] IDENTITY(1,1) NOT NULL,
+                        [Id_Publicacion] [int] NOT NULL,
+                        [Id_User] [int] NOT NULL,
+                        [Contenido] [nvarchar](1000) NOT NULL,
+                        [Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                        [Eliminado] [bit] NOT NULL DEFAULT 0,
+                        CONSTRAINT [PK_ComentarioPublicacion] PRIMARY KEY CLUSTERED ([Id_Comentario] ASC),
+                        CONSTRAINT [FK_ComentarioPublicacion_Publicacion] FOREIGN KEY ([Id_Publicacion]) REFERENCES [dbo].[Publicacion]([Id_Publicacion]) ON DELETE CASCADE,
+                        CONSTRAINT [FK_ComentarioPublicacion_User] FOREIGN KEY ([Id_User]) REFERENCES [dbo].[User]([Id_User])
+                    ) ON [PRIMARY]
+                END";
+            BD.ExecuteNonQuery(qComentario);
+
+            // Tabla CompartirPublicacion
+            string qCompartir = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'CompartirPublicacion')
+                BEGIN
+                    CREATE TABLE [dbo].[CompartirPublicacion](
+                        [Id_Compartir] [int] IDENTITY(1,1) NOT NULL,
+                        [Id_Publicacion] [int] NOT NULL,
+                        [Id_User] [int] NOT NULL,
+                        [Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                        CONSTRAINT [PK_CompartirPublicacion] PRIMARY KEY CLUSTERED ([Id_Compartir] ASC),
+                        CONSTRAINT [FK_CompartirPublicacion_Publicacion] FOREIGN KEY ([Id_Publicacion]) REFERENCES [dbo].[Publicacion]([Id_Publicacion]) ON DELETE CASCADE,
+                        CONSTRAINT [FK_CompartirPublicacion_User] FOREIGN KEY ([Id_User]) REFERENCES [dbo].[User]([Id_User]),
+                        CONSTRAINT [UQ_CompartirPublicacion_User_Publicacion] UNIQUE ([Id_User], [Id_Publicacion])
+                    ) ON [PRIMARY]
+                END";
+            BD.ExecuteNonQuery(qCompartir);
+
+            // Tabla Historia
+            string qHistoria = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'Historia')
+                BEGIN
+                    CREATE TABLE [dbo].[Historia](
+                        [Id_Historia] [int] IDENTITY(1,1) NOT NULL,
+                        [Id_User] [int] NOT NULL,
+                        [Id_Mascota] [int] NULL,
+                        [ImagenUrl] [nvarchar](500) NOT NULL,
+                        [Texto] [nvarchar](500) NULL,
+                        [Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                        [Expiracion] [datetime2](7) NOT NULL,
+                        [Eliminada] [bit] NOT NULL DEFAULT 0,
+                        CONSTRAINT [PK_Historia] PRIMARY KEY CLUSTERED ([Id_Historia] ASC),
+                        CONSTRAINT [FK_Historia_User] FOREIGN KEY ([Id_User]) REFERENCES [dbo].[User]([Id_User]),
+                        CONSTRAINT [FK_Historia_Mascota] FOREIGN KEY ([Id_Mascota]) REFERENCES [dbo].[Mascota]([Id_Mascota])
+                    ) ON [PRIMARY]
+                END";
+            BD.ExecuteNonQuery(qHistoria);
+
+            // Tabla HistoriaDestacada
+            string qDestacada = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'HistoriaDestacada')
+                BEGIN
+                    CREATE TABLE [dbo].[HistoriaDestacada](
+                        [Id_Destacada] [int] IDENTITY(1,1) NOT NULL,
+                        [Id_User] [int] NOT NULL,
+                        [Id_Historia] [int] NOT NULL,
+                        [Titulo] [nvarchar](100) NULL,
+                        [Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                        CONSTRAINT [PK_HistoriaDestacada] PRIMARY KEY CLUSTERED ([Id_Destacada] ASC),
+                        CONSTRAINT [FK_HistoriaDestacada_User] FOREIGN KEY ([Id_User]) REFERENCES [dbo].[User]([Id_User]),
+                        CONSTRAINT [FK_HistoriaDestacada_Historia] FOREIGN KEY ([Id_Historia]) REFERENCES [dbo].[Historia]([Id_Historia]) ON DELETE CASCADE
+                    ) ON [PRIMARY]
+                END";
+            BD.ExecuteNonQuery(qDestacada);
+
+            // Tabla Mencion
+            string qMencion = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'Mencion')
+                BEGIN
+                    CREATE TABLE [dbo].[Mencion](
+                        [Id_Mencion] [int] IDENTITY(1,1) NOT NULL,
+                        [Id_User_Mencionado] [int] NOT NULL,
+                        [Id_Publicacion] [int] NULL,
+                        [Id_Historia] [int] NULL,
+                        [Id_User_Menciona] [int] NOT NULL,
+                        [Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                        [Vista] [bit] NOT NULL DEFAULT 0,
+                        [Reposteada] [bit] NOT NULL DEFAULT 0,
+                        CONSTRAINT [PK_Mencion] PRIMARY KEY CLUSTERED ([Id_Mencion] ASC),
+                        CONSTRAINT [FK_Mencion_User_Mencionado] FOREIGN KEY ([Id_User_Mencionado]) REFERENCES [dbo].[User]([Id_User]),
+                        CONSTRAINT [FK_Mencion_User_Menciona] FOREIGN KEY ([Id_User_Menciona]) REFERENCES [dbo].[User]([Id_User]),
+                        CONSTRAINT [FK_Mencion_Publicacion] FOREIGN KEY ([Id_Publicacion]) REFERENCES [dbo].[Publicacion]([Id_Publicacion]) ON DELETE CASCADE,
+                        CONSTRAINT [FK_Mencion_Historia] FOREIGN KEY ([Id_Historia]) REFERENCES [dbo].[Historia]([Id_Historia]) ON DELETE CASCADE,
+                        CONSTRAINT [CK_Mencion_Tipo] CHECK (([Id_Publicacion] IS NOT NULL AND [Id_Historia] IS NULL) OR ([Id_Publicacion] IS NULL AND [Id_Historia] IS NOT NULL))
+                    ) ON [PRIMARY]
+                END";
+            BD.ExecuteNonQuery(qMencion);
+
+            // Índices
+            string qIdx1 = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_Publicacion_User_Fecha')
+                BEGIN
+                    CREATE INDEX [IX_Publicacion_User_Fecha] ON [dbo].[Publicacion]([Id_User], [Fecha] DESC)
+                END";
+            BD.ExecuteNonQuery(qIdx1);
+
+            string qIdx2 = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_Historia_User_Expiracion')
+                BEGIN
+                    CREATE INDEX [IX_Historia_User_Expiracion] ON [dbo].[Historia]([Id_User], [Expiracion] DESC)
+                END";
+            BD.ExecuteNonQuery(qIdx2);
+
+            string qIdx3 = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.indexes WHERE name = 'IX_Mencion_User_Mencionado')
+                BEGIN
+                    CREATE INDEX [IX_Mencion_User_Mencionado] ON [dbo].[Mencion]([Id_User_Mencionado], [Vista])
+                END";
+            BD.ExecuteNonQuery(qIdx3);
+
+            Console.WriteLine("✅ Tablas de perfil social creadas correctamente");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error al crear tablas de perfil social: " + ex.Message);
+            throw;
         }
     }
 }}      

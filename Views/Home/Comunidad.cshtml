@@ -166,6 +166,8 @@ body.tema-oscuro .cerrar-menu {
     box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
     border-radius: 12px !important;
     overflow: hidden !important;
+    margin-top: 180px !important; /* Mover debajo de los botones de control */
+    margin-right: 20px !important;
 }
 
 .leaflet-control-zoom a {
@@ -596,7 +598,6 @@ body.tema-oscuro .modal-content input {
 <div class="controles-mapa">
     <button class="btn-control" id="btnMiUbicacion" onclick="centrarEnMiUbicacion()">📍 Mi Ubicación</button>
     <button class="btn-control" id="btnAgregarAmigo" onclick="mostrarModalAmigo()">➕ Agregar Amigo</button>
-    <button class="btn-control" id="btnActualizar" onclick="actualizarUbicacion()">🔄 Actualizar</button>
 </div>
 
 <div class="panel-amigos" id="panelAmigos">
@@ -683,12 +684,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function initMap() {
     // Inicializar mapa con Leaflet (OpenStreetMap) centrado en Buenos Aires con zoom más cercano
-    map = L.map('map').setView([-34.6037, -58.3816], 17);
+    map = L.map('map', {
+        zoomControl: false  // Desactivar zoom control por defecto
+    }).setView([-34.6037, -58.3816], 17);
     
     // Agregar capa de OpenStreetMap
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© OpenStreetMap contributors',
         maxZoom: 19
+    }).addTo(map);
+    
+    // Agregar controles de zoom en posición personalizada (esquina superior derecha, debajo de los botones)
+    L.control.zoom({
+        position: 'topright'
     }).addTo(map);
 
     // Obtener ubicación del usuario
@@ -709,8 +717,10 @@ function initMap() {
     // Cargar puntos de interés
     cargarPuntosInteres();
     
-    // Actualizar ubicación cada 30 segundos
-    setInterval(actualizarUbicacion, 30000);
+    // Actualizar lista de amigos cada 30 segundos (sin mostrar mensajes)
+    setInterval(function() {
+        cargarAmigos();
+    }, 30000);
 }
 
 function obtenerMiUbicacion() {
@@ -750,25 +760,47 @@ function obtenerMiUbicacion() {
             // Guardar ubicación en el servidor
             guardarUbicacion(miUbicacion.lat, miUbicacion.lng);
             
-            // Iniciar seguimiento continuo
+            // Iniciar seguimiento continuo automático
             if (watchId) {
                 navigator.geolocation.clearWatch(watchId);
             }
             watchId = navigator.geolocation.watchPosition(
                 function(pos) {
-                    miUbicacion = {
-                        lat: pos.coords.latitude,
-                        lng: pos.coords.longitude
-                    };
-            if (miMarcador) {
-                miMarcador.setLatLng([miUbicacion.lat, miUbicacion.lng]);
-            }
-                    guardarUbicacion(miUbicacion.lat, miUbicacion.lng);
+                    const nuevaLat = pos.coords.latitude;
+                    const nuevaLng = pos.coords.longitude;
+                    
+                    // Calcular distancia desde la última ubicación guardada
+                    const distancia = calcularDistanciaMetros(
+                        miUbicacion.lat, 
+                        miUbicacion.lng, 
+                        nuevaLat, 
+                        nuevaLng
+                    );
+                    
+                    // Solo actualizar si se movió más de 10 metros (para evitar demasiadas peticiones)
+                    if (distancia > 10) {
+                        miUbicacion = {
+                            lat: nuevaLat,
+                            lng: nuevaLng
+                        };
+                        
+                        // Actualizar marcador en el mapa
+                        if (miMarcador) {
+                            miMarcador.setLatLng([miUbicacion.lat, miUbicacion.lng]);
+                        }
+                        
+                        // Guardar ubicación en el servidor
+                        guardarUbicacion(miUbicacion.lat, miUbicacion.lng);
+                    }
                 },
                 function(error) {
                     console.error("Error en seguimiento:", error);
                 },
-                { enableHighAccuracy: true, maximumAge: 5000 }
+                { 
+                    enableHighAccuracy: true, 
+                    maximumAge: 5000,
+                    timeout: 10000
+                }
             );
         },
         function(error) {
@@ -776,6 +808,19 @@ function obtenerMiUbicacion() {
         },
         { enableHighAccuracy: true, timeout: 10000 }
     );
+}
+
+// Función auxiliar para calcular distancia en metros
+function calcularDistanciaMetros(lat1, lng1, lat2, lng2) {
+    const R = 6371000; // Radio de la Tierra en metros
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLng = (lng2 - lng1) * Math.PI / 180;
+    const a = 
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
 }
 
 function centrarEnMiUbicacion() {
@@ -797,11 +842,7 @@ function guardarUbicacion(lat, lng) {
     .catch(err => console.error('Error al guardar ubicación:', err));
 }
 
-function actualizarUbicacion() {
-    obtenerMiUbicacion();
-    cargarAmigos();
-    mostrarMensaje("Ubicación actualizada", "exito");
-}
+// Función eliminada - la ubicación se actualiza automáticamente con watchPosition
 
 function cargarAmigos() {
     fetch('/Home/ObtenerAmigos')
@@ -832,16 +873,20 @@ function mostrarAmigos(amigos) {
     lista.innerHTML = amigos.map(amigo => {
         const nombreMostrar = amigo.nombreMostrar || amigo.nombre || 'Usuario';
         const nombreEscapado = (amigo.nombre || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const tieneUbicacion = amigo.lat != null && amigo.lng != null;
+        const onclickUbicacion = tieneUbicacion ? `onclick="centrarEnAmigo(${amigo.lat}, ${amigo.lng})"` : '';
+        const estiloClick = tieneUbicacion ? 'cursor: pointer;' : 'cursor: default;';
         return `
         <div class="amigo-item">
             <div style="position: relative; display: inline-block;">
-                <img src="${amigo.fotoPerfil || '/img/perfil/default.png'}" alt="${nombreMostrar}" class="amigo-avatar" onclick="centrarEnAmigo(${amigo.lat}, ${amigo.lng})" onerror="this.src='/img/perfil/default.png'" />
+                <img src="${amigo.fotoPerfil || '/img/perfil/default.png'}" alt="${nombreMostrar}" class="amigo-avatar" ${onclickUbicacion} onerror="this.src='/img/perfil/default.png'" />
                 ${amigo.estaOnline ? '<span class="estado-online" style="position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #2ecc71; border: 2px solid white; border-radius: 50%;"></span>' : '<span class="estado-offline" style="position: absolute; bottom: 2px; right: 2px; width: 12px; height: 12px; background: #95a5a6; border: 2px solid white; border-radius: 50%;"></span>'}
             </div>
-            <div class="amigo-info" onclick="centrarEnAmigo(${amigo.lat}, ${amigo.lng})" style="flex: 1; cursor: pointer;">
+            <div class="amigo-info" ${onclickUbicacion} style="flex: 1; ${estiloClick}">
                 <p class="amigo-nombre">${nombreMostrar} ${amigo.estaOnline ? '<span style="color: #2ecc71; font-size: 0.7rem;">🟢</span>' : '<span style="color: #95a5a6; font-size: 0.7rem;">⚫</span>'}</p>
                 ${amigo.apodo ? `<p style="font-size: 0.75rem; opacity: 0.7; font-style: italic; margin: 0;">(${amigo.nombre})</p>` : ''}
                 <p class="amigo-mascota">🐾 ${amigo.mascotaNombre || 'Sin mascota'}</p>
+                ${!tieneUbicacion ? '<p style="font-size: 0.7rem; opacity: 0.6; margin: 2px 0 0 0; color: #e74c3c;">📍 Sin ubicación</p>' : ''}
             </div>
            <div style="display: flex; gap: 5px;">
                <button class="btn-eliminar-amigo" onclick="abrirChat(${amigo.id})" style="background: #39b77c; font-size: 0.7rem; padding: 4px 6px;" title="Enviar mensaje">💬</button>
@@ -1126,7 +1171,11 @@ function actualizarMarcadoresAmigos(amigos) {
 }
 
 function centrarEnAmigo(lat, lng) {
-    map.setView([lat, lng], 18);
+    if (lat != null && lng != null && !isNaN(lat) && !isNaN(lng)) {
+        map.setView([lat, lng], 18);
+    } else {
+        mostrarMensaje("Este amigo no tiene ubicación disponible", "error");
+    }
 }
 
 function mostrarModalAmigo() {

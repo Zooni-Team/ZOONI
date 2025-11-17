@@ -1627,3 +1627,257 @@
 	ALTER TABLE Mascota ALTER COLUMN Peso DECIMAL(10,2);
 	ALTER TABLE Mascota ADD Archivada BIT DEFAULT 0;
 	ALTER TABLE Mascota ADD TagColor NVARCHAR(20) NULL;
+	GO
+	/****** Object:  Table [dbo].[Publicacion]    Script Date: 30/10/2025 14:26:55 ******/
+	SET ANSI_NULLS ON
+	GO
+	SET QUOTED_IDENTIFIER ON
+	GO
+	CREATE TABLE [dbo].[Publicacion](
+		[Id_Publicacion] [int] IDENTITY(1,1) NOT NULL,
+		[Id_User] [int] NOT NULL,
+		[Id_Mascota] [int] NULL,
+		[ImagenUrl] [nvarchar](500) NULL,
+		[Descripcion] [nvarchar](2000) NULL,
+		[Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+		[Anclada] [bit] NOT NULL DEFAULT 0,
+		[FechaAnclada] [datetime2](7) NULL,
+		[Eliminada] [bit] NOT NULL DEFAULT 0,
+	CONSTRAINT [PK_Publicacion] PRIMARY KEY CLUSTERED 
+	(
+		[Id_Publicacion] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	GO
+	/****** Object:  Table [dbo].[LikePublicacion]    Script Date: 30/10/2025 14:26:55 ******/
+	SET ANSI_NULLS ON
+	GO
+	SET QUOTED_IDENTIFIER ON
+	GO
+	CREATE TABLE [dbo].[LikePublicacion](
+		[Id_Like] [int] IDENTITY(1,1) NOT NULL,
+		[Id_Publicacion] [int] NOT NULL,
+		[Id_User] [int] NOT NULL,
+		[Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+	CONSTRAINT [PK_LikePublicacion] PRIMARY KEY CLUSTERED 
+	(
+		[Id_Like] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	GO
+	/****** Object:  Table [dbo].[ComentarioPublicacion]    Script Date: 30/10/2025 14:26:55 ******/
+	SET ANSI_NULLS ON
+	GO
+	SET QUOTED_IDENTIFIER ON
+	GO
+	CREATE TABLE [dbo].[ComentarioPublicacion](
+		[Id_Comentario] [int] IDENTITY(1,1) NOT NULL,
+		[Id_Publicacion] [int] NOT NULL,
+		[Id_User] [int] NOT NULL,
+		[Contenido] [nvarchar](1000) NOT NULL,
+		[Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+		[Eliminado] [bit] NOT NULL DEFAULT 0,
+	CONSTRAINT [PK_ComentarioPublicacion] PRIMARY KEY CLUSTERED 
+	(
+		[Id_Comentario] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	GO
+	/****** Object:  Table [dbo].[CompartirPublicacion]    Script Date: 30/10/2025 14:26:55 ******/
+	SET ANSI_NULLS ON
+	GO
+	SET QUOTED_IDENTIFIER ON
+	GO
+	CREATE TABLE [dbo].[CompartirPublicacion](
+		[Id_Compartir] [int] IDENTITY(1,1) NOT NULL,
+		[Id_Publicacion] [int] NOT NULL,
+		[Id_User] [int] NOT NULL,
+		[Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+	CONSTRAINT [PK_CompartirPublicacion] PRIMARY KEY CLUSTERED 
+	(
+		[Id_Compartir] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	GO
+	/****** Object:  Table [dbo].[Historia]    Script Date: 30/10/2025 14:26:55 ******/
+	SET ANSI_NULLS ON
+	GO
+	SET QUOTED_IDENTIFIER ON
+	GO
+	CREATE TABLE [dbo].[Historia](
+		[Id_Historia] [int] IDENTITY(1,1) NOT NULL,
+		[Id_User] [int] NOT NULL,
+		[Id_Mascota] [int] NULL,
+		[ImagenUrl] [nvarchar](500) NOT NULL,
+		[Texto] [nvarchar](500) NULL,
+		[Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+		[Expiracion] [datetime2](7) NOT NULL,
+		[Eliminada] [bit] NOT NULL DEFAULT 0,
+	CONSTRAINT [PK_Historia] PRIMARY KEY CLUSTERED 
+	(
+		[Id_Historia] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	GO
+	/****** Object:  Table [dbo].[HistoriaDestacada]    Script Date: 30/10/2025 14:26:55 ******/
+	SET ANSI_NULLS ON
+	GO
+	SET QUOTED_IDENTIFIER ON
+	GO
+	CREATE TABLE [dbo].[HistoriaDestacada](
+		[Id_Destacada] [int] IDENTITY(1,1) NOT NULL,
+		[Id_User] [int] NOT NULL,
+		[Id_Historia] [int] NOT NULL,
+		[Titulo] [nvarchar](100) NULL,
+		[Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+	CONSTRAINT [PK_HistoriaDestacada] PRIMARY KEY CLUSTERED 
+	(
+		[Id_Destacada] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+	GO
+	/****** Object:  Table [dbo].[Mencion]    Script Date: 30/10/2025 14:26:55 ******/
+	SET ANSI_NULLS ON
+	GO
+	SET QUOTED_IDENTIFIER ON
+	GO
+	CREATE TABLE [dbo].[Mencion](
+		[Id_Mencion] [int] IDENTITY(1,1) NOT NULL,
+		[Id_User_Mencionado] [int] NOT NULL,
+		[Id_Publicacion] [int] NULL,
+		[Id_Historia] [int] NULL,
+		[Id_User_Menciona] [int] NOT NULL,
+		[Fecha] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+		[Vista] [bit] NOT NULL DEFAULT 0,
+		[Reposteada] [bit] NOT NULL DEFAULT 0,
+	CONSTRAINT [PK_Mencion] PRIMARY KEY CLUSTERED 
+	(
+		[Id_Mencion] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+	CONSTRAINT [CK_Mencion_Tipo] CHECK (([Id_Publicacion] IS NOT NULL AND [Id_Historia] IS NULL) OR ([Id_Publicacion] IS NULL AND [Id_Historia] IS NOT NULL))
+	) ON [PRIMARY]
+	GO
+	/****** Object:  Foreign Keys for Perfil Social Tables ******/
+	ALTER TABLE [dbo].[Publicacion]  WITH CHECK ADD  CONSTRAINT [FK_Publicacion_User] FOREIGN KEY([Id_User])
+	REFERENCES [dbo].[User] ([Id_User])
+	GO
+	ALTER TABLE [dbo].[Publicacion] CHECK CONSTRAINT [FK_Publicacion_User]
+	GO
+	ALTER TABLE [dbo].[Publicacion]  WITH CHECK ADD  CONSTRAINT [FK_Publicacion_Mascota] FOREIGN KEY([Id_Mascota])
+	REFERENCES [dbo].[Mascota] ([Id_Mascota])
+	GO
+	ALTER TABLE [dbo].[Publicacion] CHECK CONSTRAINT [FK_Publicacion_Mascota]
+	GO
+	ALTER TABLE [dbo].[LikePublicacion]  WITH CHECK ADD  CONSTRAINT [FK_LikePublicacion_Publicacion] FOREIGN KEY([Id_Publicacion])
+	REFERENCES [dbo].[Publicacion] ([Id_Publicacion])
+	ON DELETE CASCADE
+	GO
+	ALTER TABLE [dbo].[LikePublicacion] CHECK CONSTRAINT [FK_LikePublicacion_Publicacion]
+	GO
+	ALTER TABLE [dbo].[LikePublicacion]  WITH CHECK ADD  CONSTRAINT [FK_LikePublicacion_User] FOREIGN KEY([Id_User])
+	REFERENCES [dbo].[User] ([Id_User])
+	GO
+	ALTER TABLE [dbo].[LikePublicacion] CHECK CONSTRAINT [FK_LikePublicacion_User]
+	GO
+	ALTER TABLE [dbo].[ComentarioPublicacion]  WITH CHECK ADD  CONSTRAINT [FK_ComentarioPublicacion_Publicacion] FOREIGN KEY([Id_Publicacion])
+	REFERENCES [dbo].[Publicacion] ([Id_Publicacion])
+	ON DELETE CASCADE
+	GO
+	ALTER TABLE [dbo].[ComentarioPublicacion] CHECK CONSTRAINT [FK_ComentarioPublicacion_Publicacion]
+	GO
+	ALTER TABLE [dbo].[ComentarioPublicacion]  WITH CHECK ADD  CONSTRAINT [FK_ComentarioPublicacion_User] FOREIGN KEY([Id_User])
+	REFERENCES [dbo].[User] ([Id_User])
+	GO
+	ALTER TABLE [dbo].[ComentarioPublicacion] CHECK CONSTRAINT [FK_ComentarioPublicacion_User]
+	GO
+	ALTER TABLE [dbo].[CompartirPublicacion]  WITH CHECK ADD  CONSTRAINT [FK_CompartirPublicacion_Publicacion] FOREIGN KEY([Id_Publicacion])
+	REFERENCES [dbo].[Publicacion] ([Id_Publicacion])
+	ON DELETE CASCADE
+	GO
+	ALTER TABLE [dbo].[CompartirPublicacion] CHECK CONSTRAINT [FK_CompartirPublicacion_Publicacion]
+	GO
+	ALTER TABLE [dbo].[CompartirPublicacion]  WITH CHECK ADD  CONSTRAINT [FK_CompartirPublicacion_User] FOREIGN KEY([Id_User])
+	REFERENCES [dbo].[User] ([Id_User])
+	GO
+	ALTER TABLE [dbo].[CompartirPublicacion] CHECK CONSTRAINT [FK_CompartirPublicacion_User]
+	GO
+	ALTER TABLE [dbo].[Historia]  WITH CHECK ADD  CONSTRAINT [FK_Historia_User] FOREIGN KEY([Id_User])
+	REFERENCES [dbo].[User] ([Id_User])
+	GO
+	ALTER TABLE [dbo].[Historia] CHECK CONSTRAINT [FK_Historia_User]
+	GO
+	ALTER TABLE [dbo].[Historia]  WITH CHECK ADD  CONSTRAINT [FK_Historia_Mascota] FOREIGN KEY([Id_Mascota])
+	REFERENCES [dbo].[Mascota] ([Id_Mascota])
+	GO
+	ALTER TABLE [dbo].[Historia] CHECK CONSTRAINT [FK_Historia_Mascota]
+	GO
+	ALTER TABLE [dbo].[HistoriaDestacada]  WITH CHECK ADD  CONSTRAINT [FK_HistoriaDestacada_User] FOREIGN KEY([Id_User])
+	REFERENCES [dbo].[User] ([Id_User])
+	GO
+	ALTER TABLE [dbo].[HistoriaDestacada] CHECK CONSTRAINT [FK_HistoriaDestacada_User]
+	GO
+	ALTER TABLE [dbo].[HistoriaDestacada]  WITH CHECK ADD  CONSTRAINT [FK_HistoriaDestacada_Historia] FOREIGN KEY([Id_Historia])
+	REFERENCES [dbo].[Historia] ([Id_Historia])
+	ON DELETE CASCADE
+	GO
+	ALTER TABLE [dbo].[HistoriaDestacada] CHECK CONSTRAINT [FK_HistoriaDestacada_Historia]
+	GO
+	ALTER TABLE [dbo].[Mencion]  WITH CHECK ADD  CONSTRAINT [FK_Mencion_User_Mencionado] FOREIGN KEY([Id_User_Mencionado])
+	REFERENCES [dbo].[User] ([Id_User])
+	GO
+	ALTER TABLE [dbo].[Mencion] CHECK CONSTRAINT [FK_Mencion_User_Mencionado]
+	GO
+	ALTER TABLE [dbo].[Mencion]  WITH CHECK ADD  CONSTRAINT [FK_Mencion_User_Menciona] FOREIGN KEY([Id_User_Menciona])
+	REFERENCES [dbo].[User] ([Id_User])
+	GO
+	ALTER TABLE [dbo].[Mencion] CHECK CONSTRAINT [FK_Mencion_User_Menciona]
+	GO
+	ALTER TABLE [dbo].[Mencion]  WITH CHECK ADD  CONSTRAINT [FK_Mencion_Publicacion] FOREIGN KEY([Id_Publicacion])
+	REFERENCES [dbo].[Publicacion] ([Id_Publicacion])
+	ON DELETE CASCADE
+	GO
+	ALTER TABLE [dbo].[Mencion] CHECK CONSTRAINT [FK_Mencion_Publicacion]
+	GO
+	ALTER TABLE [dbo].[Mencion]  WITH CHECK ADD  CONSTRAINT [FK_Mencion_Historia] FOREIGN KEY([Id_Historia])
+	REFERENCES [dbo].[Historia] ([Id_Historia])
+	ON DELETE CASCADE
+	GO
+	ALTER TABLE [dbo].[Mencion] CHECK CONSTRAINT [FK_Mencion_Historia]
+	GO
+	/****** Object:  Indexes for Perfil Social Tables ******/
+	CREATE NONCLUSTERED INDEX [IX_Publicacion_User_Fecha] ON [dbo].[Publicacion]
+	(
+		[Id_User] ASC,
+		[Fecha] DESC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	GO
+	CREATE UNIQUE NONCLUSTERED INDEX [UQ_LikePublicacion_User_Publicacion] ON [dbo].[LikePublicacion]
+	(
+		[Id_User] ASC,
+		[Id_Publicacion] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	GO
+	CREATE UNIQUE NONCLUSTERED INDEX [UQ_CompartirPublicacion_User_Publicacion] ON [dbo].[CompartirPublicacion]
+	(
+		[Id_User] ASC,
+		[Id_Publicacion] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	GO
+	CREATE NONCLUSTERED INDEX [IX_Historia_User_Expiracion] ON [dbo].[Historia]
+	(
+		[Id_User] ASC,
+		[Expiracion] DESC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	GO
+	CREATE UNIQUE NONCLUSTERED INDEX [UQ_HistoriaDestacada_User_Historia] ON [dbo].[HistoriaDestacada]
+	(
+		[Id_User] ASC,
+		[Id_Historia] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	GO
+	CREATE NONCLUSTERED INDEX [IX_Mencion_User_Mencionado] ON [dbo].[Mencion]
+	(
+		[Id_User_Mencionado] ASC,
+		[Vista] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	GO

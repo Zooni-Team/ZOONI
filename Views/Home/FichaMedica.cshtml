@@ -265,11 +265,78 @@ body.tema-oscuro .dato {
     border-radius: 8px;
     transition: all 0.2s ease;
     opacity: 0.6;
+    flex-shrink: 0;
 }
 .btn-editar-mini:hover {
     opacity: 1;
     background: rgba(57, 183, 124, 0.1);
     transform: scale(1.1);
+}
+
+#pesoEditForm, #fechaEditForm {
+    display: none;
+    margin-top: 12px;
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(57, 183, 124, 0.05);
+    border: 1px solid rgba(57, 183, 124, 0.2);
+}
+
+#pesoEditForm input, #fechaEditForm input {
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 2px solid var(--verde);
+    width: 100%;
+    max-width: 200px;
+    margin-bottom: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+#pesoEditForm .btn-accion, #fechaEditForm .btn-accion {
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Poppins', sans-serif;
+    margin-right: 8px;
+    margin-top: 5px;
+}
+
+#pesoEditForm .btn-guardar, #fechaEditForm .btn-guardar {
+    background: var(--verde);
+    color: white;
+}
+
+#pesoEditForm .btn-guardar:hover, #fechaEditForm .btn-guardar:hover {
+    background: #2e9b67;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(57, 183, 124, 0.3);
+}
+
+#pesoEditForm .btn-cancelar, #fechaEditForm .btn-cancelar {
+    background: #ccc;
+    color: var(--marron);
+}
+
+body.tema-oscuro #pesoEditForm .btn-cancelar,
+body.tema-oscuro #fechaEditForm .btn-cancelar {
+    background: #555;
+    color: #fff;
+}
+
+#pesoEditForm .btn-cancelar:hover, #fechaEditForm .btn-cancelar:hover {
+    background: #bbb;
+    transform: translateY(-1px);
+}
+
+body.tema-oscuro #pesoEditForm .btn-cancelar:hover,
+body.tema-oscuro #fechaEditForm .btn-cancelar:hover {
+    background: #666;
 }
 
 
@@ -452,11 +519,13 @@ body.tema-oscuro .consejo {
                 <span style="flex: 1;">⚖️ <span>Peso:</span> <span id="pesoDisplay">@pesoFormateado</span></span>
                 <button class="btn-editar-mini" onclick="editarPeso()" title="Editar peso">✏️</button>
             </div>
-            <div id="pesoEditForm" style="display: none; margin-top: 10px;">
+            <div id="pesoEditForm">
                 <input type="text" id="pesoInput" value="@(pesoDisplay?.Replace(" kg", "") ?? pesoDecimal.ToString("F2", System.Globalization.CultureInfo.InvariantCulture))" 
-                       placeholder="Ej: 5.5" style="padding: 8px; border-radius: 8px; border: 2px solid var(--verde); width: 60%; margin-right: 5px;" />
-                <button onclick="guardarPeso()" style="padding: 8px 15px; background: var(--verde); color: white; border: none; border-radius: 8px; cursor: pointer;">Guardar</button>
-                <button onclick="cancelarEditarPeso()" style="padding: 8px 15px; background: #ccc; color: var(--marron); border: none; border-radius: 8px; cursor: pointer; margin-left: 5px;">Cancelar</button>
+                       placeholder="Ej: 5.5 o 5,5" />
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button onclick="guardarPeso()" class="btn-accion btn-guardar">Guardar</button>
+                    <button onclick="cancelarEditarPeso()" class="btn-accion btn-cancelar">Cancelar</button>
+                </div>
             </div>
         </div>
         <div class="dato editable-dato">
@@ -464,12 +533,13 @@ body.tema-oscuro .consejo {
                 <span style="flex: 1;">🎂 <span>Edad:</span> <span id="edadDisplay">@edadFormateada</span></span>
                 <button class="btn-editar-mini" onclick="editarFechaNacimiento()" title="Editar fecha de nacimiento">✏️</button>
             </div>
-            <div id="fechaEditForm" style="display: none; margin-top: 10px;">
-                <input type="date" id="fechaNacimientoInput" value="@fechaNacimientoStr" 
-                       style="padding: 8px; border-radius: 8px; border: 2px solid var(--verde); width: 60%; margin-right: 5px;" />
-                <button onclick="guardarFechaNacimiento()" style="padding: 8px 15px; background: var(--verde); color: white; border: none; border-radius: 8px; cursor: pointer;">Guardar</button>
-                <button onclick="cancelarEditarFecha()" style="padding: 8px 15px; background: #ccc; color: var(--marron); border: none; border-radius: 8px; cursor: pointer; margin-left: 5px;">Cancelar</button>
-                <small style="display: block; margin-top: 5px; opacity: 0.7; font-size: 0.85rem;">Si ingresás la fecha de nacimiento, la edad se calculará automáticamente día tras día.</small>
+            <div id="fechaEditForm">
+                <input type="date" id="fechaNacimientoInput" value="@fechaNacimientoStr" />
+                <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                    <button onclick="guardarFechaNacimiento()" class="btn-accion btn-guardar">Guardar</button>
+                    <button onclick="cancelarEditarFecha()" class="btn-accion btn-cancelar">Cancelar</button>
+                </div>
+                <small style="display: block; margin-top: 8px; opacity: 0.7; font-size: 0.85rem;">Si ingresás la fecha de nacimiento, la edad se calculará automáticamente día tras día.</small>
             </div>
         </div>
     </div>

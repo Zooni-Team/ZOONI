@@ -104,5 +104,32 @@ namespace Zooni.Models
                 throw;
             }
         }
+
+        // ======================================================
+        // 🔹 Ejecuta script SQL completo (múltiples comandos)
+        // ======================================================
+        public static void ExecuteScript(string script)
+        {
+            try
+            {
+                using var connection = GetConnection();
+                // Dividir por GO y ejecutar cada comando
+                var commands = script.Split(new[] { "GO", "go", "Go" }, StringSplitOptions.RemoveEmptyEntries);
+                
+                foreach (var cmd in commands)
+                {
+                    var trimmedCmd = cmd.Trim();
+                    if (string.IsNullOrWhiteSpace(trimmedCmd)) continue;
+                    
+                    using var command = new SqlCommand(trimmedCmd, connection);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"❌ Error en ExecuteScript:\n{ex.Message}");
+                throw;
+            }
+        }
     }
 }

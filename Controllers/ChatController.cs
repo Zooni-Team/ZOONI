@@ -52,9 +52,43 @@ namespace Zooni.Controllers
                 string nombre = mascota["Nombre"].ToString();
                 string especie = mascota["Especie"].ToString();
                 string raza = mascota["Raza"].ToString();
-                decimal pesoDecimal = Convert.ToDecimal(mascota["Peso"] ?? 0);
-                string? pesoDisplay = mascota.Table.Columns.Contains("PesoDisplay") ? 
-                    mascota["PesoDisplay"]?.ToString() : null;
+                
+                // Manejo mejorado del peso usando PesoHelper
+                decimal pesoDecimal = 0;
+                string? pesoDisplay = null;
+                
+                if (mascota.Table.Columns.Contains("PesoDisplay") && mascota["PesoDisplay"] != DBNull.Value)
+                {
+                    pesoDisplay = mascota["PesoDisplay"].ToString();
+                }
+                
+                if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
+                {
+                    // ✅ Corrección global: dividir por 10 si no hay PesoDisplay y el peso parece incorrecto (>= 10)
+                    if (string.IsNullOrEmpty(pesoDisplay) && pesoDecimal >= 10)
+                    {
+                        decimal pesoCorregido = pesoDecimal / 10;
+                        if (pesoCorregido <= 200 && pesoCorregido >= 0.1M)
+                        {
+                            pesoDecimal = pesoCorregido;
+                            pesoDisplay = PesoHelper.FormatearPeso(pesoDecimal);
+                        }
+                    }
+                    // Si el peso es muy alto incluso después de dividir, aplicar corrección adicional
+                    else if (string.IsNullOrEmpty(pesoDisplay) && pesoDecimal > 200)
+                    {
+                        decimal pesoCorregido = pesoDecimal / 10;
+                        if (pesoCorregido > 200)
+                        {
+                            pesoCorregido = pesoDecimal / 100;
+                        }
+                        if (pesoCorregido <= 200 && pesoCorregido >= 0.1M)
+                        {
+                            pesoDecimal = pesoCorregido;
+                            pesoDisplay = PesoHelper.FormatearPeso(pesoDecimal);
+                        }
+                    }
+                }
                 int edad = Convert.ToInt32(mascota["Edad"] ?? 0);
                 string sexo = mascota["Sexo"]?.ToString() ?? "No definido";
                 bool esterilizado = Convert.ToBoolean(mascota["Esterilizado"]);

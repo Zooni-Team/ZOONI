@@ -503,7 +503,14 @@ body.tema-oscuro .card:hover {
             @foreach (var m in mascotasActivas)
             {
                 <div class="card">
-                    <img src="@(string.IsNullOrWhiteSpace(m.Foto) ? "/img/mascotas/default.png" : m.Foto)" alt="@(m.Nombre ?? "Mascota")" onerror="this.src='/img/mascotas/default.png'" />
+                    @{
+                        string fotoSrc = "/img/mascotas/default.png";
+                        if (!string.IsNullOrWhiteSpace(m.Foto))
+                        {
+                            fotoSrc = m.Foto.StartsWith("/") ? m.Foto : "/" + m.Foto;
+                        }
+                    }
+                    <img src="@fotoSrc" alt="@(m.Nombre ?? "Mascota")" onerror="this.src='/img/mascotas/default.png'" />
                     <h3>@m.Nombre</h3>
                     <p>@m.Especie - @m.Raza</p>
                     <div class="acciones">
@@ -533,7 +540,14 @@ body.tema-oscuro .card:hover {
             @foreach (var m in mascotasArchivadas)
             {
                 <div class="card archivada">
-                    <img src="@(string.IsNullOrWhiteSpace(m.Foto) ? "/img/mascotas/default.png" : m.Foto)" alt="@(m.Nombre ?? "Mascota")" onerror="this.src='/img/mascotas/default.png'" />
+                    @{
+                        string fotoSrcArch = "/img/mascotas/default.png";
+                        if (!string.IsNullOrWhiteSpace(m.Foto))
+                        {
+                            fotoSrcArch = m.Foto.StartsWith("/") ? m.Foto : "/" + m.Foto;
+                        }
+                    }
+                    <img src="@fotoSrcArch" alt="@(m.Nombre ?? "Mascota")" onerror="this.src='/img/mascotas/default.png'" />
                     <h3>@m.Nombre</h3>
                     <p>@m.Especie - @m.Raza</p>
                 </div>

@@ -390,8 +390,19 @@ body.tema-oscuro .btn-cancelar:hover {
 
             <div class="form-group">
                 <label for="PesoDisplay">⚖️ Peso (kg)</label>
+                @{
+                    string pesoValorInput = "";
+                    if (!string.IsNullOrEmpty(pesoDisplay))
+                    {
+                        pesoValorInput = pesoDisplay.Replace(" kg", "");
+                    }
+                    else
+                    {
+                        pesoValorInput = Model.Peso.ToString("F2", System.Globalization.CultureInfo.InvariantCulture);
+                    }
+                }
                 <input type="text" id="PesoDisplay" name="PesoDisplay" 
-                       value="@(string.IsNullOrEmpty(pesoDisplay) ? Model.Peso.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) : pesoDisplay.Replace(" kg", ""))" 
+                       value="@pesoValorInput" 
                        placeholder="Ej: 5.5 o 5,5" />
                 <small style="display: block; margin-top: 0.5rem; opacity: 0.7;">
                     También podés usar un slider más abajo
@@ -401,9 +412,20 @@ body.tema-oscuro .btn-cancelar:hover {
             <div class="form-group">
                 <label for="Peso">⚖️ Peso (slider)</label>
                 <div class="slider-container">
+                    @{
+                        decimal pesoSlider = Model.Peso;
+                        if (!string.IsNullOrEmpty(pesoDisplay))
+                        {
+                            string pesoLimpio = pesoDisplay.Replace(" kg", "").Replace(",", ".");
+                            if (decimal.TryParse(pesoLimpio, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out decimal pesoParseado))
+                            {
+                                pesoSlider = pesoParseado;
+                            }
+                        }
+                    }
                     <input type="range" id="Peso" name="Peso" min="0.1" max="80" step="0.1" 
-                           value="@Model.Peso.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)" />
-                    <div class="valor-display" id="pesoTexto">@Model.Peso.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) kg</div>
+                           value="@pesoSlider.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)" />
+                    <div class="valor-display" id="pesoTexto">@pesoSlider.ToString("F2", System.Globalization.CultureInfo.InvariantCulture) kg</div>
                 </div>
             </div>
 

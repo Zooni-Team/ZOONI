@@ -1,9 +1,20 @@
 @using Zooni.Models
 @{
-    ViewData["Title"] = "Perfil - Zooni 👤";
+    ViewData["Title"] = "Perfil - Zooni";
     Layout = null;
     var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
     var mascotas = ViewBag.Mascotas as List<Mascota> ?? new List<Mascota>();
+    var publicaciones = ViewBag.Publicaciones as List<Publicacion> ?? new List<Publicacion>();
+    var historias = ViewBag.Historias as List<Historia> ?? new List<Historia>();
+    var historiasDestacadas = ViewBag.HistoriasDestacadas as List<HistoriaDestacada> ?? new List<HistoriaDestacada>();
+    var amigos = ViewBag.Amigos as List<object> ?? new List<object>();
+    var esMiPerfil = ViewBag.EsMiPerfil ?? false;
+    var perfilId = ViewBag.PerfilId ?? 0;
+    var esAmigo = ViewBag.EsAmigo ?? false;
+    var tieneSolicitud = ViewBag.TieneSolicitud ?? false;
+    var cantidadPublicaciones = ViewBag.CantidadPublicaciones ?? 0;
+    var cantidadSeguidores = ViewBag.CantidadSeguidores ?? 0;
+    var cantidadSiguiendo = ViewBag.CantidadSiguiendo ?? 0;
     
     // ✅ Manejo seguro y limpieza de valores
     string LimpiarTexto(string texto)
@@ -26,10 +37,10 @@
     if (string.IsNullOrWhiteSpace(pais))
         pais = "Argentina";
     
-    var descripcionRaw = ViewBag.Descripcion?.ToString() ?? "Amante de los animales ❤️";
+    var descripcionRaw = ViewBag.Descripcion?.ToString() ?? "Amante de los animales";
     var descripcion = LimpiarTexto(descripcionRaw);
     if (string.IsNullOrWhiteSpace(descripcion))
-        descripcion = "Amante de los animales ❤️";
+        descripcion = "Amante de los animales";
     
     var fotoPerfilRaw = ViewBag.FotoPerfil?.ToString() ?? "/img/perfil/default.png";
     var fotoPerfil = LimpiarTexto(fotoPerfilRaw);
@@ -64,6 +75,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>@ViewData["Title"]</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<script src="~/lib/country-state-city/country-state-city.umd.min.js"></script>
 <style>
 :root {
   --verde: #39b77c;
@@ -196,13 +208,13 @@ body.tema-oscuro .cerrar-menu {
 main {
   margin-top: 90px;
   width: 100%;
-  max-width: 600px;
+  max-width: 900px;
   margin-left: auto;
   margin-right: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
   padding: 0 20px 60px 20px;
+  gap: 20px;
 }
 
 h1 {
@@ -344,6 +356,12 @@ body.tema-oscuro .form-group select {
 .form-group textarea {
   resize: vertical;
   min-height: 100px;
+}
+.form-group select {
+  cursor: pointer;
+}
+.form-group select option {
+  padding: 8px;
 }
 
 .descripcion-vista {
@@ -561,6 +579,457 @@ input[type="file"] {
     grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
   }
 }
+
+/* ========== ESTILOS TIPO INSTAGRAM ========== */
+.perfil-header {
+  display: flex;
+  gap: 30px;
+  padding: 30px 20px;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  background: var(--card-claro);
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+body.tema-oscuro .perfil-header {
+  border-bottom-color: rgba(255,255,255,0.1);
+  background: var(--card-oscuro);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.perfil-foto-container {
+  position: relative;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+.perfil-foto {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--verde);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+.perfil-foto:hover {
+  transform: scale(1.05);
+}
+.btn-cambiar-foto {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: var(--verde);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+.btn-cambiar-foto:hover {
+  background: #2fa76b;
+  transform: scale(1.1);
+}
+
+.perfil-info {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.perfil-nombre-acciones {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+}
+.perfil-username {
+  font-size: 1.8rem;
+  font-weight: 300;
+  margin: 0;
+  color: inherit;
+}
+.btn-perfil {
+  padding: 10px 18px;
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 10px;
+  background: transparent;
+  color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+body.tema-oscuro .btn-perfil {
+  border-color: rgba(255,255,255,0.2);
+}
+.btn-perfil:hover {
+  background: rgba(0,0,0,0.05);
+  transform: translateY(-1px);
+}
+body.tema-oscuro .btn-perfil:hover {
+  background: rgba(255,255,255,0.05);
+}
+.btn-editar {
+  background: var(--verde);
+  color: white;
+  border-color: var(--verde);
+}
+.btn-editar:hover {
+  background: #2fa76b;
+}
+.btn-amigo {
+  background: var(--verde);
+  color: white;
+  border-color: var(--verde);
+}
+.btn-agregar {
+  background: var(--verde);
+  color: white;
+  border-color: var(--verde);
+}
+.btn-pendiente {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.perfil-stats {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 0;
+  padding: 15px 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+body.tema-oscuro .perfil-stats {
+  border-top-color: rgba(255,255,255,0.1);
+  border-bottom-color: rgba(255,255,255,0.1);
+}
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.stat-item:hover {
+  transform: scale(1.05);
+}
+.stat-item strong {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: inherit;
+}
+.stat-item span {
+  font-size: 0.85rem;
+  opacity: 0.7;
+  text-transform: lowercase;
+}
+
+.perfil-descripcion {
+  margin-top: 0;
+}
+.perfil-descripcion strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+.perfil-descripcion p {
+  margin: 8px 0;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+.perfil-ubicacion {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.9rem;
+  opacity: 0.7;
+  font-weight: 500;
+}
+
+.historias-section {
+  margin-bottom: 30px;
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+body.tema-oscuro .historias-section {
+  border-bottom-color: rgba(255,255,255,0.1);
+}
+.historias-destacadas,
+.historias-activas {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 10px 0;
+  scrollbar-width: thin;
+}
+.historia-destacada,
+.historia-item {
+  flex-shrink: 0;
+  text-align: center;
+  cursor: pointer;
+}
+.historia-destacada-imagen,
+.historia-imagen {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid var(--verde);
+  overflow: hidden;
+  margin-bottom: 5px;
+}
+.historia-destacada-imagen img,
+.historia-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.historia-destacada-titulo,
+.historia-usuario {
+  font-size: 0.75rem;
+  display: block;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.amigos-section {
+  margin-bottom: 30px;
+}
+.amigos-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+.amigos-grid {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+.amigo-item {
+  flex-shrink: 0;
+  text-align: center;
+  cursor: pointer;
+}
+.amigo-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--verde);
+  margin-bottom: 5px;
+}
+.amigo-item span {
+  display: block;
+  font-size: 0.75rem;
+  max-width: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.publicaciones-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+body.tema-oscuro .publicaciones-tabs {
+  border-top-color: rgba(255,255,255,0.1);
+}
+.tab-btn {
+  flex: 1;
+  padding: 15px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  opacity: 0.5;
+  transition: all 0.2s;
+}
+.tab-btn.active {
+  opacity: 1;
+  border-bottom-color: var(--verde);
+}
+
+.publicaciones-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  margin-bottom: 30px;
+}
+.publicacion-item {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  cursor: pointer;
+  background: rgba(0,0,0,0.1);
+}
+.publicacion-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+.publicacion-item:hover img {
+  transform: scale(1.1);
+}
+.publicacion-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  color: white;
+  font-weight: 600;
+}
+.publicacion-item:hover .publicacion-overlay {
+  opacity: 1;
+}
+.publicacion-anclada {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(0,0,0,0.7);
+  color: white;
+  padding: 5px 8px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  z-index: 2;
+}
+
+.sin-publicaciones {
+  text-align: center;
+  padding: 60px 20px;
+  color: inherit;
+  opacity: 0.6;
+}
+
+.modal-publicacion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-content {
+  background: var(--card-claro);
+  border-radius: 12px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+body.tema-oscuro .modal-content {
+  background: var(--card-oscuro);
+}
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  z-index: 10;
+}
+
+@@media (max-width: 768px) {
+  main {
+    padding: 0 15px 60px 15px;
+  }
+  .perfil-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 20px 15px;
+    gap: 20px;
+  }
+  .perfil-foto-container {
+    align-self: center;
+  }
+  .perfil-foto {
+    width: 120px;
+    height: 120px;
+  }
+  .btn-cambiar-foto {
+    width: 36px;
+    height: 36px;
+    font-size: 1.2rem;
+  }
+  .perfil-info {
+    width: 100%;
+    align-items: center;
+  }
+  .perfil-nombre-acciones {
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+  }
+  .btn-perfil {
+    width: 100%;
+    max-width: 200px;
+  }
+  .perfil-stats {
+    justify-content: space-around;
+    gap: 20px;
+    width: 100%;
+  }
+  .perfil-descripcion {
+    text-align: center;
+    width: 100%;
+  }
+  .publicaciones-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+  }
+  .historias-section {
+    padding: 15px 0;
+  }
+  .amigos-section {
+    padding: 15px 0;
+  }
+  .modal-content {
+    max-width: 95%;
+    margin: 10px;
+  }
+}
 </style>
 </head>
 
@@ -571,206 +1040,638 @@ input[type="file"] {
 
 <div class="menu-lateral" id="menuLateral">
     <div class="cerrar-menu" id="cerrarMenu">✖</div>
-    <a href="/Home/Index">🏠 Inicio</a>
-    <a href="/Home/Comunidad">👥 Comunidad</a>
-    <a href="/Marketplace">🛒 Marketplace</a>
-    <a href="/home/FichaMedica">💉 Ficha médica</a>
-    <a href="/home/calendario">📅 Calendario</a>
-    <a href="/Chat/ChatZooni">💬 ChatBot</a>
-    <a href="/Home/Closet">👕 Closet</a>
-    <a href="/Home/Perfil">👤 Perfil</a>
-    <a href="/Home/configuracion">⚙️ Configuración</a>
-    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+    <a href="/Home/Index">Inicio</a>
+    <a href="/Home/Comunidad">Comunidad</a>
+    <a href="/Marketplace">Marketplace</a>
+    <a href="/home/FichaMedica">Ficha médica</a>
+    <a href="/home/calendario">Calendario</a>
+    <a href="/Chat/ChatZooni">ChatBot</a>
+    <a href="/Home/Closet">Closet</a>
+    <a href="/Home/Perfil">Perfil</a>
+    <a href="/Home/configuracion">Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">Cerrar sesión</a>
 </div>
 <div class="overlay" id="overlay"></div>
 
 <main>
-  <h1>Mi Perfil 👤</h1>
+  <div class="perfil-header">
+    <div class="perfil-foto-container">
+      <img src="@fotoPerfil" alt="@nombreCompleto" class="perfil-foto" onerror="this.src='/img/perfil/default.png'" />
+      @if (esMiPerfil)
+      {
+        <button class="btn-cambiar-foto" onclick="abrirModalEditarPerfil()" title="Cambiar foto">+</button>
+        <input type="file" id="fotoInput" accept="image/*" style="display:none;" />
+      }
+    </div>
+    <div class="perfil-info">
+      <div class="perfil-nombre-acciones">
+        <h1 class="perfil-username">@nombreCompleto</h1>
+        @if (esMiPerfil)
+        {
+          <button class="btn-perfil btn-editar" onclick="abrirModalEditarPerfil()">Editar perfil</button>
+          <button class="btn-perfil btn-config" onclick="document.getElementById('menuLateral').classList.add('abierto'); document.getElementById('overlay').classList.add('activo');">Config</button>
+          <button class="btn-perfil btn-nueva-publicacion" onclick="abrirModalNuevaPublicacion()" style="background: var(--amarillo); color: #3a2b00;">Nueva publicación</button>
+        }
+        else
+        {
+          if (esAmigo)
+          {
+            <button class="btn-perfil btn-amigo" onclick="eliminarAmigo(@perfilId)">Amigo ✓</button>
+          }
+          else if (tieneSolicitud)
+          {
+            <button class="btn-perfil btn-pendiente" disabled>Solicitud pendiente</button>
+          }
+          else
+          {
+            <button class="btn-perfil btn-agregar" onclick="agregarAmigo(@perfilId)">Agregar</button>
+          }
+          <button class="btn-perfil btn-mensaje" onclick="abrirChat(@perfilId)">Mensaje</button>
+        }
+      </div>
+      <div class="perfil-stats">
+        <div class="stat-item">
+          <strong>@cantidadPublicaciones</strong>
+          <span>publicaciones</span>
+        </div>
+        <div class="stat-item" onclick="@(esMiPerfil ? "location.href='/Home/Comunidad'" : "")" style="@(esMiPerfil ? "cursor:pointer;" : "")">
+          <strong>@cantidadSeguidores</strong>
+          <span>seguidores</span>
+        </div>
+        <div class="stat-item" onclick="@(esMiPerfil ? "location.href='/Home/Comunidad'" : "")" style="@(esMiPerfil ? "cursor:pointer;" : "")">
+          <strong>@cantidadSiguiendo</strong>
+          <span>siguiendo</span>
+        </div>
+      </div>
+      <div class="perfil-descripcion">
+        <strong>@nombreCompleto</strong>
+        <p>@descripcion</p>
+        <span class="perfil-ubicacion">@pais</span>
+      </div>
+    </div>
+  </div>
 
   @if (TempData["Exito"] != null)
   {
-      <section style="margin-bottom: 20px;">
-          <div class="mensaje mensaje-exito">@TempData["Exito"]</div>
-      </section>
+    <div class="mensaje mensaje-exito">@TempData["Exito"]</div>
   }
   @if (TempData["Error"] != null)
   {
-      <section style="margin-bottom: 20px;">
-          <div class="mensaje mensaje-error">@TempData["Error"]</div>
-      </section>
+    <div class="mensaje mensaje-error">@TempData["Error"]</div>
   }
 
-  <section>
-    <div class="avatar-usuario">
-      <img src="@fotoPerfil" alt="Avatar de perfil" id="fotoPerfilPreview" onerror="this.src='/img/perfil/default.png'" />
-      <button class="cambiar-foto" onclick="document.getElementById('fotoInput').click()" title="Cambiar foto">📷</button>
-      <input type="file" id="fotoInput" accept="image/*" />
-      <div class="nombre" id="nombreDisplay">@nombreCompleto</div>
-      <div class="pais">🌎 <span id="paisDisplay">@pais</span></div>
-    </div>
-
-    <!-- Modo Vista -->
-    <div class="modo-vista" id="modoVista">
-      <div class="form-group">
-        <label>Descripción</label>
-        <div class="descripcion-vista">
-          <span id="descripcionDisplay">@descripcion</span>
-        </div>
-      </div>
-
-      <button class="editar-btn" onclick="activarEdicion()">✏️ Editar Perfil</button>
-    </div>
-
-    <!-- Modo Edición -->
-    <form method="post" action="/Home/ActualizarPerfil" enctype="multipart/form-data" class="modo-edicion" id="modoEdicion">
-      @Html.AntiForgeryToken()
-      
-      <div class="form-group">
-        <label for="Nombre">Nombre</label>
-        <input type="text" id="Nombre" name="Nombre" value="@nombreUsuario" required />
-      </div>
-
-      <div class="form-group">
-        <label for="Apellido">Apellido</label>
-        <input type="text" id="Apellido" name="Apellido" value="@apellidoUsuario" required />
-      </div>
-
-      <div class="form-group">
-        <label for="Pais">País</label>
-        <select id="Pais" name="Pais" required>
-          @{
-            var esArg = pais == "Argentina";
-            var esChi = pais == "Chile";
-            var esUru = pais == "Uruguay";
-            var esPar = pais == "Paraguay";
-            var esBra = pais == "Brasil";
-            var esMex = pais == "México";
-            var esCol = pais == "Colombia";
-            var esEsp = pais == "España";
-            var esOtr = !esArg && !esChi && !esUru && !esPar && !esBra && !esMex && !esCol && !esEsp;
-          }
-          @if (esArg) { <option value="Argentina" selected>Argentina</option> } else { <option value="Argentina">Argentina</option> }
-          @if (esChi) { <option value="Chile" selected>Chile</option> } else { <option value="Chile">Chile</option> }
-          @if (esUru) { <option value="Uruguay" selected>Uruguay</option> } else { <option value="Uruguay">Uruguay</option> }
-          @if (esPar) { <option value="Paraguay" selected>Paraguay</option> } else { <option value="Paraguay">Paraguay</option> }
-          @if (esBra) { <option value="Brasil" selected>Brasil</option> } else { <option value="Brasil">Brasil</option> }
-          @if (esMex) { <option value="México" selected>México</option> } else { <option value="México">México</option> }
-          @if (esCol) { <option value="Colombia" selected>Colombia</option> } else { <option value="Colombia">Colombia</option> }
-          @if (esEsp) { <option value="España" selected>España</option> } else { <option value="España">España</option> }
-          @if (esOtr) { <option value="Otro" selected>Otro</option> } else { <option value="Otro">Otro</option> }
-        </select>
-      </div>
-
-      <div class="form-group">
-        <label for="Descripcion">Descripción</label>
-        <textarea id="Descripcion" name="Descripcion" maxlength="200" placeholder="Cuéntanos sobre ti y tus mascotas...">@descripcion</textarea>
-        <small style="color: inherit; opacity: 0.7; font-size: 0.85rem; display: block; margin-top: 5px;">@(descripcion?.Length ?? 0)/200 caracteres</small>
-      </div>
-
-      <div class="form-group">
-        <label>Foto de Perfil</label>
-        <input type="file" id="FotoPerfil" name="FotoPerfil" accept="image/*" onchange="previewFotoPerfil(this)" />
-        <button type="button" class="btn btn-secondary" onclick="document.getElementById('FotoPerfil').click()" style="margin-top: 5px;">📷 Seleccionar Imagen</button>
-        <small style="color: inherit; opacity: 0.7; font-size: 0.85rem; display: block; margin-top: 5px;">Formatos: JPG, PNG, GIF (máx. 5MB)</small>
-      </div>
-
-      <div style="display: flex; gap: 10px; margin-top: 20px;">
-        <button type="submit" class="btn">💾 Guardar Cambios</button>
-        <button type="button" class="btn btn-secondary" onclick="cancelarEdicion()">❌ Cancelar</button>
-      </div>
-    </form>
-  </section>
-
-  <section>
-    <h2>🐾 Mis Mascotas</h2>
-    @if (mascotas.Count > 0)
-    {
-        <div class="mascotas-grid">
-          @foreach (var m in mascotas)
+  <!-- Historias -->
+  @if (historias.Count > 0 || historiasDestacadas.Count > 0)
+  {
+    <div class="historias-section">
+      @if (historiasDestacadas.Count > 0)
+      {
+        <div class="historias-destacadas">
+          @foreach (var destacada in historiasDestacadas)
           {
-              <div class="mascota" onclick="seleccionarMascota('@m.Id_Mascota')" title="Hacé clic para seleccionar">
-                  <img src="@(string.IsNullOrEmpty(m.Foto) || m.Foto == "" ? "/img/mascotas/default.png" : (m.Foto.StartsWith("/") ? m.Foto : "/" + m.Foto))" alt="@(m.Nombre ?? "Mascota")" onerror="this.src='/img/mascotas/default.png'" />
-                  <p>@(m.Nombre ?? "Sin nombre")</p>
+            <div class="historia-destacada" onclick="verHistoriaDestacada(@destacada.Id_Historia)">
+              <div class="historia-destacada-imagen">
+                <img src="@destacada.ImagenUrl" alt="@destacada.Titulo" onerror="this.src='/img/mascotas/default.png'" />
               </div>
+              <span class="historia-destacada-titulo">@(destacada.Titulo ?? "Destacada")</span>
+            </div>
           }
         </div>
+      }
+      @if (historias.Count > 0)
+      {
+        <div class="historias-activas">
+          @foreach (var historia in historias)
+          {
+            <div class="historia-item" onclick="verHistoria(@historia.Id_Historia)">
+              <div class="historia-imagen">
+                <img src="@historia.ImagenUrl" alt="Historia" onerror="this.src='/img/mascotas/default.png'" />
+              </div>
+              <span class="historia-usuario">@(historia.NombreMascota ?? historia.NombreUsuario)</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Amigos -->
+  @if (amigos.Count > 0)
+  {
+    <div class="amigos-section">
+      <h3>Amigos</h3>
+      <div class="amigos-grid">
+        @foreach (var amigo in amigos)
+        {
+          <div class="amigo-item" onclick="location.href='/Home/Perfil?id=@(amigo.GetType().GetProperty("Id")?.GetValue(amigo))'">
+            <img src="@(amigo.GetType().GetProperty("FotoPerfil")?.GetValue(amigo) ?? "/img/perfil/default.png")" alt="@(amigo.GetType().GetProperty("Nombre")?.GetValue(amigo))" onerror="this.src='/img/perfil/default.png'" />
+            <span>@(amigo.GetType().GetProperty("Nombre")?.GetValue(amigo))</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  <!-- Publicaciones -->
+  <div class="publicaciones-tabs">
+    <button class="tab-btn active" onclick="mostrarPublicaciones('grid')">Grid</button>
+    <button class="tab-btn" onclick="mostrarPublicaciones('list')">Lista</button>
+  </div>
+
+  <div class="publicaciones-grid" id="publicacionesGrid">
+    @if (publicaciones.Count > 0)
+    {
+      @foreach (var pub in publicaciones)
+      {
+        <div class="publicacion-item" onclick="abrirPublicacion(@pub.Id_Publicacion)">
+          <img src="@(pub.ImagenUrl ?? "/img/mascotas/default.png")" alt="Publicación" onerror="this.src='/img/mascotas/default.png'" />
+          @if (pub.Anclada)
+          {
+            <div class="publicacion-anclada">Fijada</div>
+          }
+          <div class="publicacion-overlay">
+            <span>Me gusta: @pub.CantidadLikes</span>
+            <span>Comentarios: @pub.CantidadComentarios</span>
+          </div>
+        </div>
+      }
     }
     else
     {
-        <p class="mensaje-vacio">No tenés mascotas registradas aún</p>
+      <div class="sin-publicaciones">
+        <p>@(esMiPerfil ? "Aún no tenés publicaciones. ¡Compartí algo!" : "Este usuario aún no tiene publicaciones")</p>
+      </div>
     }
-  </section>
+  </div>
+
+  <!-- Modal de Publicación -->
+  <div class="modal-publicacion" id="modalPublicacion" style="display:none;">
+    <div class="modal-content">
+      <button class="modal-close" onclick="cerrarPublicacion()">X</button>
+      <div class="modal-publicacion-content" id="modalPublicacionContent">
+        <!-- Se carga dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Perfil -->
+  <div class="modal-publicacion" id="modalEditarPerfil" style="display:none;">
+    <div class="modal-content" style="max-width: 500px;">
+      <button class="modal-close" onclick="cerrarModalEditarPerfil()">X</button>
+      <div style="padding: 30px;">
+        <h2 style="margin-bottom: 20px;">Editar perfil</h2>
+        <form id="formEditarPerfil" method="post" action="/Home/ActualizarPerfil" enctype="multipart/form-data">
+          @Html.AntiForgeryToken()
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" name="Nombre" value="@nombreUsuario" required />
+          </div>
+          <div class="form-group">
+            <label>Apellido</label>
+            <input type="text" name="Apellido" value="@apellidoUsuario" required />
+          </div>
+          <div class="form-group">
+            <label>País</label>
+            <select name="Pais" id="paisSelect" required>
+              <option value="">Seleccionar país</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Descripción</label>
+            <textarea name="Descripcion" rows="4">@descripcion</textarea>
+          </div>
+          <div class="form-group">
+            <label>Foto de perfil</label>
+            <input type="file" name="FotoPerfil" accept="image/*" id="fotoPerfilInput" />
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('fotoPerfilInput').click()" style="margin-top: 10px; width: auto;">Seleccionar imagen</button>
+            <div id="fotoPreview" style="margin-top: 15px; text-align: center;">
+              <img src="@fotoPerfil" alt="Preview" id="fotoPreviewImg" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--verde); cursor: pointer;" onclick="document.getElementById('fotoPerfilInput').click()" />
+            </div>
+          </div>
+          <button type="submit" class="btn">Guardar cambios</button>
+          <button type="button" class="btn btn-secondary" onclick="cerrarModalEditarPerfil()" style="margin-top: 10px;">Cancelar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Nueva Publicación -->
+  <div class="modal-publicacion" id="modalNuevaPublicacion" style="display:none;">
+    <div class="modal-content" style="max-width: 600px;">
+      <button class="modal-close" onclick="cerrarModalNuevaPublicacion()">X</button>
+      <div style="padding: 30px;">
+        <h2 style="margin-bottom: 20px;">Nueva publicación</h2>
+        <form id="formNuevaPublicacion" method="post" action="/Home/CrearPublicacion" enctype="multipart/form-data">
+          @Html.AntiForgeryToken()
+          <div class="form-group">
+            <label>Imagen *</label>
+            <input type="file" name="imagen" accept="image/*" id="imagenPublicacionInput" required style="display: none;" />
+            <button type="button" class="btn btn-secondary" onclick="document.getElementById('imagenPublicacionInput').click()" style="width: auto; margin-bottom: 10px;">Seleccionar imagen</button>
+            <div id="imagenPreview" style="margin-top: 15px; display: none; text-align: center;">
+              <img id="previewImg" src="" alt="Preview" style="max-width: 100%; max-height: 400px; border-radius: 8px; object-fit: contain; border: 2px solid var(--verde);" />
+              <button type="button" class="btn btn-secondary" onclick="document.getElementById('imagenPublicacionInput').value=''; document.getElementById('imagenPreview').style.display='none';" style="margin-top: 10px; width: auto;">Eliminar imagen</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Mascota (opcional)</label>
+            <select name="idMascota" id="mascotaSelect">
+              <option value="">Sin mascota</option>
+              @foreach (var mascota in mascotas)
+              {
+                <option value="@mascota.Id_Mascota">@mascota.Nombre</option>
+              }
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Descripción</label>
+            <textarea name="descripcion" rows="4" placeholder="Escribe una descripción..."></textarea>
+          </div>
+          <button type="submit" class="btn">Publicar</button>
+          <button type="button" class="btn btn-secondary" onclick="cerrarModalNuevaPublicacion()" style="margin-top: 10px;">Cancelar</button>
+        </form>
+      </div>
+    </div>
+  </div>
 </main>
 
 <script>
-const menu=document.getElementById("menuLateral"),overlay=document.getElementById("overlay");
-document.getElementById("abrirMenu").onclick=()=>{menu.classList.add("abierto");overlay.classList.add("activo");};
-document.getElementById("cerrarMenu").onclick=cerrarMenu;overlay.onclick=cerrarMenu;
-function cerrarMenu(){menu.classList.remove("abierto");overlay.classList.remove("activo");}
-
-function seleccionarMascota(id){
-    if (!id) return;
-    fetch(`/Home/CambiarMascota?MascotaId=${id}`,{method:'POST'})
-        .then(()=>location.reload())
-        .catch(err=>console.error('Error al cambiar mascota:', err));
+const menu = document.getElementById("menuLateral");
+const overlay = document.getElementById("overlay");
+document.getElementById("abrirMenu").onclick = () => {
+    menu.classList.add("abierto");
+    overlay.classList.add("activo");
+};
+document.getElementById("cerrarMenu").onclick = cerrarMenu;
+overlay.onclick = cerrarMenu;
+function cerrarMenu() {
+    menu.classList.remove("abierto");
+    overlay.classList.remove("activo");
 }
 
-function activarEdicion() {
-    document.getElementById('modoVista').classList.add('oculto');
-    document.getElementById('modoEdicion').classList.add('activo');
+// Funciones para publicaciones
+function abrirPublicacion(id) {
+    // Cargar publicación completa con comentarios
+    fetch(`/Home/ObtenerComentarios?publicacionId=${id}`)
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                // Mostrar modal con publicación completa
+                document.getElementById('modalPublicacion').style.display = 'flex';
+                // Aquí cargarías la publicación completa
+            }
+        });
 }
 
-function cancelarEdicion() {
-    document.getElementById('modoVista').classList.remove('oculto');
-    document.getElementById('modoEdicion').classList.remove('activo');
-    location.reload();
+function cerrarPublicacion() {
+    document.getElementById('modalPublicacion').style.display = 'none';
 }
 
-// Preview de foto del input pequeño
-const fotoInput = document.getElementById('fotoInput');
-if (fotoInput) {
-    fotoInput.addEventListener('change', function(e) {
+function likePublicacion(id) {
+    fetch('/Home/LikePublicacion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ publicacionId: id })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            // Actualizar UI
+            location.reload();
+        }
+    });
+}
+
+function comentarPublicacion(id) {
+    const contenido = prompt('Escribí tu comentario:');
+    if (contenido) {
+        fetch('/Home/ComentarPublicacion', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ publicacionId: id, contenido: contenido })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+
+function compartirPublicacion(id) {
+    fetch('/Home/CompartirPublicacion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ publicacionId: id })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            alert('Publicación compartida');
+        }
+    });
+}
+
+function anclarPublicacion(id) {
+    if (confirm('¿Anclar esta publicación?')) {
+        fetch('/Home/AnclarPublicacion', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ publicacionId: id, anclar: true })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+
+// Funciones para amigos
+function agregarAmigo(id) {
+    fetch('/Home/AgregarAmigo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: '' })
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert(data.message || 'Error al agregar amigo');
+        }
+    });
+}
+
+function eliminarAmigo(id) {
+    if (confirm('¿Eliminar de tus amigos?')) {
+        fetch('/Home/EliminarAmigo', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ amigoId: id })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            }
+        });
+    }
+}
+
+function abrirChat(id) {
+    window.location.href = `/Home/Mensajes?userId=${id}`;
+}
+
+// Funciones para historias
+function verHistoria(id) {
+    // Implementar visor de historias
+    alert('Ver historia ' + id);
+}
+
+function verHistoriaDestacada(id) {
+    // Implementar visor de historias destacadas
+    alert('Ver historia destacada ' + id);
+}
+
+function mostrarPublicaciones(vista) {
+    // Cambiar entre vista grid y lista
+    const grid = document.getElementById('publicacionesGrid');
+    if (vista === 'grid') {
+        grid.className = 'publicaciones-grid';
+    } else {
+        grid.className = 'publicaciones-lista';
+    }
+}
+
+// Funciones para modales
+function abrirModalEditarPerfil() {
+    const modal = document.getElementById('modalEditarPerfil');
+    if (modal) {
+        modal.style.display = 'flex';
+        // Cargar países después de un pequeño delay para asegurar que el DOM esté listo
+        setTimeout(cargarPaises, 100);
+    }
+}
+
+function cerrarModalEditarPerfil() {
+    const modal = document.getElementById('modalEditarPerfil');
+    if (modal) {
+        modal.style.display = 'none';
+    }
+}
+
+function abrirModalNuevaPublicacion() {
+    document.getElementById('modalNuevaPublicacion').style.display = 'flex';
+}
+
+function cerrarModalNuevaPublicacion() {
+    document.getElementById('modalNuevaPublicacion').style.display = 'none';
+}
+
+// Preview de foto de perfil
+const fotoPerfilInput = document.getElementById('fotoPerfilInput');
+if (fotoPerfilInput) {
+    fotoPerfilInput.addEventListener('change', function(e) {
         const file = e.target.files[0];
         if (file) {
+            // Validar tamaño (máximo 5MB)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('La imagen es demasiado grande. Por favor selecciona una imagen menor a 5MB.');
+                this.value = '';
+                return;
+            }
+            
+            // Validar tipo
+            if (!file.type.startsWith('image/')) {
+                alert('Por favor selecciona un archivo de imagen válido.');
+                this.value = '';
+                return;
+            }
+            
             const reader = new FileReader();
             reader.onload = function(e) {
-                const preview = document.getElementById('fotoPerfilPreview');
-                if (preview) preview.src = e.target.result;
+                const preview = document.getElementById('fotoPreviewImg');
+                if (preview) {
+                    preview.src = e.target.result;
+                    // También actualizar la foto principal del perfil
+                    const fotoPrincipal = document.querySelector('.perfil-foto');
+                    if (fotoPrincipal) fotoPrincipal.src = e.target.result;
+                }
             };
             reader.readAsDataURL(file);
         }
     });
 }
 
-// Preview de foto del formulario
-function previewFotoPerfil(input) {
-    if (input.files && input.files[0]) {
-        const file = input.files[0];
-        if (file.size > 5 * 1024 * 1024) {
-            alert('La imagen es demasiado grande. Por favor selecciona una imagen menor a 5MB.');
-            input.value = '';
-            return;
-        }
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            const preview = document.getElementById('fotoPerfilPreview');
-            if (preview) preview.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-    }
-}
-
-// Contador de caracteres en descripción
-const descripcionTextarea = document.getElementById('Descripcion');
-if (descripcionTextarea) {
-    descripcionTextarea.addEventListener('input', function() {
-        const length = this.value.length;
-        const small = this.nextElementSibling;
-        if (small && small.tagName === 'SMALL') {
-            small.textContent = length + '/200 caracteres';
+// Preview de imagen de publicación
+const imagenPublicacionInput = document.getElementById('imagenPublicacionInput');
+if (imagenPublicacionInput) {
+    imagenPublicacionInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            // Validar tamaño (máximo 10MB)
+            if (file.size > 10 * 1024 * 1024) {
+                alert('La imagen es demasiado grande. Por favor selecciona una imagen menor a 10MB.');
+                this.value = '';
+                return;
+            }
+            
+            // Validar tipo
+            if (!file.type.startsWith('image/')) {
+                alert('Por favor selecciona un archivo de imagen válido.');
+                this.value = '';
+                return;
+            }
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const preview = document.getElementById('previewImg');
+                const previewContainer = document.getElementById('imagenPreview');
+                if (preview) {
+                    preview.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                }
+            };
+            reader.readAsDataURL(file);
         }
     });
 }
+
+// Manejar envío de formulario de nueva publicación
+const formNuevaPublicacion = document.getElementById('formNuevaPublicacion');
+if (formNuevaPublicacion) {
+    formNuevaPublicacion.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const imagenInput = document.getElementById('imagenPublicacionInput');
+        if (!imagenInput.files || imagenInput.files.length === 0) {
+            alert('Por favor selecciona una imagen');
+            return;
+        }
+        
+        const formData = new FormData();
+        
+        // Agregar imagen
+        formData.append('imagen', imagenInput.files[0]);
+        
+        // Agregar descripción
+        const descripcion = this.querySelector('textarea[name="descripcion"]').value;
+        formData.append('descripcion', descripcion || '');
+        
+        // Agregar mascota si está seleccionada
+        const idMascota = this.querySelector('select[name="idMascota"]').value;
+        if (idMascota) {
+            formData.append('idMascota', idMascota);
+        }
+        
+        // Agregar token anti-forgery
+        const token = this.querySelector('input[name="__RequestVerificationToken"]');
+        if (token) {
+            formData.append('__RequestVerificationToken', token.value);
+        }
+        
+        const btnSubmit = this.querySelector('button[type="submit"]');
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = 'Publicando...';
+        
+        fetch('/Home/CrearPublicacion', {
+            method: 'POST',
+            body: formData
+        })
+        .then(r => {
+            if (r.ok) {
+                return r.json();
+            }
+            return r.text().then(text => {
+                console.error('Error del servidor:', text);
+                throw new Error('Error en la respuesta del servidor: ' + r.status);
+            });
+        })
+        .then(data => {
+            if (data.success) {
+                cerrarModalNuevaPublicacion();
+                location.reload();
+            } else {
+                alert('Error al crear la publicación: ' + (data.message || 'Error desconocido'));
+                btnSubmit.disabled = false;
+                btnSubmit.textContent = 'Publicar';
+            }
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            alert('Error al crear la publicación. Por favor intenta nuevamente.');
+            btnSubmit.disabled = false;
+            btnSubmit.textContent = 'Publicar';
+        });
+    });
+}
+// Cargar países usando country-state-city
+function cargarPaises() {
+    const paisSelect = document.getElementById('paisSelect');
+    if (!paisSelect) return;
+    
+    const paisActual = '@pais';
+    
+    // Esperar a que la librería esté cargada
+    if (typeof window.csc !== 'undefined') {
+        const { Country } = window.csc;
+        const countries = Country.getAllCountries();
+        
+        // Función para obtener bandera
+        const flag = a2 => String.fromCodePoint(...[...a2.toUpperCase()].map(c => 127397 + c.charCodeAt(0)));
+        
+        // Limpiar y llenar select
+        paisSelect.innerHTML = '<option value="">Seleccionar país</option>';
+        
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country.name;
+            option.textContent = `${flag(country.isoCode)} ${country.name}`;
+            if (country.name === paisActual || country.isoCode === paisActual) {
+                option.selected = true;
+            }
+            paisSelect.appendChild(option);
+        });
+    } else {
+        // Fallback si no está disponible la librería
+        const paisesComunes = [
+            'Argentina', 'Brasil', 'Chile', 'Colombia', 'México', 'Perú', 
+            'España', 'Estados Unidos', 'Uruguay', 'Paraguay', 'Bolivia', 
+            'Ecuador', 'Venezuela', 'Costa Rica', 'Panamá', 'República Dominicana'
+        ];
+        
+        paisesComunes.forEach(p => {
+            const option = document.createElement('option');
+            option.value = p;
+            option.textContent = p;
+            if (p === paisActual) {
+                option.selected = true;
+            }
+            paisSelect.appendChild(option);
+        });
+    }
+}
+
+// Cargar script de países
+function initPaises() {
+    if (typeof window.csc !== 'undefined') {
+        // La librería ya está cargada
+        if (document.getElementById('paisSelect')) {
+            cargarPaises();
+        }
+    } else {
+        // Esperar a que se cargue
+        setTimeout(initPaises, 100);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Intentar cargar países después de un delay
+    setTimeout(initPaises, 300);
+});
 </script>
 </body>
 </html>

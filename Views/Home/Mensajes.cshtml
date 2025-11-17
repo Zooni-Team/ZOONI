@@ -55,6 +55,9 @@ header {
     top: 15px;
     left: 20px;
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .menu-icon {
@@ -152,7 +155,8 @@ main {
     flex-direction: column;
     height: 100vh;
     padding-top: 70px;
-    padding-bottom: 80px;
+    padding-bottom: 20px;
+    overflow: hidden;
 }
 
 .chat-container {
@@ -162,6 +166,7 @@ main {
     width: 100%;
     margin: 0 auto;
     height: 100%;
+    padding: 0 20px;
 }
 
 .chat-header {
@@ -197,6 +202,7 @@ body.tema-oscuro .chat-header {
     display: flex;
     flex-direction: column;
     gap: 15px;
+    min-height: 0; /* Permite que el flex funcione correctamente */
 }
 
 .mensaje-item {
@@ -252,6 +258,8 @@ body.tema-oscuro .mensaje-item:not(.mio) .mensaje-contenido {
     background: var(--card-claro);
     display: flex;
     gap: 10px;
+    align-items: center;
+    flex-shrink: 0; /* Evita que se comprima */
 }
 body.tema-oscuro .chat-input-container {
     background: var(--card-oscuro);
@@ -291,6 +299,9 @@ body.tema-oscuro .chat-input {
     font-size: 1rem;
     cursor: pointer;
     transition: transform 0.2s ease, opacity 0.2s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    min-width: 80px;
 }
 
 .btn-enviar:hover {
@@ -321,10 +332,10 @@ body.tema-oscuro .chat-input {
 
 <body class="tema-@tema">
 <header>
-    <button onclick="window.history.back()" style="background: none; border: none; cursor: pointer; margin-right: 10px; padding: 5px;">
-        <span style="font-size: 1.5rem;">←</span>
-    </button>
     <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+    <button onclick="window.history.back()" style="background: var(--card-claro); border: 2px solid rgba(0,0,0,0.1); cursor: pointer; padding: 0; display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 8px; transition: all 0.2s ease; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <span style="font-size: 1.5rem; line-height: 1; color: inherit;">←</span>
+    </button>
 </header>
 
 <div class="menu-lateral" id="menuLateral">
@@ -356,7 +367,7 @@ body.tema-oscuro .chat-input {
             </div>
             <div class="chat-input-container">
                 <input type="text" class="chat-input" id="mensajeInput" placeholder="Escribí un mensaje..." />
-                <button class="btn-enviar" id="btnEnviar">Enviar</button>
+                <button type="button" class="btn-enviar" id="btnEnviar" onclick="enviarMensaje()">Enviar</button>
             </div>
         }
         else
@@ -371,11 +382,137 @@ body.tema-oscuro .chat-input {
 </main>
 
 <script>
+console.log('Script cargado');
 let chatId = null;
 let intervaloPolling = null;
 
+// Funciones globales del chat
+function cargarMensajes() {
+    if (!chatId) {
+        console.log('No hay chatId para cargar mensajes');
+        return;
+    }
+    
+    fetch('/Home/ObtenerMensajes?chatId=' + chatId)
+        .then(function(response) { return response.json(); })
+        .then(function(data) {
+            if (data.success) {
+                mostrarMensajes(data.mensajes);
+            }
+        })
+        .catch(function(err) {
+            console.error('Error al cargar mensajes:', err);
+        });
+}
+
+function mostrarMensajes(mensajes) {
+    const container = document.getElementById('chatMessages');
+    if (!container) return;
+    
+    container.innerHTML = mensajes.map(function(m) {
+        return '<div class="mensaje-item ' + (m.esMio ? 'mio' : '') + '">' +
+            '<img src="' + (m.fotoPerfil || '/img/perfil/default.png') + '" alt="' + (m.nombreUsuario || 'Usuario') + '" class="mensaje-avatar" onerror="this.src=\'/img/perfil/default.png\'" />' +
+            '<div class="mensaje-contenido">' +
+            '<div>' + (m.contenido || '') + '</div>' +
+            '<div class="mensaje-fecha">' + formatearFecha(m.fecha) + '</div>' +
+            '</div>' +
+            '</div>';
+    }).join('');
+    
+    container.scrollTop = container.scrollHeight;
+}
+
+function formatearFecha(fechaStr) {
+    const fecha = new Date(fechaStr);
+    const ahora = new Date();
+    const diff = ahora - fecha;
+    const minutos = Math.floor(diff / 60000);
+    
+    if (minutos < 1) return 'Ahora';
+    if (minutos < 60) return 'Hace ' + minutos + ' min';
+    // Si pasó más de una hora, mostrar la hora en formato HH:MM
+    const horas = fecha.getHours().toString().padStart(2, '0');
+    const mins = fecha.getMinutes().toString().padStart(2, '0');
+    return horas + ':' + mins;
+}
+
+function iniciarPolling() {
+    if (intervaloPolling) {
+        clearInterval(intervaloPolling);
+    }
+    intervaloPolling = setInterval(function() {
+        cargarMensajes();
+    }, 3000);
+}
+
+function enviarMensaje() {
+    console.log('enviarMensaje llamado');
+    const mensajeInput = document.getElementById('mensajeInput');
+    const btnEnviar = document.getElementById('btnEnviar');
+    
+    if (!mensajeInput || !btnEnviar) {
+        console.error('Elementos no encontrados:', { mensajeInput: !!mensajeInput, btnEnviar: !!btnEnviar });
+        return;
+    }
+    
+    const contenido = mensajeInput.value.trim();
+    if (!contenido) {
+        console.log('Mensaje vacío');
+        return;
+    }
+    
+    if (!chatId) {
+        console.error('ChatId no disponible:', chatId);
+        alert('Error: El chat no está inicializado. Por favor, recargá la página.');
+        return;
+    }
+    
+    console.log('Enviando mensaje:', { chatId: chatId, contenido: contenido });
+    
+    btnEnviar.disabled = true;
+    btnEnviar.textContent = 'Enviando...';
+    
+    fetch('/Home/EnviarMensaje', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            chatId: chatId,
+            contenido: contenido
+        })
+    })
+    .then(function(response) {
+        console.log('Respuesta recibida:', response.status);
+        if (!response.ok) {
+            throw new Error('Error HTTP: ' + response.status);
+        }
+        return response.json();
+    })
+    .then(function(data) {
+        console.log('Datos recibidos:', data);
+        if (data.success) {
+            mensajeInput.value = '';
+            mensajeInput.focus();
+            cargarMensajes();
+        } else {
+            alert('Error al enviar mensaje: ' + (data.message || 'Error desconocido'));
+        }
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = 'Enviar';
+    })
+    .catch(function(err) {
+        console.error('Error al enviar mensaje:', err);
+        alert('Error al enviar mensaje. Verificá tu conexión e intentá de nuevo.');
+        btnEnviar.disabled = false;
+        btnEnviar.textContent = 'Enviar';
+    });
+}
+
 // Esperar a que el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM cargado');
+    
     // Menu lateral
     const abrirMenu = document.getElementById('abrirMenu');
     const cerrarMenu = document.getElementById('cerrarMenu');
@@ -409,99 +546,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var amigoIdValue = amigoId.Value;
         <text>
         const amigoIdValue = @amigoIdValue;
-        
-        // Funciones del chat
-        function cargarMensajes() {
-            if (!chatId) return;
-            
-            fetch('/Home/ObtenerMensajes?chatId=' + chatId)
-                .then(function(response) { return response.json(); })
-                .then(function(data) {
-                    if (data.success) {
-                        mostrarMensajes(data.mensajes);
-                    }
-                })
-                .catch(function(err) {
-                    console.error('Error al cargar mensajes:', err);
-                });
-        }
-        
-        function mostrarMensajes(mensajes) {
-            const container = document.getElementById('chatMessages');
-            if (!container) return;
-            
-            container.innerHTML = mensajes.map(function(m) {
-                return '<div class="mensaje-item ' + (m.esMio ? 'mio' : '') + '">' +
-                    '<img src="' + (m.fotoPerfil || '/img/perfil/default.png') + '" alt="' + (m.nombreUsuario || 'Usuario') + '" class="mensaje-avatar" onerror="this.src=\'/img/perfil/default.png\'" />' +
-                    '<div class="mensaje-contenido">' +
-                    '<div>' + (m.contenido || '') + '</div>' +
-                    '<div class="mensaje-fecha">' + formatearFecha(m.fecha) + '</div>' +
-                    '</div>' +
-                    '</div>';
-            }).join('');
-            
-            // Scroll al final
-            container.scrollTop = container.scrollHeight;
-        }
-        
-        function formatearFecha(fechaStr) {
-            const fecha = new Date(fechaStr);
-            const ahora = new Date();
-            const diff = ahora - fecha;
-            const minutos = Math.floor(diff / 60000);
-            
-            if (minutos &lt; 1) return 'Ahora';
-            if (minutos &lt; 60) return 'Hace ' + minutos + ' min';
-            if (minutos &lt; 1440) return 'Hace ' + Math.floor(minutos / 60) + ' h';
-            return fecha.toLocaleDateString('es-AR');
-        }
-        
-        function iniciarPolling() {
-            if (intervaloPolling) {
-                clearInterval(intervaloPolling);
-            }
-            intervaloPolling = setInterval(function() {
-                cargarMensajes();
-            }, 3000);
-        }
-        
-        function enviarMensaje() {
-            const mensajeInput = document.getElementById('mensajeInput');
-            const btnEnviar = document.getElementById('btnEnviar');
-            
-            if (!mensajeInput || !btnEnviar) return;
-            
-            const contenido = mensajeInput.value.trim();
-            if (!contenido || !chatId) return;
-            
-            btnEnviar.disabled = true;
-            
-            fetch('/Home/EnviarMensaje', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chatId: chatId,
-                    contenido: contenido
-                })
-            })
-            .then(function(response) { return response.json(); })
-            .then(function(data) {
-                if (data.success) {
-                    mensajeInput.value = '';
-                    cargarMensajes();
-                } else {
-                    alert('Error al enviar mensaje: ' + (data.message || 'Error desconocido'));
-                }
-                btnEnviar.disabled = false;
-            })
-            .catch(function(err) {
-                console.error('Error:', err);
-                alert('Error al enviar mensaje');
-                btnEnviar.disabled = false;
-            });
-        }
+        console.log('Inicializando chat para amigo:', amigoIdValue);
         
         // Obtener o crear chat
         fetch('/Home/ObtenerOCrearChat', {
@@ -511,13 +556,22 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify(amigoIdValue)
         })
-        .then(function(response) { return response.json(); })
+        .then(function(response) {
+            console.log('Respuesta de ObtenerOCrearChat:', response.status);
+            if (!response.ok) {
+                throw new Error('Error HTTP: ' + response.status);
+            }
+            return response.json();
+        })
         .then(function(data) {
-            if (data.success) {
+            console.log('Datos del chat:', data);
+            if (data.success && data.chatId) {
                 chatId = data.chatId;
+                console.log('ChatId asignado:', chatId);
                 cargarMensajes();
                 iniciarPolling();
             } else {
+                console.error('Error al obtener chat:', data.message);
                 const chatMessages = document.getElementById('chatMessages');
                 if (chatMessages) {
                     chatMessages.innerHTML = '<div class="sin-chat"><p>Error al inicializar chat: ' + (data.message || 'Error desconocido') + '</p></div>';
@@ -525,10 +579,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .catch(function(err) {
-            console.error('Error:', err);
+            console.error('Error al inicializar chat:', err);
             const chatMessages = document.getElementById('chatMessages');
             if (chatMessages) {
-                chatMessages.innerHTML = '<div class="sin-chat"><p>Error al inicializar chat</p></div>';
+                chatMessages.innerHTML = '<div class="sin-chat"><p>Error al inicializar chat. Por favor, recargá la página.</p></div>';
             }
         });
         
@@ -537,18 +591,32 @@ document.addEventListener('DOMContentLoaded', function() {
             const mensajeInput = document.getElementById('mensajeInput');
             const btnEnviar = document.getElementById('btnEnviar');
             
-            if (btnEnviar) {
-                btnEnviar.addEventListener('click', enviarMensaje);
-            }
+            console.log('Configurando botones:', { mensajeInput: !!mensajeInput, btnEnviar: !!btnEnviar });
             
-            if (mensajeInput) {
+            if (mensajeInput && btnEnviar) {
+                // Agregar listener al botón
+                btnEnviar.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    console.log('Botón clickeado');
+                    enviarMensaje();
+                    return false;
+                });
+                
+                // Configurar Enter para enviar
                 mensajeInput.addEventListener('keypress', function(e) {
-                    if (e.key === 'Enter') {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        console.log('Enter presionado');
                         enviarMensaje();
                     }
                 });
+                
+                mensajeInput.focus();
+            } else {
+                console.error('No se encontraron los elementos del chat');
             }
-        }, 100);
+        }, 500);
         
         // Limpiar polling al salir
         window.addEventListener('beforeunload', function() {
