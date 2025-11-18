@@ -30,6 +30,14 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/49092919/zooni/Views/BuscarProveedor/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzY2FyUHJvdmVlZG9yXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/49092919/zooni/Views/BuscarProveedor/Perfil.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQnVzY2FyUHJvdmVlZG9yXFBlcmZpbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/49092919/zooni/Views/Chat/ChatZooni.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2hhdFxDaGF0Wm9vbmkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -216,6 +224,22 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/49092919/zooni/Views/Home/TiendaVivienda.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxUaWVuZGFWaXZpZW5kYS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/49092919/zooni/Views/Proveedor/Dashboard.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmVlZG9yXERhc2hib2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/49092919/zooni/Views/Proveedor/Registro1.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmVlZG9yXFJlZ2lzdHJvMS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/49092919/zooni/Views/Proveedor/Registro2.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmVlZG9yXFJlZ2lzdHJvMi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/49092919/zooni/Views/Proveedor/Registro3.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvdmVlZG9yXFJlZ2lzdHJvMy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/49092919/zooni/Views/Registro/Registro1.cshtml]

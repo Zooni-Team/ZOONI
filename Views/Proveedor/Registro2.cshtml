@@ -1,0 +1,484 @@
+@{
+    ViewData["Title"] = "Datos del Proveedor - Zooni";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --verde: #3ac37d;
+            --verde-hover: #2ea968;
+            --gris: #555;
+            --gris-claro: #ccc;
+            --marron: #8B5E3C;
+            --fondo: #fff;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--fondo);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        .titulo-principal {
+            text-align: center;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            width: 100%;
+        }
+
+        .titulo-principal h1 {
+            color: var(--marron);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .titulo-principal h2 {
+            color: var(--gris);
+            font-weight: 700;
+            font-size: 1.15rem;
+            margin: 0.3rem 0 1.5rem;
+        }
+
+        .contenedor {
+            text-align: center;
+            background: #fff;
+            border-radius: 25px;
+            padding: 2.2rem 2rem 2.5rem;
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.08);
+            width: 90%;
+            max-width: 420px;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        @@keyframes fadeUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .volver {
+            position: absolute;
+            top: 18px;
+            left: 18px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--marron);
+            cursor: pointer;
+            transition: transform 0.2s ease, color 0.2s ease;
+            z-index: 5;
+            text-decoration: none;
+            line-height: 1;
+        }
+
+        .volver:hover {
+            transform: scale(1.1);
+            color: var(--verde);
+        }
+
+        .formulario {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            width: 100%;
+        }
+
+        .campo-grupo {
+            width: 100%;
+            max-width: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .label-text {
+            color: var(--gris);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: left;
+            width: 100%;
+        }
+
+        .required {
+            color: red;
+            margin-left: 2px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 13px 16px;
+            border-radius: 20px;
+            border: 1.8px solid var(--gris-claro);
+            outline: none;
+            font-size: 15px;
+            text-align: left;
+            transition: border 0.2s ease, box-shadow 0.2s ease;
+            background: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        input[type="number"] {
+            text-align: center;
+        }
+
+        textarea {
+            text-align: left;
+            min-height: 100px;
+            resize: vertical;
+            padding: 13px 16px;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--verde);
+            box-shadow: 0 0 0 2px rgba(58, 195, 125, 0.2);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .checkbox-item {
+            position: relative;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkbox-item label {
+            background: #f8f8f8;
+            border-radius: 20px;
+            padding: 14px 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+            font-weight: 500;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            word-wrap: break-word;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .checkbox-item label:hover {
+            background: #e9fff0;
+            transform: scale(1.03);
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + label {
+            background: var(--verde);
+            color: #fff;
+            border: 2px solid var(--verde-hover);
+            transform: scale(1.05);
+            box-shadow: 0 0 10px rgba(58, 195, 125, 0.3);
+        }
+
+        .btn-principal {
+            background-color: var(--verde);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            padding: 14px 40px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.25s ease, background-color 0.25s ease;
+            width: 100%;
+            max-width: 320px;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .btn-principal:hover {
+            background-color: var(--verde-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 195, 125, 0.3);
+        }
+
+        .error {
+            color: #d32f2f;
+            font-weight: 600;
+            padding: 12px 16px;
+            background-color: #ffebee;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 320px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .mensaje-sin-tipos {
+            color: #999;
+            font-size: 14px;
+            text-align: center;
+            padding: 20px;
+            background: #f5f5f5;
+            border-radius: 12px;
+            width: 100%;
+        }
+
+        .imagen-bienvenida {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .imagen-bienvenida img {
+            width: 100%;
+            max-width: 900px;
+            object-fit: cover;
+        }
+
+        /* Media Queries */
+        @@media (max-width: 768px) {
+            .contenedor {
+                padding: 1.8rem 1.5rem;
+                max-width: 380px;
+            }
+
+            .titulo-principal h1 {
+                font-size: 2rem;
+            }
+
+            .titulo-principal h2 {
+                font-size: 1.1rem;
+            }
+
+            .volver {
+                top: 14px;
+                left: 14px;
+                font-size: 26px;
+            }
+
+            .checkbox-group {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .checkbox-item label {
+                padding: 12px 8px;
+                font-size: 13px;
+                min-height: 48px;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .contenedor {
+                padding: 1.5rem 1.2rem;
+                max-width: 340px;
+                margin-bottom: 1.5rem;
+            }
+
+            .titulo-principal {
+                margin-top: 1.5rem;
+            }
+
+            .titulo-principal h1 {
+                font-size: 1.8rem;
+            }
+
+            .titulo-principal h2 {
+                font-size: 1rem;
+                margin: 0.2rem 0 1rem;
+            }
+
+            .volver {
+                top: 12px;
+                left: 12px;
+                font-size: 24px;
+            }
+
+            .formulario {
+                gap: 18px;
+            }
+
+            .campo-grupo {
+                max-width: 100%;
+            }
+
+            input, textarea {
+                font-size: 14px;
+                padding: 12px 14px;
+            }
+
+            .checkbox-group {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+
+            .checkbox-item label {
+                padding: 10px 6px;
+                font-size: 12px;
+                min-height: 45px;
+            }
+
+            .btn-principal {
+                padding: 12px 30px;
+                font-size: 1rem;
+            }
+
+            .label-text {
+                font-size: 13px;
+            }
+        }
+
+        @@media (max-width: 360px) {
+            .contenedor {
+                padding: 1.3rem 1rem;
+                max-width: 320px;
+            }
+
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+
+            .checkbox-item label {
+                min-height: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="titulo-principal">
+        <h1>Zooni</h1>
+        <h2>¡Registrate como Proveedor!</h2>
+    </div>
+
+    <div class="contenedor">
+        <a href="/Proveedor/Registro1" class="volver">←</a>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="error">@ViewBag.Error</div>
+        }
+
+        <form method="post" asp-action="Registro2" asp-controller="Proveedor" class="formulario">
+            @Html.AntiForgeryToken()
+
+            <div class="campo-grupo">
+                <label class="label-text">DNI <span class="required">*</span></label>
+                <input type="text" name="dni" placeholder="12345678" required maxlength="20" />
+            </div>
+
+            <div class="campo-grupo">
+                <label class="label-text">Nombre Completo Legal <span class="required">*</span></label>
+                <input type="text" name="nombreCompleto" placeholder="Juan Pérez" required maxlength="200" />
+            </div>
+
+            <div class="campo-grupo">
+                <label class="label-text">Años de Experiencia <span class="required">*</span></label>
+                <input type="number" name="experiencia" placeholder="5" required min="0" max="100" />
+            </div>
+
+            <div class="campo-grupo">
+                <label class="label-text">Descripción</label>
+                <textarea name="descripcion" placeholder="Contanos sobre tu experiencia y servicios..." maxlength="1000"></textarea>
+            </div>
+
+            <div class="campo-grupo">
+                <label class="label-text">Tipos de Servicio que Ofreces <span class="required">*</span></label>
+                <div class="checkbox-group">
+                    @if (ViewBag.TiposServicio != null && ViewBag.TiposServicio.Rows.Count > 0)
+                    {
+                        foreach (System.Data.DataRow tipo in ViewBag.TiposServicio.Rows)
+                        {
+                            <div class="checkbox-item">
+                                <input type="checkbox" name="tiposServicio" value="@tipo["Id_TipoServicio"]" id="tipo_@tipo["Id_TipoServicio"]" />
+                                <label for="tipo_@tipo["Id_TipoServicio"]">@tipo["Descripcion"]</label>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="mensaje-sin-tipos">
+                            No hay tipos de servicio disponibles. Por favor, contactá al administrador.
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="campo-grupo">
+                <label class="label-text">Especies que Atiendes <span class="required">*</span></label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="especies" value="Perro" id="especie_perro" />
+                        <label for="especie_perro">🐕 Perro</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="especies" value="Gato" id="especie_gato" />
+                        <label for="especie_gato">🐈 Gato</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="especies" value="Conejo" id="especie_conejo" />
+                        <label for="especie_conejo">🐰 Conejo</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="especies" value="Ave" id="especie_ave" />
+                        <label for="especie_ave">🦜 Ave</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="especies" value="Pez" id="especie_pez" />
+                        <label for="especie_pez">🐠 Pez</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" name="especies" value="Reptil" id="especie_reptil" />
+                        <label for="especie_reptil">🦎 Reptil</label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-principal">Continuar</button>
+        </form>
+    </div>
+
+    <div class="imagen-bienvenida">
+        <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
+    </div>
+</body>
+</html>

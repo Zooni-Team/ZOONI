@@ -1,0 +1,130 @@
+@{
+    ViewData["Title"] = "Perfil Proveedor - Zooni";
+}
+
+<div style="max-width: 1000px; margin: 0 auto; padding: 20px;">
+    @if (ViewBag.Proveedor != null)
+    {
+        <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px;">
+            <div style="display: flex; gap: 30px; margin-bottom: 30px;">
+                @if (!string.IsNullOrEmpty(ViewBag.Proveedor["FotoPerfil"]?.ToString()))
+                {
+                    <img src="@ViewBag.Proveedor["FotoPerfil"]" alt="Foto" style="width: 200px; height: 200px; object-fit: cover; border-radius: 12px;" />
+                }
+                else
+                {
+                    <div style="width: 200px; height: 200px; background: #f0f0f0; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #999;">
+                        Sin foto
+                    </div>
+                }
+                
+                <div style="flex: 1;">
+                    <h1 style="margin: 0 0 10px 0; color: #8B5E3C;">@ViewBag.Proveedor["NombreCompleto"]</h1>
+                    
+                    <div style="display: flex; align-items: center; gap: 15px; margin: 15px 0;">
+                        <div>
+                            <span style="color: #FFD700; font-size: 24px;">⭐</span>
+                            <span style="font-weight: 600; font-size: 20px;">@ViewBag.Proveedor["Calificacion_Promedio"]</span>
+                            <span style="color: #999;">(@ViewBag.Proveedor["Cantidad_Resenas"] reseñas)</span>
+                        </div>
+                        @if (ViewBag.Proveedor["Precio_Hora"] != DBNull.Value)
+                        {
+                            <span style="font-weight: 600; font-size: 18px; color: #6c757d;">$@ViewBag.Proveedor["Precio_Hora"]/hora</span>
+                        }
+                    </div>
+                    
+                    <div style="color: #666; margin: 15px 0;">
+                        <p style="margin: 5px 0;">📍 @ViewBag.Proveedor["Ciudad"], @ViewBag.Proveedor["Provincia"]</p>
+                        <p style="margin: 5px 0;">📅 @ViewBag.Proveedor["Experiencia_Anios"] años de experiencia</p>
+                    </div>
+                </div>
+            </div>
+            
+            @if (!string.IsNullOrEmpty(ViewBag.Proveedor["Descripcion"]?.ToString()))
+            {
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                    <h3 style="color: #8B5E3C; margin-bottom: 10px;">Sobre mí</h3>
+                    <p style="color: #666; line-height: 1.6;">@ViewBag.Proveedor["Descripcion"]</p>
+                </div>
+            }
+            
+            @if (ViewBag.TiposServicio != null && ViewBag.TiposServicio.Rows.Count > 0)
+            {
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                    <h3 style="color: #8B5E3C; margin-bottom: 10px;">Servicios que Ofrezco</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        @foreach (System.Data.DataRow tipo in ViewBag.TiposServicio.Rows)
+                        {
+                            <span style="background: #6c757d; color: white; padding: 5px 15px; border-radius: 20px; font-size: 14px;">@tipo["Descripcion"]</span>
+                        }
+                    </div>
+                </div>
+            }
+            
+            @if (ViewBag.Especies != null && ViewBag.Especies.Rows.Count > 0)
+            {
+                <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #eee;">
+                    <h3 style="color: #8B5E3C; margin-bottom: 10px;">Especies que Atiendo</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        @foreach (System.Data.DataRow especie in ViewBag.Especies.Rows)
+                        {
+                            <span style="background: #3ac37d; color: white; padding: 5px 15px; border-radius: 20px; font-size: 14px;">@especie["Especie"]</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        
+        @if (ViewBag.Resenas != null && ViewBag.Resenas.Rows.Count > 0)
+        {
+            <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                <h2 style="color: #8B5E3C; margin-bottom: 20px;">Reseñas</h2>
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    @foreach (System.Data.DataRow resena in ViewBag.Resenas.Rows)
+                    {
+                        <div style="padding: 15px; background: #f9f9f9; border-radius: 8px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <div>
+                                    <strong>@resena["Nombre"] @resena["Apellido"]</strong>
+                                    <span style="color: #999; font-size: 12px; margin-left: 10px;">@resena["Fecha"]</span>
+                                </div>
+                                <div>
+                                    @for (int i = 0; i < Convert.ToInt32(resena["Calificacion"]); i++)
+                                    {
+                                        <span style="color: #FFD700;">⭐</span>
+                                    }
+                                </div>
+                            </div>
+                            @if (!string.IsNullOrEmpty(resena["Comentario"]?.ToString()))
+                            {
+                                <p style="color: #666; margin: 0;">@resena["Comentario"]</p>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); text-align: center;">
+                <p style="color: #999;">Aún no hay reseñas para este proveedor.</p>
+            </div>
+        }
+        
+        <div style="margin-top: 30px; text-align: center;">
+            <a href="/BuscarProveedor" style="display: inline-block; padding: 12px 24px; background-color: #6c757d; color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                ← Volver a Búsqueda
+            </a>
+        </div>
+    }
+    else
+    {
+        <div style="text-align: center; padding: 40px;">
+            <p style="color: #999; font-size: 18px;">Proveedor no encontrado.</p>
+            <a href="/BuscarProveedor" style="display: inline-block; margin-top: 20px; padding: 12px 24px; background-color: #6c757d; color: white; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                Volver a Búsqueda
+            </a>
+        </div>
+    }
+</div>
+

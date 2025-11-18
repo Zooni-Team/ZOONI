@@ -64,29 +64,10 @@ namespace Zooni.Controllers
                 
                 if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
                 {
-                    // ✅ Corrección global: dividir por 10 si no hay PesoDisplay y el peso parece incorrecto (>= 10)
-                    if (string.IsNullOrEmpty(pesoDisplay) && pesoDecimal >= 10)
+                    // Usar el peso tal cual está en la BD, sin correcciones
+                    if (string.IsNullOrEmpty(pesoDisplay))
                     {
-                        decimal pesoCorregido = pesoDecimal / 10;
-                        if (pesoCorregido <= 200 && pesoCorregido >= 0.1M)
-                        {
-                            pesoDecimal = pesoCorregido;
-                            pesoDisplay = PesoHelper.FormatearPeso(pesoDecimal);
-                        }
-                    }
-                    // Si el peso es muy alto incluso después de dividir, aplicar corrección adicional
-                    else if (string.IsNullOrEmpty(pesoDisplay) && pesoDecimal > 200)
-                    {
-                        decimal pesoCorregido = pesoDecimal / 10;
-                        if (pesoCorregido > 200)
-                        {
-                            pesoCorregido = pesoDecimal / 100;
-                        }
-                        if (pesoCorregido <= 200 && pesoCorregido >= 0.1M)
-                        {
-                            pesoDecimal = pesoCorregido;
-                            pesoDisplay = PesoHelper.FormatearPeso(pesoDecimal);
-                        }
+                        pesoDisplay = PesoHelper.FormatearPeso(pesoDecimal);
                     }
                 }
                 int edad = Convert.ToInt32(mascota["Edad"] ?? 0);
@@ -190,6 +171,60 @@ Información actual de la mascota:
 - Sexo: {datos?["sexo"]}
 - Vacunas: {datos?["vacunas"]}
 - Tratamientos: {datos?["tratamientos"]}
+
+CONOCIMIENTO SOBRE LA APLICACIÓN ZOONI:
+Eres también un asistente de ayuda para usar la aplicación. Si el usuario pregunta cómo hacer algo en la web, podés guiarlo.
+
+SECCIONES PRINCIPALES:
+1. 🏠 Inicio (/Home/Index): Vista principal con la mascota activa, puedes cambiar entre mascotas con las flechas
+2. 👥 Comunidad (/Home/Comunidad): Ver publicaciones de otros usuarios, seguir amigos, compartir contenido
+3. 🛒 Marketplace (/Marketplace): Comprar productos para mascotas
+4. 💉 Ficha Médica (/Home/FichaMedica): Ver y editar información médica, vacunas, tratamientos, peso
+5. 📅 Calendario (/Home/Calendario): Ver eventos, recordatorios de vacunas y controles
+6. 👕 Closet (/Home/Closet): Ropa y accesorios de la mascota
+7. 👤 Perfil (/Home/Perfil): Ver tu perfil, publicaciones, mascotas, amigos
+8. ⚙️ Configuración (/Home/Configuracion): Ajustes generales de la cuenta
+
+GESTIÓN DE MASCOTAS:
+- Agregar nueva mascota: /Registro/NuevaMascota
+- Configurar mascotas: /Home/ConfigMascotas (editar, archivar, recuperar mascotas archivadas)
+- Cambiar mascota activa: En el Inicio, usar las flechas laterales o ir a ConfigMascotas
+- Editar datos de mascota: /Home/EditarMascota?id=[Id_Mascota]
+- Archivar mascota: Desde ConfigMascotas, botón "Archivar" (no se borra, solo se oculta)
+- Recuperar mascota archivada: Desde ConfigMascotas, sección "Archivadas", botón "Recuperar"
+
+CONFIGURACIÓN Y PREFERENCIAS:
+- Cambiar tema (claro/oscuro): /Home/ConfigTema
+- Cambiar datos personales: /Home/Configuracion
+- Actualizar contacto (email/teléfono): Desde Configuracion
+- Cambiar contraseña: Desde Configuracion
+
+FICHA MÉDICA:
+- Ver ficha médica: /Home/FichaMedica
+- Actualizar peso: Desde FichaMedica, sección de peso
+- Agregar vacuna: Desde FichaMedica
+- Agregar tratamiento: Desde FichaMedica
+- Ver historial médico: Desde FichaMedica
+
+PROVEEDORES DE SERVICIOS:
+- Buscar paseadores/cuidadores: /BuscarProveedor
+- Registrarse como proveedor: Botón "Registrarse como Proveedor" en el login
+- Los proveedores pueden marcar su zona de atención en un mapa
+
+CHAT Y MENSAJERÍA:
+- Chat con amigos: /Home/Mensajes
+- Para chatear, primero agregá amigos desde Comunidad
+
+PUBLICACIONES Y COMUNIDAD:
+- Crear publicación: Desde Comunidad
+- Ver publicaciones de amigos: Desde Comunidad
+- Seguir usuarios: Desde Comunidad o Perfil
+- Compartir historias: Desde Comunidad
+
+CONSEJOS ÚTILES:
+- Si el usuario quiere cambiar algo específico, indicá la ruta exacta (ej: "Andá a ConfigMascotas para editar tu mascota")
+- Si pregunta sobre una funcionalidad, explicá brevemente cómo acceder
+- Siempre combiná consejos veterinarios con ayuda sobre cómo usar la app si es relevante
 """;
 
                 chatHistory.AddSystemMessage(sys);

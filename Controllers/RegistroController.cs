@@ -329,7 +329,7 @@ public IActionResult Registro3(string modo = "")
 
 [HttpPost]
 [ValidateAntiForgeryToken]
-public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int Edad, string Foto, string modo = "")
+public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int Edad, string Foto, string Fecha_Nacimiento, string modo = "")
 {
     try
     {
@@ -363,15 +363,32 @@ public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int E
             HttpContext.Session.SetString("MascotaFoto", "");
         }
 
-        // 🟢 Normalizar peso
+        // 🟢 Normalizar peso (con corrección automática de multiplicación por 10)
         var (pesoNormalizado, pesoDisplayFinal) = PesoHelper.NormalizarPeso(Peso.ToString());
+
+        // 🎂 Procesar fecha de nacimiento y calcular edad
+        DateTime? fechaNacimiento = null;
+        int edadFinal = Edad;
+        
+        if (!string.IsNullOrWhiteSpace(Fecha_Nacimiento) && DateTime.TryParse(Fecha_Nacimiento, out DateTime fechaNac))
+        {
+            fechaNacimiento = fechaNac;
+            // Calcular edad automáticamente desde la fecha de nacimiento
+            edadFinal = EdadHelper.CalcularEdadEnMeses(fechaNacimiento);
+            HttpContext.Session.SetString("MascotaFechaNacimiento", fechaNacimiento.Value.ToString("yyyy-MM-dd"));
+        }
+        else if (Edad > 0)
+        {
+            // Si no hay fecha pero sí hay edad, usar la edad proporcionada
+            edadFinal = Edad;
+        }
 
         // 🧠 Guardar en sesión
         HttpContext.Session.SetString("MascotaSexo", Sexo ?? "");
         HttpContext.Session.SetString("MascotaRaza", Raza ?? "");
         HttpContext.Session.SetString("MascotaPeso", pesoNormalizado.ToString("F2", CultureInfo.InvariantCulture));
         HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplayFinal);
-        HttpContext.Session.SetInt32("MascotaEdad", Edad);
+        HttpContext.Session.SetInt32("MascotaEdad", edadFinal);
 
         // 🧩 Definir modo final con fallback
         // 🔹 Definición robusta del modo final
@@ -394,9 +411,24 @@ if (modoFinal == "nuevamascota")
     string foto = HttpContext.Session.GetString("MascotaFoto") ?? "";
     HttpContext.Session.SetString("MascotaPesoDisplay", pesoDisplayFinal);
 
+    // Obtener fecha de nacimiento de sesión si existe
+    string fechaNacStr = HttpContext.Session.GetString("MascotaFechaNacimiento");
+    DateTime? fechaNacimiento = null;
+    if (!string.IsNullOrEmpty(fechaNacStr) && DateTime.TryParse(fechaNacStr, out DateTime fechaNac))
+    {
+        fechaNacimiento = fechaNac;
+    }
+    
+    // Calcular edad desde fecha de nacimiento si está disponible
+    int edadFinal = edad;
+    if (fechaNacimiento.HasValue)
+    {
+        edadFinal = EdadHelper.CalcularEdadEnMeses(fechaNacimiento);
+    }
+
     string queryInsert = @"
         INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Foto, Fecha_Nacimiento, PesoDisplay)
-        VALUES (@U, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, @Foto, SYSDATETIME(), @PesoDisplay);
+        VALUES (@U, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, @Foto, @FechaNac, @PesoDisplay);
         SELECT SCOPE_IDENTITY();";
 
     var parametros = new Dictionary<string, object>
@@ -407,8 +439,9 @@ if (modoFinal == "nuevamascota")
     { "@Raza", raza },
     { "@Sexo", sexo },
     { "@Peso", peso },
-    { "@Edad", edad },
+    { "@Edad", edadFinal },
     { "@Foto", foto },
+    { "@FechaNac", fechaNacimiento.HasValue ? (object)fechaNacimiento.Value : DBNull.Value },
     { "@PesoDisplay", pesoDisplayFinal }
 };
 
@@ -749,9 +782,24 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
             // ✅ Obtener foto de sesión (puede ser null/vacío)
             string foto = HttpContext.Session.GetString("MascotaFoto") ?? "";
             
+            // Obtener fecha de nacimiento de sesión si existe
+            string fechaNacStr = HttpContext.Session.GetString("MascotaFechaNacimiento");
+            DateTime? fechaNacimiento = null;
+            if (!string.IsNullOrEmpty(fechaNacStr) && DateTime.TryParse(fechaNacStr, out DateTime fechaNac))
+            {
+                fechaNacimiento = fechaNac;
+            }
+            
+            // Calcular edad desde fecha de nacimiento si está disponible
+            int edadFinal = edad;
+            if (fechaNacimiento.HasValue)
+            {
+                edadFinal = EdadHelper.CalcularEdadEnMeses(fechaNacimiento);
+            }
+
             string insert = @"
                 INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Foto, Fecha_Nacimiento, PesoDisplay)
-                VALUES (@Id_User, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, @Foto, SYSDATETIME(), @PesoDisplay)";
+                VALUES (@Id_User, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, @Foto, @FechaNac, @PesoDisplay)";
 
             BD.ExecuteNonQuery(insert, new Dictionary<string, object>
             {
@@ -761,8 +809,9 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
                 { "@Raza", raza ?? "" },
                 { "@Sexo", sexo ?? "" },
                 { "@Peso", peso },
-                { "@Edad", edad },
+                { "@Edad", edadFinal },
                 { "@Foto", foto }, // ✅ Permite null/vacío
+                { "@FechaNac", fechaNacimiento.HasValue ? (object)fechaNacimiento.Value : DBNull.Value },
                 { "@PesoDisplay", HttpContext.Session.GetString("MascotaPesoDisplay") ?? (peso.ToString("F2") + " kg") }
             });
             

@@ -1,0 +1,91 @@
+@{
+    ViewData["Title"] = "Buscar Proveedores - Zooni";
+}
+
+<h2>Buscar Proveedores de Servicios</h2>
+
+<form method="get" asp-action="Index" asp-controller="BuscarProveedor" style="margin-bottom: 30px; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Ciudad</label>
+            <input type="text" name="ciudad" value="@ViewBag.Ciudad" placeholder="Buenos Aires" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;" />
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Provincia</label>
+            <input type="text" name="provincia" value="@ViewBag.Provincia" placeholder="CABA" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;" />
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Tipo de Servicio</label>
+            <input type="text" name="tipoServicio" value="@ViewBag.TipoServicio" placeholder="Paseo" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;" />
+        </div>
+        <div>
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Especie</label>
+            <select name="especie" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+                <option value="">Todas</option>
+                <option value="Perro" selected="@(ViewBag.Especie == "Perro")">Perro</option>
+                <option value="Gato" selected="@(ViewBag.Especie == "Gato")">Gato</option>
+                <option value="Conejo" selected="@(ViewBag.Especie == "Conejo")">Conejo</option>
+                <option value="Ave" selected="@(ViewBag.Especie == "Ave")">Ave</option>
+                <option value="Pez" selected="@(ViewBag.Especie == "Pez")">Pez</option>
+                <option value="Reptil" selected="@(ViewBag.Especie == "Reptil")">Reptil</option>
+            </select>
+        </div>
+    </div>
+    <button type="submit" style="margin-top: 15px; padding: 12px 24px; background-color: #6c757d; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">Buscar</button>
+</form>
+
+@if (ViewBag.Proveedores != null && ViewBag.Proveedores.Rows.Count > 0)
+{
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+        @foreach (System.Data.DataRow proveedor in ViewBag.Proveedores.Rows)
+        {
+            <div style="background: white; border-radius: 12px; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                @if (!string.IsNullOrEmpty(proveedor["FotoPerfil"]?.ToString()))
+                {
+                    <img src="@proveedor["FotoPerfil"]" alt="Foto" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 15px;" />
+                }
+                else
+                {
+                    <div style="width: 100%; height: 200px; background: #f0f0f0; border-radius: 8px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; color: #999;">
+                        Sin foto
+                    </div>
+                }
+                
+                <h3 style="margin: 0 0 10px 0; color: #8B5E3C;">@proveedor["NombreCompleto"]</h3>
+                
+                @if (!string.IsNullOrEmpty(proveedor["Descripcion"]?.ToString()))
+                {
+                    <p style="color: #666; font-size: 14px; margin: 0 0 10px 0;">@(proveedor["Descripcion"].ToString().Length > 100 ? proveedor["Descripcion"].ToString().Substring(0, 100) + "..." : proveedor["Descripcion"].ToString())</p>
+                }
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin: 10px 0;">
+                    <div>
+                        <span style="color: #FFD700; font-size: 18px;">⭐</span>
+                        <span style="font-weight: 600;">@proveedor["Calificacion_Promedio"]</span>
+                        <span style="color: #999; font-size: 12px;">(@proveedor["Cantidad_Resenas"] reseñas)</span>
+                    </div>
+                    @if (proveedor["Precio_Hora"] != DBNull.Value)
+                    {
+                        <span style="font-weight: 600; color: #6c757d;">$@proveedor["Precio_Hora"]/hora</span>
+                    }
+                </div>
+                
+                <div style="margin: 10px 0; color: #666; font-size: 14px;">
+                    <p style="margin: 5px 0;">📍 @proveedor["Ciudad"], @proveedor["Provincia"]</p>
+                    <p style="margin: 5px 0;">📅 @proveedor["Experiencia_Anios"] años de experiencia</p>
+                </div>
+                
+                <a href="/BuscarProveedor/Perfil/@proveedor["Id_Proveedor"]" style="display: block; text-align: center; padding: 10px; background-color: #6c757d; color: white; border-radius: 8px; text-decoration: none; margin-top: 15px; font-weight: 600;">
+                    Ver Perfil
+                </a>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div style="text-align: center; padding: 40px; background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+        <p style="color: #999; font-size: 18px;">No se encontraron proveedores con los criterios de búsqueda.</p>
+    </div>
+}
+

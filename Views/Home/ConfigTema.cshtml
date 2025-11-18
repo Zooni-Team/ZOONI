@@ -35,29 +35,6 @@ body.tema-oscuro {
   color: var(--texto-oscuro);
 }
 
-/* 🕯️ Modo duelo */
-body.tema-duelo {
-  background: linear-gradient(135deg, #2d1b3d 0%, #1a0f26 100%);
-  color: #e8d5e8;
-  position: relative;
-}
-body.tema-duelo::before {
-  content: '🕯️';
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 8rem;
-  opacity: 0.05;
-  pointer-events: none;
-  z-index: 0;
-}
-body.tema-duelo main,
-body.tema-duelo header,
-body.tema-duelo .menu-lateral {
-  position: relative;
-  z-index: 1;
-}
 
 /* ===== Reset ===== */
 html, body {
@@ -94,9 +71,6 @@ header {
 body.tema-oscuro .menu-icon {
   filter: brightness(0) invert(1); /* blanco en modo oscuro */
 }
-body.tema-duelo .menu-icon {
-  filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(280deg);
-}
 .menu-icon:hover { transform: scale(1.1); }
 
 .menu-lateral {
@@ -121,10 +95,6 @@ body.tema-claro .menu-lateral {
 body.tema-oscuro .menu-lateral {
   background: rgba(30,30,30,0.96);
   box-shadow: 4px 0 14px rgba(0, 0, 0, 0.5);
-}
-body.tema-duelo .menu-lateral {
-  background: rgba(45, 27, 61, 0.98);
-  box-shadow: 4px 0 14px rgba(139, 90, 155, 0.3);
 }
 .menu-lateral.abierto { transform: translateX(0); }
 
@@ -275,11 +245,6 @@ button:active { transform: scale(0.97); }
     </form>
   </div>
   
-  <div style="margin-top: 30px; padding: 15px; background: rgba(107, 76, 122, 0.1); border-radius: 12px; border-left: 4px solid #8b5a9b;">
-    <p style="margin: 0; font-size: 0.9rem; opacity: 0.9;">
-      💜 <strong>Modo Duelo:</strong> Muestra símbolos de respeto y memoria en el inicio y otras secciones de la aplicación.
-    </p>
-  </div>
 </main>
 
 <script>

@@ -93,6 +93,42 @@ namespace Zooni.Controllers
                 HttpContext.Session.SetString("UserApellido", user["Apellido"].ToString() ?? "");
                 HttpContext.Session.SetString("UserMail", user["Correo"].ToString() ?? "");
 
+                // 🔍 Verificar si es proveedor (solo si la tabla existe)
+                // Primero verificar si existe la tabla ProveedorServicio
+                int esProveedor = 0;
+                try
+                {
+                    string checkTableQuery = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ProveedorServicio'";
+                    object? tableExists = BD.ExecuteScalar(checkTableQuery);
+                    int tableExistsInt = tableExists != null && tableExists != DBNull.Value ? Convert.ToInt32(tableExists) : 0;
+                    
+                    if (tableExistsInt > 0)
+                    {
+                        string proveedorQuery = @"
+                            SELECT COUNT(*) FROM ProveedorServicio 
+                            WHERE Id_User = @UserId AND Estado = 1";
+                        object? proveedorResult = BD.ExecuteScalar(proveedorQuery, new Dictionary<string, object> { { "@UserId", userId } });
+                        esProveedor = proveedorResult != null && proveedorResult != DBNull.Value ? Convert.ToInt32(proveedorResult) : 0;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("⚠️ Error al verificar proveedor (tabla puede no existir): " + ex.Message);
+                    esProveedor = 0;
+                }
+                
+                // Establecer sesión según tipo de usuario
+                if (esProveedor > 0)
+                {
+                    HttpContext.Session.SetString("EsProveedor", "true");
+                    HttpContext.Session.SetString("TipoUsuario", "Proveedor");
+                }
+                else
+                {
+                    HttpContext.Session.SetString("EsProveedor", "false");
+                    HttpContext.Session.SetString("TipoUsuario", "Dueño");
+                }
+
                 // 🟢 Marcar usuario como online
                 try
                 {
@@ -108,7 +144,15 @@ namespace Zooni.Controllers
                     Console.WriteLine("⚠️ Error al actualizar estado online: " + ex.Message);
                 }
 
-return RedirectToAction("Index", "Home");            }
+                // Redirigir según tipo de usuario
+                if (esProveedor > 0)
+                {
+                    return RedirectToAction("Dashboard", "Proveedor");
+                }
+                else
+                {
+                    return RedirectToAction("Index", "Home");
+                }            }
             catch (Exception ex)
             {
                 Console.WriteLine("❌ Error en Auth/Login POST: " + ex.Message);

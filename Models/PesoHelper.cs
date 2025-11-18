@@ -22,12 +22,55 @@ namespace Zooni.Models
             {
                 peso = Math.Round(peso, 2);
                 
+                // ✅ CORRECCIÓN SOLO PARA PESOS CLARAMENTE INCORRECTOS
+                // Solo dividir si el peso es claramente demasiado alto (ej: 473 kg, 300 kg sin decimales)
+                // NO dividir pesos válidos como 47.3 kg, 30.5 kg, etc.
+                
+                // Si el peso es >= 100 kg (muy raro para mascotas), podría estar multiplicado
+                // Pero solo si no tiene decimales significativos (sugiere error de entrada)
+                if (peso >= 100.0M && peso <= 3000.0M)
+                {
+                    // Solo corregir si parece un número redondo multiplicado (ej: 300, 473, 500)
+                    // No corregir si tiene decimales razonables (ej: 47.3, 123.5)
+                    decimal parteDecimal = peso - Math.Floor(peso);
+                    // Si es un número muy redondo (sin decimales o con .0) y está en rango sospechoso
+                    if (parteDecimal < 0.1M && peso > 80.0M) // Solo números redondos > 80 kg
+                    {
+                        decimal pesoCorregido = peso / 10.0M;
+                        // Validar que el peso corregido sea razonable
+                        if (pesoCorregido >= MIN_PESO && pesoCorregido <= MAX_PESO)
+                        {
+                            peso = pesoCorregido;
+                            pesoDisplay = peso.ToString("F2", CultureInfo.InvariantCulture).Replace('.', ',');
+                        }
+                    }
+                }
+                // Si es extremadamente alto (multiplicado por 100)
+                else if (peso > 3000.0M && peso <= 30000.0M)
+                {
+                    decimal pesoCorregido = peso / 100.0M;
+                    if (pesoCorregido >= MIN_PESO && pesoCorregido <= MAX_PESO)
+                    {
+                        peso = pesoCorregido;
+                        pesoDisplay = peso.ToString("F2", CultureInfo.InvariantCulture).Replace('.', ',');
+                    }
+                }
+                
                 // Para almacenamiento interno, validamos rango
                 if (peso < MIN_PESO) peso = MIN_PESO;
                 if (peso > MAX_PESO) peso = MAX_PESO;
                 
-                // Pero mantenemos el valor original para mostrar
-                return (peso, pesoDisplay + " kg");
+                // Formatear display
+                if (!pesoDisplay.Contains("kg"))
+                {
+                    pesoDisplay = peso.ToString("F2", CultureInfo.InvariantCulture).Replace('.', ',') + " kg";
+                }
+                else if (!pesoDisplay.EndsWith(" kg"))
+                {
+                    pesoDisplay = pesoDisplay.Replace("kg", "").Trim() + " kg";
+                }
+                
+                return (peso, pesoDisplay);
             }
             
             return (MIN_PESO, $"{MIN_PESO:F2}".Replace('.', ',') + " kg");

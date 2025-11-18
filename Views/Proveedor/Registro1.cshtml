@@ -1,0 +1,221 @@
+@{
+    ViewData["Title"] = "Registro Proveedor - Zooni";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --marron: #8B5E3C;
+            --amarillo: #FFD85A;
+            --amarillo-hover: #FFC93C;
+            --gris: #555;
+            --gris-claro: #ccc;
+            --fondo: #FFFFFF;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--fondo);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            width: 380px;
+            padding: 0 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: var(--marron);
+            font-weight: 700;
+            font-size: 80px;
+            margin: 10px 0;
+        }
+
+        .illustration {
+            width: 100%;
+            max-width: 420px;
+            height: auto;
+            margin-top: 3px;
+            margin-bottom: 3px;
+            object-fit: contain;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        h2 {
+            color: #444;
+            font-weight: 700;
+            font-size: 22px;
+            margin: 15px 0 10px 0;
+        }
+
+        .subtitle {
+            color: var(--gris);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+
+        input {
+            width: 100%;
+            max-width: 320px;
+            padding: 14px 15px;
+            font-size: 15px;
+            border-radius: 18px;
+            border: 1.8px solid var(--gris-claro);
+            outline: none;
+            text-align: center;
+            transition: border 0.2s ease;
+        }
+
+        input:focus {
+            border-color: var(--amarillo);
+        }
+
+        .btn-principal {
+            display: inline-block;
+            width: 100%;
+            max-width: 320px;
+            background-color: var(--amarillo);
+            border: none;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 18px;
+            color: #5b4500;
+            text-align: center;
+            padding: 14px 0;
+            cursor: pointer;
+            box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.1);
+            transition: background 0.2s ease, transform 0.2s ease;
+            text-decoration: none;
+            margin-bottom: 4.5%;
+        }
+
+        .btn-principal:hover {
+            background-color: var(--amarillo-hover);
+            transform: scale(1.02);
+        }
+
+        .divider {
+            margin: 22px 0 12px;
+            font-weight: 600;
+            color: var(--gris);
+            font-size: 15px;
+        }
+
+        .link {
+            font-size: 15px;
+            color: var(--gris);
+            margin-top: 10px;
+        }
+
+        .link a {
+            text-decoration: none;
+            color: var(--marron);
+            font-weight: 700;
+        }
+
+        .error {
+            color: red;
+            font-weight: 600;
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #ffe6e6;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .info-text {
+            color: var(--gris);
+            font-size: 13px;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+
+        @@media (max-width: 768px) {
+            h1 { font-size: 64px; }
+            h2 { font-size: 18px; }
+            .btn-principal { font-size: 16px; }
+        }
+
+        @@media (max-width: 480px) {
+            h1 { font-size: 54px; }
+            .container { width: 90%; padding: 0 10px; }
+            input { padding: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Zooni</h1>
+
+        <img src="~/img/mascotas-bienvenida.png" alt="Zooni mascotas" class="illustration" />
+
+        <h2>Registro de Proveedor</h2>
+        <p class="subtitle">Creá tu cuenta como proveedor de servicios</p>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="error">@ViewBag.Error</div>
+        }
+
+        <form method="post" asp-action="Registro1" asp-controller="Proveedor">
+            @Html.AntiForgeryToken()
+            <input type="email" name="correo" placeholder="Correo electrónico" required autocomplete="off" />
+            <input type="password" name="contrasena" placeholder="Contraseña" required autocomplete="off" id="contrasena" />
+            <input type="password" name="confirmarContrasena" placeholder="Repetir contraseña" required autocomplete="off" id="confirmarContrasena" />
+            <p class="info-text">La contraseña debe tener al menos 6 caracteres</p>
+            <button type="submit" class="btn-principal">Crear cuenta</button>
+        </form>
+
+        <div class="divider">¿Ya tenés cuenta?</div>
+
+        <div class="link">
+            <a href="/Auth/Login">Iniciar sesión</a>
+        </div>
+    </div>
+
+    <script>
+        // Validar que las contraseñas coincidan
+        document.querySelector('form').addEventListener('submit', function(e) {
+            const contrasena = document.getElementById('contrasena').value;
+            const confirmarContrasena = document.getElementById('confirmarContrasena').value;
+            
+            if (contrasena !== confirmarContrasena) {
+                e.preventDefault();
+                alert('Las contraseñas no coinciden. Por favor, verificá que ambas sean iguales.');
+                return false;
+            }
+            
+            if (contrasena.length < 6) {
+                e.preventDefault();
+                alert('La contraseña debe tener al menos 6 caracteres.');
+                return false;
+            }
+        });
+    </script>
+</body>
+</html>

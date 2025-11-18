@@ -48,26 +48,6 @@ body.tema-claro {
     color: var(--texto-claro);
 }
 
-body.tema-duelo {
-    background: linear-gradient(135deg, #2d1b3d 0%, #1a0f26 100%);
-    color: #e8d5e8;
-    position: relative;
-}
-body.tema-duelo::before {
-    content: '🕯️';
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 10rem;
-    opacity: 0.08;
-    pointer-events: none;
-    z-index: 0;
-}
-body.tema-duelo main {
-    position: relative;
-    z-index: 1;
-}
 
 body.tema-oscuro {
     background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
@@ -95,19 +75,6 @@ header {
 }
 body.tema-oscuro .menu-icon {
     filter: brightness(0) invert(1); /* blanco en modo oscuro */
-}
-body.tema-duelo .menu-icon {
-    filter: brightness(0) invert(1) sepia(1) saturate(2) hue-rotate(280deg);
-}
-body.tema-duelo .menu-lateral {
-    background: rgba(45, 27, 61, 0.98);
-    box-shadow: 4px 0 14px rgba(139, 90, 155, 0.3);
-}
-body.tema-duelo .mascota-nombre::before {
-    content: '🕯️ ';
-}
-body.tema-duelo .mascota-nombre::after {
-    content: ' 🕯️';
 }
 .menu-icon:hover { transform: scale(1.1); }
 
@@ -271,6 +238,10 @@ body.tema-oscuro .mascota-nombre {
 }
 .arrow-left { left: -55px; }
 .arrow-right { right: -55px; }
+.arrow-foto {
+    top: 60%;
+    z-index: 6;
+}
 
 .fade {
     transition: opacity 0.6s ease, transform 0.6s ease;
@@ -419,6 +390,7 @@ body.tema-oscuro footer {
     <div class="mascota-nombre">@mascotaNombre</div>
 
     <div class="mascota-wrapper" id="mascotaWrapper">
+        @Html.AntiForgeryToken()
         <!-- Foto animada -->
         <img src="@rutaAnimada"
              alt="Avatar @mascotaNombre"
@@ -434,9 +406,24 @@ body.tema-oscuro footer {
                  id="fotoReal"/>
         }
 
-        <!-- Flechas -->
-        <button class="arrow arrow-left" id="prevFoto">⮜</button>
-        <button class="arrow arrow-right" id="nextFoto">⮞</button>
+        <!-- Flechas para cambiar entre mascotas -->
+        @{
+            var todasMascotas = ViewBag.TodasMascotas as List<Zooni.Models.Mascota> ?? new List<Zooni.Models.Mascota>();
+            var indiceActual = ViewBag.IndiceMascotaActual ?? 0;
+            bool mostrarFlechasMascotas = todasMascotas.Count > 1;
+        }
+        @if (mostrarFlechasMascotas)
+        {
+            <button class="arrow arrow-left" id="prevMascota" title="Mascota anterior">⮜</button>
+            <button class="arrow arrow-right" id="nextMascota" title="Siguiente mascota">⮞</button>
+        }
+        
+        <!-- Flechas para alternar foto animada/real (solo si hay foto real) -->
+        @if (!string.IsNullOrEmpty(rutaFoto))
+        {
+            <button class="arrow arrow-left arrow-foto" id="prevFoto" style="display:none;">⮜</button>
+            <button class="arrow arrow-right arrow-foto" id="nextFoto" style="display:none;">⮞</button>
+        }
     </div>
 
     <div class="panel">
@@ -473,18 +460,64 @@ overlay.addEventListener("click", cerrarMenu);
 </script>
 
 <script>
+// ========== NAVEGACIÓN ENTRE MASCOTAS ==========
+@{
+    var mascotasJson = System.Text.Json.JsonSerializer.Serialize(ViewBag.TodasMascotas ?? new List<object>());
+}
+const todasMascotas = @Html.Raw(mascotasJson);
+const indiceActual = @(ViewBag.IndiceMascotaActual ?? 0);
+const prevMascota = document.getElementById("prevMascota");
+const nextMascota = document.getElementById("nextMascota");
+
+if (todasMascotas && todasMascotas.length > 1) {
+    if (prevMascota) {
+        prevMascota.addEventListener("click", () => {
+            const nuevoIndice = indiceActual > 0 ? indiceActual - 1 : todasMascotas.length - 1;
+            cambiarMascota(todasMascotas[nuevoIndice].Id_Mascota);
+        });
+    }
+    
+    if (nextMascota) {
+        nextMascota.addEventListener("click", () => {
+            const nuevoIndice = indiceActual < todasMascotas.length - 1 ? indiceActual + 1 : 0;
+            cambiarMascota(todasMascotas[nuevoIndice].Id_Mascota);
+        });
+    }
+}
+
+function cambiarMascota(mascotaId) {
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = "@Url.Action("CambiarMascota", "Home")";
+    
+    // Obtener el token anti-forgery del formulario oculto
+    const tokenInput = document.querySelector('input[name="__RequestVerificationToken"]');
+    if (tokenInput) {
+        const token = document.createElement("input");
+        token.type = "hidden";
+        token.name = "__RequestVerificationToken";
+        token.value = tokenInput.value;
+        form.appendChild(token);
+    }
+    
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "MascotaId";
+    input.value = mascotaId;
+    form.appendChild(input);
+    
+    document.body.appendChild(form);
+    form.submit();
+}
+
+// ========== ALTERNAR FOTO ANIMADA/REAL ==========
 const animada = document.getElementById("fotoAnimada");
 const real = document.getElementById("fotoReal");
-const prev = document.getElementById("prevFoto");
-const next = document.getElementById("nextFoto");
+const prevFoto = document.getElementById("prevFoto");
+const nextFoto = document.getElementById("nextFoto");
 let mostrandoReal = false;
 
-// Solo mostrar flechas si hay foto real
 const tieneFoto = "@(string.IsNullOrEmpty(rutaFoto) ? "false" : "true")" === "true";
-if (!tieneFoto) {
-    if (prev) prev.style.display = "none";
-    if (next) next.style.display = "none";
-}
 
 function alternarFoto(direccion) {
     if (!tieneFoto) return;
@@ -503,9 +536,12 @@ function alternarFoto(direccion) {
     mostrandoReal = !mostrandoReal;
 }
 
-if (tieneFoto) {
-    if (prev) prev.addEventListener("click", () => alternarFoto("left"));
-    if (next) next.addEventListener("click", () => alternarFoto("right"));
+// Doble clic en la imagen para alternar foto (si hay foto real)
+if (tieneFoto && animada) {
+    animada.addEventListener("dblclick", () => alternarFoto("right"));
+    if (real) {
+        real.addEventListener("dblclick", () => alternarFoto("left"));
+    }
 }
 </script>
 

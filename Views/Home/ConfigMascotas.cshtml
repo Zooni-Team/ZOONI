@@ -298,6 +298,15 @@ body.tema-oscuro .card:hover {
     transform: translateY(-2px);
 }
 
+.btn-recuperar {
+    background: var(--verde);
+    color: #fff;
+}
+.btn-recuperar:hover {
+    background: #2fa66a;
+    transform: translateY(-2px);
+}
+
 .mensaje-vacio {
     text-align: center;
     padding: 40px 20px;
@@ -494,6 +503,25 @@ body.tema-oscuro .card:hover {
 <main>
     <h1>🐾 Configuración de Mascotas</h1>
 
+    @if (TempData["Exito"] != null)
+    {
+        <div style="background: #d4edda; color: #155724; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #c3e6cb;">
+            @TempData["Exito"]
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div style="background: #f8d7da; color: #721c24; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #f5c6cb;">
+            @TempData["Error"]
+        </div>
+    }
+    @if (TempData["Info"] != null)
+    {
+        <div style="background: #d1ecf1; color: #0c5460; padding: 12px 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #bee5eb;">
+            @TempData["Info"]
+        </div>
+    }
+
     <a href="/Registro/NuevaMascota" class="btn-agregar">+ Agregar nueva mascota</a>
 
     <div class="seccion-titulo">Activas</div>
@@ -550,6 +578,13 @@ body.tema-oscuro .card:hover {
                     <img src="@fotoSrcArch" alt="@(m.Nombre ?? "Mascota")" onerror="this.src='/img/mascotas/default.png'" />
                     <h3>@m.Nombre</h3>
                     <p>@m.Especie - @m.Raza</p>
+                    <div class="acciones">
+                        <form asp-action="DesarchivarMascota" asp-controller="Home" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@m.Id_Mascota" />
+                            <button type="submit" class="btn btn-recuperar">Recuperar</button>
+                        </form>
+                    </div>
                 </div>
             }
         </div>

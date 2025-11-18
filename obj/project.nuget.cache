@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "nKfz/MGzgMdsGUdzn2b7MgX9lShG8c8BpfJYFCnEPkWJxLRHlQkU4t7qOWYwXjgDxFuZB3nQNcRSucv2tHZj9g==",
+  "dgSpecHash": "1i50oFM+CZ8VhTTxFu0s33QSvoBRCsXKbn+W0Qui4SdqknWnJ8fs1OPguK48X0VzUZ4kZ4IbgPE/EWU9WLoXAw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\49092919\\zooni\\Zooni.csproj",
+  "projectFilePath": "c:\\Users\\49092919\\zooni\\Zooni.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\49092919\\.nuget\\packages\\azure.ai.openai\\2.0.0-beta.5\\azure.ai.openai.2.0.0-beta.5.nupkg.sha512",
     "C:\\Users\\49092919\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",

@@ -33,12 +33,13 @@ namespace Zooni.Controllers
                   FROM Mascota m
                   LEFT JOIN MascotaCompartida mc ON m.Id_Mascota = mc.Id_Mascota AND mc.Id_UsuarioCompartido = @UserId AND mc.Activo = 1
                   WHERE m.Id_Mascota = @Id 
-                    AND (m.Id_User = @UserId OR mc.Id_UsuarioCompartido = @UserId)";
+                    AND (m.Id_User = @UserId OR mc.Id_UsuarioCompartido = @UserId)
+                    AND (m.Archivada IS NULL OR m.Archivada = 0)";
         param = new Dictionary<string, object> { { "@Id", mascotaId.Value }, { "@UserId", userId } };
     }
     else
     {
-        // Incluir mascotas propias y compartidas
+        // Incluir mascotas propias y compartidas (solo activas, no archivadas)
         query = @"SELECT TOP 1 m.*, 
                     CASE WHEN m.PesoDisplay IS NULL OR m.PesoDisplay = '' THEN NULL ELSE m.PesoDisplay END AS PesoDisplay,
                     CASE WHEN m.Id_User = @UserId THEN 1 ELSE 0 END AS EsPropietario,
@@ -46,6 +47,7 @@ namespace Zooni.Controllers
                   FROM Mascota m
                   LEFT JOIN MascotaCompartida mc ON m.Id_Mascota = mc.Id_Mascota AND mc.Id_UsuarioCompartido = @UserId AND mc.Activo = 1
                   WHERE (m.Id_User = @UserId OR mc.Id_UsuarioCompartido = @UserId)
+                    AND (m.Archivada IS NULL OR m.Archivada = 0)
                   ORDER BY m.Id_Mascota DESC";
         param = new Dictionary<string, object> { { "@UserId", userId } };
     }
@@ -83,7 +85,7 @@ namespace Zooni.Controllers
     ViewBag.MascotaEdad = mascota["Edad"] == DBNull.Value ? 0 : Convert.ToInt32(mascota["Edad"]);
     }
     
-    // Manejo mejorado del peso usando PesoHelper
+    // Manejo del peso usando PesoHelper - usar siempre el valor de la BD sin correcciones
     decimal pesoDecimal = 0;
     string? pesoDisplayBD = null;
     
@@ -93,69 +95,12 @@ namespace Zooni.Controllers
         pesoDisplayBD = mascota["PesoDisplay"].ToString();
     }
     
-    // Obtener el peso decimal para cálculos
+    // Obtener el peso decimal de la BD (usar el valor tal cual está guardado)
     if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
     {
-        bool pesoCorregido = false;
-        decimal pesoOriginal = pesoDecimal;
-        
-        // ✅ Corrección global: dividir por 10 si no hay PesoDisplay y el peso parece incorrecto (>= 10)
-        // Esto corrige casos como 400 -> 40.0, 300 -> 30.0, etc.
-        // También corregir si el peso es muy alto (más de 100kg es poco común para mascotas)
-        if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal >= 10)
-        {
-            // Dividir por 10 para corregir el error de parseo
-            decimal pesoCorregidoTemp = pesoDecimal / 10;
-            // Validar que el peso corregido sea razonable (menor a 200kg para cualquier mascota)
-            if (pesoCorregidoTemp <= 200 && pesoCorregidoTemp >= 0.1M)
-            {
-                pesoDecimal = pesoCorregidoTemp;
-                pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
-                pesoCorregido = true;
-            }
-        }
-        // Si el peso es muy alto incluso después de dividir, aplicar corrección adicional
-        else if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal > 200)
-        {
-            // Intentar dividir por 10 o 100 según el caso
-            decimal pesoCorregidoTemp = pesoDecimal / 10;
-            if (pesoCorregidoTemp > 200)
-            {
-                pesoCorregidoTemp = pesoDecimal / 100;
-            }
-            if (pesoCorregidoTemp <= 200 && pesoCorregidoTemp >= 0.1M)
-            {
-                pesoDecimal = pesoCorregidoTemp;
-                pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
-                pesoCorregido = true;
-            }
-        }
-        
-        // Si se corrigió el peso, actualizar la base de datos
-        if (pesoCorregido)
-        {
-            try
-            {
-                int idMascota = Convert.ToInt32(mascota["Id_Mascota"]);
-                string qActualizar = @"
-                    UPDATE Mascota
-                    SET Peso = @Peso, PesoDisplay = @PesoDisplay
-                    WHERE Id_Mascota = @Id";
-                BD.ExecuteNonQuery(qActualizar, new Dictionary<string, object>
-                {
-                    { "@Peso", pesoDecimal },
-                    { "@PesoDisplay", pesoDisplayBD },
-                    { "@Id", idMascota }
-                });
-                Console.WriteLine($"✅ Peso corregido en BD: {pesoOriginal} -> {pesoDecimal} kg (Mascota ID: {idMascota})");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"⚠️ Error al actualizar peso corregido en BD: {ex.Message}");
-            }
-        }
-        
+        // Usar el peso tal cual está en la BD, sin correcciones
         ViewBag.MascotaPeso = pesoDecimal;
+        // Si hay PesoDisplay, usarlo; sino formatear el decimal
         ViewBag.MascotaPesoDisplay = pesoDisplayBD ?? PesoHelper.FormatearPeso(pesoDecimal);
     }
     else
@@ -229,6 +174,71 @@ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
                 CargarViewBagMascota(mascota);
                 ViewBag.MascotaFoto = HttpContext.Session.GetString("MascotaFoto");
 
+                // Cargar todas las mascotas activas para navegación (solo únicas por nombre y raza)
+                // Si hay duplicados, tomar solo la más reciente (mayor Id_Mascota)
+                string qTodasMascotas = @"
+                    WITH MascotasUnicas AS (
+                        SELECT 
+                            m.Id_Mascota, 
+                            m.Nombre, 
+                            m.Especie, 
+                            m.Raza, 
+                            m.Foto,
+                            ROW_NUMBER() OVER (PARTITION BY m.Nombre, m.Raza ORDER BY m.Id_Mascota DESC) AS rn
+                        FROM Mascota m
+                        LEFT JOIN MascotaCompartida mc ON m.Id_Mascota = mc.Id_Mascota AND mc.Id_UsuarioCompartido = @UserId AND mc.Activo = 1
+                        WHERE (m.Id_User = @UserId OR mc.Id_UsuarioCompartido = @UserId)
+                          AND (m.Archivada IS NULL OR m.Archivada = 0)
+                    )
+                    SELECT Id_Mascota, Nombre, Especie, Raza, Foto
+                    FROM MascotasUnicas
+                    WHERE rn = 1
+                    ORDER BY Id_Mascota DESC";
+                
+                var dtTodasMascotas = BD.ExecuteQuery(qTodasMascotas, new Dictionary<string, object> { { "@UserId", userId.Value } });
+                var listaMascotas = new List<Mascota>();
+                foreach (System.Data.DataRow row in dtTodasMascotas.Rows)
+                {
+                    listaMascotas.Add(new Mascota
+                    {
+                        Id_Mascota = Convert.ToInt32(row["Id_Mascota"]),
+                        Nombre = row["Nombre"]?.ToString() ?? "Sin nombre",
+                        Especie = row["Especie"]?.ToString() ?? "Perro",
+                        Raza = row["Raza"]?.ToString() ?? "",
+                        Foto = row["Foto"]?.ToString() ?? ""
+                    });
+                }
+                ViewBag.TodasMascotas = listaMascotas;
+                
+                // Índice de la mascota actual (buscar por nombre y raza si hay duplicados)
+                int? mascotaIdActual = HttpContext.Session.GetInt32("MascotaId");
+                int indiceActual = 0;
+                if (mascotaIdActual != null)
+                {
+                    // Obtener nombre y raza de la mascota actual
+                    string qMascotaActual = @"
+                        SELECT TOP 1 Nombre, Raza
+                        FROM Mascota
+                        WHERE Id_Mascota = @Id";
+                    var dtActual = BD.ExecuteQuery(qMascotaActual, new Dictionary<string, object> { { "@Id", mascotaIdActual.Value } });
+                    
+                    if (dtActual.Rows.Count > 0)
+                    {
+                        string nombreActual = dtActual.Rows[0]["Nombre"]?.ToString() ?? "";
+                        string razaActual = dtActual.Rows[0]["Raza"]?.ToString() ?? "";
+                        
+                        // Buscar en la lista de mascotas únicas por nombre y raza
+                        for (int i = 0; i < listaMascotas.Count; i++)
+                        {
+                            if (listaMascotas[i].Nombre == nombreActual && listaMascotas[i].Raza == razaActual)
+                            {
+                                indiceActual = i;
+                                break;
+                            }
+                        }
+                    }
+                }
+                ViewBag.IndiceMascotaActual = indiceActual;
 
                 return View();
             }
@@ -727,32 +737,69 @@ if (TempData["Exito"] != null && TempData["Exito"].ToString().Contains("Mascota 
                 if (userId == null)
                     return RedirectToAction("Login", "Auth");
 
-                string q = "SELECT Nombre, Especie, Raza FROM Mascota WHERE Id_Mascota = @Id AND Id_User = @User";
+                // Verificar que la mascota pertenece al usuario o está compartida y obtener su nombre y raza
+                string q = @"
+                    SELECT TOP 1 m.Nombre, m.Especie, m.Raza 
+                    FROM Mascota m
+                    LEFT JOIN MascotaCompartida mc ON m.Id_Mascota = mc.Id_Mascota AND mc.Id_UsuarioCompartido = @User AND mc.Activo = 1
+                    WHERE m.Id_Mascota = @Id 
+                      AND (m.Id_User = @User OR mc.Id_UsuarioCompartido = @User)
+                      AND (m.Archivada IS NULL OR m.Archivada = 0)";
                 var dt = BD.ExecuteQuery(q, new Dictionary<string, object> { { "@Id", MascotaId }, { "@User", userId.Value } });
 
                 if (dt.Rows.Count == 0)
                 {
                     TempData["Error"] = "Mascota no encontrada.";
-                    return RedirectToAction("Configuracion");
+                    return RedirectToAction("Index");
                 }
 
                 var m = dt.Rows[0];
-                HttpContext.Session.SetInt32("MascotaId", MascotaId);
-                HttpContext.Session.SetString("MascotaNombre", m["Nombre"].ToString());
-                HttpContext.Session.SetString("MascotaEspecie", m["Especie"].ToString());
-                HttpContext.Session.SetString("MascotaRaza", m["Raza"].ToString());
+                string nombre = m["Nombre"]?.ToString() ?? "";
+                string raza = m["Raza"]?.ToString() ?? "";
+                
+                // Buscar la mascota más reciente con ese nombre y raza (por si hay duplicados)
+                string qMascotaUnica = @"
+                    SELECT TOP 1 m.Id_Mascota, m.Nombre, m.Especie, m.Raza
+                    FROM Mascota m
+                    LEFT JOIN MascotaCompartida mc ON m.Id_Mascota = mc.Id_Mascota AND mc.Id_UsuarioCompartido = @User AND mc.Activo = 1
+                    WHERE (m.Id_User = @User OR mc.Id_UsuarioCompartido = @User)
+                      AND (m.Archivada IS NULL OR m.Archivada = 0)
+                      AND m.Nombre = @Nombre
+                      AND (m.Raza = @Raza OR (m.Raza IS NULL AND @Raza IS NULL))
+                    ORDER BY m.Id_Mascota DESC";
+                
+                var dtUnica = BD.ExecuteQuery(qMascotaUnica, new Dictionary<string, object> 
+                { 
+                    { "@User", userId.Value },
+                    { "@Nombre", nombre },
+                    { "@Raza", raza ?? (object)DBNull.Value }
+                });
+
+                if (dtUnica.Rows.Count == 0)
+                {
+                    TempData["Error"] = "Mascota no encontrada.";
+                    return RedirectToAction("Index");
+                }
+
+                var mascotaUnica = dtUnica.Rows[0];
+                int idMascotaFinal = Convert.ToInt32(mascotaUnica["Id_Mascota"]);
+                
+                HttpContext.Session.SetInt32("MascotaId", idMascotaFinal);
+                HttpContext.Session.SetString("MascotaNombre", mascotaUnica["Nombre"].ToString());
+                HttpContext.Session.SetString("MascotaEspecie", mascotaUnica["Especie"].ToString());
+                HttpContext.Session.SetString("MascotaRaza", mascotaUnica["Raza"]?.ToString() ?? "");
                 
                 // Limpiar avatar de sesión al cambiar de mascota (cada mascota tiene su propio avatar)
                 HttpContext.Session.Remove("MascotaAvatar");
 
-                TempData["Exito"] = $"Mascota activa: {m["Nombre"]} 🐾";
-                return RedirectToAction("Configuracion");
+                // Redirigir al Index
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
                 Console.WriteLine("❌ Error en CambiarMascota: " + ex.Message);
                 TempData["Error"] = "Error al cambiar mascota.";
-                return RedirectToAction("Configuracion");
+                return RedirectToAction("Index");
             }
         }
 
@@ -910,7 +957,7 @@ public IActionResult DescargarPDF()
     string especie = mascota["Especie"].ToString();
     string raza = mascota["Raza"].ToString();
 
-    // ✅ Peso: usar PesoDisplay si está disponible, sino formatear el decimal
+    // ✅ Peso: usar PesoDisplay si está disponible, sino formatear el decimal (sin correcciones)
     string? pesoDisplayBD = null;
     if (mascota.Table.Columns.Contains("PesoDisplay") && mascota["PesoDisplay"] != DBNull.Value)
     {
@@ -921,32 +968,7 @@ public IActionResult DescargarPDF()
     string peso;
     if (mascota["Peso"] != DBNull.Value && decimal.TryParse(mascota["Peso"].ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal))
     {
-        // ✅ Corrección global: dividir por 10 si no hay PesoDisplay y el peso parece incorrecto (>= 10)
-        if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal >= 10)
-        {
-            decimal pesoCorregido = pesoDecimal / 10;
-            if (pesoCorregido <= 200 && pesoCorregido >= 0.1M)
-            {
-                pesoDecimal = pesoCorregido;
-                pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
-            }
-        }
-        // Si el peso es muy alto incluso después de dividir, aplicar corrección adicional
-        else if (string.IsNullOrEmpty(pesoDisplayBD) && pesoDecimal > 200)
-        {
-            decimal pesoCorregido = pesoDecimal / 10;
-            if (pesoCorregido > 200)
-            {
-                pesoCorregido = pesoDecimal / 100;
-            }
-            if (pesoCorregido <= 200 && pesoCorregido >= 0.1M)
-            {
-                pesoDecimal = pesoCorregido;
-                pesoDisplayBD = PesoHelper.FormatearPeso(pesoDecimal);
-            }
-        }
-        
-        // Usar PesoDisplay si existe, sino formatear el decimal
+        // Usar PesoDisplay si existe, sino formatear el decimal (usar valor tal cual de la BD)
         peso = !string.IsNullOrEmpty(pesoDisplayBD) 
             ? pesoDisplayBD 
             : PesoHelper.FormatearPeso(pesoDecimal);
@@ -1269,12 +1291,13 @@ public IActionResult Perfil(int? id = null)
         ViewBag.CantidadSiguiendo = 0;
     }
     
-    // 🐾 Mascotas (filtrar duplicados: misma raza y nombre exacto)
+    // 🐾 Mascotas (filtrar duplicados: misma raza y nombre exacto, excluir archivadas)
     string qMascotas = @"
         SELECT Id_Mascota, Nombre, Especie, Raza, Foto,
                ROW_NUMBER() OVER (PARTITION BY Nombre, Raza ORDER BY Id_Mascota DESC) as rn
         FROM Mascota 
-        WHERE Id_User = @Id";
+        WHERE Id_User = @Id 
+          AND (Archivada IS NULL OR Archivada = 0)";
     var dtMascotas = BD.ExecuteQuery(qMascotas, new Dictionary<string, object> { { "@Id", perfilId } });
 
     var mascotas = new List<Mascota>();
@@ -1562,7 +1585,7 @@ public IActionResult ActualizarPerfil(string Nombre, string Apellido, string Pai
 [HttpPost]
 public IActionResult CambiarTema(string modo)
 {
-    if (modo != "claro" && modo != "oscuro" && modo != "duelo") modo = "claro";
+    if (modo != "claro" && modo != "oscuro") modo = "claro";
     HttpContext.Session.SetString("Tema", modo);
     return RedirectToAction("ConfigTema");
 }
@@ -2088,6 +2111,131 @@ public IActionResult GuardarMascotaEditada(Mascota model, string PesoDisplay, Da
 
     TempData["Exito"] = "Datos de la mascota guardados ✅";
         return RedirectToAction("ConfigMascotas");
+    }
+
+    // ============================
+    // POST: ArchivarMascota
+    // ============================
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult ArchivarMascota(int id)
+    {
+        try
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+                return RedirectToAction("Login", "Auth");
+
+            // Verificar que la mascota pertenece al usuario
+            string checkQuery = "SELECT Id_Mascota FROM Mascota WHERE Id_Mascota = @Id AND Id_User = @UserId";
+            var checkResult = BD.ExecuteQuery(checkQuery, new Dictionary<string, object> 
+            { 
+                { "@Id", id }, 
+                { "@UserId", userId.Value } 
+            });
+
+            if (checkResult.Rows.Count == 0)
+            {
+                TempData["Error"] = "Mascota no encontrada o no tenés permiso para archivarla.";
+                return RedirectToAction("ConfigMascotas");
+            }
+
+            // Archivar la mascota (marcar Archivada = 1)
+            string updateQuery = "UPDATE Mascota SET Archivada = 1 WHERE Id_Mascota = @Id AND Id_User = @UserId";
+            BD.ExecuteNonQuery(updateQuery, new Dictionary<string, object> 
+            { 
+                { "@Id", id }, 
+                { "@UserId", userId.Value } 
+            });
+
+            // Si la mascota archivada era la activa, limpiar la sesión
+            int? mascotaActivaId = HttpContext.Session.GetInt32("MascotaId");
+            if (mascotaActivaId == id)
+            {
+                HttpContext.Session.Remove("MascotaId");
+            }
+
+            TempData["Exito"] = "Mascota archivada correctamente ✅";
+            return RedirectToAction("ConfigMascotas");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en ArchivarMascota: " + ex.Message);
+            TempData["Error"] = "Error al archivar la mascota.";
+            return RedirectToAction("ConfigMascotas");
+        }
+    }
+
+    // ============================
+    // POST: DesarchivarMascota
+    // ============================
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult DesarchivarMascota(int id)
+    {
+        try
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+                return RedirectToAction("Login", "Auth");
+
+            // Verificar que la mascota pertenece al usuario y está archivada
+            string checkQuery = @"
+                SELECT Id_Mascota, Archivada 
+                FROM Mascota 
+                WHERE Id_Mascota = @Id AND Id_User = @UserId";
+            var checkResult = BD.ExecuteQuery(checkQuery, new Dictionary<string, object> 
+            { 
+                { "@Id", id }, 
+                { "@UserId", userId.Value } 
+            });
+
+            if (checkResult.Rows.Count == 0)
+            {
+                TempData["Error"] = "Mascota no encontrada o no tenés permiso para recuperarla.";
+                return RedirectToAction("ConfigMascotas");
+            }
+
+            // Verificar que realmente está archivada
+            var row = checkResult.Rows[0];
+            bool estaArchivada = row["Archivada"] != DBNull.Value && Convert.ToBoolean(row["Archivada"]);
+            
+            if (!estaArchivada)
+            {
+                TempData["Info"] = "Esta mascota ya está activa.";
+                return RedirectToAction("ConfigMascotas");
+            }
+
+            // Desarchivar la mascota (marcar Archivada = 0 o NULL)
+            string updateQuery = @"
+                UPDATE Mascota 
+                SET Archivada = 0 
+                WHERE Id_Mascota = @Id AND Id_User = @UserId";
+            
+            int rowsAffected = BD.ExecuteNonQuery(updateQuery, new Dictionary<string, object> 
+            { 
+                { "@Id", id }, 
+                { "@UserId", userId.Value } 
+            });
+
+            if (rowsAffected > 0)
+            {
+                TempData["Exito"] = "Mascota recuperada correctamente ✅";
+            }
+            else
+            {
+                TempData["Error"] = "No se pudo recuperar la mascota. Intentá nuevamente.";
+            }
+
+            return RedirectToAction("ConfigMascotas");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("❌ Error en DesarchivarMascota: " + ex.Message);
+            Console.WriteLine("Stack trace: " + ex.StackTrace);
+            TempData["Error"] = "Error al recuperar la mascota: " + ex.Message;
+            return RedirectToAction("ConfigMascotas");
+        }
     }
 
     // 🎂 POST: Actualizar peso desde FichaMedica
