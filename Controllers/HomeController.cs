@@ -11,6 +11,7 @@ using iText.Layout;
 using iText.Layout.Element;
 using iText.Layout.Properties;
 using iText.IO.Image;
+using Zooni.Utils;
 namespace Zooni.Controllers
 {
     public class HomeController : BaseController
@@ -5585,11 +5586,11 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
         }
 
         // ============================
-        // POST: /Home/ObtenerOCrearChat
+        // POST: /Home/ObtenerOCrearChatProveedor
         // ============================
         [HttpPost]
-        [Route("Home/ObtenerOCrearChat")]
-        public IActionResult ObtenerOCrearChat([FromBody] int idProveedorUser)
+        [Route("Home/ObtenerOCrearChatProveedor")]
+        public IActionResult ObtenerOCrearChatProveedor([FromBody] int idProveedorUser)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
@@ -5641,7 +5642,7 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
             }
             catch (Exception ex)
             {
-                Console.WriteLine("❌ Error en ObtenerOCrearChat: " + ex.Message);
+                Console.WriteLine("❌ Error en ObtenerOCrearChatProveedor: " + ex.Message);
                 return Json(new { success = false, message = ex.Message });
             }
         }
@@ -5656,7 +5657,7 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
             try
             {
                 string checkTable = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ProveedorServicio'";
-                object? tableExists = BD.ExecuteScalar(checkTable);
+                object tableExists = BD.ExecuteScalar(checkTable);
                 if (tableExists == null || Convert.ToInt32(tableExists) == 0)
                 {
                     Console.WriteLine("⚠️ La tabla ProveedorServicio no existe.");
