@@ -1,0 +1,202 @@
+@{
+    ViewData["Title"] = "Contratar Servicio - Zooni";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --verde: #3ac37d;
+            --marron: #8B5E3C;
+            --gris: #555;
+            --gris-claro: #ccc;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+        h1 {
+            color: var(--marron);
+            margin: 0 0 10px 0;
+        }
+        .proveedor-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+        .campo {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--gris);
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1.8px solid var(--gris-claro);
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .btn {
+            background-color: var(--verde);
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background-color: #2ea968;
+        }
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📅 Contratar Servicio</h1>
+        
+        @if (TempData["Error"] != null)
+        {
+            <div class="error">@TempData["Error"]</div>
+        }
+
+        @if (ViewBag.Proveedor != null)
+        {
+            <div class="proveedor-info">
+                <strong>@ViewBag.Proveedor["NombreCompleto"]</strong>
+                @if (ViewBag.Proveedor["Precio_Hora"] != null && ViewBag.Proveedor["Precio_Hora"] != DBNull.Value)
+                {
+                    <div style="margin-top: 5px; color: var(--gris);">$@ViewBag.Proveedor["Precio_Hora"]/hora</div>
+                }
+            </div>
+
+            <form id="formContratar" onsubmit="enviarReserva(event)">
+                <div class="campo">
+                    <label>Mascota *</label>
+                    <select id="idMascota" name="idMascota" required>
+                        <option value="">Seleccionar mascota</option>
+                        @if (ViewBag.Mascotas != null)
+                        {
+                            foreach (System.Data.DataRow mascota in ViewBag.Mascotas.Rows)
+                            {
+                                <option value="@mascota["Id_Mascota"]">@mascota["Nombre"] (@mascota["Especie"])</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Tipo de Servicio *</label>
+                    <select id="idTipoServicio" name="idTipoServicio" required>
+                        <option value="">Seleccionar servicio</option>
+                        @if (ViewBag.TiposServicio != null)
+                        {
+                            foreach (System.Data.DataRow tipo in ViewBag.TiposServicio.Rows)
+                            {
+                                <option value="@tipo["Id_TipoServicio"]">@tipo["Descripcion"]</option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="campo">
+                    <label>Fecha *</label>
+                    <input type="date" id="fechaInicio" name="fechaInicio" required min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </div>
+
+                <div class="campo">
+                    <label>Hora *</label>
+                    <input type="time" id="horaInicio" name="horaInicio" required />
+                </div>
+
+                <div class="campo">
+                    <label>Duración (horas) *</label>
+                    <input type="number" id="duracionHoras" name="duracionHoras" min="0.5" max="24" step="0.5" value="1" required />
+                </div>
+
+                <div class="campo">
+                    <label>Notas (opcional)</label>
+                    <textarea id="notas" name="notas" placeholder="Instrucciones especiales, preferencias, etc."></textarea>
+                </div>
+
+                <button type="submit" class="btn">Contratar Servicio</button>
+            </form>
+        }
+    </div>
+
+    <script>
+        async function enviarReserva(event) {
+            event.preventDefault();
+            
+            const formData = {
+                idProveedor: @ViewBag.Proveedor["Id_Proveedor"],
+                idMascota: parseInt(document.getElementById('idMascota').value),
+                idTipoServicio: parseInt(document.getElementById('idTipoServicio').value),
+                fechaInicio: document.getElementById('fechaInicio').value,
+                horaInicio: document.getElementById('horaInicio').value,
+                duracionHoras: parseFloat(document.getElementById('duracionHoras').value),
+                notas: document.getElementById('notas').value
+            };
+
+            try {
+                const response = await fetch('/BuscarProveedor/CrearReserva', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const data = await response.json();
+                if (data.success) {
+                    alert('¡Reserva creada exitosamente!');
+                    window.location.href = '/Home/Index';
+                } else {
+                    alert('Error: ' + (data.message || 'No se pudo crear la reserva'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al crear la reserva');
+            }
+        }
+    </script>
+</body>
+</html>
+

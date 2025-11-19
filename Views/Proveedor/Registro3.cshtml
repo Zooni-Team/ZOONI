@@ -318,18 +318,24 @@
             </div>
 
             <div class="campo-grupo">
-                <label class="label-text">Ciudad <span class="optional">(opcional)</span></label>
-                <input type="text" name="ciudad" placeholder="Buenos Aires" maxlength="100" />
+                <label class="label-text">País <span class="optional">(opcional)</span></label>
+                <select id="Pais" name="pais" style="width: 100%; padding: 13px 16px; border-radius: 20px; border: 1.8px solid var(--gris-claro); outline: none; font-size: 15px; font-family: 'Poppins', sans-serif;">
+                    <option value="">Seleccionar país</option>
+                </select>
             </div>
 
             <div class="campo-grupo">
                 <label class="label-text">Provincia <span class="optional">(opcional)</span></label>
-                <input type="text" name="provincia" placeholder="CABA" maxlength="100" />
+                <select id="Provincia" name="provincia" disabled style="width: 100%; padding: 13px 16px; border-radius: 20px; border: 1.8px solid var(--gris-claro); outline: none; font-size: 15px; font-family: 'Poppins', sans-serif;">
+                    <option value="">Seleccionar provincia</option>
+                </select>
             </div>
 
             <div class="campo-grupo">
-                <label class="label-text">País <span class="optional">(opcional)</span></label>
-                <input type="text" name="pais" placeholder="Argentina" maxlength="100" />
+                <label class="label-text">Ciudad <span class="optional">(opcional)</span></label>
+                <select id="Ciudad" name="ciudad" disabled style="width: 100%; padding: 13px 16px; border-radius: 20px; border: 1.8px solid var(--gris-claro); outline: none; font-size: 15px; font-family: 'Poppins', sans-serif;">
+                    <option value="">Seleccionar ciudad</option>
+                </select>
             </div>
 
             <div class="campo-grupo">
@@ -344,5 +350,53 @@
     <div class="imagen-bienvenida">
         <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
     </div>
+
+    <script src="~/lib/country-state-city/country-state-city.umd.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const { Country, State, City } = window.csc;
+            const pais = document.getElementById("Pais");
+            const prov = document.getElementById("Provincia");
+            const ciudad = document.getElementById("Ciudad");
+
+            const flag = a2 => String.fromCodePoint(...[...a2.toUpperCase()].map(c => 127397 + c.charCodeAt(0)));
+            const countries = Country.getAllCountries();
+            pais.innerHTML = '<option value="">Seleccionar país</option>' + 
+                countries.map(c => `<option value="${c.name}">${flag(c.isoCode)} ${c.name}</option>`).join("");
+
+            pais.addEventListener("change", function() {
+                const iso = countries.find(c => c.name === this.value)?.isoCode;
+                if (iso) {
+                    const provincias = State.getStatesOfCountry(iso);
+                    prov.innerHTML = '<option value="">Seleccionar provincia</option>' + 
+                        provincias.map(s => `<option value="${s.name}">${s.name}</option>`).join("");
+                    prov.disabled = provincias.length === 0;
+                    ciudad.innerHTML = '<option value="">Seleccionar ciudad</option>';
+                    ciudad.disabled = true;
+                } else {
+                    prov.innerHTML = '<option value="">Seleccionar provincia</option>';
+                    prov.disabled = true;
+                    ciudad.innerHTML = '<option value="">Seleccionar ciudad</option>';
+                    ciudad.disabled = true;
+                }
+            });
+
+            prov.addEventListener("change", function() {
+                const isoPais = countries.find(c => c.name === pais.value)?.isoCode;
+                if (isoPais && this.value) {
+                    const estado = State.getStatesOfCountry(isoPais).find(s => s.name === this.value);
+                    if (estado) {
+                        const ciudades = City.getCitiesOfState(isoPais, estado.isoCode);
+                        ciudad.innerHTML = '<option value="">Seleccionar ciudad</option>' + 
+                            ciudades.map(c => `<option value="${c.name}">${c.name}</option>`).join("");
+                        ciudad.disabled = ciudades.length === 0;
+                    }
+                } else {
+                    ciudad.innerHTML = '<option value="">Seleccionar ciudad</option>';
+                    ciudad.disabled = true;
+                }
+            });
+        });
+    </script>
 </body>
 </html>

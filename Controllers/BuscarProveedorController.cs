@@ -6,18 +6,40 @@ using System.Data;
 
 namespace Zooni.Controllers
 {
-    public class BuscarProveedorController : Controller
+    public class BuscarProveedorController : BaseController
     {
+        // Método para asegurar que las tablas existan (copiado de ProveedorController)
+        private void AsegurarTablasProveedores()
+        {
+            try
+            {
+                string checkTable = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ProveedorServicio'";
+                object? tableExists = BD.ExecuteScalar(checkTable);
+                if (tableExists == null || Convert.ToInt32(tableExists) == 0)
+                {
+                    // Si la tabla no existe, redirigir a que se ejecute el script
+                    // Por ahora solo logueamos el error
+                    Console.WriteLine("⚠️ La tabla ProveedorServicio no existe. Se debe ejecutar el script SQL.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error al verificar tablas: " + ex.Message);
+            }
+        }
         // ============================
         // GET: /BuscarProveedor
         // ============================
         [HttpGet]
         [Route("BuscarProveedor")]
-        public IActionResult Index(string? ciudad, string? provincia, string? tipoServicio, string? especie, 
+        public IActionResult Index(string? ciudad, string? provincia, string? pais, string? tipoServicio, string? especie, 
             decimal? latitud, decimal? longitud, decimal? radioKm)
         {
             try
             {
+                // Asegurar que las tablas existan
+                AsegurarTablasProveedores();
+                
                 // Cargar tipos de servicio
                 string tiposQuery = "SELECT Id_TipoServicio, Descripcion FROM TipoServicio ORDER BY Descripcion";
                 DataTable tiposDt = BD.ExecuteQuery(tiposQuery);
@@ -56,9 +78,13 @@ namespace Zooni.Controllers
 
                 query += @"
                     FROM ProveedorServicio P
-                    WHERE P.Estado = 1 
-                      AND P.Latitud IS NOT NULL 
-                      AND P.Longitud IS NOT NULL";
+                    WHERE P.Estado = 1";
+                    
+                // Si hay coordenadas, solo buscar proveedores con ubicación
+                if (latitud.HasValue && longitud.HasValue)
+                {
+                    query += @" AND P.Latitud IS NOT NULL AND P.Longitud IS NOT NULL";
+                }
 
                 var parametros = new Dictionary<string, object>();
 
@@ -72,6 +98,12 @@ namespace Zooni.Controllers
                 {
                     query += " AND P.Provincia LIKE @Provincia";
                     parametros.Add("@Provincia", $"%{provincia}%");
+                }
+
+                if (!string.IsNullOrEmpty(pais))
+                {
+                    query += " AND P.Pais LIKE @Pais";
+                    parametros.Add("@Pais", $"%{pais}%");
                 }
 
                 // Filtrado por ubicación (radio de búsqueda)
@@ -136,6 +168,7 @@ namespace Zooni.Controllers
                 ViewBag.Proveedores = proveedoresDt;
                 ViewBag.Ciudad = ciudad;
                 ViewBag.Provincia = provincia;
+                ViewBag.Pais = pais;
                 ViewBag.TipoServicio = tipoServicio;
                 ViewBag.Especie = especie;
                 ViewBag.Latitud = latitud;
@@ -223,6 +256,257 @@ namespace Zooni.Controllers
                 Console.WriteLine("❌ Error en BuscarProveedor/Perfil: " + ex.Message);
                 TempData["Error"] = "Error al cargar el perfil.";
                 return RedirectToAction("Index", "BuscarProveedor");
+            }
+        }
+
+        // ============================
+        // POST: /BuscarProveedor/CrearResena
+        // ============================
+        [HttpPost]
+        [Route("BuscarProveedor/CrearResena")]
+        public IActionResult CrearResena(int idProveedor, int calificacion, string comentario, int? idReserva = null)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId");
+                if (userId == null)
+                {
+                    return Json(new { success = false, message = "No autorizado" });
+                }
+
+                // Verificar que no haya una reseña previa para esta reserva
+                if (idReserva.HasValue)
+                {
+                    string checkQuery = "SELECT COUNT(*) FROM Resena WHERE Id_Reserva = @IdReserva AND Id_User = @UserId";
+                    object? existeResult = BD.ExecuteScalar(checkQuery, new Dictionary<string, object>
+                    {
+                        { "@IdReserva", idReserva.Value },
+                        { "@UserId", userId.Value }
+                    });
+                    int existe = existeResult != null && existeResult != DBNull.Value ? Convert.ToInt32(existeResult) : 0;
+                    
+                    if (existe > 0)
+                    {
+                        return Json(new { success = false, message = "Ya has reseñado este servicio" });
+                    }
+                }
+
+                // Crear reseña
+                string insertQuery = @"
+                    INSERT INTO Resena (Id_User, Id_Proveedor, Id_Reserva, Calificacion, Comentario, Fecha)
+                    VALUES (@IdUser, @IdProveedor, @IdReserva, @Calificacion, @Comentario, GETDATE())";
+
+                BD.ExecuteNonQuery(insertQuery, new Dictionary<string, object>
+                {
+                    { "@IdUser", userId.Value },
+                    { "@IdProveedor", idProveedor },
+                    { "@IdReserva", idReserva ?? (object)DBNull.Value },
+                    { "@Calificacion", calificacion },
+                    { "@Comentario", comentario ?? "" }
+                });
+
+                // Actualizar calificación promedio del proveedor
+                string updateCalificacionQuery = @"
+                    UPDATE ProveedorServicio
+                    SET Calificacion_Promedio = (
+                            SELECT AVG(CAST(Calificacion AS DECIMAL(4,2)))
+                            FROM Resena
+                            WHERE Id_Proveedor = @IdProveedor
+                        ),
+                        Cantidad_Resenas = (
+                            SELECT COUNT(*)
+                            FROM Resena
+                            WHERE Id_Proveedor = @IdProveedor
+                        )
+                    WHERE Id_Proveedor = @IdProveedor";
+
+                BD.ExecuteNonQuery(updateCalificacionQuery, new Dictionary<string, object>
+                {
+                    { "@IdProveedor", idProveedor }
+                });
+
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en BuscarProveedor/CrearResena: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // ============================
+        // GET: /BuscarProveedor/Contratar/{id}
+        // ============================
+        [HttpGet]
+        [Route("BuscarProveedor/Contratar/{id}")]
+        public IActionResult Contratar(int id)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId");
+                if (userId == null)
+                {
+                    TempData["Error"] = "Debés iniciar sesión para contratar un servicio.";
+                    return RedirectToAction("Login", "Auth");
+                }
+
+                // Obtener datos del proveedor
+                string proveedorQuery = @"
+                    SELECT P.*
+                    FROM ProveedorServicio P
+                    WHERE P.Id_Proveedor = @Id AND P.Estado = 1";
+                
+                DataTable proveedorDt = BD.ExecuteQuery(proveedorQuery, new Dictionary<string, object> { { "@Id", id } });
+                if (proveedorDt.Rows.Count == 0)
+                {
+                    TempData["Error"] = "Proveedor no encontrado.";
+                    return RedirectToAction("Index", "BuscarProveedor");
+                }
+
+                ViewBag.Proveedor = proveedorDt.Rows[0];
+
+                // Obtener tipos de servicio del proveedor
+                string tiposQuery = @"
+                    SELECT TS.Id_TipoServicio, TS.Descripcion
+                    FROM ProveedorServicio_TipoServicio PST
+                    INNER JOIN TipoServicio TS ON PST.Id_TipoServicio = TS.Id_TipoServicio
+                    WHERE PST.Id_Proveedor = @Id";
+                DataTable tiposDt = BD.ExecuteQuery(tiposQuery, new Dictionary<string, object> { { "@Id", id } });
+                ViewBag.TiposServicio = tiposDt;
+
+                // Obtener mascotas del usuario
+                string mascotasQuery = @"
+                    SELECT Id_Mascota, Nombre, Especie, Raza
+                    FROM Mascota
+                    WHERE Id_User = @UserId";
+                DataTable mascotasDt = BD.ExecuteQuery(mascotasQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+                ViewBag.Mascotas = mascotasDt;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en BuscarProveedor/Contratar: " + ex.Message);
+                TempData["Error"] = "Error al cargar la página de contratación.";
+                return RedirectToAction("Index", "BuscarProveedor");
+            }
+        }
+
+        // ============================
+        // POST: /BuscarProveedor/CrearReserva
+        // ============================
+        [HttpPost]
+        [Route("BuscarProveedor/CrearReserva")]
+        public IActionResult CrearReserva(int idProveedor, int idMascota, int idTipoServicio, DateTime fechaInicio, TimeSpan horaInicio, decimal? duracionHoras, string? notas)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId");
+                if (userId == null)
+                {
+                    return Json(new { success = false, message = "No autorizado" });
+                }
+
+                // Obtener precio del proveedor
+                string precioQuery = "SELECT Precio_Hora FROM ProveedorServicio WHERE Id_Proveedor = @IdProveedor";
+                DataTable precioDt = BD.ExecuteQuery(precioQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                decimal precioHora = 0;
+                if (precioDt.Rows.Count > 0 && precioDt.Rows[0]["Precio_Hora"] != DBNull.Value)
+                {
+                    precioHora = Convert.ToDecimal(precioDt.Rows[0]["Precio_Hora"]);
+                }
+
+                decimal duracion = duracionHoras ?? 1.0M;
+                decimal precioTotal = precioHora * duracion;
+
+                // Crear reserva
+                string insertQuery = @"
+                    INSERT INTO ReservaProveedor 
+                    (Id_User, Id_Proveedor, Id_Mascota, Id_TipoServicio, Fecha_Inicio, Hora_Inicio, Duracion_Horas, Precio_Total, Id_EstadoReserva, Notas, Fecha_Creacion)
+                    VALUES 
+                    (@IdUser, @IdProveedor, @IdMascota, @IdTipoServicio, @FechaInicio, @HoraInicio, @DuracionHoras, @PrecioTotal, 1, @Notas, GETDATE())";
+                
+                BD.ExecuteNonQuery(insertQuery, new Dictionary<string, object>
+                {
+                    { "@IdUser", userId.Value },
+                    { "@IdProveedor", idProveedor },
+                    { "@IdMascota", idMascota },
+                    { "@IdTipoServicio", idTipoServicio },
+                    { "@FechaInicio", fechaInicio },
+                    { "@HoraInicio", horaInicio },
+                    { "@DuracionHoras", duracion },
+                    { "@PrecioTotal", precioTotal },
+                    { "@Notas", notas ?? "" }
+                });
+
+                return Json(new { success = true, message = "Reserva creada exitosamente" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en BuscarProveedor/CrearReserva: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // ============================
+        // POST: /BuscarProveedor/ObtenerOCrearChat
+        // ============================
+        [HttpPost]
+        [Route("BuscarProveedor/ObtenerOCrearChat")]
+        public IActionResult ObtenerOCrearChat([FromBody] int idProveedorUser)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+                return Json(new { success = false, message = "No autenticado" });
+
+            try
+            {
+                // Buscar chat existente entre estos dos usuarios
+                string qChatExistente = @"
+                    SELECT TOP 1 c.Id_Chat
+                    FROM Chat c
+                    INNER JOIN ParticipanteChat pc1 ON c.Id_Chat = pc1.Id_Chat AND pc1.Id_User = @UserId
+                    INNER JOIN ParticipanteChat pc2 ON c.Id_Chat = pc2.Id_Chat AND pc2.Id_User = @ProveedorUserId
+                    WHERE c.EsGrupo = 0";
+
+                var dtChat = BD.ExecuteQuery(qChatExistente, new Dictionary<string, object>
+                {
+                    { "@UserId", userId.Value },
+                    { "@ProveedorUserId", idProveedorUser }
+                });
+
+                int chatId;
+                if (dtChat.Rows.Count > 0)
+                {
+                    chatId = Convert.ToInt32(dtChat.Rows[0]["Id_Chat"]);
+                }
+                else
+                {
+                    // Crear nuevo chat individual
+                    string qCrearChat = @"
+                        INSERT INTO Chat (Nombre, EsGrupo, FechaCreacion)
+                        VALUES (NULL, 0, GETDATE());
+                        SELECT CAST(SCOPE_IDENTITY() AS INT);";
+                    chatId = Convert.ToInt32(BD.ExecuteScalar(qCrearChat, new Dictionary<string, object>()));
+
+                    // Agregar participantes
+                    BD.ExecuteNonQuery(@"
+                        INSERT INTO ParticipanteChat (Id_Chat, Id_User, Administrador, FechaIngreso)
+                        VALUES (@ChatId, @UserId, 0, GETDATE())",
+                        new Dictionary<string, object> { { "@ChatId", chatId }, { "@UserId", userId.Value } });
+
+                    BD.ExecuteNonQuery(@"
+                        INSERT INTO ParticipanteChat (Id_Chat, Id_User, Administrador, FechaIngreso)
+                        VALUES (@ChatId, @ProveedorUserId, 0, GETDATE())",
+                        new Dictionary<string, object> { { "@ChatId", chatId }, { "@ProveedorUserId", idProveedorUser } });
+                }
+
+                return Json(new { success = true, chatId = chatId });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en ObtenerOCrearChat: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
             }
         }
     }

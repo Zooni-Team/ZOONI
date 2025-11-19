@@ -413,14 +413,13 @@ if (modoFinal == "nuevamascota")
 
     // Obtener fecha de nacimiento de sesión si existe
     string fechaNacStr = HttpContext.Session.GetString("MascotaFechaNacimiento");
-    DateTime? fechaNacimiento = null;
-    if (!string.IsNullOrEmpty(fechaNacStr) && DateTime.TryParse(fechaNacStr, out DateTime fechaNac))
+    if (!string.IsNullOrEmpty(fechaNacStr) && DateTime.TryParse(fechaNacStr, out DateTime fechaNacParsed))
     {
-        fechaNacimiento = fechaNac;
+        fechaNacimiento = fechaNacParsed;
     }
     
     // Calcular edad desde fecha de nacimiento si está disponible
-    int edadFinal = edad;
+    edadFinal = edad;
     if (fechaNacimiento.HasValue)
     {
         edadFinal = EdadHelper.CalcularEdadEnMeses(fechaNacimiento);

@@ -1,0 +1,188 @@
+@{
+    ViewData["Title"] = "Tracking de Paseo - Zooni";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+        #map { width: 100%; flex: 1; }
+        .panel-stats { position: fixed; top: 15px; left: 15px; z-index: 1000; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); min-width: 200px; }
+        .stat-item { margin: 10px 0; }
+        .stat-label { font-size: 12px; color: #666; }
+        .stat-value { font-size: 20px; font-weight: 700; color: #8B5E3C; }
+        .btn-finalizar { position: fixed; bottom: 20px; right: 20px; z-index: 1000; background: #3ac37d; color: white; padding: 15px 30px; border: none; border-radius: 25px; font-weight: 600; font-size: 16px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        .btn-finalizar:hover { background: #2ea968; }
+        header { position: fixed; top: 15px; right: 15px; z-index: 1000; background: white; padding: 10px 20px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+        header h2 { font-size: 16px; color: #8B5E3C; margin: 0; }
+    </style>
+</head>
+<body>
+    <header>
+        <h2>📍 @(ViewBag.Reserva?["MascotaNombre"]) - @(ViewBag.Reserva?["ProveedorNombre"])</h2>
+    </header>
+    <div class="panel-stats">
+        <div class="stat-item">
+            <div class="stat-label">⏱️ Tiempo</div>
+            <div class="stat-value" id="tiempo">00:00:00</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-label">📏 Distancia</div>
+            <div class="stat-value" id="distancia">0 m</div>
+        </div>
+    </div>
+    <div id="map"></div>
+    <button class="btn-finalizar" id="btnFinalizar" onclick="finalizarPaseo()">Finalizar Paseo</button>
+
+    <script>
+        let map;
+        let polyline;
+        let puntos = [];
+        let idReserva = @ViewBag.IdReserva;
+        let watchId = null;
+        let fechaInicio = null;
+        let distanciaTotal = 0;
+
+        function initMap() {
+            map = L.map('map').setView([-34.6037, -58.3816], 15);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            polyline = L.polyline([], { color: '#4A90E2', weight: 5, opacity: 0.7 }).addTo(map);
+
+            // Obtener ubicación inicial
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                    const lat = pos.coords.latitude;
+                    const lng = pos.coords.longitude;
+                    map.setView([lat, lng], 15);
+                    agregarPunto(lat, lng);
+                    fechaInicio = new Date();
+                    iniciarTracking();
+                });
+            }
+
+            // Cargar ruta existente
+            cargarRuta();
+        }
+
+        function iniciarTracking() {
+            // Guardar ubicación cada 10 segundos
+            watchId = setInterval(() => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        pos => {
+                            const lat = pos.coords.latitude;
+                            const lng = pos.coords.longitude;
+                            agregarPunto(lat, lng);
+                            guardarUbicacion(lat, lng);
+                        },
+                        err => console.error('Error geolocalización:', err),
+                        { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 }
+                    );
+                }
+            }, 10000);
+
+            // Actualizar estadísticas cada segundo
+            setInterval(actualizarStats, 1000);
+        }
+
+        function agregarPunto(lat, lng) {
+            puntos.push([lat, lng]);
+            polyline.setLatLngs(puntos);
+            map.fitBounds(polyline.getBounds());
+        }
+
+        function guardarUbicacion(lat, lng) {
+            fetch('/Paseo/GuardarUbicacion', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ idReserva: idReserva, latitud: lat, longitud: lng })
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    distanciaTotal = data.distanciaAcumulada || 0;
+                    actualizarStats();
+                }
+            })
+            .catch(err => console.error('Error:', err));
+        }
+
+        function cargarRuta() {
+            fetch(`/Paseo/ObtenerRuta/${idReserva}`)
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && data.puntos.length > 0) {
+                        puntos = data.puntos.map(p => [p.lat, p.lng]);
+                        polyline.setLatLngs(puntos);
+                        if (puntos.length > 0) {
+                            map.fitBounds(polyline.getBounds());
+                            distanciaTotal = data.puntos[data.puntos.length - 1].distancia || 0;
+                            if (data.puntos[0].fechaHora) {
+                                fechaInicio = new Date(data.puntos[0].fechaHora);
+                            }
+                        }
+                    }
+                });
+        }
+
+        function actualizarStats() {
+            if (fechaInicio) {
+                const ahora = new Date();
+                const diff = Math.floor((ahora - fechaInicio) / 1000);
+                const horas = Math.floor(diff / 3600);
+                const minutos = Math.floor((diff % 3600) / 60);
+                const segundos = diff % 60;
+                document.getElementById('tiempo').textContent = 
+                    `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+            }
+
+            if (distanciaTotal > 0) {
+                const distanciaTexto = distanciaTotal < 1000 
+                    ? `${Math.round(distanciaTotal)} m` 
+                    : `${(distanciaTotal / 1000).toFixed(2)} km`;
+                document.getElementById('distancia').textContent = distanciaTexto;
+            }
+        }
+
+        function finalizarPaseo() {
+            if (confirm('¿Finalizar el paseo?')) {
+                fetch('/Paseo/FinalizarPaseo', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ idReserva: idReserva })
+                })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success) {
+                        if (watchId) clearInterval(watchId);
+                        window.location.href = `/Paseo/Resumen/${idReserva}`;
+                    } else {
+                        alert('Error al finalizar el paseo');
+                    }
+                });
+            }
+        }
+
+        // Service Worker para background tracking (si está disponible)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw-tracker.js').catch(() => {});
+        }
+
+        document.addEventListener('DOMContentLoaded', initMap);
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,271 @@
+@{
+    ViewData["Title"] = "Dashboard Cuidador - Zooni";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --marron: #8B5E3C;
+            --verde: #3ac37d;
+            --naranja: #FF8C42;
+            --gris: #555;
+            --gris-claro: #ccc;
+            --fondo: #FFFFFF;
+            --gris-oscuro: #6c757d;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            color: var(--naranja);
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 28px;
+            color: var(--naranja);
+        }
+
+        .btn-logout {
+            background-color: var(--naranja);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-logout:hover {
+            background-color: #e67a2e;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .welcome-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .welcome-card h2 {
+            color: white;
+            margin: 0 0 10px 0;
+            font-size: 32px;
+        }
+
+        .welcome-card p {
+            color: rgba(255,255,255,0.9);
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--naranja);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .info-card h3 {
+            color: var(--naranja);
+            margin: 0 0 15px 0;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .info-card p {
+            color: var(--gris);
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+
+        .btn-action {
+            background-color: var(--naranja);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: background 0.3s;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-action:hover {
+            background-color: #e67a2e;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-card .number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--naranja);
+            margin: 10px 0;
+        }
+
+        .stat-card .label {
+            color: var(--gris);
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>🏠 Zooni - Panel de Cuidador</h1>
+            <a href="/Auth/Logout" class="btn-logout">Cerrar Sesión</a>
+        </div>
+    </header>
+
+    <div class="container">
+        @if (TempData["Exito"] != null)
+        {
+            <div class="success">@TempData["Exito"]</div>
+        }
+
+        <div class="welcome-card">
+            <h2>¡Bienvenido, @(ViewBag.Proveedor?["NombreCompleto"] ?? "Cuidador")!</h2>
+            <p>Gestioná tus servicios de cuidado y reservas desde aquí</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">Calificación</div>
+                <div class="number">@(ViewBag.Proveedor?["Calificacion_Promedio"] ?? "0") ⭐</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Reseñas</div>
+                <div class="number">@(ViewBag.Proveedor?["Cantidad_Resenas"] ?? "0")</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Experiencia</div>
+                <div class="number">@(ViewBag.Proveedor?["Experiencia_Anios"] ?? "0") años</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Precio/Hora</div>
+                <div class="number">$@(ViewBag.Proveedor?["Precio_Hora"] ?? "0")</div>
+            </div>
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>⚙️ Configuración</h3>
+                <p>Actualizá tu información personal, servicios y especies que atendés</p>
+                <a href="/Proveedor/Configuracion" class="btn-action">Configurar Perfil</a>
+            </div>
+
+            <div class="info-card">
+                <h3>📅 Reservas</h3>
+                <p>Revisá y gestioná tus reservas de cuidado</p>
+                <a href="/Proveedor/Reservas" class="btn-action">Ver Reservas</a>
+            </div>
+
+            <div class="info-card">
+                <h3>⭐ Reseñas</h3>
+                <p>Revisá las reseñas y comentarios de tus clientes</p>
+                <a href="/Proveedor/Resenas" class="btn-action">Ver Reseñas</a>
+            </div>
+
+            <div class="info-card">
+                <h3>💬 Chats</h3>
+                <p>Comunicate con los dueños de mascotas</p>
+                <a href="/Chat/ChatZooni" class="btn-action">Abrir Chats</a>
+            </div>
+
+            <div class="info-card">
+                <h3>🔍 Mi Perfil Público</h3>
+                <p>Vé cómo ven tu perfil los clientes</p>
+                <a href="/BuscarProveedor/Perfil/@(ViewBag.Proveedor?["Id_Proveedor"])" class="btn-action" target="_blank">Ver Perfil</a>
+            </div>
+
+            <div class="info-card">
+                <h3>📊 Estadísticas</h3>
+                <p>Revisá tus estadísticas y rendimiento</p>
+                <a href="/Proveedor/Estadisticas" class="btn-action">Ver Estadísticas</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

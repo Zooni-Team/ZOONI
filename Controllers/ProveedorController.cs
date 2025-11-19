@@ -6,8 +6,237 @@ using System.Data;
 
 namespace Zooni.Controllers
 {
-    public class ProveedorController : Controller
+    public class ProveedorController : BaseController
     {
+        // ============================
+        // Método para crear tablas automáticamente
+        // ============================
+        private void AsegurarTablasProveedores()
+        {
+            try
+            {
+                // Verificar y crear TipoUsuario "Proveedor"
+                string checkTipoUsuario = "SELECT COUNT(*) FROM TipoUsuario WHERE Descripcion = 'Proveedor'";
+                object? countTipoUsuario = BD.ExecuteScalar(checkTipoUsuario);
+                if (countTipoUsuario == null || Convert.ToInt32(countTipoUsuario) == 0)
+                {
+                    BD.ExecuteNonQuery("INSERT INTO TipoUsuario (Descripcion) VALUES ('Proveedor')");
+                }
+
+                // Verificar y crear tabla ProveedorServicio
+                string checkTable = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ProveedorServicio'";
+                object? tableExists = BD.ExecuteScalar(checkTable);
+                if (tableExists == null || Convert.ToInt32(tableExists) == 0)
+                {
+                    string createTable = @"
+                        CREATE TABLE [dbo].[ProveedorServicio](
+                            [Id_Proveedor] [int] IDENTITY(1,1) NOT NULL,
+                            [Id_User] [int] NOT NULL,
+                            [DNI] [nvarchar](20) NOT NULL,
+                            [NombreCompleto] [nvarchar](200) NOT NULL,
+                            [Experiencia_Anios] [int] NOT NULL DEFAULT 0,
+                            [Descripcion] [nvarchar](1000) NULL,
+                            [FotoPerfil] [nvarchar](500) NULL,
+                            [Telefono] [nvarchar](30) NULL,
+                            [Direccion] [nvarchar](200) NULL,
+                            [Ciudad] [nvarchar](100) NULL,
+                            [Provincia] [nvarchar](100) NULL,
+                            [Pais] [nvarchar](100) NULL,
+                            [Precio_Hora] [decimal](12, 2) NULL,
+                            [Calificacion_Promedio] [decimal](4, 2) NULL DEFAULT 0,
+                            [Cantidad_Resenas] [int] NOT NULL DEFAULT 0,
+                            [Estado] [bit] NOT NULL DEFAULT 1,
+                            [Fecha_Registro] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                            [Verificado] [bit] NOT NULL DEFAULT 0,
+                            [Latitud] [decimal](10, 8) NULL,
+                            [Longitud] [decimal](11, 8) NULL,
+                            [Radio_Atencion_Km] [decimal](10, 2) NULL DEFAULT 5.00,
+                            [Tipo_Ubicacion] [nvarchar](20) NULL DEFAULT 'Cobertura',
+                            CONSTRAINT [PK_ProveedorServicio] PRIMARY KEY CLUSTERED ([Id_Proveedor] ASC),
+                            CONSTRAINT [UQ_ProveedorServicio_User] UNIQUE NONCLUSTERED ([Id_User] ASC),
+                            CONSTRAINT [UQ_ProveedorServicio_DNI] UNIQUE NONCLUSTERED ([DNI] ASC)
+                        )";
+                    BD.ExecuteNonQuery(createTable);
+
+                    // Agregar Foreign Key si existe la tabla User
+                    try
+                    {
+                        string addFK = @"
+                            IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_ProveedorServicio_User')
+                            BEGIN
+                                ALTER TABLE [dbo].[ProveedorServicio] WITH CHECK ADD CONSTRAINT [FK_ProveedorServicio_User] 
+                                FOREIGN KEY([Id_User]) REFERENCES [dbo].[User] ([Id_User]) ON DELETE CASCADE
+                                ALTER TABLE [dbo].[ProveedorServicio] CHECK CONSTRAINT [FK_ProveedorServicio_User]
+                            END";
+                        BD.ExecuteNonQuery(addFK);
+                    }
+                    catch { }
+                }
+
+                // Verificar y agregar columnas de ubicación si no existen
+                try
+                {
+                    string checkLat = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Latitud'";
+                    object? latExists = BD.ExecuteScalar(checkLat);
+                    if (latExists == null || Convert.ToInt32(latExists) == 0)
+                    {
+                        BD.ExecuteNonQuery("ALTER TABLE [dbo].[ProveedorServicio] ADD [Latitud] [decimal](10, 8) NULL");
+                        BD.ExecuteNonQuery("ALTER TABLE [dbo].[ProveedorServicio] ADD [Longitud] [decimal](11, 8) NULL");
+                        BD.ExecuteNonQuery("ALTER TABLE [dbo].[ProveedorServicio] ADD [Radio_Atencion_Km] [decimal](10, 2) NULL DEFAULT 5.00");
+                        BD.ExecuteNonQuery("ALTER TABLE [dbo].[ProveedorServicio] ADD [Tipo_Ubicacion] [nvarchar](20) NULL DEFAULT 'Cobertura'");
+                    }
+                }
+                catch { }
+
+                // Verificar y crear tabla ProveedorServicio_TipoServicio
+                string checkTableTipos = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ProveedorServicio_TipoServicio'";
+                object? tableTiposExists = BD.ExecuteScalar(checkTableTipos);
+                if (tableTiposExists == null || Convert.ToInt32(tableTiposExists) == 0)
+                {
+                    string createTableTipos = @"
+                        CREATE TABLE [dbo].[ProveedorServicio_TipoServicio](
+                            [Id] [int] IDENTITY(1,1) NOT NULL,
+                            [Id_Proveedor] [int] NOT NULL,
+                            [Id_TipoServicio] [int] NOT NULL,
+                            CONSTRAINT [PK_ProveedorServicio_TipoServicio] PRIMARY KEY CLUSTERED ([Id] ASC),
+                            CONSTRAINT [UQ_Proveedor_TipoServicio] UNIQUE NONCLUSTERED ([Id_Proveedor] ASC, [Id_TipoServicio] ASC)
+                        )";
+                    BD.ExecuteNonQuery(createTableTipos);
+
+                    try
+                    {
+                        BD.ExecuteNonQuery(@"
+                            IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_Proveedor_TipoServicio_Proveedor')
+                            BEGIN
+                                ALTER TABLE [dbo].[ProveedorServicio_TipoServicio] WITH CHECK ADD CONSTRAINT [FK_Proveedor_TipoServicio_Proveedor] 
+                                FOREIGN KEY([Id_Proveedor]) REFERENCES [dbo].[ProveedorServicio] ([Id_Proveedor]) ON DELETE CASCADE
+                                ALTER TABLE [dbo].[ProveedorServicio_TipoServicio] CHECK CONSTRAINT [FK_Proveedor_TipoServicio_Proveedor]
+                            END");
+                        BD.ExecuteNonQuery(@"
+                            IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_Proveedor_TipoServicio_TipoServicio')
+                            BEGIN
+                                ALTER TABLE [dbo].[ProveedorServicio_TipoServicio] WITH CHECK ADD CONSTRAINT [FK_Proveedor_TipoServicio_TipoServicio] 
+                                FOREIGN KEY([Id_TipoServicio]) REFERENCES [dbo].[TipoServicio] ([Id_TipoServicio])
+                                ALTER TABLE [dbo].[ProveedorServicio_TipoServicio] CHECK CONSTRAINT [FK_Proveedor_TipoServicio_TipoServicio]
+                            END");
+                    }
+                    catch { }
+                }
+
+                // Verificar y crear tabla ProveedorServicio_Especie
+                string checkTableEspecies = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ProveedorServicio_Especie'";
+                object? tableEspeciesExists = BD.ExecuteScalar(checkTableEspecies);
+                if (tableEspeciesExists == null || Convert.ToInt32(tableEspeciesExists) == 0)
+                {
+                    string createTableEspecies = @"
+                        CREATE TABLE [dbo].[ProveedorServicio_Especie](
+                            [Id] [int] IDENTITY(1,1) NOT NULL,
+                            [Id_Proveedor] [int] NOT NULL,
+                            [Especie] [nvarchar](50) NOT NULL,
+                            CONSTRAINT [PK_ProveedorServicio_Especie] PRIMARY KEY CLUSTERED ([Id] ASC),
+                            CONSTRAINT [UQ_Proveedor_Especie] UNIQUE NONCLUSTERED ([Id_Proveedor] ASC, [Especie] ASC)
+                        )";
+                    BD.ExecuteNonQuery(createTableEspecies);
+
+                    try
+                    {
+                        BD.ExecuteNonQuery(@"
+                            IF NOT EXISTS (SELECT * FROM sys.foreign_keys WHERE name = 'FK_Proveedor_Especie_Proveedor')
+                            BEGIN
+                                ALTER TABLE [dbo].[ProveedorServicio_Especie] WITH CHECK ADD CONSTRAINT [FK_Proveedor_Especie_Proveedor] 
+                                FOREIGN KEY([Id_Proveedor]) REFERENCES [dbo].[ProveedorServicio] ([Id_Proveedor]) ON DELETE CASCADE
+                                ALTER TABLE [dbo].[ProveedorServicio_Especie] CHECK CONSTRAINT [FK_Proveedor_Especie_Proveedor]
+                            END");
+                    }
+                    catch { }
+                }
+
+                // Verificar y crear tabla ReservaProveedor
+                string checkTableReserva = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ReservaProveedor'";
+                object? tableReservaExists = BD.ExecuteScalar(checkTableReserva);
+                if (tableReservaExists == null || Convert.ToInt32(tableReservaExists) == 0)
+                {
+                    string createTableReserva = @"
+                        CREATE TABLE [dbo].[ReservaProveedor](
+                            [Id_Reserva] [int] IDENTITY(1,1) NOT NULL,
+                            [Id_User] [int] NOT NULL,
+                            [Id_Proveedor] [int] NOT NULL,
+                            [Id_Mascota] [int] NOT NULL,
+                            [Id_TipoServicio] [int] NOT NULL,
+                            [Fecha_Inicio] [datetime2](7) NOT NULL,
+                            [Fecha_Fin] [datetime2](7) NULL,
+                            [Hora_Inicio] [time](0) NOT NULL,
+                            [Hora_Fin] [time](0) NULL,
+                            [Duracion_Horas] [decimal](5,2) NULL,
+                            [Precio_Total] [decimal](12, 2) NOT NULL,
+                            [Id_EstadoReserva] [int] NOT NULL DEFAULT 1,
+                            [Notas] [nvarchar](1000) NULL,
+                            [Direccion_Servicio] [nvarchar](500) NULL,
+                            [Latitud_Servicio] [decimal](10, 8) NULL,
+                            [Longitud_Servicio] [decimal](11, 8) NULL,
+                            [Compartir_Ubicacion] [bit] NOT NULL DEFAULT 0,
+                            [Fecha_Creacion] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                            CONSTRAINT [PK_ReservaProveedor] PRIMARY KEY CLUSTERED ([Id_Reserva] ASC)
+                        )";
+                    BD.ExecuteNonQuery(createTableReserva);
+                }
+
+                // Agregar columnas adicionales a ReservaProveedor si no existen
+                try
+                {
+                    string checkDistancia = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ReservaProveedor]') AND name = 'Distancia_Total_Metros'";
+                    object? distExists = BD.ExecuteScalar(checkDistancia);
+                    if (distExists == null || Convert.ToInt32(distExists) == 0)
+                    {
+                        BD.ExecuteNonQuery("ALTER TABLE [dbo].[ReservaProveedor] ADD [Distancia_Total_Metros] [decimal](10,2) NULL");
+                        BD.ExecuteNonQuery("ALTER TABLE [dbo].[ReservaProveedor] ADD [Tiempo_Total_Segundos] [int] NULL");
+                        BD.ExecuteNonQuery("ALTER TABLE [dbo].[ReservaProveedor] ADD [Ruta_GPS_JSON] [nvarchar](max) NULL");
+                        BD.ExecuteNonQuery("ALTER TABLE [dbo].[ReservaProveedor] ADD [Fecha_Hora_Inicio_Real] [datetime2](7) NULL");
+                        BD.ExecuteNonQuery("ALTER TABLE [dbo].[ReservaProveedor] ADD [Fecha_Hora_Fin_Real] [datetime2](7) NULL");
+                    }
+                }
+                catch { }
+
+                // Verificar y crear tabla UbicacionServicio
+                string checkTableUbicacion = "SELECT COUNT(*) FROM sys.tables WHERE name = 'UbicacionServicio'";
+                object? tableUbicacionExists = BD.ExecuteScalar(checkTableUbicacion);
+                if (tableUbicacionExists == null || Convert.ToInt32(tableUbicacionExists) == 0)
+                {
+                    string createTableUbicacion = @"
+                        CREATE TABLE [dbo].[UbicacionServicio](
+                            [Id] [int] IDENTITY(1,1) NOT NULL,
+                            [Id_Reserva] [int] NOT NULL,
+                            [Id_Proveedor] [int] NOT NULL,
+                            [Latitud] [decimal](10, 8) NOT NULL,
+                            [Longitud] [decimal](11, 8) NOT NULL,
+                            [Fecha_Hora] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                            [Tipo] [nvarchar](20) NOT NULL DEFAULT 'Proveedor',
+                            [Distancia_Acumulada_Metros] [decimal](10,2) NULL DEFAULT 0,
+                            [Tiempo_Transcurrido_Segundos] [int] NULL DEFAULT 0,
+                            CONSTRAINT [PK_UbicacionServicio] PRIMARY KEY CLUSTERED ([Id] ASC)
+                        )";
+                    BD.ExecuteNonQuery(createTableUbicacion);
+                }
+
+                // Agregar columna Id_Proveedor a Resena si no existe
+                try
+                {
+                    string checkResenaProv = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Resena]') AND name = 'Id_Proveedor'";
+                    object? resenaProvExists = BD.ExecuteScalar(checkResenaProv);
+                    if (resenaProvExists == null || Convert.ToInt32(resenaProvExists) == 0)
+                    {
+                        BD.ExecuteNonQuery("ALTER TABLE [dbo].[Resena] ADD [Id_Proveedor] [int] NULL");
+                    }
+                }
+                catch { }
+
+                Console.WriteLine("✅ Tablas de proveedores verificadas/creadas correctamente");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error al crear tablas de proveedores: " + ex.Message);
+            }
+        }
         // ============================
         // GET: /Proveedor/Registro1
         // ============================
@@ -15,6 +244,7 @@ namespace Zooni.Controllers
         [Route("Proveedor/Registro1")]
         public IActionResult Registro1()
         {
+            AsegurarTablasProveedores();
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId != null)
             {
@@ -177,12 +407,41 @@ namespace Zooni.Controllers
         [Route("Proveedor/Registro2")]
         public IActionResult Registro2()
         {
+            AsegurarTablasProveedores();
             // Verificar que haya correo y contraseña en sesión
             string? correo = HttpContext.Session.GetString("ProveedorCorreo");
             if (string.IsNullOrEmpty(correo))
             {
                 TempData["Error"] = "Sesión expirada. Volvé a iniciar.";
                 return RedirectToAction("Registro1", "Proveedor");
+            }
+
+            // Asegurar que existan Paseador y Cuidador
+            try
+            {
+                // Insertar Paseador si no existe
+                string checkPaseador = "SELECT COUNT(*) FROM TipoServicio WHERE Descripcion = 'Paseador'";
+                object? countPaseador = BD.ExecuteScalar(checkPaseador);
+                if (countPaseador == null || Convert.ToInt32(countPaseador) == 0)
+                {
+                    string insertPaseador = "INSERT INTO TipoServicio (Descripcion) VALUES ('Paseador')";
+                    BD.ExecuteNonQuery(insertPaseador);
+                    Console.WriteLine("✅ Tipo de servicio 'Paseador' creado");
+                }
+
+                // Insertar Cuidador si no existe
+                string checkCuidador = "SELECT COUNT(*) FROM TipoServicio WHERE Descripcion = 'Cuidador'";
+                object? countCuidador = BD.ExecuteScalar(checkCuidador);
+                if (countCuidador == null || Convert.ToInt32(countCuidador) == 0)
+                {
+                    string insertCuidador = "INSERT INTO TipoServicio (Descripcion) VALUES ('Cuidador')";
+                    BD.ExecuteNonQuery(insertCuidador);
+                    Console.WriteLine("✅ Tipo de servicio 'Cuidador' creado");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error al verificar/crear tipos de servicio: " + ex.Message);
             }
 
             // Cargar tipos de servicio disponibles (priorizar Paseador y Cuidador)
@@ -362,6 +621,7 @@ namespace Zooni.Controllers
         [Route("Proveedor/Registro3")]
         public IActionResult Registro3()
         {
+            AsegurarTablasProveedores();
             // Verificar que haya datos en sesión
             string? correo = HttpContext.Session.GetString("ProveedorCorreo");
             string? dni = HttpContext.Session.GetString("ProveedorDNI");
@@ -407,16 +667,8 @@ namespace Zooni.Controllers
                     return RedirectToAction("Registro2", "Proveedor");
                 }
 
-                // Verificar que la tabla existe antes de insertar
-                string checkTableQuery = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ProveedorServicio'";
-                object? tableExists = BD.ExecuteScalar(checkTableQuery);
-                int tableExistsInt = tableExists != null && tableExists != DBNull.Value ? Convert.ToInt32(tableExists) : 0;
-                
-                if (tableExistsInt == 0)
-                {
-                    TempData["Error"] = "La tabla de proveedores no existe. Por favor, ejecutá el script SQL 'CreateTablesProveedorServicio.sql' en la base de datos primero.";
-                    return View();
-                }
+                // Asegurar que las tablas existan
+                AsegurarTablasProveedores();
 
                 // ✅ CREAR USUARIO AL FINAL (solo si no existe)
                 int userId;
@@ -607,6 +859,7 @@ namespace Zooni.Controllers
         [Route("Proveedor/Dashboard")]
         public IActionResult Dashboard()
         {
+            AsegurarTablasProveedores();
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
             {
@@ -618,18 +871,17 @@ namespace Zooni.Controllers
             try
             {
                 string proveedorQuery = @"
-                    IF OBJECT_ID('ProveedorServicio', 'U') IS NOT NULL
-                        SELECT P.*, U.Nombre, U.Apellido, M.Correo
-                        FROM ProveedorServicio P
-                        INNER JOIN [User] U ON P.Id_User = U.Id_User
-                        INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
-                        WHERE P.Id_User = @UserId";
+                    SELECT P.*, U.Nombre, U.Apellido, M.Correo
+                    FROM ProveedorServicio P
+                    INNER JOIN [User] U ON P.Id_User = U.Id_User
+                    INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+                    WHERE P.Id_User = @UserId";
                 
                 dt = BD.ExecuteQuery(proveedorQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
             }
             catch (Exception ex)
             {
-                Console.WriteLine("⚠️ Error al verificar proveedor (tabla puede no existir): " + ex.Message);
+                Console.WriteLine("⚠️ Error al verificar proveedor: " + ex.Message);
             }
             
             if (dt.Rows.Count == 0)
@@ -676,7 +928,995 @@ namespace Zooni.Controllers
 
             ViewBag.Proveedor = dt.Rows[0];
             ViewBag.TipoPrincipal = tipoPrincipal; // "Paseador" o "Cuidador"
+            
+            // Redirigir a dashboard personalizado según el tipo
+            if (tipoPrincipal == "Paseador")
+            {
+                return RedirectToAction("DashboardPaseador", "Proveedor");
+            }
+            else if (tipoPrincipal == "Cuidador")
+            {
+                return RedirectToAction("DashboardCuidador", "Proveedor");
+            }
+            
             return View();
+        }
+
+        // ============================
+        // GET: /Proveedor/DashboardPaseador
+        // ============================
+        [HttpGet]
+        [Route("Proveedor/DashboardPaseador")]
+        public IActionResult DashboardPaseador()
+        {
+            AsegurarTablasProveedores();
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            // Verificar que sea proveedor
+            DataTable dt = new DataTable();
+            try
+            {
+                string proveedorQuery = @"
+                    IF OBJECT_ID('ProveedorServicio', 'U') IS NOT NULL
+                        SELECT P.*, U.Nombre, U.Apellido, M.Correo
+                        FROM ProveedorServicio P
+                        INNER JOIN [User] U ON P.Id_User = U.Id_User
+                        INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+                        WHERE P.Id_User = @UserId";
+                
+                dt = BD.ExecuteQuery(proveedorQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error al verificar proveedor: " + ex.Message);
+            }
+            
+            if (dt.Rows.Count == 0)
+            {
+                return RedirectToAction("Registro1", "Proveedor");
+            }
+
+            int idProveedor = Convert.ToInt32(dt.Rows[0]["Id_Proveedor"]);
+            ViewBag.Proveedor = dt.Rows[0];
+            ViewBag.TipoPrincipal = "Paseador";
+
+            // Obtener estadísticas de reservas
+            try
+            {
+                string statsQuery = @"
+                    SELECT 
+                        COUNT(CASE WHEN Id_EstadoReserva = 1 THEN 1 END) AS Pendientes,
+                        COUNT(CASE WHEN Id_EstadoReserva = 2 THEN 1 END) AS Confirmadas,
+                        COUNT(CASE WHEN Id_EstadoReserva = 3 THEN 1 END) AS EnCurso,
+                        COUNT(CASE WHEN Id_EstadoReserva = 4 THEN 1 END) AS Completadas,
+                        COUNT(*) AS Total
+                    FROM ReservaProveedor
+                    WHERE Id_Proveedor = @IdProveedor";
+                
+                DataTable statsDt = BD.ExecuteQuery(statsQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                if (statsDt.Rows.Count > 0)
+                {
+                    ViewBag.ReservasPendientes = statsDt.Rows[0]["Pendientes"] ?? 0;
+                    ViewBag.ReservasConfirmadas = statsDt.Rows[0]["Confirmadas"] ?? 0;
+                    ViewBag.ReservasEnCurso = statsDt.Rows[0]["EnCurso"] ?? 0;
+                    ViewBag.ReservasCompletadas = statsDt.Rows[0]["Completadas"] ?? 0;
+                    ViewBag.TotalReservas = statsDt.Rows[0]["Total"] ?? 0;
+                }
+
+                // Obtener reservas próximas (próximas 5)
+                string proximasQuery = @"
+                    SELECT TOP 5
+                        RP.Id_Reserva,
+                        RP.Fecha_Inicio,
+                        RP.Hora_Inicio,
+                        M.Nombre AS MascotaNombre,
+                        M.Foto AS MascotaFoto,
+                        U.Nombre + ' ' + U.Apellido AS DuenioNombre,
+                        ER.Descripcion AS Estado,
+                        TS.Descripcion AS TipoServicio
+                    FROM ReservaProveedor RP
+                    INNER JOIN Mascota M ON RP.Id_Mascota = M.Id_Mascota
+                    INNER JOIN [User] U ON RP.Id_User = U.Id_User
+                    INNER JOIN EstadoReserva ER ON RP.Id_EstadoReserva = ER.Id_EstadoReserva
+                    INNER JOIN TipoServicio TS ON RP.Id_TipoServicio = TS.Id_TipoServicio
+                    WHERE RP.Id_Proveedor = @IdProveedor
+                      AND RP.Id_EstadoReserva IN (1, 2, 3)
+                      AND RP.Fecha_Inicio >= CAST(GETDATE() AS DATE)
+                    ORDER BY RP.Fecha_Inicio ASC, RP.Hora_Inicio ASC";
+                
+                DataTable proximasDt = BD.ExecuteQuery(proximasQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                ViewBag.ProximasReservas = proximasDt;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error al obtener estadísticas: " + ex.Message);
+                ViewBag.ReservasPendientes = 0;
+                ViewBag.ReservasConfirmadas = 0;
+                ViewBag.ReservasEnCurso = 0;
+                ViewBag.ReservasCompletadas = 0;
+                ViewBag.TotalReservas = 0;
+                ViewBag.ProximasReservas = new DataTable();
+            }
+
+            return View();
+        }
+
+        // ============================
+        // GET: /Proveedor/DashboardCuidador
+        // ============================
+        [HttpGet]
+        [Route("Proveedor/DashboardCuidador")]
+        public IActionResult DashboardCuidador()
+        {
+            AsegurarTablasProveedores();
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            // Verificar que sea proveedor, si no, redirigir
+            if (!EsProveedor())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Verificar que sea proveedor
+            DataTable dt = new DataTable();
+            try
+            {
+                string proveedorQuery = @"
+                    IF OBJECT_ID('ProveedorServicio', 'U') IS NOT NULL
+                        SELECT P.*, U.Nombre, U.Apellido, M.Correo
+                        FROM ProveedorServicio P
+                        INNER JOIN [User] U ON P.Id_User = U.Id_User
+                        INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+                        WHERE P.Id_User = @UserId";
+                
+                dt = BD.ExecuteQuery(proveedorQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error al verificar proveedor: " + ex.Message);
+            }
+            
+            if (dt.Rows.Count == 0)
+            {
+                return RedirectToAction("Registro1", "Proveedor");
+            }
+
+            ViewBag.Proveedor = dt.Rows[0];
+            ViewBag.TipoPrincipal = "Cuidador";
+            return View();
+        }
+
+        // ============================
+        // GET: /Proveedor/Configuracion
+        // ============================
+        [HttpGet]
+        [Route("Proveedor/Configuracion")]
+        public IActionResult Configuracion()
+        {
+            AsegurarTablasProveedores();
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            // Verificar que sea proveedor, si no, redirigir
+            if (!EsProveedor())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            // Obtener datos del proveedor
+            DataTable dt = new DataTable();
+            try
+            {
+                string proveedorQuery = @"
+                    SELECT P.*, U.Nombre, U.Apellido, M.Correo
+                    FROM ProveedorServicio P
+                    INNER JOIN [User] U ON P.Id_User = U.Id_User
+                    INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+                    WHERE P.Id_User = @UserId";
+                
+                dt = BD.ExecuteQuery(proveedorQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error al obtener proveedor: " + ex.Message);
+            }
+            
+            if (dt.Rows.Count == 0)
+            {
+                return RedirectToAction("Registro1", "Proveedor");
+            }
+
+            // Obtener tipos de servicio del proveedor
+            int idProveedor = Convert.ToInt32(dt.Rows[0]["Id_Proveedor"]);
+            string tiposQuery = @"
+                SELECT TS.Id_TipoServicio, TS.Descripcion
+                FROM ProveedorServicio_TipoServicio PST
+                INNER JOIN TipoServicio TS ON PST.Id_TipoServicio = TS.Id_TipoServicio
+                WHERE PST.Id_Proveedor = @IdProveedor";
+            DataTable tiposDt = BD.ExecuteQuery(tiposQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+
+            // Asegurar que existan Paseador y Cuidador
+            try
+            {
+                // Insertar Paseador si no existe
+                string checkPaseador = "SELECT COUNT(*) FROM TipoServicio WHERE Descripcion = 'Paseador'";
+                object? countPaseador = BD.ExecuteScalar(checkPaseador);
+                if (countPaseador == null || Convert.ToInt32(countPaseador) == 0)
+                {
+                    string insertPaseador = "INSERT INTO TipoServicio (Descripcion) VALUES ('Paseador')";
+                    BD.ExecuteNonQuery(insertPaseador);
+                    Console.WriteLine("✅ Tipo de servicio 'Paseador' creado");
+                }
+
+                // Insertar Cuidador si no existe
+                string checkCuidador = "SELECT COUNT(*) FROM TipoServicio WHERE Descripcion = 'Cuidador'";
+                object? countCuidador = BD.ExecuteScalar(checkCuidador);
+                if (countCuidador == null || Convert.ToInt32(countCuidador) == 0)
+                {
+                    string insertCuidador = "INSERT INTO TipoServicio (Descripcion) VALUES ('Cuidador')";
+                    BD.ExecuteNonQuery(insertCuidador);
+                    Console.WriteLine("✅ Tipo de servicio 'Cuidador' creado");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error al verificar/crear tipos de servicio: " + ex.Message);
+            }
+
+            // Obtener todos los tipos de servicio disponibles
+            string todosTiposQuery = @"
+                SELECT Id_TipoServicio, Descripcion 
+                FROM TipoServicio 
+                ORDER BY 
+                    CASE 
+                        WHEN Descripcion = 'Paseador' THEN 1
+                        WHEN Descripcion = 'Cuidador' THEN 2
+                        ELSE 3
+                    END,
+                    Descripcion";
+            DataTable todosTiposDt = BD.ExecuteQuery(todosTiposQuery);
+
+            // Obtener especies del proveedor
+            string especiesQuery = @"
+                SELECT Especie
+                FROM ProveedorServicio_Especie
+                WHERE Id_Proveedor = @IdProveedor";
+            DataTable especiesDt = BD.ExecuteQuery(especiesQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+
+            // Obtener tipo principal
+            string tipoPrincipal = "";
+            try
+            {
+                string tipoQuery = @"
+                    SELECT TOP 1 TS.Descripcion
+                    FROM ProveedorServicio_TipoServicio PSTS
+                    INNER JOIN TipoServicio TS ON PSTS.Id_TipoServicio = TS.Id_TipoServicio
+                    WHERE PSTS.Id_Proveedor = @IdProveedor
+                      AND TS.Descripcion IN ('Paseador', 'Cuidador')
+                    ORDER BY 
+                        CASE 
+                            WHEN TS.Descripcion = 'Paseador' THEN 1
+                            WHEN TS.Descripcion = 'Cuidador' THEN 2
+                        END";
+                
+                object? tipoResult = BD.ExecuteScalar(tipoQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                tipoPrincipal = tipoResult?.ToString() ?? HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+                HttpContext.Session.SetString("ProveedorTipoPrincipal", tipoPrincipal);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("⚠️ Error al obtener tipo principal: " + ex.Message);
+                tipoPrincipal = HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+            }
+
+            ViewBag.Proveedor = dt.Rows[0];
+            ViewBag.TiposServicio = tiposDt;
+            ViewBag.TodosTiposServicio = todosTiposDt;
+            ViewBag.Especies = especiesDt;
+            ViewBag.TipoPrincipal = tipoPrincipal;
+            return View();
+        }
+
+        // ============================
+        // POST: /Proveedor/Configuracion
+        // ============================
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Route("Proveedor/Configuracion")]
+        public IActionResult Configuracion(string dni, string nombreCompleto, int experiencia, string? descripcion,
+            string? telefono, string? direccion, string? ciudad, string? provincia, string? pais, decimal? precioHora,
+            decimal? latitud, decimal? longitud, decimal? radioAtencion, IFormFile? fotoPerfil)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId");
+                if (userId == null)
+                {
+                    return RedirectToAction("Login", "Auth");
+                }
+
+                // Verificar que sea proveedor, si no, redirigir
+                if (!EsProveedor())
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+
+                // Obtener ID del proveedor
+                string proveedorQuery = "SELECT Id_Proveedor FROM ProveedorServicio WHERE Id_User = @UserId";
+                object? proveedorIdResult = BD.ExecuteScalar(proveedorQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+                if (proveedorIdResult == null || proveedorIdResult == DBNull.Value)
+                {
+                    TempData["Error"] = "Proveedor no encontrado.";
+                    return RedirectToAction("Configuracion", "Proveedor");
+                }
+                int idProveedor = Convert.ToInt32(proveedorIdResult);
+
+                // Determinar tipo de ubicación según el tipo principal
+                string tipoUbicacion = "Cobertura"; // Por defecto para paseadores
+                string tipoPrincipal = "";
+                
+                // Obtener tipo principal actual
+                try
+                {
+                    string tipoQuery = @"
+                        SELECT TOP 1 TS.Descripcion
+                        FROM ProveedorServicio_TipoServicio PSTS
+                        INNER JOIN TipoServicio TS ON PSTS.Id_TipoServicio = TS.Id_TipoServicio
+                        WHERE PSTS.Id_Proveedor = @IdProveedor
+                          AND TS.Descripcion IN ('Paseador', 'Cuidador')
+                        ORDER BY 
+                            CASE 
+                                WHEN TS.Descripcion = 'Paseador' THEN 1
+                                WHEN TS.Descripcion = 'Cuidador' THEN 2
+                            END";
+                    
+                    object? tipoResult = BD.ExecuteScalar(tipoQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                    tipoPrincipal = tipoResult?.ToString() ?? "";
+                    
+                    if (tipoPrincipal == "Cuidador")
+                    {
+                        tipoUbicacion = "Precisa";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("⚠️ Error al obtener tipo principal: " + ex.Message);
+                }
+
+                // Manejar foto de perfil si se subió
+                string fotoPerfilPath = null;
+                if (fotoPerfil != null && fotoPerfil.Length > 0)
+                {
+                    var uploadsPath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "proveedores");
+                    if (!Directory.Exists(uploadsPath))
+                        Directory.CreateDirectory(uploadsPath);
+
+                    var fileName = $"proveedor_{idProveedor}_{Guid.NewGuid()}{Path.GetExtension(fotoPerfil.FileName)}";
+                    var filePath = Path.Combine(uploadsPath, fileName);
+                    
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        fotoPerfil.CopyTo(stream);
+                    }
+                    
+                    fotoPerfilPath = $"/uploads/proveedores/{fileName}";
+                }
+
+                // Actualizar datos del proveedor
+                string updateQuery = @"
+                    UPDATE ProveedorServicio 
+                    SET DNI = @DNI,
+                        NombreCompleto = @NombreCompleto,
+                        Experiencia_Anios = @Experiencia,
+                        Descripcion = @Descripcion,
+                        Telefono = @Telefono,
+                        Direccion = @Direccion,
+                        Ciudad = @Ciudad,
+                        Provincia = @Provincia,
+                        Pais = @Pais,
+                        Precio_Hora = @PrecioHora,
+                        Latitud = @Latitud,
+                        Longitud = @Longitud,
+                        Radio_Atencion_Km = @RadioAtencion,
+                        Tipo_Ubicacion = @TipoUbicacion" + 
+                        (fotoPerfilPath != null ? ", FotoPerfil = @FotoPerfil" : "") + @"
+                    WHERE Id_Proveedor = @IdProveedor";
+
+                var updateParams = new Dictionary<string, object>
+                {
+                    { "@DNI", dni },
+                    { "@NombreCompleto", nombreCompleto },
+                    { "@Experiencia", experiencia },
+                    { "@Descripcion", descripcion ?? (object)DBNull.Value },
+                    { "@Telefono", telefono ?? (object)DBNull.Value },
+                    { "@Direccion", direccion ?? (object)DBNull.Value },
+                    { "@Ciudad", ciudad ?? (object)DBNull.Value },
+                    { "@Provincia", provincia ?? (object)DBNull.Value },
+                    { "@Pais", pais ?? (object)DBNull.Value },
+                    { "@PrecioHora", precioHora ?? (object)DBNull.Value },
+                    { "@Latitud", latitud ?? (object)DBNull.Value },
+                    { "@Longitud", longitud ?? (object)DBNull.Value },
+                    { "@RadioAtencion", radioAtencion ?? (object)DBNull.Value },
+                    { "@TipoUbicacion", tipoUbicacion },
+                    { "@IdProveedor", idProveedor }
+                };
+
+                if (fotoPerfilPath != null)
+                {
+                    updateParams.Add("@FotoPerfil", fotoPerfilPath);
+                }
+
+                BD.ExecuteNonQuery(updateQuery, updateParams);
+
+                // Actualizar tipos de servicio
+                var tiposServicioForm = Request.Form["tiposServicio"];
+                tipoPrincipal = ""; // Reutilizar variable existente
+                if (tiposServicioForm.Count > 0)
+                {
+                    // Eliminar tipos actuales
+                    string deleteTiposQuery = "DELETE FROM ProveedorServicio_TipoServicio WHERE Id_Proveedor = @IdProveedor";
+                    BD.ExecuteNonQuery(deleteTiposQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+
+                    // Insertar nuevos tipos y determinar tipo principal
+                    foreach (var tipoIdStr in tiposServicioForm)
+                    {
+                        if (int.TryParse(tipoIdStr, out int tipoId))
+                        {
+                            string insertTipo = @"
+                                INSERT INTO ProveedorServicio_TipoServicio (Id_Proveedor, Id_TipoServicio)
+                                VALUES (@IdProveedor, @IdTipoServicio)";
+                            BD.ExecuteNonQuery(insertTipo, new Dictionary<string, object>
+                            {
+                                { "@IdProveedor", idProveedor },
+                                { "@IdTipoServicio", tipoId }
+                            });
+
+                            // Determinar tipo principal (Paseador o Cuidador)
+                            if (string.IsNullOrEmpty(tipoPrincipal))
+                            {
+                                string tipoQuery = "SELECT Descripcion FROM TipoServicio WHERE Id_TipoServicio = @Id";
+                                object? tipoResult = BD.ExecuteScalar(tipoQuery, new Dictionary<string, object> { { "@Id", tipoId } });
+                                string? tipoDesc = tipoResult?.ToString();
+                                
+                                if (tipoDesc == "Paseador" || tipoDesc == "Cuidador")
+                                {
+                                    tipoPrincipal = tipoDesc;
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Actualizar tipo principal en sesión
+                    if (!string.IsNullOrEmpty(tipoPrincipal))
+                    {
+                        HttpContext.Session.SetString("ProveedorTipoPrincipal", tipoPrincipal);
+                    }
+                }
+
+                // Actualizar especies
+                var especiesForm = Request.Form["especies"];
+                if (especiesForm.Count > 0)
+                {
+                    // Eliminar especies actuales
+                    string deleteEspeciesQuery = "DELETE FROM ProveedorServicio_Especie WHERE Id_Proveedor = @IdProveedor";
+                    BD.ExecuteNonQuery(deleteEspeciesQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+
+                    // Insertar nuevas especies
+                    foreach (var especie in especiesForm)
+                    {
+                        string insertEspecie = @"
+                            INSERT INTO ProveedorServicio_Especie (Id_Proveedor, Especie)
+                            VALUES (@IdProveedor, @Especie)";
+                        BD.ExecuteNonQuery(insertEspecie, new Dictionary<string, object>
+                        {
+                            { "@IdProveedor", idProveedor },
+                            { "@Especie", especie.ToString() }
+                        });
+                    }
+                }
+
+                // Actualizar nombre del usuario
+                string[] nombres = nombreCompleto.Split(' ', 2);
+                string nombre = nombres[0];
+                string apellido = nombres.Length > 1 ? nombres[1] : "";
+
+                string updateUser = @"
+                    UPDATE [User] 
+                    SET Nombre = @Nombre, Apellido = @Apellido
+                    WHERE Id_User = @UserId";
+                BD.ExecuteNonQuery(updateUser, new Dictionary<string, object>
+                {
+                    { "@Nombre", nombre },
+                    { "@Apellido", apellido },
+                    { "@UserId", userId.Value }
+                });
+
+                TempData["Exito"] = "Configuración actualizada exitosamente.";
+                
+                // Redirigir al dashboard correcto según el tipo principal
+                if (tipoPrincipal == "Paseador")
+                {
+                    return RedirectToAction("DashboardPaseador", "Proveedor");
+                }
+                else if (tipoPrincipal == "Cuidador")
+                {
+                    return RedirectToAction("DashboardCuidador", "Proveedor");
+                }
+                
+                return RedirectToAction("Configuracion", "Proveedor");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en Proveedor/Configuracion POST: " + ex.Message);
+                TempData["Error"] = "Error al actualizar la configuración.";
+                return RedirectToAction("Configuracion", "Proveedor");
+            }
+        }
+
+        // ============================
+        // GET: /Proveedor/Perfil
+        // ============================
+        [HttpGet]
+        [Route("Proveedor/Perfil")]
+        public IActionResult Perfil()
+        {
+            AsegurarTablasProveedores();
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            // Verificar que sea proveedor, si no, redirigir
+            if (!EsProveedor())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                string proveedorQuery = @"
+                    SELECT P.*, U.Nombre, U.Apellido, M.Correo
+                    FROM ProveedorServicio P
+                    INNER JOIN [User] U ON P.Id_User = U.Id_User
+                    INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+                    WHERE P.Id_User = @UserId";
+                
+                DataTable proveedorDt = BD.ExecuteQuery(proveedorQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+                if (proveedorDt.Rows.Count == 0)
+                {
+                    return RedirectToAction("Registro1", "Proveedor");
+                }
+
+                ViewBag.Proveedor = proveedorDt.Rows[0];
+                int idProveedor = Convert.ToInt32(proveedorDt.Rows[0]["Id_Proveedor"]);
+
+                // Obtener tipos de servicio
+                string tiposQuery = @"
+                    SELECT TS.Descripcion
+                    FROM ProveedorServicio_TipoServicio PSTS
+                    INNER JOIN TipoServicio TS ON PSTS.Id_TipoServicio = TS.Id_TipoServicio
+                    WHERE PSTS.Id_Proveedor = @IdProveedor";
+                DataTable tiposDt = BD.ExecuteQuery(tiposQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                ViewBag.TiposServicio = tiposDt;
+
+                // Obtener especies
+                string especiesQuery = @"
+                    SELECT Especie
+                    FROM ProveedorServicio_Especie
+                    WHERE Id_Proveedor = @IdProveedor";
+                DataTable especiesDt = BD.ExecuteQuery(especiesQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                ViewBag.Especies = especiesDt;
+
+                // Obtener reseñas
+                string resenasQuery = @"
+                    SELECT R.*, U.Nombre + ' ' + U.Apellido AS NombreUsuario, M.Nombre AS NombreMascota
+                    FROM Resena R
+                    LEFT JOIN [User] U ON R.Id_Usuario = U.Id_User
+                    LEFT JOIN Mascota M ON R.Id_Mascota = M.Id_Mascota
+                    WHERE R.Id_Proveedor = @IdProveedor
+                    ORDER BY R.Fecha DESC";
+                DataTable resenasDt = BD.ExecuteQuery(resenasQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                ViewBag.Resenas = resenasDt;
+
+                ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
+                ViewBag.TipoPrincipal = HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en Proveedor/Perfil: " + ex.Message);
+                TempData["Error"] = "Error al cargar el perfil.";
+                string tipoPrincipal = HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+                if (tipoPrincipal == "Paseador")
+                    return RedirectToAction("DashboardPaseador", "Proveedor");
+                else if (tipoPrincipal == "Cuidador")
+                    return RedirectToAction("DashboardCuidador", "Proveedor");
+                return RedirectToAction("Dashboard", "Proveedor");
+            }
+        }
+
+        // ============================
+        // GET: /Proveedor/Reservas
+        // ============================
+        [HttpGet]
+        [Route("Proveedor/Reservas")]
+        public IActionResult Reservas()
+        {
+            AsegurarTablasProveedores();
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            // Verificar que sea proveedor, si no, redirigir
+            if (!EsProveedor())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                string proveedorQuery = @"
+                    SELECT Id_Proveedor
+                    FROM ProveedorServicio
+                    WHERE Id_User = @UserId";
+                
+                DataTable proveedorDt = BD.ExecuteQuery(proveedorQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+                if (proveedorDt.Rows.Count == 0)
+                {
+                    return RedirectToAction("Registro1", "Proveedor");
+                }
+
+                int idProveedor = Convert.ToInt32(proveedorDt.Rows[0]["Id_Proveedor"]);
+
+                string reservasQuery = @"
+                    SELECT 
+                        RP.Id_Reserva,
+                        RP.Fecha_Inicio,
+                        RP.Hora_Inicio,
+                        RP.Precio_Total,
+                        M.Nombre AS MascotaNombre,
+                        M.Foto AS MascotaFoto,
+                        M.Especie AS MascotaEspecie,
+                        U.Nombre + ' ' + U.Apellido AS DuenioNombre,
+                        ER.Descripcion AS Estado,
+                        ER.Id_EstadoReserva,
+                        TS.Descripcion AS TipoServicio,
+                        RP.Notas
+                    FROM ReservaProveedor RP
+                    INNER JOIN Mascota M ON RP.Id_Mascota = M.Id_Mascota
+                    INNER JOIN [User] U ON RP.Id_User = U.Id_User
+                    INNER JOIN EstadoReserva ER ON RP.Id_EstadoReserva = ER.Id_EstadoReserva
+                    INNER JOIN TipoServicio TS ON RP.Id_TipoServicio = TS.Id_TipoServicio
+                    WHERE RP.Id_Proveedor = @IdProveedor
+                    ORDER BY RP.Fecha_Inicio DESC, RP.Hora_Inicio DESC";
+                
+                DataTable reservasDt = BD.ExecuteQuery(reservasQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                ViewBag.Reservas = reservasDt;
+                ViewBag.TipoPrincipal = HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en Proveedor/Reservas: " + ex.Message);
+                TempData["Error"] = "Error al cargar las reservas.";
+                string tipoPrincipal = HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+                if (tipoPrincipal == "Paseador")
+                    return RedirectToAction("DashboardPaseador", "Proveedor");
+                else if (tipoPrincipal == "Cuidador")
+                    return RedirectToAction("DashboardCuidador", "Proveedor");
+                return RedirectToAction("Dashboard", "Proveedor");
+            }
+        }
+
+        // ============================
+        // GET: /Proveedor/Resenas
+        // ============================
+        [HttpGet]
+        [Route("Proveedor/Resenas")]
+        public IActionResult Resenas()
+        {
+            AsegurarTablasProveedores();
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            // Verificar que sea proveedor, si no, redirigir
+            if (!EsProveedor())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                string proveedorQuery = @"
+                    SELECT Id_Proveedor
+                    FROM ProveedorServicio
+                    WHERE Id_User = @UserId";
+                
+                DataTable proveedorDt = BD.ExecuteQuery(proveedorQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+                if (proveedorDt.Rows.Count == 0)
+                {
+                    return RedirectToAction("Registro1", "Proveedor");
+                }
+
+                int idProveedor = Convert.ToInt32(proveedorDt.Rows[0]["Id_Proveedor"]);
+
+                string resenasQuery = @"
+                    SELECT 
+                        R.Id_Resena,
+                        R.Calificacion,
+                        R.Comentario,
+                        R.Fecha,
+                        U.Nombre + ' ' + U.Apellido AS UsuarioNombre,
+                        M.Nombre AS MascotaNombre
+                    FROM Resena R
+                    INNER JOIN [User] U ON R.Id_User = U.Id_User
+                    LEFT JOIN ReservaProveedor RP ON R.Id_Reserva = RP.Id_Reserva
+                    LEFT JOIN Mascota M ON RP.Id_Mascota = M.Id_Mascota
+                    WHERE R.Id_Proveedor = @IdProveedor
+                    ORDER BY R.Fecha DESC";
+                
+                DataTable resenasDt = BD.ExecuteQuery(resenasQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                ViewBag.Resenas = resenasDt;
+                ViewBag.TipoPrincipal = HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en Proveedor/Resenas: " + ex.Message);
+                TempData["Error"] = "Error al cargar las reseñas.";
+                string tipoPrincipal = HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+                if (tipoPrincipal == "Paseador")
+                    return RedirectToAction("DashboardPaseador", "Proveedor");
+                else if (tipoPrincipal == "Cuidador")
+                    return RedirectToAction("DashboardCuidador", "Proveedor");
+                return RedirectToAction("Dashboard", "Proveedor");
+            }
+        }
+
+        // ============================
+        // GET: /Proveedor/Estadisticas
+        // ============================
+        [HttpGet]
+        [Route("Proveedor/Estadisticas")]
+        public IActionResult Estadisticas()
+        {
+            AsegurarTablasProveedores();
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToAction("Login", "Auth");
+            }
+
+            // Verificar que sea proveedor, si no, redirigir
+            if (!EsProveedor())
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            try
+            {
+                string proveedorQuery = @"
+                    SELECT P.*
+                    FROM ProveedorServicio P
+                    WHERE P.Id_User = @UserId";
+                
+                DataTable proveedorDt = BD.ExecuteQuery(proveedorQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+                if (proveedorDt.Rows.Count == 0)
+                {
+                    return RedirectToAction("Registro1", "Proveedor");
+                }
+
+                int idProveedor = Convert.ToInt32(proveedorDt.Rows[0]["Id_Proveedor"]);
+                ViewBag.Proveedor = proveedorDt.Rows[0];
+
+                // Estadísticas detalladas
+                string statsQuery = @"
+                    SELECT 
+                        COUNT(*) AS TotalReservas,
+                        COUNT(CASE WHEN Id_EstadoReserva = 1 THEN 1 END) AS Pendientes,
+                        COUNT(CASE WHEN Id_EstadoReserva = 2 THEN 1 END) AS Confirmadas,
+                        COUNT(CASE WHEN Id_EstadoReserva = 3 THEN 1 END) AS EnCurso,
+                        COUNT(CASE WHEN Id_EstadoReserva = 4 THEN 1 END) AS Completadas,
+                        COUNT(CASE WHEN Id_EstadoReserva = 5 THEN 1 END) AS Canceladas,
+                        SUM(CASE WHEN Id_EstadoReserva = 4 THEN Precio_Total ELSE 0 END) AS IngresosTotales,
+                        AVG(CASE WHEN Id_EstadoReserva = 4 THEN Precio_Total ELSE NULL END) AS PromedioPorReserva
+                    FROM ReservaProveedor
+                    WHERE Id_Proveedor = @IdProveedor";
+                
+                DataTable statsDt = BD.ExecuteQuery(statsQuery, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                if (statsDt.Rows.Count > 0)
+                {
+                    ViewBag.Estadisticas = statsDt.Rows[0];
+                }
+
+                ViewBag.TipoPrincipal = HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en Proveedor/Estadisticas: " + ex.Message);
+                TempData["Error"] = "Error al cargar las estadísticas.";
+                string tipoPrincipal = HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+                if (tipoPrincipal == "Paseador")
+                    return RedirectToAction("DashboardPaseador", "Proveedor");
+                else if (tipoPrincipal == "Cuidador")
+                    return RedirectToAction("DashboardCuidador", "Proveedor");
+                return RedirectToAction("Dashboard", "Proveedor");
+            }
+        }
+
+        // ============================
+        // POST: /Proveedor/IniciarReserva
+        // ============================
+        [HttpPost]
+        [Route("Proveedor/IniciarReserva")]
+        public IActionResult IniciarReserva([FromBody] dynamic request)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId");
+                if (userId == null || !EsProveedor())
+                {
+                    return Json(new { success = false, message = "No autorizado" });
+                }
+
+                int idReserva = Convert.ToInt32(request.idReserva);
+
+                // Verificar que la reserva pertenece al proveedor
+                string verificarQuery = @"
+                    SELECT RP.Id_Reserva, P.Id_User
+                    FROM ReservaProveedor RP
+                    INNER JOIN ProveedorServicio P ON RP.Id_Proveedor = P.Id_Proveedor
+                    WHERE RP.Id_Reserva = @IdReserva AND P.Id_User = @UserId";
+                
+                DataTable verificarDt = BD.ExecuteQuery(verificarQuery, new Dictionary<string, object>
+                {
+                    { "@IdReserva", idReserva },
+                    { "@UserId", userId.Value }
+                });
+
+                if (verificarDt.Rows.Count == 0)
+                {
+                    return Json(new { success = false, message = "Reserva no encontrada o no autorizada" });
+                }
+
+                // Actualizar estado a "EnCurso" (3) y marcar fecha/hora de inicio real
+                string updateQuery = @"
+                    UPDATE ReservaProveedor
+                    SET Id_EstadoReserva = 3,
+                        Fecha_Hora_Inicio_Real = GETDATE()
+                    WHERE Id_Reserva = @IdReserva";
+
+                BD.ExecuteNonQuery(updateQuery, new Dictionary<string, object> { { "@IdReserva", idReserva } });
+
+                return Json(new { success = true, message = "Servicio iniciado" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en IniciarReserva: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // ============================
+        // POST: /Proveedor/CompletarReserva
+        // ============================
+        [HttpPost]
+        [Route("Proveedor/CompletarReserva")]
+        public IActionResult CompletarReserva([FromBody] dynamic request)
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId");
+                if (userId == null || !EsProveedor())
+                {
+                    return Json(new { success = false, message = "No autorizado" });
+                }
+
+                int idReserva = Convert.ToInt32(request.idReserva);
+
+                // Verificar que la reserva pertenece al proveedor y está en curso
+                string verificarQuery = @"
+                    SELECT RP.Id_Reserva, P.Id_User, RP.Fecha_Hora_Inicio_Real
+                    FROM ReservaProveedor RP
+                    INNER JOIN ProveedorServicio P ON RP.Id_Proveedor = P.Id_Proveedor
+                    WHERE RP.Id_Reserva = @IdReserva 
+                      AND P.Id_User = @UserId
+                      AND RP.Id_EstadoReserva = 3";
+                
+                DataTable verificarDt = BD.ExecuteQuery(verificarQuery, new Dictionary<string, object>
+                {
+                    { "@IdReserva", idReserva },
+                    { "@UserId", userId.Value }
+                });
+
+                if (verificarDt.Rows.Count == 0)
+                {
+                    return Json(new { success = false, message = "Reserva no encontrada o no está en curso" });
+                }
+
+                // Calcular tiempo total si hay fecha de inicio real
+                DateTime? fechaInicio = null;
+                if (verificarDt.Rows[0]["Fecha_Hora_Inicio_Real"] != DBNull.Value)
+                {
+                    fechaInicio = Convert.ToDateTime(verificarDt.Rows[0]["Fecha_Hora_Inicio_Real"]);
+                }
+
+                // Obtener distancia total y tiempo total de las ubicaciones
+                string statsQuery = @"
+                    SELECT 
+                        MAX(Distancia_Acumulada_Metros) AS DistanciaTotal,
+                        MAX(Tiempo_Transcurrido_Segundos) AS TiempoTotal
+                    FROM UbicacionServicio
+                    WHERE Id_Reserva = @IdReserva";
+
+                DataTable statsDt = BD.ExecuteQuery(statsQuery, new Dictionary<string, object> { { "@IdReserva", idReserva } });
+                
+                decimal? distanciaTotal = null;
+                int? tiempoTotal = null;
+
+                if (statsDt.Rows.Count > 0)
+                {
+                    if (statsDt.Rows[0]["DistanciaTotal"] != DBNull.Value)
+                    {
+                        distanciaTotal = Convert.ToDecimal(statsDt.Rows[0]["DistanciaTotal"]);
+                    }
+                    if (statsDt.Rows[0]["TiempoTotal"] != DBNull.Value)
+                    {
+                        tiempoTotal = Convert.ToInt32(statsDt.Rows[0]["TiempoTotal"]);
+                    }
+                }
+
+                // Si no hay tiempo calculado, calcular desde fecha de inicio
+                if (!tiempoTotal.HasValue && fechaInicio.HasValue)
+                {
+                    tiempoTotal = (int)(DateTime.Now - fechaInicio.Value).TotalSeconds;
+                }
+
+                // Actualizar estado a "Completada" (4) y marcar fecha/hora de fin real
+                string updateQuery = @"
+                    UPDATE ReservaProveedor
+                    SET Id_EstadoReserva = 4,
+                        Fecha_Hora_Fin_Real = GETDATE(),
+                        Distancia_Total_Metros = @DistanciaTotal,
+                        Tiempo_Total_Segundos = @TiempoTotal
+                    WHERE Id_Reserva = @IdReserva";
+
+                BD.ExecuteNonQuery(updateQuery, new Dictionary<string, object>
+                {
+                    { "@IdReserva", idReserva },
+                    { "@DistanciaTotal", distanciaTotal ?? (object)DBNull.Value },
+                    { "@TiempoTotal", tiempoTotal ?? (object)DBNull.Value }
+                });
+
+                return Json(new { success = true, message = "Servicio completado" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("❌ Error en CompletarReserva: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
         }
     }
 }

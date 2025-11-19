@@ -1,0 +1,386 @@
+/* ============================================
+   ZOONI DESIGN SYSTEM - Sistema de Diseño Unificado
+   ============================================ */
+
+:root {
+    /* 🎨 Colores Principales */
+    --verde: #3ac37d;
+    --verde-hover: #2ea968;
+    --verde-claro: #e8f5e9;
+    --amarillo: #FFD85A;
+    --amarillo-hover: #ffd044;
+    --marron: #8B5E3C;
+    --marron-claro: #a67c52;
+    --azul: #4A90E2;
+    --azul-hover: #357abd;
+    
+    /* 🎨 Colores Neutros */
+    --gris: #555;
+    --gris-claro: #ccc;
+    --gris-oscuro: #6c757d;
+    --blanco: #ffffff;
+    --negro: #000000;
+    
+    /* 🎨 Fondos */
+    --fondo-bosque: url('/img/fondos/bosque.png');
+    --fondo-claro: #f9f9f8;
+    --fondo-oscuro: #121212;
+    --card-bg-claro: rgba(255, 255, 255, 0.95);
+    --card-bg-oscuro: rgba(30, 30, 30, 0.95);
+    
+    /* 🎨 Textos */
+    --texto-claro: #4B3B2B;
+    --texto-oscuro: #ffffff;
+    --texto-gris: #666;
+    
+    /* 🎨 Sombras */
+    --sombra-suave: 0 2px 8px rgba(0,0,0,0.1);
+    --sombra-media: 0 4px 12px rgba(0,0,0,0.15);
+    --sombra-fuerte: 0 8px 24px rgba(0,0,0,0.2);
+    
+    /* 🎨 Bordes */
+    --radio-pequeño: 8px;
+    --radio-medio: 12px;
+    --radio-grande: 20px;
+    --radio-completo: 50%;
+    
+    /* 🎨 Espaciado */
+    --espacio-xs: 5px;
+    --espacio-sm: 10px;
+    --espacio-md: 15px;
+    --espacio-lg: 20px;
+    --espacio-xl: 30px;
+    
+    /* 🎨 Tipografía */
+    --fuente: 'Poppins', sans-serif;
+    --peso-normal: 400;
+    --peso-semibold: 600;
+    --peso-bold: 700;
+}
+
+/* ============================================
+   TEMA CLARO/OSCURO
+   ============================================ */
+body.tema-claro {
+    background: var(--fondo-bosque) center center / cover no-repeat fixed;
+    color: var(--texto-claro);
+}
+
+body.tema-oscuro {
+    background: var(--fondo-bosque) center center / cover no-repeat fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: overlay;
+    filter: brightness(0.6);
+}
+
+/* ============================================
+   RESET Y BASE
+   ============================================ */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+    font-family: var(--fuente);
+    transition: background .4s ease, color .4s ease;
+}
+
+/* ============================================
+   TIPOGRAFÍA
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--fuente);
+    font-weight: var(--peso-bold);
+    color: inherit;
+    margin: 0;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+p, span, label, a, button, input, select, textarea {
+    font-family: var(--fuente);
+    color: inherit;
+}
+
+/* ============================================
+   BOTONES
+   ============================================ */
+.btn {
+    display: inline-block;
+    padding: 14px 28px;
+    border: none;
+    border-radius: var(--radio-grande);
+    font-family: var(--fuente);
+    font-size: 1rem;
+    font-weight: var(--peso-semibold);
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: var(--sombra-suave);
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--sombra-media);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn-verde {
+    background: var(--verde);
+    color: var(--blanco);
+}
+
+.btn-verde:hover {
+    background: var(--verde-hover);
+}
+
+.btn-azul {
+    background: var(--azul);
+    color: var(--blanco);
+}
+
+.btn-azul:hover {
+    background: var(--azul-hover);
+}
+
+.btn-amarillo {
+    background: var(--amarillo);
+    color: var(--marron);
+}
+
+.btn-amarillo:hover {
+    background: var(--amarillo-hover);
+}
+
+.btn-gris {
+    background: var(--gris-oscuro);
+    color: var(--blanco);
+}
+
+.btn-gris:hover {
+    background: #5a6268;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid currentColor;
+}
+
+/* ============================================
+   TARJETAS
+   ============================================ */
+.card {
+    background: var(--card-bg-claro);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radio-grande);
+    padding: var(--espacio-xl);
+    box-shadow: var(--sombra-media);
+    margin-bottom: var(--espacio-lg);
+}
+
+body.tema-oscuro .card {
+    background: var(--card-bg-oscuro);
+}
+
+/* ============================================
+   FORMULARIOS
+   ============================================ */
+.input, input[type="text"], input[type="email"], input[type="password"], 
+input[type="number"], input[type="tel"], input[type="date"], input[type="time"],
+select, textarea {
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: var(--radio-grande);
+    border: 1.8px solid var(--gris-claro);
+    font-family: var(--fuente);
+    font-size: 15px;
+    background: var(--blanco);
+    color: var(--texto-claro);
+    transition: all 0.2s ease;
+}
+
+.input:focus, input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--verde);
+    box-shadow: 0 0 0 3px rgba(58, 195, 125, 0.2);
+}
+
+body.tema-oscuro .input,
+body.tema-oscuro input,
+body.tema-oscuro select,
+body.tema-oscuro textarea {
+    background: var(--card-bg-oscuro);
+    border-color: #555;
+    color: var(--texto-oscuro);
+}
+
+/* ============================================
+   MENÚ LATERAL
+   ============================================ */
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-100%);
+    width: 240px;
+    height: 100%;
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 12px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    padding: 2.5rem 1.2rem;
+    gap: 1rem;
+    transition: transform 0.35s ease, background .4s ease, color .4s ease;
+    z-index: 999;
+}
+
+body.tema-claro .menu-lateral {
+    background: rgba(255, 255, 255, 0.97);
+}
+
+body.tema-oscuro .menu-lateral {
+    background: rgba(30, 30, 30, 0.97);
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
+}
+
+.menu-lateral.abierto {
+    transform: translateX(0);
+}
+
+.menu-lateral a {
+    text-decoration: none;
+    font-weight: var(--peso-semibold);
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: var(--radio-medio);
+    transition: all .25s ease;
+    color: inherit;
+}
+
+body.tema-claro .menu-lateral a {
+    color: var(--marron);
+}
+
+body.tema-oscuro .menu-lateral a {
+    color: var(--texto-oscuro);
+}
+
+body.tema-claro .menu-lateral a:hover {
+    background: var(--amarillo);
+    color: #3c2a00;
+}
+
+body.tema-oscuro .menu-lateral a:hover {
+    background: var(--verde);
+    color: var(--blanco);
+}
+
+/* ============================================
+   HEADER
+   ============================================ */
+.menu-icon {
+    width: 38px;
+    height: 38px;
+    display: block;
+    cursor: pointer;
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0);
+}
+
+body.tema-oscuro .menu-icon {
+    filter: brightness(0) invert(1);
+}
+
+.menu-icon:hover {
+    transform: scale(1.1);
+}
+
+/* ============================================
+   OVERLAY
+   ============================================ */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.25);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    z-index: 8;
+}
+
+.overlay.activo {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* ============================================
+   BADGES Y ETIQUETAS
+   ============================================ */
+.badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: var(--peso-semibold);
+}
+
+.badge-verde {
+    background: var(--verde-claro);
+    color: var(--verde-hover);
+}
+
+.badge-azul {
+    background: #e3f2fd;
+    color: #1976d2;
+}
+
+.badge-amarillo {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.badge-gris {
+    background: #f0f0f0;
+    color: var(--gris);
+}
+
+/* ============================================
+   UTILIDADES
+   ============================================ */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mt-sm { margin-top: var(--espacio-sm); }
+.mt-md { margin-top: var(--espacio-md); }
+.mt-lg { margin-top: var(--espacio-lg); }
+.mt-xl { margin-top: var(--espacio-xl); }
+
+.mb-sm { margin-bottom: var(--espacio-sm); }
+.mb-md { margin-bottom: var(--espacio-md); }
+.mb-lg { margin-bottom: var(--espacio-lg); }
+.mb-xl { margin-bottom: var(--espacio-xl); }
+
+.flex { display: flex; }
+.flex-column { flex-direction: column; }
+.flex-center { justify-content: center; align-items: center; }
+.gap-sm { gap: var(--espacio-sm); }
+.gap-md { gap: var(--espacio-md); }
+.gap-lg { gap: var(--espacio-lg); }
+

@@ -1,0 +1,200 @@
+@{
+    ViewData["Title"] = "Mi Perfil - Zooni";
+    Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/zooni-design-system.css" />
+    <style>
+        body {
+            background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        body.tema-oscuro {
+            background-color: rgba(0, 0, 0, 0.5);
+            background-blend-mode: overlay;
+            filter: brightness(0.6);
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .header-perfil {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .foto-perfil {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--verde);
+            box-shadow: var(--sombra-fuerte);
+            margin: 0 auto 20px;
+            display: block;
+        }
+        .nombre-perfil {
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin: 0;
+        }
+        .info-perfil {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .info-item {
+            background: var(--card-bg-claro);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: var(--radio-grande);
+            box-shadow: var(--sombra-media);
+        }
+        .info-item h3 {
+            color: var(--marron);
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        .info-item p {
+            color: var(--texto-gris);
+            margin: 5px 0;
+        }
+        .badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .volver {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+    </style>
+</head>
+<body class="tema-@tema">
+    <div class="container">
+        <a href="/Proveedor/DashboardPaseador" class="volver">← Volver al Dashboard</a>
+        
+        <div class="header-perfil">
+            @if (ViewBag.Proveedor?["FotoPerfil"] != null && ViewBag.Proveedor["FotoPerfil"] != DBNull.Value && !string.IsNullOrEmpty(ViewBag.Proveedor["FotoPerfil"].ToString()))
+            {
+                <img src="@ViewBag.Proveedor["FotoPerfil"]" alt="Foto de perfil" class="foto-perfil" />
+            }
+            else
+            {
+                <div class="foto-perfil" style="background: var(--gris-claro); display: flex; align-items: center; justify-content: center; font-size: 72px;">📷</div>
+            }
+            <h1 class="nombre-perfil">@(ViewBag.Proveedor?["NombreCompleto"] ?? "Proveedor")</h1>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 15px; margin-top: 15px;">
+                <span style="color: #FFD700; font-size: 24px;">⭐</span>
+                <span style="font-weight: 600; font-size: 20px; color: white; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">@(ViewBag.Proveedor?["Calificacion_Promedio"] ?? "0")</span>
+                <span style="color: rgba(255,255,255,0.9); text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">(@(ViewBag.Proveedor?["Cantidad_Resenas"] ?? "0") reseñas)</span>
+            </div>
+        </div>
+
+        <div class="info-perfil">
+            <div class="info-item">
+                <h3>📍 Ubicación</h3>
+                <p>@(ViewBag.Proveedor?["Ciudad"] ?? "No especificada"), @(ViewBag.Proveedor?["Provincia"] ?? "")</p>
+                <p>@(ViewBag.Proveedor?["Pais"] ?? "")</p>
+            </div>
+
+            <div class="info-item">
+                <h3>💼 Experiencia</h3>
+                <p>@(ViewBag.Proveedor?["Experiencia_Anios"] ?? "0") años de experiencia</p>
+                @if (ViewBag.Proveedor?["Precio_Hora"] != null && ViewBag.Proveedor["Precio_Hora"] != DBNull.Value)
+                {
+                    <p style="font-weight: 600; color: var(--verde); margin-top: 10px;">$@ViewBag.Proveedor["Precio_Hora"]/hora</p>
+                }
+            </div>
+
+            @if (ViewBag.TiposServicio != null && ViewBag.TiposServicio.Rows.Count > 0)
+            {
+                <div class="info-item">
+                    <h3>🛠️ Servicios</h3>
+                    <div class="badges">
+                        @foreach (System.Data.DataRow tipo in ViewBag.TiposServicio.Rows)
+                        {
+                            <span class="badge badge-verde">@tipo["Descripcion"]</span>
+                        }
+                    </div>
+                </div>
+            }
+
+            @if (ViewBag.Especies != null && ViewBag.Especies.Rows.Count > 0)
+            {
+                <div class="info-item">
+                    <h3>🐾 Especies</h3>
+                    <div class="badges">
+                        @foreach (System.Data.DataRow especie in ViewBag.Especies.Rows)
+                        {
+                            <span class="badge badge-azul">@especie["Especie"]</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+
+        @if (!string.IsNullOrEmpty(ViewBag.Proveedor?["Descripcion"]?.ToString()))
+        {
+            <div class="card">
+                <h3 style="color: var(--marron); margin-bottom: 15px;">Sobre mí</h3>
+                <p style="color: var(--texto-gris); line-height: 1.8;">@ViewBag.Proveedor["Descripcion"]</p>
+            </div>
+        }
+
+        @if (ViewBag.Resenas != null && ViewBag.Resenas.Rows.Count > 0)
+        {
+            <div class="card">
+                <h3 style="color: var(--marron); margin-bottom: 20px;">⭐ Reseñas (@ViewBag.Resenas.Rows.Count)</h3>
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    @foreach (System.Data.DataRow resena in ViewBag.Resenas.Rows)
+                    {
+                        <div style="padding: 15px; background: #f8f9fa; border-radius: var(--radio-medio);">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                <div>
+                                    <strong style="color: var(--marron);">@resena["UsuarioNombre"]</strong>
+                                    @if (resena["MascotaNombre"] != DBNull.Value)
+                                    {
+                                        <span style="color: var(--texto-gris); font-size: 14px;"> - @resena["MascotaNombre"]</span>
+                                    }
+                                    <p style="color: var(--texto-gris); font-size: 12px; margin: 5px 0 0 0;">@(((DateTime)resena["Fecha"]).ToString("dd/MM/yyyy"))</p>
+                                </div>
+                                <div>
+                                    @for (int i = 0; i < Convert.ToInt32(resena["Calificacion"]); i++)
+                                    {
+                                        <span style="color: #FFD700; font-size: 18px;">⭐</span>
+                                    }
+                                </div>
+                            </div>
+                            @if (resena["Comentario"] != DBNull.Value && !string.IsNullOrEmpty(resena["Comentario"].ToString()))
+                            {
+                                <p style="color: var(--texto-gris); margin: 0; line-height: 1.6;">@resena["Comentario"]</p>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/Proveedor/Configuracion" class="btn btn-verde">⚙️ Editar Perfil</a>
+        </div>
+    </div>
+</body>
+</html>
+

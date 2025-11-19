@@ -1,8 +1,36 @@
 @{
     ViewData["Title"] = "Perfil Proveedor - Zooni";
+    Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
 }
 
-<div style="max-width: 1000px; margin: 0 auto; padding: 20px;">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/zooni-design-system.css" />
+    <style>
+        body {
+            background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        body.tema-oscuro {
+            background-color: rgba(0, 0, 0, 0.5);
+            background-blend-mode: overlay;
+            filter: brightness(0.6);
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body class="tema-@tema">
+<div class="container">
     @if (ViewBag.Proveedor != null)
     {
         <div style="background: white; border-radius: 12px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 30px;">
@@ -27,7 +55,7 @@
                             <span style="font-weight: 600; font-size: 20px;">@ViewBag.Proveedor["Calificacion_Promedio"]</span>
                             <span style="color: #999;">(@ViewBag.Proveedor["Cantidad_Resenas"] reseñas)</span>
                         </div>
-                        @if (ViewBag.Proveedor["Precio_Hora"] != DBNull.Value)
+                        @if (ViewBag.Proveedor["Precio_Hora"] != null && ViewBag.Proveedor["Precio_Hora"] != DBNull.Value)
                         {
                             <span style="font-weight: 600; font-size: 18px; color: #6c757d;">$@ViewBag.Proveedor["Precio_Hora"]/hora</span>
                         }
@@ -36,6 +64,15 @@
                     <div style="color: #666; margin: 15px 0;">
                         <p style="margin: 5px 0;">📍 @ViewBag.Proveedor["Ciudad"], @ViewBag.Proveedor["Provincia"]</p>
                         <p style="margin: 5px 0;">📅 @ViewBag.Proveedor["Experiencia_Anios"] años de experiencia</p>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; margin-top: 20px;">
+                        <a href="/BuscarProveedor/Contratar/@ViewBag.Proveedor["Id_Proveedor"]" style="flex: 1; display: inline-block; padding: 12px 24px; background-color: #3ac37d; color: white; border-radius: 8px; text-decoration: none; font-weight: 600; text-align: center;">
+                            📅 Contratar Servicio
+                        </a>
+                        <button onclick="iniciarChat(@ViewBag.Proveedor["Id_User"])" style="flex: 1; padding: 12px 24px; background-color: #4A90E2; color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">
+                            💬 Chatear
+                        </button>
                     </div>
                 </div>
             </div>
@@ -127,4 +164,30 @@
         </div>
     }
 </div>
+</body>
+</html>
+
+<script>
+async function iniciarChat(idProveedorUser) {
+    try {
+        const response = await fetch('/BuscarProveedor/ObtenerOCrearChat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(idProveedorUser)
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            window.location.href = '/Home/Mensajes?chatId=' + data.chatId;
+        } else {
+            alert(data.message || 'Error al iniciar el chat');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al iniciar el chat');
+    }
+}
+</script>
 

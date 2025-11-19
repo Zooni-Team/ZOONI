@@ -12,7 +12,7 @@ using iText.Layout.Properties;
 using iText.IO.Image;
 namespace Zooni.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
        private DataRow ObtenerMascotaActiva(int userId)
 {
@@ -147,6 +147,25 @@ namespace Zooni.Controllers
             {
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (userId == null) return RedirectToAction("Login", "Auth");
+
+                // Si es proveedor, redirigir al dashboard correspondiente
+                string? esProveedor = HttpContext.Session.GetString("EsProveedor");
+                if (esProveedor == "true")
+                {
+                    string tipoPrincipal = HttpContext.Session.GetString("ProveedorTipoPrincipal") ?? "";
+                    if (tipoPrincipal == "Paseador")
+                    {
+                        return RedirectToAction("DashboardPaseador", "Proveedor");
+                    }
+                    else if (tipoPrincipal == "Cuidador")
+                    {
+                        return RedirectToAction("DashboardCuidador", "Proveedor");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Dashboard", "Proveedor");
+                    }
+                }
 var tema = HttpContext.Session.GetString("Tema") ?? "claro";
         ViewBag.Tema = tema;
                 var param = new Dictionary<string, object> { { "@UserId", userId.Value } };
@@ -256,6 +275,12 @@ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (userId == null) return RedirectToAction("Login", "Auth");
 
+                // Verificar que NO sea proveedor, si es proveedor, redirigir
+                if (EsProveedor())
+                {
+                    return RedirigirProveedorSiEsNecesario();
+                }
+
                 var mascota = ObtenerMascotaActiva(userId.Value);
                 if (mascota == null)
                 {
@@ -284,6 +309,12 @@ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (userId == null) return RedirectToAction("Login", "Auth");
 
+                // Verificar que NO sea proveedor, si es proveedor, redirigir
+                if (EsProveedor())
+                {
+                    return RedirigirProveedorSiEsNecesario();
+                }
+
                 var mascota = ObtenerMascotaActiva(userId.Value);
                 if (mascota == null)
                 {
@@ -307,6 +338,12 @@ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
         {
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null) return RedirectToAction("Login", "Auth");
+
+            // Verificar que NO sea proveedor, si es proveedor, redirigir
+            if (EsProveedor())
+            {
+                return RedirigirProveedorSiEsNecesario();
+            }
 
             var mascota = ObtenerMascotaActiva(userId.Value);
             CargarViewBagMascota(mascota);
@@ -417,6 +454,12 @@ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
             {
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (userId == null) return RedirectToAction("Login", "Auth");
+
+                // Verificar que NO sea proveedor, si es proveedor, redirigir
+                if (EsProveedor())
+                {
+                    return RedirigirProveedorSiEsNecesario();
+                }
 
                 var mascota = ObtenerMascotaActiva(userId.Value);
                 if (mascota == null)
@@ -616,7 +659,14 @@ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
                 var userId = HttpContext.Session.GetInt32("UserId");
                 if (userId == null)
                     return RedirectToAction("Login", "Auth");
- var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+
+                // Verificar que NO sea proveedor, si es proveedor, redirigir
+                if (EsProveedor())
+                {
+                    return RedirigirProveedorSiEsNecesario();
+                }
+
+                var tema = HttpContext.Session.GetString("Tema") ?? "claro";
         ViewBag.Tema = tema;
                 string qUser = @"
                     SELECT U.Nombre, U.Apellido, U.Telefono, M.Correo
@@ -1170,6 +1220,12 @@ public IActionResult Perfil(int? id = null)
         Console.WriteLine("⚠️ Error al crear tablas (puede ser normal si ya existen): " + ex.Message);
     }
     
+    // Verificar que NO sea proveedor, si es proveedor, redirigir
+    if (EsProveedor())
+    {
+        return RedirigirProveedorSiEsNecesario();
+    }
+
     var tema = HttpContext.Session.GetString("Tema") ?? "claro";
     ViewBag.Tema = tema;
     
@@ -1597,6 +1653,18 @@ public IActionResult ConfigMascotas()
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null)
         return RedirectToAction("Login", "Auth");
+
+    // Verificar que NO sea proveedor, si es proveedor, redirigir
+    if (EsProveedor())
+    {
+        return RedirigirProveedorSiEsNecesario();
+    }
+
+    // Limpiar TempData de errores que no son relevantes para esta vista
+    if (TempData["Error"] != null && TempData["Error"].ToString().Contains("reseña"))
+    {
+        TempData.Remove("Error");
+    }
 
     ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
 
@@ -2350,6 +2418,12 @@ public IActionResult GuardarMascotaEditada(Mascota model, string PesoDisplay, Da
         if (userId == null)
             return RedirectToAction("Login", "Auth");
 
+        // Verificar que NO sea proveedor, si es proveedor, redirigir
+        if (EsProveedor())
+        {
+            return RedirigirProveedorSiEsNecesario();
+        }
+
         var tema = HttpContext.Session.GetString("Tema") ?? "claro";
         ViewBag.Tema = tema;
 
@@ -2445,6 +2519,12 @@ public IActionResult Closet()
     if (userId == null)
         return RedirectToAction("Login", "Auth");
 
+    // Verificar que NO sea proveedor, si es proveedor, redirigir
+    if (EsProveedor())
+    {
+        return RedirigirProveedorSiEsNecesario();
+    }
+
     var tema = HttpContext.Session.GetString("Tema") ?? "claro";
     ViewBag.Tema = tema;
 
@@ -2509,12 +2589,15 @@ public IActionResult CambiarAvatar(string avatarRuta)
     return RedirectToAction("Closet");
 }
 
-[HttpGet]
-public IActionResult Comunidad()
-{
-    var userId = HttpContext.Session.GetInt32("UserId");
-    if (userId == null)
-        return RedirectToAction("Login", "Auth");
+    [HttpGet]
+    public IActionResult Comunidad()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return RedirectToAction("Login", "Auth");
+
+        // Comunidad es accesible tanto para dueños como proveedores
+        // No necesitamos verificación adicional aquí
 
     var tema = HttpContext.Session.GetString("Tema") ?? "claro";
     ViewBag.Tema = tema;
@@ -2718,9 +2801,10 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                 SELECT DISTINCT
                     U.Id_User,
                     U.Nombre + ' ' + U.Apellido as NombreCompleto,
-                    P.FotoPerfil,
-                    UB.Latitud as Lat,
-                    UB.Longitud as Lng,
+                    ISNULL(PS.NombreCompleto, U.Nombre + ' ' + U.Apellido) as NombreMostrar,
+                    ISNULL(PS.FotoPerfil, P.FotoPerfil) as FotoPerfil,
+                    ISNULL(PS.Latitud, UB.Latitud) as Lat,
+                    ISNULL(PS.Longitud, UB.Longitud) as Lng,
                     (SELECT TOP 1 Nombre FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaNombre,
                     (SELECT TOP 1 Foto FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaFoto,
                     (SELECT TOP 1 Especie FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaEspecie,
@@ -2731,7 +2815,8 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                         WHEN U.EstadoOnline = 1 AND U.UltimaActividad >= DATEADD(MINUTE, -5, GETDATE()) THEN 1
                         ELSE 0
                     END as EstaOnline,
-                    U.UltimaActividad
+                    U.UltimaActividad,
+                    CASE WHEN PS.Id_Proveedor IS NOT NULL THEN 1 ELSE 0 END as EsProveedor
                 FROM (
                     SELECT Id_Amigo as Id_User FROM CirculoConfianza WHERE Id_User = @UserId
                     UNION
@@ -2743,10 +2828,11 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                 ) AS AmigosIds
                 INNER JOIN [User] U ON AmigosIds.Id_User = U.Id_User
                 LEFT JOIN Perfil P ON P.Id_Usuario = U.Id_User
+                LEFT JOIN ProveedorServicio PS ON PS.Id_User = U.Id_User
                 LEFT JOIN Ubicacion UB ON UB.Id_Ubicacion = U.Id_Ubicacion
                 LEFT JOIN ConfiguracionUsuario CU ON CU.Id_User = U.Id_User
                 WHERE U.Estado = 1
-                AND (ISNULL(CU.MostrableUbicacion, 'amigos') IN ('amigos', 'todos'))";
+                AND (ISNULL(CU.MostrableUbicacion, 'amigos') IN ('amigos', 'todos') OR PS.Id_Proveedor IS NOT NULL)";
 
         var dtAmigos = BD.ExecuteQuery(qAmigos, new Dictionary<string, object> { { "@UserId", userId.Value } });
 
@@ -2825,7 +2911,9 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
             
             string nombreMostrar = apodos.ContainsKey(amigoId) && !string.IsNullOrEmpty(apodos[amigoId])
                 ? apodos[amigoId]
-                : (row["NombreCompleto"]?.ToString() ?? "Usuario");
+                : (row["NombreMostrar"]?.ToString() ?? row["NombreCompleto"]?.ToString() ?? "Usuario");
+            
+            bool esProveedor = row.Table.Columns.Contains("EsProveedor") && Convert.ToInt32(row["EsProveedor"]) == 1;
             
             amigos.Add(new
             {
@@ -2836,9 +2924,10 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                 fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png",
                 lat = row["Lat"] != DBNull.Value ? Convert.ToDouble(row["Lat"]) : (double?)null,
                 lng = row["Lng"] != DBNull.Value ? Convert.ToDouble(row["Lng"]) : (double?)null,
-                mascotaNombre = row["MascotaNombre"]?.ToString() ?? "Sin mascota",
+                mascotaNombre = row["MascotaNombre"]?.ToString() ?? (esProveedor ? "Proveedor" : "Sin mascota"),
                 mascotaAvatar = avatarMascota,
-                estaOnline = estaOnline
+                estaOnline = estaOnline,
+                esProveedor = esProveedor
             });
         }
 
@@ -3016,8 +3105,70 @@ public IActionResult BuscarUsuarios(string query)
     }
 }
 
-[HttpGet]
-public IActionResult ObtenerUsuariosSugeridos()
+    [HttpGet]
+    public IActionResult ObtenerUsuariosSugeridos()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            // Obtener usuarios sugeridos (dueños de mascotas y proveedores)
+            string query = @"
+                SELECT TOP 10
+                    U.Id_User as id,
+                    U.Nombre + ' ' + U.Apellido as nombre,
+                    M.Correo as email,
+                    ISNULL(PR.FotoPerfil, PS.FotoPerfil) as fotoPerfil,
+                    ISNULL((SELECT TOP 1 Nombre FROM Mascota WHERE Id_User = U.Id_User), 'Sin mascota') as mascotaNombre,
+                    CASE WHEN PS.Id_Proveedor IS NOT NULL THEN 1 ELSE 0 END as esProveedor,
+                    PS.NombreCompleto as nombreProveedor
+                FROM [User] U
+                INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+                LEFT JOIN Perfil PR ON PR.Id_Usuario = U.Id_User
+                LEFT JOIN ProveedorServicio PS ON PS.Id_User = U.Id_User
+                WHERE U.Id_User != @UserId
+                  AND U.Id_User NOT IN (
+                      SELECT Id_Amigo FROM CirculoConfianza WHERE Id_User = @UserId
+                      UNION
+                      SELECT Id_Receptor FROM Invitacion WHERE Id_Emisor = @UserId AND Estado IN ('Pendiente', 'Aceptada')
+                      UNION
+                      SELECT Id_Emisor FROM Invitacion WHERE Id_Receptor = @UserId AND Estado IN ('Pendiente', 'Aceptada')
+                  )
+                ORDER BY NEWID()";
+            
+            var dt = BD.ExecuteQuery(query, new Dictionary<string, object> { { "@UserId", userId.Value } });
+            
+            var sugeridos = new List<object>();
+            foreach (System.Data.DataRow row in dt.Rows)
+            {
+                string nombreMostrar = row["esProveedor"].ToString() == "1" && row["nombreProveedor"] != DBNull.Value
+                    ? row["nombreProveedor"].ToString()
+                    : row["nombre"].ToString();
+                
+                sugeridos.Add(new
+                {
+                    id = Convert.ToInt32(row["id"]),
+                    nombre = nombreMostrar,
+                    email = row["email"].ToString(),
+                    fotoPerfil = row["fotoPerfil"]?.ToString() ?? "/img/perfil/default.png",
+                    mascotaNombre = row["mascotaNombre"]?.ToString() ?? "Sin mascota",
+                    esProveedor = Convert.ToInt32(row["esProveedor"]) == 1
+                });
+            }
+            
+            return Json(new { success = true, sugeridos = sugeridos.Take(10) });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error ObtenerUsuariosSugeridos: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpGet]
+    public IActionResult ObtenerUsuariosSugeridos_OLD()
 {
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null)
