@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Zooni.Models;
+using Zooni.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -439,6 +440,35 @@ namespace Zooni.Controllers
                     { "@Notas", notas ?? "" }
                 });
 
+                // Obtener información del proveedor para la notificación
+                string qProveedor = @"
+                    SELECT PS.Id_User, PS.NombreCompleto, TS.Descripcion as TipoServicio
+                    FROM ProveedorServicio PS
+                    INNER JOIN TipoServicio TS ON @IdTipoServicio = TS.Id_TipoServicio
+                    WHERE PS.Id_Proveedor = @IdProveedor";
+                
+                DataTable dtProv = BD.ExecuteQuery(qProveedor, new Dictionary<string, object>
+                {
+                    { "@IdProveedor", idProveedor },
+                    { "@IdTipoServicio", idTipoServicio }
+                });
+
+                if (dtProv.Rows.Count > 0)
+                {
+                    int idProveedorUser = Convert.ToInt32(dtProv.Rows[0]["Id_User"]);
+                    string tipoServicio = dtProv.Rows[0]["TipoServicio"]?.ToString() ?? "servicio";
+                    string fechaFormateada = fechaInicio.ToString("dd/MM/yyyy");
+
+                    NotificacionController.CrearNotificacion(
+                        idProveedorUser,
+                        "NuevaReserva",
+                        "Nueva reserva recibida",
+                        $"Tienes una nueva reserva de {tipoServicio} para el {fechaFormateada}",
+                        idProveedor,
+                        "/Proveedor/Reservas"
+                    );
+                }
+
                 return Json(new { success = true, message = "Reserva creada exitosamente" });
             }
             catch (Exception ex)
@@ -506,6 +536,85 @@ namespace Zooni.Controllers
             catch (Exception ex)
             {
                 Console.WriteLine("❌ Error en ObtenerOCrearChat: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // ============================
+        // GET: Obtener todos los proveedores (para planificador)
+        // ============================
+        [HttpGet]
+        public IActionResult ObtenerProveedores()
+        {
+            try
+            {
+                AsegurarTablasProveedores();
+                
+                string query = @"
+                    SELECT 
+                        P.Id_Proveedor,
+                        P.NombreCompleto,
+                        P.Precio_Hora,
+                        P.Estado
+                    FROM ProveedorServicio P
+                    WHERE P.Estado = 1
+                    ORDER BY P.NombreCompleto ASC";
+                
+                DataTable dt = BD.ExecuteQuery(query, new Dictionary<string, object>());
+                var proveedores = new List<object>();
+                
+                foreach (DataRow row in dt.Rows)
+                {
+                    proveedores.Add(new
+                    {
+                        id = Convert.ToInt32(row["Id_Proveedor"]),
+                        nombre = EncryptionHelper.Decrypt(row["NombreCompleto"].ToString() ?? ""),
+                        precioHora = row["Precio_Hora"] != DBNull.Value ? Convert.ToDecimal(row["Precio_Hora"]) : 0
+                    });
+                }
+                
+                return Json(new { success = true, proveedores = proveedores });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error ObtenerProveedores: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // ============================
+        // GET: Obtener tipos de servicio de un proveedor
+        // ============================
+        [HttpGet]
+        [Route("BuscarProveedor/ObtenerTiposServicio/{idProveedor}")]
+        public IActionResult ObtenerTiposServicio(int idProveedor)
+        {
+            try
+            {
+                string query = @"
+                    SELECT TS.Id_TipoServicio, TS.Descripcion
+                    FROM ProveedorServicio_TipoServicio PSTS
+                    INNER JOIN TipoServicio TS ON PSTS.Id_TipoServicio = TS.Id_TipoServicio
+                    WHERE PSTS.Id_Proveedor = @IdProveedor
+                    ORDER BY TS.Descripcion ASC";
+                
+                DataTable dt = BD.ExecuteQuery(query, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                var tipos = new List<object>();
+                
+                foreach (DataRow row in dt.Rows)
+                {
+                    tipos.Add(new
+                    {
+                        id = Convert.ToInt32(row["Id_TipoServicio"]),
+                        descripcion = row["Descripcion"].ToString()
+                    });
+                }
+                
+                return Json(new { success = true, tipos = tipos });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error ObtenerTiposServicio: " + ex.Message);
                 return Json(new { success = false, message = ex.Message });
             }
         }

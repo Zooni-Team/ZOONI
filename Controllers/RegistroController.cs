@@ -1,6 +1,7 @@
 using System.Globalization;
 using Microsoft.AspNetCore.Mvc;
 using Zooni.Models;
+using Zooni.Utils;
 using System;
 using System.Collections.Generic;
 
@@ -104,6 +105,10 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
             return RedirectToAction("Registro2", "Registro");
         }
 
+        // Encriptar correo y hashear contraseña
+        string correoEncrypted = EncryptionHelper.Encrypt((correo ?? $"temp_{Guid.NewGuid()}@zooni.app").ToLower().Trim());
+        string contrasenaHashed = PasswordHelper.HashPassword(contrasena ?? "temp123");
+        
         string queryMail = @"
             INSERT INTO Mail (Correo, Contrasena, Fecha_Creacion)
             VALUES (@Correo, @Contrasena, SYSDATETIME());
@@ -111,8 +116,8 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
 
         var mailParams = new Dictionary<string, object>
         {
-            { "@Correo", correo ?? $"temp_{Guid.NewGuid()}@zooni.app" },
-            { "@Contrasena", contrasena ?? "temp123" }
+            { "@Correo", correoEncrypted },
+            { "@Contrasena", contrasenaHashed }
         };
 
         int idMail = Convert.ToInt32(BD.ExecuteScalar(queryMail, mailParams));
@@ -614,6 +619,12 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
         Console.WriteLine("✅ Correo disponible");
 
         Console.WriteLine($"💾 Actualizando datos del usuario...");
+        // Encriptar datos sensibles antes de guardar
+        string nombreEncrypted = EncryptionHelper.Encrypt(nombre);
+        string apellidoEncrypted = EncryptionHelper.Encrypt(apellido);
+        string correoEncrypted = EncryptionHelper.Encrypt(mail.Trim().ToLower());
+        string contrasenaHashed = PasswordHelper.HashPassword(contrasena);
+        
         string updateUserQuery = @"
             UPDATE [User]
             SET Nombre = @Nombre,
@@ -622,8 +633,8 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
 
         BD.ExecuteNonQuery(updateUserQuery, new Dictionary<string, object>
         {
-            { "@Nombre", nombre },
-            { "@Apellido", apellido },
+            { "@Nombre", nombreEncrypted },
+            { "@Apellido", apellidoEncrypted },
             { "@Id_User", userId.Value }
         });
         Console.WriteLine("✅ Usuario actualizado");
@@ -638,8 +649,8 @@ public IActionResult Registro4(string nombre, string apellido, string mail, stri
 
         BD.ExecuteNonQuery(updateMailQuery, new Dictionary<string, object>
         {
-            { "@Correo", mail },
-            { "@Contrasena", contrasena },
+            { "@Correo", correoEncrypted },
+            { "@Contrasena", contrasenaHashed },
             { "@Id_User", userId.Value }
         });
         Console.WriteLine("✅ Mail actualizado");

@@ -749,27 +749,35 @@ overlay.onclick = cerrar;
 function cerrar(){ menu.classList.remove("abierto"); overlay.classList.remove("activo"); }
 
 const especie = "@mascotaEspecie";
-const raza = "@mascotaRaza".toLowerCase();
+const raza = "@mascotaRaza";
 let curiosidades = [];
 
-fetch("/data/consejos.json")
+// Cargar curiosidades desde la base de datos
+fetch(`/Home/ObtenerCuriosidades?especie=${encodeURIComponent(especie)}&raza=${encodeURIComponent(raza)}`)
   .then(r => r.json())
   .then(data => {
-    fetch("/data/consejos.json")
-  .then(r => r.json())
-  .then(data => {
-    curiosidades = data.filter(c =>
-      (c.especie === especie || c.especie === "general") &&
-      (c.raza.toLowerCase() === raza || c.raza === "general")
-    );
-
-    if (curiosidades.length === 0)
-      curiosidades = [{ texto: "No hay curiosidades específicas, pero recordá cuidar su bienestar todos los días 🐶" }];
-
+    if (data.success && data.curiosidades.length > 0) {
+      curiosidades = data.curiosidades.map(c => ({
+        texto: c.curiosidad,
+        titulo: `Dato ${c.categoria}`,
+        categoria: c.categoria
+      }));
+    } else {
+      curiosidades = [{ 
+        texto: "No hay curiosidades específicas para esta raza aún, pero recordá cuidar su bienestar todos los días 🐶",
+        titulo: "Consejo General",
+        categoria: "General"
+      }];
+    }
     mostrarCartas();
-  });
-    if (curiosidades.length === 0)
-      curiosidades = [{ texto: "No hay curiosidades específicas, pero recordá cuidar su bienestar todos los días 🐶" }];
+  })
+  .catch(err => {
+    console.error('Error al cargar curiosidades:', err);
+    curiosidades = [{ 
+      texto: "Error al cargar curiosidades. Recordá cuidar su bienestar todos los días 🐶",
+      titulo: "Consejo General",
+      categoria: "General"
+    }];
     mostrarCartas();
   });
 

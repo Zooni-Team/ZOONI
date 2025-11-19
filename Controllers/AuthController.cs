@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Zooni.Models;
+using Zooni.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -62,6 +63,9 @@ namespace Zooni.Controllers
                 }
 
                 // 🔍 Buscar usuario y validar credenciales
+                // Primero buscar el usuario por correo (encriptado)
+                string correoEncrypted = EncryptionHelper.Encrypt(correo.ToLower().Trim());
+                
                 string query = @"
                     SELECT TOP 1 
                         U.Id_User, U.Nombre, U.Apellido, 
@@ -69,12 +73,11 @@ namespace Zooni.Controllers
                         U.Pais, U.Provincia, U.Ciudad, U.Telefono
                     FROM [User] U
                     INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
-                    WHERE M.Correo = @Correo AND M.Contrasena = @Contrasena AND U.Estado = 1";
+                    WHERE M.Correo = @Correo AND U.Estado = 1";
 
                 var parametros = new Dictionary<string, object>
                 {
-                    { "@Correo", correo },
-                    { "@Contrasena", contrasena }
+                    { "@Correo", correoEncrypted }
                 };
 
                 DataTable dt = BD.ExecuteQuery(query, parametros);
@@ -85,13 +88,27 @@ namespace Zooni.Controllers
                     return View();
                 }
 
+                // Verificar contraseña usando PasswordHelper
+                string storedPasswordHash = dt.Rows[0]["Contrasena"].ToString() ?? "";
+                if (!PasswordHelper.VerifyPassword(contrasena, storedPasswordHash))
+                {
+                    ViewBag.Error = "Usuario o contraseña incorrectos.";
+                    return View();
+                }
+
                 // ✅ Usuario válido → guardar sesión
                 var user = dt.Rows[0];
                 int userId = Convert.ToInt32(user["Id_User"]);
+                
+                // Desencriptar datos para la sesión
+                string correoDecrypted = EncryptionHelper.Decrypt(user["Correo"].ToString() ?? "");
+                string nombreDecrypted = EncryptionHelper.Decrypt(user["Nombre"].ToString() ?? "");
+                string apellidoDecrypted = EncryptionHelper.Decrypt(user["Apellido"].ToString() ?? "");
+                
                 HttpContext.Session.SetInt32("UserId", userId);
-                HttpContext.Session.SetString("UserNombre", user["Nombre"].ToString() ?? "");
-                HttpContext.Session.SetString("UserApellido", user["Apellido"].ToString() ?? "");
-                HttpContext.Session.SetString("UserMail", user["Correo"].ToString() ?? "");
+                HttpContext.Session.SetString("UserNombre", nombreDecrypted);
+                HttpContext.Session.SetString("UserApellido", apellidoDecrypted);
+                HttpContext.Session.SetString("UserMail", correoDecrypted);
 
                 // 🔍 Verificar si es proveedor (solo si la tabla existe)
                 // Primero verificar si existe la tabla ProveedorServicio

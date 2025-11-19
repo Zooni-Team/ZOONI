@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Zooni.Models;
+using Zooni.Utils;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -681,7 +682,10 @@ namespace Zooni.Controllers
                 }
                 else
                 {
-                    // Crear nuevo Mail
+                    // Crear nuevo Mail - Encriptar correo y hashear contraseña
+                    string correoEncrypted = EncryptionHelper.Encrypt(correo.ToLower().Trim());
+                    string contrasenaHashed = PasswordHelper.HashPassword(contrasena);
+                    
                     string queryMail = @"
                         INSERT INTO Mail (Correo, Contrasena, Fecha_Creacion)
                         VALUES (@Correo, @Contrasena, SYSDATETIME());
@@ -689,8 +693,8 @@ namespace Zooni.Controllers
 
                     var mailParams = new Dictionary<string, object>
                     {
-                        { "@Correo", correo },
-                        { "@Contrasena", contrasena }
+                        { "@Correo", correoEncrypted },
+                        { "@Contrasena", contrasenaHashed }
                     };
 
                     object? mailResult = BD.ExecuteScalar(queryMail, mailParams);
@@ -706,10 +710,12 @@ namespace Zooni.Controllers
                     object? tipoProveedorId = BD.ExecuteScalar(tipoProveedorQuery);
                     int idTipoProveedor = tipoProveedorId != null && tipoProveedorId != DBNull.Value ? Convert.ToInt32(tipoProveedorId) : 1;
 
-                    // Dividir nombre completo
+                    // Dividir nombre completo y encriptar
                     string[] nombres = nombreCompleto.Split(' ', 2);
                     string nombre = nombres[0];
                     string apellido = nombres.Length > 1 ? nombres[1] : "";
+                    string nombreEncrypted = EncryptionHelper.Encrypt(nombre);
+                    string apellidoEncrypted = EncryptionHelper.Encrypt(apellido);
 
                     // Crear nuevo User
                     string queryUser = @"
@@ -720,8 +726,8 @@ namespace Zooni.Controllers
                     var userParams = new Dictionary<string, object> 
                     { 
                         { "@Id_Mail", idMail },
-                        { "@Nombre", nombre },
-                        { "@Apellido", apellido },
+                        { "@Nombre", nombreEncrypted },
+                        { "@Apellido", apellidoEncrypted },
                         { "@Id_TipoUsuario", idTipoProveedor }
                     };
                     object? userResult = BD.ExecuteScalar(queryUser, userParams);
@@ -733,7 +739,11 @@ namespace Zooni.Controllers
                     userId = Convert.ToInt32(userResult);
                 }
 
-                // Crear proveedor
+                // Crear proveedor - Encriptar datos sensibles
+                string dniEncrypted = EncryptionHelper.Encrypt(dni);
+                string nombreCompletoEncrypted = EncryptionHelper.Encrypt(nombreCompleto);
+                string telefonoEncrypted = telefono != null ? EncryptionHelper.Encrypt(telefono) : null;
+                
                 string insertProveedor = @"
                     INSERT INTO ProveedorServicio 
                     (Id_User, DNI, NombreCompleto, Experiencia_Anios, Descripcion, 
@@ -748,11 +758,11 @@ namespace Zooni.Controllers
                 var proveedorParams = new Dictionary<string, object>
                 {
                     { "@Id_User", userId },
-                    { "@DNI", dni },
-                    { "@NombreCompleto", nombreCompleto },
+                    { "@DNI", dniEncrypted },
+                    { "@NombreCompleto", nombreCompletoEncrypted },
                     { "@Experiencia", experiencia },
                     { "@Descripcion", descripcion },
-                    { "@Telefono", telefono ?? (object)DBNull.Value },
+                    { "@Telefono", telefonoEncrypted ?? (object)DBNull.Value },
                     { "@Direccion", direccion ?? (object)DBNull.Value },
                     { "@Ciudad", ciudad ?? (object)DBNull.Value },
                     { "@Provincia", provincia ?? (object)DBNull.Value },
@@ -1313,6 +1323,11 @@ namespace Zooni.Controllers
                     fotoPerfilPath = $"/uploads/proveedores/{fileName}";
                 }
 
+                // Encriptar datos sensibles antes de actualizar
+                string dniEncrypted = EncryptionHelper.Encrypt(dni);
+                string nombreCompletoEncrypted = EncryptionHelper.Encrypt(nombreCompleto);
+                string telefonoEncrypted = telefono != null ? EncryptionHelper.Encrypt(telefono) : null;
+                
                 // Actualizar datos del proveedor
                 string updateQuery = @"
                     UPDATE ProveedorServicio 
@@ -1335,11 +1350,11 @@ namespace Zooni.Controllers
 
                 var updateParams = new Dictionary<string, object>
                 {
-                    { "@DNI", dni },
-                    { "@NombreCompleto", nombreCompleto },
+                    { "@DNI", dniEncrypted },
+                    { "@NombreCompleto", nombreCompletoEncrypted },
                     { "@Experiencia", experiencia },
                     { "@Descripcion", descripcion ?? (object)DBNull.Value },
-                    { "@Telefono", telefono ?? (object)DBNull.Value },
+                    { "@Telefono", telefonoEncrypted ?? (object)DBNull.Value },
                     { "@Direccion", direccion ?? (object)DBNull.Value },
                     { "@Ciudad", ciudad ?? (object)DBNull.Value },
                     { "@Provincia", provincia ?? (object)DBNull.Value },
@@ -1916,6 +1931,82 @@ namespace Zooni.Controllers
             {
                 Console.WriteLine("❌ Error en CompletarReserva: " + ex.Message);
                 return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // ============================
+        // Método para insertar curiosidades iniciales
+        // ============================
+        private void InsertarCuriosidadesIniciales()
+        {
+            try
+            {
+                var curiosidades = new List<Dictionary<string, string>>
+                {
+                    // Perros - Golden Retriever
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Golden Retriever" }, { "Curiosidad", "Los Golden Retrievers tienen una membrana especial en sus patas que les permite nadar mejor. Son excelentes nadadores y les encanta el agua." }, { "Categoria", "Física" } },
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Golden Retriever" }, { "Curiosidad", "Fueron criados originalmente en Escocia en el siglo XIX para recuperar aves acuáticas durante la caza. Su nombre 'Retriever' significa 'recuperador'." }, { "Categoria", "Histórica" } },
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Golden Retriever" }, { "Curiosidad", "Tienen un 'pelaje doble' que los protege del agua y del frío. La capa externa repele el agua y la interna los mantiene calientes." }, { "Categoria", "Física" } },
+                    
+                    // Perros - Labrador Retriever
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Labrador Retriever" }, { "Curiosidad", "Los Labradores tienen una cola única llamada 'cola de nutria' que les ayuda a nadar y mantener el equilibrio." }, { "Categoria", "Física" } },
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Labrador Retriever" }, { "Curiosidad", "Son la raza más popular del mundo desde hace más de 30 años. Su inteligencia y carácter amigable los hacen ideales como perros de familia." }, { "Categoria", "Popularidad" } },
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Labrador Retriever" }, { "Curiosidad", "Tienen una membrana entre los dedos que les permite nadar de manera más eficiente. Son excelentes perros de rescate acuático." }, { "Categoria", "Habilidad" } },
+                    
+                    // Perros - Pastor Alemán
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Pastor Alemán" }, { "Curiosidad", "Los Pastores Alemanes tienen un sentido del olfato 100,000 veces más desarrollado que los humanos. Por eso son excelentes perros policía." }, { "Categoria", "Sentidos" } },
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Pastor Alemán" }, { "Curiosidad", "Fueron criados originalmente para pastorear ovejas, pero su inteligencia y lealtad los convirtieron en perros de trabajo versátiles." }, { "Categoria", "Histórica" } },
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Pastor Alemán" }, { "Curiosidad", "Tienen orejas que pueden moverse independientemente para captar sonidos desde diferentes direcciones, mejorando su capacidad de alerta." }, { "Categoria", "Física" } },
+                    
+                    // Perros - Caniche
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Caniche" }, { "Curiosidad", "Los Caniches son considerados la segunda raza más inteligente del mundo, después del Border Collie. Aprenden comandos muy rápido." }, { "Categoria", "Inteligencia" } },
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Caniche" }, { "Curiosidad", "Originalmente fueron criados como perros de caza acuática. Su pelaje rizado los protegía del agua fría mientras recuperaban aves." }, { "Categoria", "Histórica" } },
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Caniche" }, { "Curiosidad", "Vienen en tres tamaños: estándar, miniatura y toy. Todos comparten la misma personalidad activa e inteligente." }, { "Categoria", "Variedad" } },
+                    
+                    // Perros - Rottweiler
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Rottweiler" }, { "Curiosidad", "Los Rottweilers tienen una mordida de 328 libras de presión, una de las más fuertes entre las razas de perros." }, { "Categoria", "Física" } },
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Rottweiler" }, { "Curiosidad", "Fueron criados originalmente por los romanos para pastorear ganado y proteger a los soldados durante las campañas militares." }, { "Categoria", "Histórica" } },
+                    new Dictionary<string, string> { { "Especie", "Perro" }, { "Raza", "Rottweiler" }, { "Curiosidad", "A pesar de su apariencia intimidante, son perros muy leales y protectores con sus familias. Son excelentes perros guardianes." }, { "Categoria", "Personalidad" } },
+                    
+                    // Gatos - Persa
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Persa" }, { "Curiosidad", "Los gatos Persas tienen una cara plana debido a una mutación genética llamada braquicefalia. Necesitan limpieza facial regular." }, { "Categoria", "Física" } },
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Persa" }, { "Curiosidad", "Tienen el pelaje más largo de todas las razas de gatos. Requieren cepillado diario para evitar nudos y mantenerlo saludable." }, { "Categoria", "Cuidado" } },
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Persa" }, { "Curiosidad", "Son conocidos por su personalidad tranquila y relajada. Prefieren ambientes calmados y no son muy activos." }, { "Categoria", "Personalidad" } },
+                    
+                    // Gatos - Siames
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Siames" }, { "Curiosidad", "Los gatos Siameses tienen un gen de temperatura que hace que su pelaje sea más oscuro en las partes más frías del cuerpo (orejas, patas, cola)." }, { "Categoria", "Genética" } },
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Siames" }, { "Curiosidad", "Son extremadamente vocales y 'hablan' mucho con sus dueños. Tienen un maullido distintivo y fuerte." }, { "Categoria", "Comportamiento" } },
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Siames" }, { "Curiosidad", "Fueron considerados gatos sagrados en el antiguo reino de Siam (Tailandia). Solo la realeza podía tenerlos." }, { "Categoria", "Histórica" } },
+                    
+                    // Gatos - Maine Coon
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Maine Coon" }, { "Curiosidad", "Los Maine Coon son la raza de gato doméstico más grande. Los machos pueden pesar hasta 11 kg y medir más de 1 metro de largo." }, { "Categoria", "Tamaño" } },
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Maine Coon" }, { "Curiosidad", "Tienen mechones de pelo en las orejas que los protegen del frío, similar a los linces. Son excelentes cazadores." }, { "Categoria", "Física" } },
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Maine Coon" }, { "Curiosidad", "A diferencia de la mayoría de los gatos, a muchos Maine Coon les encanta el agua. Algunos incluso disfrutan nadar." }, { "Categoria", "Comportamiento" } },
+                    
+                    // Gatos - Bombay
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Bombay" }, { "Curiosidad", "Los gatos Bombay fueron criados para parecerse a una pantera negra en miniatura. Tienen un pelaje completamente negro y brillante." }, { "Categoria", "Apariencia" } },
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Bombay" }, { "Curiosidad", "A pesar de su apariencia salvaje, son gatos muy cariñosos y sociables. Les encanta estar cerca de sus dueños." }, { "Categoria", "Personalidad" } },
+                    new Dictionary<string, string> { { "Especie", "Gato" }, { "Raza", "Bombay" }, { "Curiosidad", "Tienen ojos dorados o cobrizos que contrastan hermosamente con su pelaje negro. Son conocidos como 'panteras de salón'." }, { "Categoria", "Apariencia" } }
+                };
+
+                foreach (var cur in curiosidades)
+                {
+                    string insertQuery = @"
+                        INSERT INTO CuriosidadRaza (Especie, Raza, Curiosidad, Categoria)
+                        VALUES (@Especie, @Raza, @Curiosidad, @Categoria)";
+                    
+                    BD.ExecuteNonQuery(insertQuery, new Dictionary<string, object>
+                    {
+                        { "@Especie", cur["Especie"] },
+                        { "@Raza", cur["Raza"] },
+                        { "@Curiosidad", cur["Curiosidad"] },
+                        { "@Categoria", cur["Categoria"] }
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al insertar curiosidades iniciales: " + ex.Message);
             }
         }
     }

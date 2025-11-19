@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Zooni.Models;
+using System;
+using System.Collections.Generic;
 using System.Data;
 
 namespace Zooni.Controllers

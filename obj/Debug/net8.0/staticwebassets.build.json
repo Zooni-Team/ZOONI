@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "mocxPulx6ASRPhKcGOq3Z5sqb3I9570SYG2Tm19CGiM=",
+  "Hash": "NY7wfevCVcpbSrOCVOw54Zogwl94E72k9+vCpw/xcaA=",
   "Source": "Zooni",
   "BasePath": "_content/Zooni",
   "Mode": "Default",
@@ -199,8 +199,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "qhvq8jp66u",
-      "Integrity": "EpoZWPbostuxFFggOFG9fyieZjtzddC1sA3WFqK8ulM=",
+      "Fingerprint": "kslabzf5vy",
+      "Integrity": "LOw5SmOh7TLigBUjL1e9IemctzvULYwoDMtWsMtaOjg=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\data\\veterinarios.json"
@@ -3353,7 +3353,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Nov 2025 23:53:37 GMT"
+          "Value": "Tue, 18 Nov 2025 23:58:04 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3398,7 +3398,7 @@
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Nov 2025 23:53:37 GMT"
+          "Value": "Tue, 18 Nov 2025 23:58:04 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3751,7 +3751,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5190"
+          "Value": "4693"
         },
         {
           "Name": "Content-Type",
@@ -3759,11 +3759,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"EpoZWPbostuxFFggOFG9fyieZjtzddC1sA3WFqK8ulM=\""
+          "Value": "\"LOw5SmOh7TLigBUjL1e9IemctzvULYwoDMtWsMtaOjg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Nov 2025 22:51:12 GMT"
+          "Value": "Wed, 19 Nov 2025 01:54:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3773,12 +3773,12 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-EpoZWPbostuxFFggOFG9fyieZjtzddC1sA3WFqK8ulM="
+          "Value": "sha256-LOw5SmOh7TLigBUjL1e9IemctzvULYwoDMtWsMtaOjg="
         }
       ]
     },
     {
-      "Route": "data/veterinarios.qhvq8jp66u.json",
+      "Route": "data/veterinarios.kslabzf5vy.json",
       "AssetFile": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\zooni\\wwwroot\\data\\veterinarios.json",
       "Selectors": [],
       "ResponseHeaders": [
@@ -3788,7 +3788,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "5190"
+          "Value": "4693"
         },
         {
           "Name": "Content-Type",
@@ -3796,11 +3796,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"EpoZWPbostuxFFggOFG9fyieZjtzddC1sA3WFqK8ulM=\""
+          "Value": "\"LOw5SmOh7TLigBUjL1e9IemctzvULYwoDMtWsMtaOjg=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Tue, 18 Nov 2025 22:51:12 GMT"
+          "Value": "Wed, 19 Nov 2025 01:54:57 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -3810,7 +3810,7 @@
       "EndpointProperties": [
         {
           "Name": "fingerprint",
-          "Value": "qhvq8jp66u"
+          "Value": "kslabzf5vy"
         },
         {
           "Name": "label",
@@ -3818,7 +3818,7 @@
         },
         {
           "Name": "integrity",
-          "Value": "sha256-EpoZWPbostuxFFggOFG9fyieZjtzddC1sA3WFqK8ulM="
+          "Value": "sha256-LOw5SmOh7TLigBUjL1e9IemctzvULYwoDMtWsMtaOjg="
         }
       ]
     },

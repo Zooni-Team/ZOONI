@@ -156,8 +156,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>qhvq8jp66u</Fingerprint>
-      <Integrity>EpoZWPbostuxFFggOFG9fyieZjtzddC1sA3WFqK8ulM=</Integrity>
+      <Fingerprint>kslabzf5vy</Fingerprint>
+      <Integrity>LOw5SmOh7TLigBUjL1e9IemctzvULYwoDMtWsMtaOjg=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\data\veterinarios.json'))</OriginalItemSpec>

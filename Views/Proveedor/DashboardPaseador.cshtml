@@ -85,7 +85,7 @@
             z-index: 999;
         }
         body.tema-claro .menu-lateral {
-            background: rgba(255, 255, 255, 0.97);
+            background: #ffffff;
         }
         body.tema-oscuro .menu-lateral {
             background: rgba(30, 30, 30, 0.97);
@@ -278,6 +278,21 @@
 <body class="tema-@tema">
     <header>
         <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+        <div class="notificaciones-container">
+            <button class="btn-notificaciones" id="btnNotificaciones" onclick="togglePanelNotificaciones()">
+                🔔
+                <span class="notificaciones-badge" id="notificacionesBadge">0</span>
+            </button>
+            <div class="panel-notificaciones" id="panelNotificaciones">
+                <div class="panel-notificaciones-header">
+                    <h3>Notificaciones</h3>
+                    <button class="btn-marcar-todas" onclick="marcarTodasLeidas()">Marcar todas</button>
+                </div>
+                <div class="notificaciones-list" id="notificacionesList">
+                    <div class="notificacion-vacia">Cargando...</div>
+                </div>
+            </div>
+        </div>
     </header>
 
     <div class="menu-lateral" id="menuLateral">
@@ -375,6 +390,31 @@
         abrir.addEventListener("click", abrirMenu);
         cerrar.addEventListener("click", cerrarMenu);
         overlay.addEventListener("click", cerrarMenu);
+    </script>
+    <link rel="stylesheet" href="~/css/notificaciones.css" />
+    <script src="~/js/notificaciones.js"></script>
+    <script>
+        // Inicializar notificaciones al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            initNotificaciones();
+        });
+
+        // Toggle panel de notificaciones
+        function togglePanelNotificaciones() {
+            const panel = document.getElementById('panelNotificaciones');
+            if (panel) {
+                panel.classList.toggle('activo');
+            }
+        }
+
+        // Cerrar panel al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const container = document.querySelector('.notificaciones-container');
+            const panel = document.getElementById('panelNotificaciones');
+            if (container && panel && !container.contains(e.target) && panel.classList.contains('activo')) {
+                panel.classList.remove('activo');
+            }
+        });
     </script>
 </body>
 </html>

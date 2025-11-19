@@ -514,6 +514,12 @@ body.tema-oscuro .consejo {
         <img src="@rutaMascota" alt="Mascota" class="mascota-img" />
         <div class="dato">🐾 <span>Especie:</span> @mascotaEspecie</div>
         <div class="dato">📜 <span>Raza:</span> @mascotaRaza</div>
+        <div class="dato" id="curiosidadesContainer" style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(0,0,0,0.1);">
+            <strong style="display: block; margin-bottom: 10px;">💡 Curiosidades sobre @mascotaRaza:</strong>
+            <div id="curiosidadesList" style="font-size: 0.9rem; line-height: 1.6;">
+                <p style="opacity: 0.7;">Cargando curiosidades...</p>
+            </div>
+        </div>
         <div class="dato editable-dato">
             <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                 <span style="flex: 1;">⚖️ <span>Peso:</span> <span id="pesoDisplay">@pesoFormateado</span></span>
@@ -750,7 +756,38 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "/Home/DescargarPDF";
         });
     }
+    
+    // Cargar curiosidades de la raza
+    cargarCuriosidades();
 });
+
+// Cargar curiosidades de la raza
+async function cargarCuriosidades() {
+    try {
+        const especie = '@mascotaEspecie';
+        const raza = '@mascotaRaza';
+        const response = await fetch(`/Home/ObtenerCuriosidades?especie=${encodeURIComponent(especie)}&raza=${encodeURIComponent(raza)}`);
+        const data = await response.json();
+        
+        const container = document.getElementById('curiosidadesList');
+        if (container && data.success && data.curiosidades.length > 0) {
+            container.innerHTML = '<ul style="list-style: none; padding: 0; margin: 0;">' +
+                data.curiosidades.slice(0, 3).map(c => 
+                    `<li style="margin-bottom: 10px; padding: 8px; background: rgba(58, 195, 125, 0.1); border-radius: 6px; border-left: 3px solid var(--verde);">
+                        <strong style="color: var(--verde); font-size: 0.85rem;">${c.categoria}:</strong> ${c.curiosidad}
+                    </li>`
+                ).join('') + '</ul>';
+        } else if (container) {
+            container.innerHTML = '<p style="opacity: 0.7; font-style: italic;">Aún no hay curiosidades específicas para esta raza.</p>';
+        }
+    } catch (error) {
+        console.error('Error al cargar curiosidades:', error);
+        const container = document.getElementById('curiosidadesList');
+        if (container) {
+            container.innerHTML = '<p style="opacity: 0.7;">Error al cargar curiosidades.</p>';
+        }
+    }
+}
 </script>
 
 <script src="/js/heartbeat.js"></script>

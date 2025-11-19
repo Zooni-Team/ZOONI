@@ -2749,5 +2749,245 @@
     "especie": "raton",
     "raza": "Rata Rex",
     "texto": "Les encanta trepar 🪜. Agregá cuerdas o plataformas."
+  },
+
+  {
+    "especie": "perro",
+    "raza": "Pastor Alemán",
+    "edadMin": 24,
+    "edadMax": 180,
+    "pesoMin": 25,
+    "pesoMax": 45,
+    "texto": "El pastor alemán es un trabajador nato 🐕‍🦺. Necesita tareas y ejercicios mentales diarios para ser feliz."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pastor Alemán",
+    "texto": "Son extremadamente leales y protectores 🛡️. La socialización temprana es clave para un carácter equilibrado."
+  },
+  {
+    "especie": "perro",
+    "raza": "Pastor Alemán",
+    "texto": "Su pelaje doble necesita cepillado regular 🖌️. En época de muda, cepillalo diariamente para evitar nudos."
+  },
+  {
+    "especie": "perro",
+    "raza": "Border Collie",
+    "edadMin": 24,
+    "edadMax": 180,
+    "pesoMin": 14,
+    "pesoMax": 22,
+    "texto": "El border collie es el perro más inteligente del mundo 🧠. Si no lo ejercitás mentalmente, puede volverse destructivo."
+  },
+  {
+    "especie": "perro",
+    "raza": "Border Collie",
+    "texto": "Necesita MUCHO ejercicio físico y mental 🏃. Un border collie aburrido es un border collie problemático."
+  },
+  {
+    "especie": "perro",
+    "raza": "Border Collie",
+    "texto": "Ama los juegos de agilidad y frisbee 🎾. Son atletas naturales que brillan en competencias caninas."
+  },
+  {
+    "especie": "perro",
+    "raza": "Yorkshire Terrier",
+    "edadMin": 0,
+    "edadMax": 180,
+    "pesoMin": 1.5,
+    "pesoMax": 3.5,
+    "texto": "El yorkie es pequeño pero con personalidad gigante 💪. No lo subestimes: necesita ejercicio y disciplina."
+  },
+  {
+    "especie": "perro",
+    "raza": "Yorkshire Terrier",
+    "texto": "Su pelaje largo requiere cepillado diario 💇. Si no lo cuidás, se enreda fácilmente."
+  },
+  {
+    "especie": "perro",
+    "raza": "Yorkshire Terrier",
+    "texto": "Son valientes y protectores a pesar de su tamaño 🦁. Socializalo bien para evitar que sea agresivo con otros perros."
+  },
+  {
+    "especie": "perro",
+    "raza": "Boxer",
+    "edadMin": 24,
+    "edadMax": 180,
+    "pesoMin": 25,
+    "pesoMax": 35,
+    "texto": "El boxer es un payaso natural 🎭. Su energía y alegría son contagiosas, pero necesita mucho ejercicio."
+  },
+  {
+    "especie": "perro",
+    "raza": "Boxer",
+    "texto": "Son muy buenos con niños 👶. Su naturaleza juguetona los hace excelentes compañeros familiares."
+  },
+  {
+    "especie": "perro",
+    "raza": "Boxer",
+    "texto": "Evitá el ejercicio intenso en días calurosos 🌡️. Su hocico corto dificulta la respiración."
+  },
+  {
+    "especie": "gato",
+    "raza": "Esfinge",
+    "edadMin": 12,
+    "edadMax": 180,
+    "pesoMin": 3,
+    "pesoMax": 6,
+    "texto": "El gato esfinge no tiene pelo, pero necesita baños regulares 🛁. Su piel produce aceites que deben limpiarse."
+  },
+  {
+    "especie": "gato",
+    "raza": "Esfinge",
+    "texto": "Son extremadamente cariñosos y buscan calor humano 🔥. Prepárate para tenerlo siempre cerca."
+  },
+  {
+    "especie": "gato",
+    "raza": "Esfinge",
+    "texto": "Necesitan protección solar ☀️. Sin pelo, son muy sensibles a los rayos UV."
+  },
+  {
+    "especie": "gato",
+    "raza": "Scottish Fold",
+    "edadMin": 12,
+    "edadMax": 180,
+    "pesoMin": 3,
+    "pesoMax": 6,
+    "texto": "El scottish fold tiene orejas dobladas características 👂. Son gatos tranquilos y adaptables."
+  },
+  {
+    "especie": "gato",
+    "raza": "Scottish Fold",
+    "texto": "Aman estar en compañía humana 👥. No les gusta estar solos por mucho tiempo."
+  },
+  {
+    "especie": "gato",
+    "raza": "Scottish Fold",
+    "texto": "Su personalidad es dulce y relajada 😌. Perfectos para hogares tranquilos y familias."
+  },
+  {
+    "especie": "gato",
+    "raza": "Abisinio",
+    "edadMin": 12,
+    "edadMax": 180,
+    "pesoMin": 3,
+    "pesoMax": 6,
+    "texto": "El abisinio es un gato activo y curioso 🏃. Necesita espacio para correr y trepar."
+  },
+  {
+    "especie": "gato",
+    "raza": "Abisinio",
+    "texto": "Su pelaje tiene un patrón único tipo 'agutí' 🎨. Cada pelo tiene bandas de color diferentes."
+  },
+  {
+    "especie": "gato",
+    "raza": "Abisinio",
+    "texto": "Son muy inteligentes y aprenden trucos rápido 🎓. Disfrutan de juegos interactivos y puzzles."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Mini Lop",
+    "edadMin": 0,
+    "edadMax": 120,
+    "pesoMin": 1.5,
+    "pesoMax": 2.5,
+    "texto": "El mini lop tiene orejas caídas adorables 🐰. Son conejos tranquilos y amigables."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Mini Lop",
+    "texto": "Necesitan heno ilimitado 🌾. El 80% de su dieta debe ser heno de calidad."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Mini Lop",
+    "texto": "Son muy sociales y necesitan compañía 👥. Considerá tener dos si pasas mucho tiempo fuera."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Rex",
+    "edadMin": 0,
+    "edadMax": 120,
+    "pesoMin": 3,
+    "pesoMax": 5,
+    "texto": "El conejo rex tiene pelaje aterciopelado único 🧸. Su textura es diferente a otros conejos."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Rex",
+    "texto": "Son conejos grandes y activos 🏃. Necesitan espacio amplio para saltar y correr."
+  },
+  {
+    "especie": "conejo",
+    "raza": "Rex",
+    "texto": "Su pelaje corto requiere menos mantenimiento ✂️. Pero igual necesitan cepillado ocasional."
+  },
+  {
+    "especie": "ave",
+    "raza": "Periquito",
+    "edadMin": 0,
+    "edadMax": 180,
+    "texto": "Los periquitos son aves muy sociales 🦜. Necesitan compañía, idealmente otro periquito."
+  },
+  {
+    "especie": "ave",
+    "raza": "Periquito",
+    "texto": "Aman jugar con juguetes y espejos 🪞. Cambiá sus juguetes regularmente para mantenerlos entretenidos."
+  },
+  {
+    "especie": "ave",
+    "raza": "Periquito",
+    "texto": "Pueden aprender a hablar palabras simples 🗣️. Hablales con frecuencia para estimularlos."
+  },
+  {
+    "especie": "ave",
+    "raza": "Agapornis",
+    "edadMin": 0,
+    "edadMax": 180,
+    "texto": "Los agapornis forman parejas de por vida 💕. Si tenés uno solo, necesita mucha atención humana."
+  },
+  {
+    "especie": "ave",
+    "raza": "Agapornis",
+    "texto": "Son muy activos y necesitan volar 🕊️. Dejá que salgan de la jaula diariamente bajo supervisión."
+  },
+  {
+    "especie": "ave",
+    "raza": "Agapornis",
+    "texto": "Aman masticar y construir nidos 🪶. Proporcionáles materiales seguros como papel y ramitas."
+  },
+  {
+    "especie": "pez",
+    "raza": "Betta",
+    "edadMin": 0,
+    "edadMax": 60,
+    "texto": "Los bettas son peces solitarios 🐟. No los pongas con otros bettas machos, se pelearán."
+  },
+  {
+    "especie": "pez",
+    "raza": "Betta",
+    "texto": "Necesitan agua limpia y cálida 🌡️. Mantené la temperatura entre 24-28°C."
+  },
+  {
+    "especie": "pez",
+    "raza": "Betta",
+    "texto": "Sus aletas largas son delicadas 🎨. Evitá decoraciones con bordes afilados que puedan dañarlas."
+  },
+  {
+    "especie": "pez",
+    "raza": "Guppy",
+    "edadMin": 0,
+    "edadMax": 36,
+    "texto": "Los guppies se reproducen muy rápido 🐠. Si tenés machos y hembras, prepárate para muchos bebés."
+  },
+  {
+    "especie": "pez",
+    "raza": "Guppy",
+    "texto": "Son peces pacíficos y coloridos 🌈. Perfectos para acuarios comunitarios."
+  },
+  {
+    "especie": "pez",
+    "raza": "Guppy",
+    "texto": "Necesitan plantas vivas en el acuario 🌿. Les proporcionan escondites y mejoran la calidad del agua."
   }
 ]

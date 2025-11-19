@@ -1,5 +1,6 @@
     using Microsoft.AspNetCore.Mvc;
 using Zooni.Models;
+using Microsoft.Extensions.Caching.Memory;
 using System.Data;
 using System.Collections.Generic;
 using System;
@@ -14,6 +15,12 @@ namespace Zooni.Controllers
 {
     public class HomeController : BaseController
     {
+        private readonly IMemoryCache _cache;
+        
+        public HomeController(IMemoryCache cache)
+        {
+            _cache = cache ?? throw new ArgumentNullException(nameof(cache));
+        }
        private DataRow ObtenerMascotaActiva(int userId)
 {
     // Asegurar que la tabla existe
@@ -2599,12 +2606,252 @@ public IActionResult CambiarAvatar(string avatarRuta)
         // Comunidad es accesible tanto para dueños como proveedores
         // No necesitamos verificación adicional aquí
 
-    var tema = HttpContext.Session.GetString("Tema") ?? "claro";
-    ViewBag.Tema = tema;
-    return View();
-}
+        // Asegurar que la tabla de carteles existe
+        AsegurarTablaCartelesMascota();
 
-[HttpPost]
+        var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+        ViewBag.Tema = tema;
+        return View();
+    }
+
+    // ============================
+    // Método para asegurar tabla de carteles
+    // ============================
+    private void AsegurarTablaCartelesMascota()
+    {
+        try
+        {
+            string query = @"
+                IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'CartelMascota')
+                BEGIN
+                    CREATE TABLE CartelMascota (
+                        Id_Cartel INT IDENTITY(1,1) PRIMARY KEY,
+                        Id_User INT NOT NULL,
+                        Id_Mascota INT NULL,
+                        Tipo VARCHAR(20) NOT NULL CHECK (Tipo IN ('Perdida', 'Encontrada')),
+                        Latitud DECIMAL(10, 8) NOT NULL,
+                        Longitud DECIMAL(11, 8) NOT NULL,
+                        Descripcion NVARCHAR(500) NULL,
+                        TelefonoContacto NVARCHAR(50) NOT NULL,
+                        FechaCreacion DATETIME2 NOT NULL DEFAULT GETDATE(),
+                        Activo BIT NOT NULL DEFAULT 1,
+                        FOREIGN KEY (Id_User) REFERENCES [User](Id_User),
+                        FOREIGN KEY (Id_Mascota) REFERENCES Mascota(Id_Mascota)
+                    )
+                END";
+            BD.ExecuteNonQuery(query, new Dictionary<string, object>());
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error al crear tabla CartelMascota: " + ex.Message);
+        }
+    }
+
+    // ============================
+    // GET: Obtener carteles de mascotas
+    // ============================
+    [HttpGet]
+    public IActionResult ObtenerCarteles()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            AsegurarTablaCartelesMascota();
+            
+            string query = @"
+                SELECT 
+                    C.Id_Cartel,
+                    C.Id_User,
+                    C.Id_Mascota,
+                    C.Tipo,
+                    C.Latitud,
+                    C.Longitud,
+                    C.Descripcion,
+                    C.TelefonoContacto,
+                    C.FechaCreacion,
+                    U.Nombre + ' ' + U.Apellido AS NombreUsuario,
+                    M.Nombre AS NombreMascota,
+                    M.Foto AS FotoMascota,
+                    M.Especie AS EspecieMascota
+                FROM CartelMascota C
+                INNER JOIN [User] U ON C.Id_User = U.Id_User
+                LEFT JOIN Mascota M ON C.Id_Mascota = M.Id_Mascota
+                WHERE C.Activo = 1
+                ORDER BY C.FechaCreacion DESC";
+            
+            var dt = BD.ExecuteQuery(query, new Dictionary<string, object>());
+            var carteles = new List<object>();
+            
+            foreach (DataRow row in dt.Rows)
+            {
+                carteles.Add(new
+                {
+                    id = Convert.ToInt32(row["Id_Cartel"]),
+                    idUser = Convert.ToInt32(row["Id_User"]),
+                    idMascota = row["Id_Mascota"] == DBNull.Value ? (int?)null : Convert.ToInt32(row["Id_Mascota"]),
+                    tipo = row["Tipo"].ToString(),
+                    lat = Convert.ToDecimal(row["Latitud"]),
+                    lng = Convert.ToDecimal(row["Longitud"]),
+                    descripcion = row["Descripcion"]?.ToString() ?? "",
+                    telefono = row["TelefonoContacto"].ToString(),
+                    fechaCreacion = Convert.ToDateTime(row["FechaCreacion"]).ToString("dd/MM/yyyy HH:mm"),
+                    nombreUsuario = row["NombreUsuario"].ToString(),
+                    nombreMascota = row["NombreMascota"]?.ToString(),
+                    fotoMascota = row["FotoMascota"]?.ToString() ?? "/img/mascotas/default.png",
+                    especieMascota = row["EspecieMascota"]?.ToString(),
+                    esMio = Convert.ToInt32(row["Id_User"]) == userId.Value
+                });
+            }
+            
+            return Json(new { success = true, carteles = carteles });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error ObtenerCarteles: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    // ============================
+    // POST: Crear cartel de mascota
+    // ============================
+    [HttpPost]
+    public IActionResult CrearCartel([FromBody] dynamic request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            AsegurarTablaCartelesMascota();
+            
+            string tipo = request.tipo?.ToString() ?? "Perdida";
+            decimal latitud = Convert.ToDecimal(request.latitud);
+            decimal longitud = Convert.ToDecimal(request.longitud);
+            string descripcion = request.descripcion?.ToString() ?? "";
+            string telefono = request.telefono?.ToString() ?? "";
+            int? idMascota = request.idMascota != null ? Convert.ToInt32(request.idMascota) : (int?)null;
+            
+            if (string.IsNullOrWhiteSpace(telefono))
+            {
+                return Json(new { success = false, message = "El teléfono de contacto es requerido" });
+            }
+            
+            if (tipo != "Perdida" && tipo != "Encontrada")
+            {
+                return Json(new { success = false, message = "Tipo inválido" });
+            }
+            
+            string query = @"
+                INSERT INTO CartelMascota (Id_User, Id_Mascota, Tipo, Latitud, Longitud, Descripcion, TelefonoContacto)
+                VALUES (@IdUser, @IdMascota, @Tipo, @Latitud, @Longitud, @Descripcion, @Telefono)";
+            
+            var param = new Dictionary<string, object>
+            {
+                { "@IdUser", userId.Value },
+                { "@IdMascota", idMascota.HasValue ? (object)idMascota.Value : DBNull.Value },
+                { "@Tipo", tipo },
+                { "@Latitud", latitud },
+                { "@Longitud", longitud },
+                { "@Descripcion", descripcion },
+                { "@Telefono", telefono }
+            };
+            
+                BD.ExecuteNonQuery(query, param);
+            
+            // Crear notificaciones para usuarios cercanos
+            NotificarCartelCercano(latitud, longitud, tipo, userId.Value);
+            
+            return Json(new { success = true, message = "Cartel creado exitosamente" });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error CrearCartel: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    // ============================
+    // POST: Eliminar cartel
+    // ============================
+    [HttpPost]
+    public IActionResult EliminarCartel([FromBody] dynamic request)
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            int idCartel = Convert.ToInt32(request.idCartel);
+            
+            // Verificar que el cartel pertenece al usuario
+            string verificarQuery = "SELECT Id_User FROM CartelMascota WHERE Id_Cartel = @IdCartel AND Activo = 1";
+            object? idUserResult = BD.ExecuteScalar(verificarQuery, new Dictionary<string, object> { { "@IdCartel", idCartel } });
+            
+            if (idUserResult == null || Convert.ToInt32(idUserResult) != userId.Value)
+            {
+                return Json(new { success = false, message = "No tenés permiso para eliminar este cartel" });
+            }
+            
+            string query = "UPDATE CartelMascota SET Activo = 0 WHERE Id_Cartel = @IdCartel";
+            BD.ExecuteNonQuery(query, new Dictionary<string, object> { { "@IdCartel", idCartel } });
+            
+            return Json(new { success = true, message = "Cartel eliminado exitosamente" });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error EliminarCartel: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    // ============================
+    // GET: Obtener mascotas del usuario para carteles
+    // ============================
+    [HttpGet]
+    public IActionResult ObtenerMascotas()
+    {
+        var userId = HttpContext.Session.GetInt32("UserId");
+        if (userId == null)
+            return Json(new { success = false, message = "No autenticado" });
+
+        try
+        {
+            string query = @"
+                SELECT Id_Mascota, Nombre, Especie, Raza
+                FROM Mascota
+                WHERE Id_User = @UserId AND (Archivada IS NULL OR Archivada = 0)
+                ORDER BY Nombre ASC";
+            
+            var dt = BD.ExecuteQuery(query, new Dictionary<string, object> { { "@UserId", userId.Value } });
+            var mascotas = new List<object>();
+            
+            foreach (DataRow row in dt.Rows)
+            {
+                mascotas.Add(new
+                {
+                    id = Convert.ToInt32(row["Id_Mascota"]),
+                    nombre = row["Nombre"].ToString(),
+                    especie = row["Especie"].ToString(),
+                    raza = row["Raza"]?.ToString() ?? ""
+                });
+            }
+            
+            return Json(new { success = true, mascotas = mascotas });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error ObtenerMascotas: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    [HttpPost]
 public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
 {
     var userId = HttpContext.Session.GetInt32("UserId");
@@ -3017,6 +3264,21 @@ public IActionResult AgregarAmigo([FromBody] AgregarAmigoRequest request)
             { "@UserId", userId.Value },
             { "@AmigoId", amigoId }
         });
+
+        // Obtener nombre del emisor para la notificación
+        string qNombre = "SELECT Nombre + ' ' + Apellido as NombreCompleto FROM [User] WHERE Id_User = @UserId";
+        DataTable dtNombre = BD.ExecuteQuery(qNombre, new Dictionary<string, object> { { "@UserId", userId.Value } });
+        string nombreEmisor = dtNombre.Rows.Count > 0 ? dtNombre.Rows[0]["NombreCompleto"].ToString() : "Un usuario";
+
+        // Crear notificación para el receptor
+        NotificacionController.CrearNotificacion(
+            amigoId,
+            "SolicitudAmistad",
+            "Nueva solicitud de amistad",
+            $"{nombreEmisor} te envió una solicitud de amistad",
+            amigoId,
+            "/Home/Mensajes"
+        );
 
         return Json(new { success = true, message = "Solicitud de amistad enviada" });
     }
@@ -3815,6 +4077,37 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                 { "@Contenido", request.Contenido ?? "" }
             }));
 
+            // Obtener el otro participante del chat para notificar
+            string qOtroParticipante = @"
+                SELECT TOP 1 pc.Id_User, U.Nombre + ' ' + U.Apellido as NombreCompleto
+                FROM ParticipanteChat pc
+                INNER JOIN [User] U ON pc.Id_User = U.Id_User
+                WHERE pc.Id_Chat = @ChatId AND pc.Id_User != @UserId";
+            
+            DataTable dtOtro = BD.ExecuteQuery(qOtroParticipante, new Dictionary<string, object>
+            {
+                { "@ChatId", request.ChatId },
+                { "@UserId", userId.Value }
+            });
+
+            if (dtOtro.Rows.Count > 0)
+            {
+                int idOtroUsuario = Convert.ToInt32(dtOtro.Rows[0]["Id_User"]);
+                string nombreEmisor = dtOtro.Rows[0]["NombreCompleto"]?.ToString() ?? "Un usuario";
+                string contenidoCorto = request.Contenido?.Length > 50 
+                    ? request.Contenido.Substring(0, 50) + "..." 
+                    : request.Contenido ?? "";
+
+                NotificacionController.CrearNotificacion(
+                    idOtroUsuario,
+                    "Mensaje",
+                    "Nuevo mensaje",
+                    $"{nombreEmisor}: {contenidoCorto}",
+                    request.ChatId,
+                    $"/Home/Mensajes?chatId={request.ChatId}"
+                );
+            }
+
             return Json(new { success = true, mensajeId = mensajeId });
         }
         catch (Exception ex)
@@ -3984,6 +4277,44 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
         catch (Exception ex)
         {
             Console.WriteLine("❌ Error en ObtenerEstadoOnline: " + ex.Message);
+            return Json(new { success = false, message = ex.Message });
+        }
+    }
+
+    // ========== CURIOSIDADES POR RAZA ==========
+    
+    [HttpGet]
+    public IActionResult ObtenerCuriosidades(string especie, string raza)
+    {
+        try
+        {
+            string query = @"
+                SELECT Curiosidad, Categoria
+                FROM CuriosidadRaza
+                WHERE Especie = @Especie AND Raza = @Raza
+                ORDER BY NEWID()";
+            
+            DataTable dt = BD.ExecuteQuery(query, new Dictionary<string, object>
+            {
+                { "@Especie", especie },
+                { "@Raza", raza }
+            });
+            
+            var curiosidades = new List<object>();
+            foreach (DataRow row in dt.Rows)
+            {
+                curiosidades.Add(new
+                {
+                    curiosidad = row["Curiosidad"].ToString(),
+                    categoria = row["Categoria"]?.ToString() ?? "General"
+                });
+            }
+            
+            return Json(new { success = true, curiosidades = curiosidades });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error ObtenerCuriosidades: " + ex.Message);
             return Json(new { success = false, message = ex.Message });
         }
     }
@@ -4717,4 +5048,58 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
             throw;
         }
     }
-}}      
+
+    // ============================
+    // Método para notificar carteles cercanos
+    // ============================
+    private void NotificarCartelCercano(decimal latitud, decimal longitud, string tipo, int idUsuarioCreador)
+    {
+        try
+        {
+            // Buscar usuarios cercanos (dentro de 5 km)
+            string query = @"
+                SELECT DISTINCT U.Id_User, U.Nombre + ' ' + U.Apellido as NombreCompleto
+                FROM [User] U
+                WHERE U.Id_User != @IdUsuarioCreador
+                  AND U.Latitud IS NOT NULL 
+                  AND U.Longitud IS NOT NULL
+                  AND (
+                      6371 * acos(
+                          cos(radians(@Latitud)) * 
+                          cos(radians(CAST(U.Latitud AS FLOAT))) * 
+                          cos(radians(CAST(U.Longitud AS FLOAT)) - radians(@Longitud)) + 
+                          sin(radians(@Latitud)) * 
+                          sin(radians(CAST(U.Latitud AS FLOAT)))
+                      )
+                  ) <= 5";
+
+            DataTable dt = BD.ExecuteQuery(query, new Dictionary<string, object>
+            {
+                { "@IdUsuarioCreador", idUsuarioCreador },
+                { "@Latitud", (double)latitud },
+                { "@Longitud", (double)longitud }
+            });
+
+            string tipoMensaje = tipo == "Perdida" ? "perdida" : "encontrada";
+            string emoji = tipo == "Perdida" ? "🔴" : "🟢";
+
+            foreach (DataRow row in dt.Rows)
+            {
+                int idUser = Convert.ToInt32(row["Id_User"]);
+                NotificacionController.CrearNotificacion(
+                    idUser,
+                    "CartelCercano",
+                    $"{emoji} Mascota {tipoMensaje} cerca de ti",
+                    $"Hay una mascota {tipoMensaje} cerca de tu ubicación. Revisá el mapa de la comunidad.",
+                    null,
+                    "/Home/Comunidad"
+                );
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Error NotificarCartelCercano: " + ex.Message);
+        }
+    }
+    }
+}      

@@ -7,6 +7,7 @@ using Microsoft.SemanticKernel.Connectors.Google;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddMemoryCache(); // Agregar caché en memoria
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromHours(5);

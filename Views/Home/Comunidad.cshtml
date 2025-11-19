@@ -598,6 +598,7 @@ body.tema-oscuro .modal-content input {
 <div class="controles-mapa">
     <button class="btn-control" id="btnMiUbicacion" onclick="centrarEnMiUbicacion()">📍 Mi Ubicación</button>
     <button class="btn-control" id="btnAgregarAmigo" onclick="mostrarModalAmigo()">➕ Agregar Amigo</button>
+    <button class="btn-control" id="btnCrearCartel" onclick="activarModoCrearCartel()" style="background: #e74c3c;">🚨 Crear Cartel</button>
 </div>
 
 <div class="panel-amigos" id="panelAmigos">
@@ -656,12 +657,46 @@ body.tema-oscuro .modal-content input {
     </div>
 </div>
 
+<div class="modal-agregar-amigo" id="modalCartel">
+    <div class="modal-content" style="max-width: 500px;">
+        <h3>🚨 Crear Cartel de Mascota</h3>
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Tipo:</label>
+            <select id="selectTipoCartel" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
+                <option value="Perdida">🔴 Mascota Perdida</option>
+                <option value="Encontrada">🟢 Mascota Encontrada</option>
+            </select>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Mascota (opcional):</label>
+            <select id="selectMascotaCartel" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd;">
+                <option value="">Ninguna (mascota genérica)</option>
+            </select>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Descripción:</label>
+            <textarea id="textareaDescripcionCartel" placeholder="Descripción de la mascota, características, última vez vista..." style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd; min-height: 80px; resize: vertical;"></textarea>
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Teléfono de Contacto: *</label>
+            <input type="text" id="inputTelefonoCartel" placeholder="Ej: +54 11 1234-5678" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd;" required />
+        </div>
+        <div class="modal-buttons">
+            <button class="btn-modal btn-primary" onclick="crearCartel()">Crear Cartel</button>
+            <button class="btn-modal btn-secondary" onclick="cerrarModalCartel()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
 <script>
 let map;
 let miMarcador;
 let marcadoresAmigos = {};
+let marcadoresCarteles = {};
 let miUbicacion = null;
 let watchId = null;
+let modalCartelLat = null;
+let modalCartelLng = null;
 
 const menu = document.getElementById("menuLateral");
 const overlay = document.getElementById("overlay");
@@ -717,10 +752,23 @@ function initMap() {
     // Cargar puntos de interés
     cargarPuntosInteres();
     
+    // Cargar carteles de mascotas
+    cargarCarteles();
+    
+    // Agregar listener para doble clic en el mapa (crear cartel)
+    map.on('dblclick', function(e) {
+        mostrarModalCrearCartel(e.latlng.lat, e.latlng.lng);
+    });
+    
     // Actualizar lista de amigos cada 30 segundos (sin mostrar mensajes)
     setInterval(function() {
         cargarAmigos();
     }, 30000);
+    
+    // Actualizar carteles cada 60 segundos
+    setInterval(function() {
+        cargarCarteles();
+    }, 60000);
 }
 
 function obtenerMiUbicacion() {
@@ -1157,10 +1205,16 @@ function actualizarMarcadoresAmigos(amigos) {
                     <h4 style="margin: 0 0 5px 0; font-size: 1rem; font-weight: 600;">${nombreMostrar}</h4>
                     ${amigo.apodo ? `<p style="margin: 0 0 5px 0; font-size: 0.75rem; color: #999; font-style: italic;">(${amigo.nombre})</p>` : ''}
                     <p style="margin: 0; font-size: 0.85rem; color: #666;">🐾 ${amigo.mascotaNombre || 'Sin mascota'}</p>
-                    <button onclick="editarApodo(${amigo.id}, '${(amigo.nombre || '').replace(/'/g, "\\'")}')" 
-                            style="margin-top: 8px; padding: 4px 8px; background: #39b77c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem;">
-                        ✏️ Editar apodo
-                    </button>
+                    <div style="display: flex; gap: 5px; margin-top: 8px; flex-direction: column;">
+                        <button onclick="window.location.href='/Home/Perfil?id=${amigo.id}'" 
+                                style="padding: 4px 8px; background: #39b77c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem; width: 100%;">
+                            👤 Ver Perfil
+                        </button>
+                        <button onclick="editarApodo(${amigo.id}, '${(amigo.nombre || '').replace(/'/g, "\\'")}')" 
+                                style="padding: 4px 8px; background: #6c757d; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.75rem; width: 100%;">
+                            ✏️ Editar apodo
+                        </button>
+                    </div>
                 </div>
             `);
             
@@ -1450,6 +1504,188 @@ function cargarPuntosInteres() {
             console.error('Error al cargar puntos de interés:', err);
         });
 }
+
+// ============================
+// Funciones para carteles
+// ============================
+function cargarCarteles() {
+    fetch('/Home/ObtenerCarteles')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Remover marcadores antiguos
+                Object.values(marcadoresCarteles).forEach(marker => map.removeLayer(marker));
+                marcadoresCarteles = {};
+                
+                // Agregar nuevos marcadores
+                data.carteles.forEach(cartel => {
+                    const iconoColor = cartel.tipo === 'Perdida' ? '#e74c3c' : '#27ae60';
+                    const iconoEmoji = cartel.tipo === 'Perdida' ? '🔴' : '🟢';
+                    
+                    const iconoCartel = L.divIcon({
+                        className: 'cartel-marker',
+                        html: `<div style="background: ${iconoColor}; width: 35px; height: 35px; border-radius: 50%; border: 3px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 18px;">${iconoEmoji}</div>`,
+                        iconSize: [35, 35],
+                        iconAnchor: [17.5, 17.5]
+                    });
+                    
+                    const marker = L.marker([parseFloat(cartel.lat), parseFloat(cartel.lng)], {
+                        icon: iconoCartel,
+                        title: `${cartel.tipo}: ${cartel.nombreMascota || 'Mascota'}`
+                    }).addTo(map);
+                    
+                    const popupContent = `
+                        <div style="padding: 8px; max-width: 250px;">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                <span style="font-size: 20px;">${iconoEmoji}</span>
+                                <h4 style="margin: 0; font-size: 1rem; font-weight: 600;">${cartel.tipo === 'Perdida' ? 'Mascota Perdida' : 'Mascota Encontrada'}</h4>
+                            </div>
+                            ${cartel.nombreMascota ? `<p style="margin: 0 0 5px 0; font-size: 0.9rem; font-weight: 600;">🐾 ${cartel.nombreMascota}</p>` : ''}
+                            ${cartel.especieMascota ? `<p style="margin: 0 0 5px 0; font-size: 0.85rem; color: #666;">${cartel.especieMascota}</p>` : ''}
+                            ${cartel.descripcion ? `<p style="margin: 0 0 8px 0; font-size: 0.85rem; color: #666;">${cartel.descripcion}</p>` : ''}
+                            <p style="margin: 0 0 5px 0; font-size: 0.85rem;"><strong>📞 Contacto:</strong> ${cartel.telefono}</p>
+                            <p style="margin: 0 0 8px 0; font-size: 0.75rem; color: #999;">Publicado por: ${cartel.nombreUsuario}</p>
+                            <p style="margin: 0 0 8px 0; font-size: 0.75rem; color: #999;">${cartel.fechaCreacion}</p>
+                            ${cartel.esMio ? `<button onclick="eliminarCartel(${cartel.id})" style="width: 100%; padding: 6px; background: #e74c3c; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; margin-top: 5px;">🗑️ Eliminar Cartel</button>` : ''}
+                        </div>
+                    `;
+                    
+                    const popup = L.popup({
+                        maxWidth: 250
+                    }).setContent(popupContent);
+                    
+                    marker.bindPopup(popup);
+                    marcadoresCarteles[cartel.id] = marker;
+                });
+            }
+        })
+        .catch(err => {
+            console.error('Error al cargar carteles:', err);
+        });
+}
+
+function activarModoCrearCartel() {
+    mostrarMensaje("Hacé doble clic en el mapa donde querés crear el cartel", "exito");
+    // Cargar mascotas del usuario
+    cargarMascotasParaCartel();
+}
+
+function cargarMascotasParaCartel() {
+    fetch('/Home/ObtenerMascotas')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const select = document.getElementById('selectMascotaCartel');
+                select.innerHTML = '<option value="">Ninguna (mascota genérica)</option>';
+                data.mascotas.forEach(mascota => {
+                    const option = document.createElement('option');
+                    option.value = mascota.id;
+                    option.textContent = `${mascota.nombre} (${mascota.especie})`;
+                    select.appendChild(option);
+                });
+            }
+        })
+        .catch(err => {
+            console.error('Error al cargar mascotas:', err);
+        });
+}
+
+function mostrarModalCrearCartel(lat, lng) {
+    modalCartelLat = lat;
+    modalCartelLng = lng;
+    document.getElementById('modalCartel').classList.add('activo');
+    cargarMascotasParaCartel();
+}
+
+function cerrarModalCartel() {
+    document.getElementById('modalCartel').classList.remove('activo');
+    document.getElementById('selectTipoCartel').value = 'Perdida';
+    document.getElementById('selectMascotaCartel').value = '';
+    document.getElementById('textareaDescripcionCartel').value = '';
+    document.getElementById('inputTelefonoCartel').value = '';
+    modalCartelLat = null;
+    modalCartelLng = null;
+}
+
+function crearCartel() {
+    const tipo = document.getElementById('selectTipoCartel').value;
+    const idMascota = document.getElementById('selectMascotaCartel').value;
+    const descripcion = document.getElementById('textareaDescripcionCartel').value.trim();
+    const telefono = document.getElementById('inputTelefonoCartel').value.trim();
+    
+    if (!telefono) {
+        mostrarMensaje("El teléfono de contacto es requerido", "error");
+        return;
+    }
+    
+    if (!modalCartelLat || !modalCartelLng) {
+        mostrarMensaje("Error: no se pudo obtener la ubicación", "error");
+        return;
+    }
+    
+    fetch('/Home/CrearCartel', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            tipo: tipo,
+            latitud: modalCartelLat,
+            longitud: modalCartelLng,
+            descripcion: descripcion,
+            telefono: telefono,
+            idMascota: idMascota || null
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarMensaje("Cartel creado exitosamente", "exito");
+            cerrarModalCartel();
+            cargarCarteles();
+        } else {
+            mostrarMensaje(data.message || "Error al crear cartel", "error");
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        mostrarMensaje("Error al crear cartel", "error");
+    });
+}
+
+function eliminarCartel(idCartel) {
+    if (!confirm("¿Estás seguro de que querés eliminar este cartel?")) {
+        return;
+    }
+    
+    fetch('/Home/EliminarCartel', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ idCartel: idCartel })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarMensaje("Cartel eliminado exitosamente", "exito");
+            cargarCarteles();
+        } else {
+            mostrarMensaje(data.message || "Error al eliminar cartel", "error");
+        }
+    })
+    .catch(err => {
+        console.error('Error:', err);
+        mostrarMensaje("Error al eliminar cartel", "error");
+    });
+}
+
+// Cerrar modal al hacer clic fuera
+document.getElementById('modalCartel')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        cerrarModalCartel();
+    }
+});
 </script>
 </body>
 </html>

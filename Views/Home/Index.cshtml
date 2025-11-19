@@ -366,14 +366,30 @@ body.tema-oscuro footer {
 <body class="tema-@tema">
 <header>
     <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+    <div class="notificaciones-container">
+        <button class="btn-notificaciones" id="btnNotificaciones" onclick="togglePanelNotificaciones()">
+            🔔
+            <span class="notificaciones-badge" id="notificacionesBadge">0</span>
+        </button>
+        <div class="panel-notificaciones" id="panelNotificaciones">
+            <div class="panel-notificaciones-header">
+                <h3>Notificaciones</h3>
+                <button class="btn-marcar-todas" onclick="marcarTodasLeidas()">Marcar todas</button>
+            </div>
+            <div class="notificaciones-list" id="notificacionesList">
+                <div class="notificacion-vacia">Cargando...</div>
+            </div>
+        </div>
+    </div>
 </header>
 
 <div class="menu-lateral" id="menuLateral">
     <div class="cerrar-menu" id="cerrarMenu">✖</div>
-    <a href="/Home/Index">🏠 Inicio</a>
-    <a href="/Home/Comunidad">👥 Comunidad</a>
-    <a href="/BuscarProveedor">🔍 Buscar Proveedores</a>
-    <a href="/Marketplace">🛒 Marketplace</a>
+           <a href="/Home/Index">🏠 Inicio</a>
+           <a href="/Home/Comunidad">👥 Comunidad</a>
+           <a href="/BuscarProveedor">🔍 Buscar Proveedores</a>
+           <a href="/Planificador">📅 Planificador de Servicios</a>
+           <a href="/Marketplace">🛒 Marketplace</a>
     <a href="/home/FichaMedica">💉 Ficha médica</a>
     <a href="/home/calendario">📅 Calendario</a>
     <a href="/Chat/ChatZooni">💬 ChatBot</a>
@@ -547,6 +563,31 @@ if (tieneFoto && animada) {
 </script>
 
 <script src="/js/heartbeat.js"></script>
+<link rel="stylesheet" href="~/css/notificaciones.css" />
+<script src="~/js/notificaciones.js"></script>
+<script>
+    // Inicializar notificaciones al cargar
+    document.addEventListener('DOMContentLoaded', function() {
+        initNotificaciones();
+    });
+
+    // Toggle panel de notificaciones
+    function togglePanelNotificaciones() {
+        const panel = document.getElementById('panelNotificaciones');
+        if (panel) {
+            panel.classList.toggle('activo');
+        }
+    }
+
+    // Cerrar panel al hacer clic fuera
+    document.addEventListener('click', function(e) {
+        const container = document.querySelector('.notificaciones-container');
+        const panel = document.getElementById('panelNotificaciones');
+        if (container && panel && !container.contains(e.target) && panel.classList.contains('activo')) {
+            panel.classList.remove('activo');
+        }
+    });
+</script>
 </body>
 </html>
 <!-- © 2025 Zooni Team -->
