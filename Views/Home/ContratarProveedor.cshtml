@@ -1,13 +1,14 @@
 @{
     ViewData["Title"] = "Contratar Servicio - Zooni";
     Layout = null;
+    var tema = Context.Session.GetString("Tema") ?? "claro";
 }
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>@ViewData["Title"]</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -16,42 +17,57 @@
             --marron: #8B5E3C;
             --gris: #555;
             --gris-claro: #ccc;
+            --fondo-claro: #f9f9f8;
+            --fondo-oscuro: #121212;
+            --texto-claro: #3c2a1b;
+            --texto-oscuro: #ffffff;
         }
-        * { box-sizing: border-box; }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
             font-family: 'Poppins', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             margin: 0;
             padding: 20px;
             min-height: 100vh;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
         }
+
         .container {
             max-width: 600px;
             margin: 0 auto;
-            background: white;
+            background: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            transition: background-color .4s ease;
         }
+
         h1 {
             color: var(--marron);
             margin: 0 0 10px 0;
+            font-size: 28px;
         }
+
         .proveedor-info {
-            background: #f8f9fa;
+            background: @(tema == "oscuro" ? "#2a2a2a" : "#f8f9fa");
             padding: 15px;
             border-radius: 12px;
             margin-bottom: 25px;
         }
+
         .campo {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: var(--gris);
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--gris)");
         }
+
         input, select, textarea {
             width: 100%;
             padding: 12px;
@@ -59,11 +75,21 @@
             border: 1.8px solid var(--gris-claro);
             font-size: 15px;
             font-family: 'Poppins', sans-serif;
+            background: @(tema == "oscuro" ? "#2a2a2a" : "#ffffff");
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            transition: border-color 0.3s, background-color .4s ease, color .4s ease;
         }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--verde);
+        }
+
         textarea {
             min-height: 100px;
             resize: vertical;
         }
+
         .btn {
             background-color: var(--verde);
             color: white;
@@ -76,15 +102,33 @@
             width: 100%;
             transition: background 0.3s;
         }
+
         .btn:hover {
             background-color: #2ea968;
         }
+
         .error {
             background: #ffebee;
             color: #c62828;
             padding: 12px;
             border-radius: 8px;
             margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            input, select, textarea {
+                font-size: 14px;
+                padding: 10px;
+            }
         }
     </style>
 </head>
@@ -103,7 +147,7 @@
                 <strong>@ViewBag.Proveedor["NombreCompleto"]</strong>
                 @if (ViewBag.Proveedor["Precio_Hora"] != null && ViewBag.Proveedor["Precio_Hora"] != DBNull.Value)
                 {
-                    <div style="margin-top: 5px; color: var(--gris);">$@ViewBag.Proveedor["Precio_Hora"]/hora</div>
+                    <div style="margin-top: 5px; color: @(tema == "oscuro" ? "#aaa" : "var(--gris)");">$@ViewBag.Proveedor["Precio_Hora"]/hora</div>
                 }
             </div>
 
@@ -176,7 +220,7 @@
             };
 
             try {
-                const response = await fetch('/BuscarProveedor/CrearReserva', {
+                const response = await fetch('/Home/CrearReserva', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

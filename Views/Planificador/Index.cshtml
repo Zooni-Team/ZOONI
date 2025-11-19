@@ -207,14 +207,14 @@
                                     <span>⭐ @Math.Round(Convert.ToDouble(favorito["CalificacionPromedio"]), 1)</span>
                                 }
                                 <br>
-                                <a href="/BuscarProveedor/Contratar/@favorito["Id_Proveedor"]" class="btn-accion btn-ver">Contratar</a>
+                                <a href="/Home/ContratarProveedor/@favorito["Id_Proveedor"]" class="btn-accion btn-ver">Contratar</a>
                             </div>
                         }
                     }
                     else
                     {
                         <p>No tenés proveedores favoritos aún</p>
-                        <a href="/BuscarProveedor" class="btn-accion btn-ver">Buscar Proveedores</a>
+                        <a href="/Home/BuscarProveedores" class="btn-accion btn-ver">Buscar Proveedores</a>
                     }
                 </div>
             </div>
@@ -283,7 +283,7 @@
         // Cargar proveedores y tipos de servicio
         async function cargarProveedores() {
             try {
-                const response = await fetch('/BuscarProveedor/ObtenerProveedores');
+                const response = await fetch('/Home/ObtenerProveedores');
                 const data = await response.json();
                 if (data.success) {
                     const select = document.getElementById('idProveedor');
@@ -305,7 +305,7 @@
             if (!idProveedor) return;
 
             try {
-                const response = await fetch(`/BuscarProveedor/ObtenerTiposServicio/${idProveedor}`);
+                const response = await fetch(`/Home/ObtenerTiposServicio/${idProveedor}`);
                 const data = await response.json();
                 if (data.success) {
                     const select = document.getElementById('idTipoServicio');

@@ -44,10 +44,60 @@ namespace Zooni.Controllers
                         )";
                     BD.ExecuteNonQuery(createTable);
                 }
+                else
+                {
+                    // Verificar y agregar columnas faltantes si la tabla ya existe
+                    AsegurarColumnasNotificacion();
+                }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error al crear tabla Notificacion: " + ex.Message);
+            }
+        }
+
+        // ============================
+        // Asegurar columnas de notificaciones
+        // ============================
+        private void AsegurarColumnasNotificacion()
+        {
+            try
+            {
+                // Verificar y agregar columna Tipo
+                string checkTipo = @"
+                    IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Notificacion]') AND name = 'Tipo')
+                    BEGIN
+                        ALTER TABLE [dbo].[Notificacion] ADD [Tipo] [nvarchar](50) NOT NULL DEFAULT 'General';
+                    END";
+                BD.ExecuteNonQuery(checkTipo);
+
+                // Verificar y agregar columna Id_Referencia
+                string checkIdReferencia = @"
+                    IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Notificacion]') AND name = 'Id_Referencia')
+                    BEGIN
+                        ALTER TABLE [dbo].[Notificacion] ADD [Id_Referencia] [int] NULL;
+                    END";
+                BD.ExecuteNonQuery(checkIdReferencia);
+
+                // Verificar y agregar columna Url
+                string checkUrl = @"
+                    IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Notificacion]') AND name = 'Url')
+                    BEGIN
+                        ALTER TABLE [dbo].[Notificacion] ADD [Url] [nvarchar](500) NULL;
+                    END";
+                BD.ExecuteNonQuery(checkUrl);
+
+                // Verificar y agregar columna Eliminada
+                string checkEliminada = @"
+                    IF NOT EXISTS (SELECT * FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[Notificacion]') AND name = 'Eliminada')
+                    BEGIN
+                        ALTER TABLE [dbo].[Notificacion] ADD [Eliminada] [bit] NOT NULL DEFAULT 0;
+                    END";
+                BD.ExecuteNonQuery(checkEliminada);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al asegurar columnas de Notificacion: " + ex.Message);
             }
         }
 

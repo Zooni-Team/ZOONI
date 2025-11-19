@@ -1,0 +1,1331 @@
+@{
+    ViewData["Title"] = "Buscar Proveedores - Zooni";
+    Layout = null;
+    var tema = Context.Session.GetString("Tema") ?? "claro";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        :root {
+            --verde: #3ac37d;
+            --marron: #8B5E3C;
+            --gris: #555;
+            --gris-claro: #ccc;
+            --fondo-claro: #f9f9f8;
+            --fondo-oscuro: #121212;
+            --texto-claro: #3c2a1b;
+            --texto-oscuro: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: @(tema == "oscuro" ? "var(--fondo-oscuro)" : "var(--fondo-claro)");
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            transition: background-color .4s ease, color .4s ease;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: background-color .4s ease;
+            flex-wrap: wrap;
+        }
+
+        .menu-icon {
+            width: 28px;
+            height: 28px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .menu-icon:hover { transform: scale(1.1); }
+
+        .btn-volver {
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            cursor: pointer;
+            padding: 4px 8px;
+            transition: transform 0.2s;
+            flex-shrink: 0;
+        }
+
+        .btn-volver:hover { transform: translateX(-3px); }
+
+        .buscador-container {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 0;
+            width: 100%;
+        }
+
+        .buscador-input {
+            flex: 1;
+            padding: 10px 16px;
+            border: 2px solid var(--gris-claro);
+            border-radius: 25px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            background: @(tema == "oscuro" ? "#2a2a2a" : "#ffffff");
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            transition: border-color 0.3s, background-color .4s ease, color .4s ease;
+            min-width: 0;
+        }
+
+        .buscador-input:focus {
+            outline: none;
+            border-color: var(--verde);
+        }
+
+        .btn-filtros {
+            background: var(--verde);
+            color: white !important;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .btn-filtros:hover { background: #2ea968; }
+
+        /* Menu lateral */
+        .menu-lateral {
+            position: fixed;
+            top: 0;
+            left: -280px;
+            width: 280px;
+            height: 100vh;
+            background: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            z-index: 2000;
+            transition: left 0.3s ease, background-color .4s ease;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .menu-lateral.abierto { left: 0; }
+
+        .cerrar-menu {
+            text-align: right;
+            font-size: 24px;
+            cursor: pointer;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            margin-bottom: 20px;
+        }
+
+        .menu-lateral a {
+            display: block;
+            padding: 12px 16px;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: background 0.2s;
+        }
+
+        .menu-lateral a:hover {
+            background: @(tema == "oscuro" ? "#2a2a2a" : "#f0f0f0");
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1500;
+            display: none;
+            transition: opacity 0.3s;
+        }
+
+        .overlay.activo { display: block; }
+
+        .overlay-filtros {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 1400;
+            display: none;
+            transition: opacity 0.3s;
+        }
+
+        .overlay-filtros.activo { display: block; }
+
+        /* Panel de filtros */
+        .panel-filtros {
+            position: fixed;
+            top: 60px;
+            right: -100%;
+            width: 100%;
+            max-width: 400px;
+            max-height: calc(100vh - 80px);
+            background: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1500;
+            padding: 20px;
+            overflow-y: auto;
+            transition: right 0.3s ease, background-color .4s ease;
+        }
+
+        .panel-filtros.abierto { right: 0; }
+
+        .panel-filtros h3 {
+            margin-bottom: 20px;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            font-size: 1.2rem;
+        }
+
+        .filtro-grupo {
+            margin-bottom: 20px;
+        }
+
+        .filtro-grupo label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            font-size: 0.9rem;
+        }
+
+        .filtro-grupo select,
+        .filtro-grupo input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid var(--gris-claro);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            background: @(tema == "oscuro" ? "#2a2a2a" : "#ffffff");
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+        }
+
+        .filtro-grupo input[type="range"] {
+            width: 100%;
+            padding: 0;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: var(--gris-claro);
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .filtro-grupo input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--verde);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .filtro-grupo input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: var(--verde);
+            border-radius: 50%;
+            cursor: pointer;
+            border: none;
+        }
+
+        .rango-valor {
+            text-align: center;
+            margin-top: 5px;
+            font-weight: 600;
+            color: var(--verde);
+            font-size: 0.9rem;
+        }
+
+        .btn-aplicar-filtros {
+            width: 100%;
+            padding: 12px;
+            background: var(--verde);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .btn-aplicar-filtros:hover { background: #2ea968; }
+
+        /* Contenedor principal */
+        .contenedor-principal {
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            min-height: calc(100vh - 60px);
+            gap: 0;
+        }
+
+        /* Mapa */
+        .mapa-container {
+            flex: 1;
+            position: relative;
+            width: 100%;
+            height: 50vh;
+            min-height: 300px;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Mapa de radar */
+        .mapa-radar-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            margin: 0;
+            border-radius: 0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            display: block;
+            background: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
+            order: -1;
+            border-bottom: 2px solid var(--verde);
+        }
+
+        .mapa-radar-container.oculto {
+            display: none;
+        }
+
+        #mapRadar {
+            width: 100%;
+            height: 100%;
+        }
+
+        .controles-mapa {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-control-mapa {
+            background: @(tema == "oscuro" ? "rgba(30,30,30,0.95)" : "rgba(255,255,255,0.95)");
+            border: 2px solid rgba(0,0,0,0.1);
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s, transform 0.2s;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            font-size: 14px;
+        }
+
+        .btn-control-mapa:hover { 
+            background: @(tema == "oscuro" ? "rgba(40,40,40,0.95)" : "rgba(240,240,240,0.95)");
+            transform: translateY(-2px);
+        }
+
+        /* Lista de proveedores */
+        .lista-proveedores {
+            width: 100%;
+            background: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
+            overflow-y: auto;
+            border-top: 1px solid var(--gris-claro);
+            transition: background-color .4s ease;
+            max-height: 50vh;
+        }
+
+        .proveedor-card {
+            padding: 16px;
+            border-bottom: 1px solid var(--gris-claro);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .proveedor-card:hover {
+            background: @(tema == "oscuro" ? "#2a2a2a" : "#f9f9f9");
+        }
+
+        .proveedor-card.activo {
+            background: @(tema == "oscuro" ? "#2a2a2a" : "#e8f5e9");
+            border-left: 4px solid var(--verde);
+        }
+
+        .proveedor-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .proveedor-foto {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--gris-claro);
+            flex-shrink: 0;
+        }
+
+        .proveedor-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .proveedor-nombre {
+            font-weight: 700;
+            font-size: 16px;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            margin-bottom: 4px;
+            word-wrap: break-word;
+        }
+
+        .proveedor-calificacion {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #FFD700;
+            font-weight: 600;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+
+        .proveedor-detalles {
+            font-size: 13px;
+            color: @(tema == "oscuro" ? "#aaa" : "#666");
+            margin-top: 8px;
+        }
+
+        .proveedor-precio {
+            font-weight: 700;
+            color: var(--verde);
+            margin-top: 8px;
+            font-size: 16px;
+        }
+
+        .sin-resultados {
+            padding: 40px 20px;
+            text-align: center;
+            color: @(tema == "oscuro" ? "#aaa" : "#666");
+        }
+
+        /* Responsive */
+        @media (min-width: 769px) {
+            header {
+                flex-wrap: nowrap;
+            }
+
+            .buscador-container {
+                width: auto;
+                order: 0;
+                margin-top: 0;
+            }
+
+            .contenedor-principal {
+                flex-direction: row;
+                height: calc(100vh - 60px);
+            }
+
+            .mapa-radar-container {
+                width: 100%;
+                order: -1;
+                height: 350px;
+            }
+
+            .mapa-container {
+                flex: 1;
+                min-width: 400px;
+                height: calc(100vh - 60px);
+                min-height: auto;
+            }
+
+            .lista-proveedores {
+                width: 400px;
+                max-height: 100%;
+                border-top: none;
+                border-left: 1px solid var(--gris-claro);
+            }
+
+            .panel-filtros {
+                top: 60px;
+                right: -400px;
+                width: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 12px;
+            }
+
+            .buscador-container {
+                order: 3;
+                margin-top: 8px;
+            }
+
+            .buscador-input {
+                font-size: 13px;
+                padding: 8px 12px;
+            }
+
+            .btn-filtros {
+                padding: 8px 12px;
+                font-size: 13px;
+            }
+
+            .panel-filtros {
+                top: 0;
+                right: -100%;
+                width: 100%;
+                max-width: 100%;
+                max-height: 100vh;
+                border-radius: 0;
+            }
+
+            .mapa-radar-container {
+                height: 300px;
+            }
+
+            .mapa-container {
+                height: 40vh;
+                min-height: 250px;
+            }
+
+            .lista-proveedores {
+                max-height: 50vh;
+            }
+
+            .controles-mapa {
+                top: 10px;
+                left: 10px;
+            }
+
+            .btn-control-mapa {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+
+            .proveedor-card {
+                padding: 12px;
+            }
+
+            .proveedor-foto {
+                width: 50px;
+                height: 50px;
+            }
+
+            .proveedor-nombre {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body class="tema-@tema">
+    <!-- Header -->
+    <header>
+        <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+        <button class="btn-volver" onclick="window.history.back()">‹</button>
+        <div class="buscador-container">
+            <input type="text" class="buscador-input" id="buscadorInput" placeholder="Buscar proveedores..." />
+            <button class="btn-filtros" id="btnFiltros">
+                🔍 Filtros
+            </button>
+        </div>
+    </header>
+
+    <!-- Menu lateral -->
+    <div class="menu-lateral" id="menuLateral">
+        <div class="cerrar-menu" id="cerrarMenu">✖</div>
+        <a href="/Home/Index">🏠 Inicio</a>
+        <a href="/Home/Comunidad">👥 Comunidad</a>
+        <a href="/Home/BuscarProveedores">🔍 Buscar Proveedores</a>
+        <a href="/Planificador">📅 Planificador de Servicios</a>
+        <a href="/Marketplace">🛒 Marketplace</a>
+        <a href="/home/FichaMedica">💉 Ficha médica</a>
+        <a href="/home/calendario">📅 Calendario</a>
+        <a href="/Chat/ChatZooni">💬 ChatBot</a>
+        <a href="/Home/Closet">👕 Closet</a>
+        <a href="/Home/Perfil">👤 Perfil</a>
+        <a href="/Home/configuracion">⚙️ Configuración</a>
+        <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+    <div class="overlay-filtros" id="overlayFiltros"></div>
+
+    <!-- Panel de filtros -->
+    <div class="panel-filtros" id="panelFiltros">
+        <h3>🔍 Filtros de Búsqueda</h3>
+        <form id="formFiltros">
+            <div class="filtro-grupo">
+                <label>País</label>
+                <select id="Pais" name="pais">
+                    <option value="">Todos los países</option>
+                </select>
+            </div>
+            <div class="filtro-grupo">
+                <label>Provincia</label>
+                <select id="Provincia" name="provincia" disabled>
+                    <option value="">Todas las provincias</option>
+                </select>
+            </div>
+            <div class="filtro-grupo">
+                <label>Ciudad</label>
+                <select id="Ciudad" name="ciudad" disabled>
+                    <option value="">Todas las ciudades</option>
+                </select>
+            </div>
+            <div class="filtro-grupo">
+                <label>Tipo de Servicio</label>
+                <select name="tipoServicio" id="tipoServicio">
+                    <option value="">Todos</option>
+                    @if (ViewBag.TiposServicio != null)
+                    {
+                        foreach (System.Data.DataRow tipo in ViewBag.TiposServicio.Rows)
+                        {
+                            <option value="@tipo["Descripcion"]" selected="@(ViewBag.TipoServicio == tipo["Descripcion"].ToString())">@tipo["Descripcion"]</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="filtro-grupo">
+                <label>Especie</label>
+                <select name="especie" id="especie">
+                    <option value="">Todas</option>
+                    <option value="Perro" selected="@(ViewBag.Especie == "Perro")">Perro</option>
+                    <option value="Gato" selected="@(ViewBag.Especie == "Gato")">Gato</option>
+                    <option value="Conejo" selected="@(ViewBag.Especie == "Conejo")">Conejo</option>
+                    <option value="Ave" selected="@(ViewBag.Especie == "Ave")">Ave</option>
+                    <option value="Pez" selected="@(ViewBag.Especie == "Pez")">Pez</option>
+                    <option value="Reptil" selected="@(ViewBag.Especie == "Reptil")">Reptil</option>
+                </select>
+            </div>
+            <div class="filtro-grupo">
+                <label>Precio máximo por hora</label>
+                <input type="range" id="precioMax" name="precioMax" min="0" max="10000" step="100" value="@(ViewBag.PrecioMax ?? 10000)" />
+                <div class="rango-valor">$<span id="precioMaxValor">@(ViewBag.PrecioMax ?? 10000)</span></div>
+            </div>
+            <div class="filtro-grupo">
+                <label>Calificación mínima</label>
+                <input type="range" id="calificacionMin" name="calificacionMin" min="0" max="5" step="0.1" value="@(ViewBag.CalificacionMin ?? 0)" />
+                <div class="rango-valor"><span id="calificacionMinValor">@(ViewBag.CalificacionMin ?? 0)</span> ⭐</div>
+            </div>
+            <div class="filtro-grupo">
+                <label>Radio de búsqueda (km)</label>
+                <input type="range" id="radioKm" name="radioKm" min="1" max="50" step="1" value="@(ViewBag.RadioKm ?? 10)" />
+                <div class="rango-valor"><span id="radioKmValor">@(ViewBag.RadioKm ?? 10)</span> km</div>
+            </div>
+            <button type="button" class="btn-aplicar-filtros" id="btnAplicarFiltros">Aplicar Filtros</button>
+        </form>
+    </div>
+
+    <!-- Contenedor principal -->
+    <div class="contenedor-principal">
+        <!-- Mapa de radar -->
+        <div class="mapa-radar-container oculto" id="mapaRadarContainer">
+            <div id="mapRadar"></div>
+        </div>
+
+        <!-- Mapa -->
+        <div class="mapa-container">
+            <div id="map"></div>
+            <div class="controles-mapa">
+                <button class="btn-control-mapa" id="btnMiUbicacion">
+                    📍 Mi Ubicación
+                </button>
+            </div>
+        </div>
+
+        <!-- Lista de proveedores -->
+        <div class="lista-proveedores" id="listaProveedores">
+            @if (ViewBag.Proveedores != null && ViewBag.Proveedores.Rows.Count > 0)
+            {
+                foreach (System.Data.DataRow proveedor in ViewBag.Proveedores.Rows)
+                {
+                    <div class="proveedor-card" data-id="@proveedor["Id_Proveedor"]" data-lat="@proveedor["Latitud"]" data-lng="@proveedor["Longitud"]">
+                        <div class="proveedor-header">
+                            <img src="@(proveedor["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png")" 
+                                 alt="@proveedor["NombreCompleto"]" 
+                                 class="proveedor-foto" 
+                                 onerror="this.src='/img/perfil/default.png'" />
+                            <div class="proveedor-info">
+                                <div class="proveedor-nombre">@proveedor["NombreCompleto"]</div>
+                                <div class="proveedor-calificacion">
+                                    ⭐ @proveedor["Calificacion_Promedio"]
+                                    <span style="color: @(tema == "oscuro" ? "#aaa" : "#666"); font-size: 12px;">
+                                        (@proveedor["Cantidad_Resenas"] reseñas)
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        @if (proveedor["Precio_Hora"] != DBNull.Value)
+                        {
+                            <div class="proveedor-precio">$@proveedor["Precio_Hora"]/hora</div>
+                        }
+                        <div class="proveedor-detalles">
+                            📍 @proveedor["Ciudad"], @proveedor["Provincia"]
+                            @if (proveedor.Table.Columns.Contains("Distancia_Km") && proveedor["Distancia_Km"] != DBNull.Value)
+                            {
+                                decimal distancia = Convert.ToDecimal(proveedor["Distancia_Km"]);
+                                string distanciaTexto = distancia < 1 ? $"{(distancia * 1000):F0} m" : $"{distancia:F1} km";
+                                <div>📏 A @distanciaTexto</div>
+                            }
+                        </div>
+                        <a href="/Home/PerfilProveedor/@proveedor["Id_Proveedor"]" style="display: block; margin-top: 12px; padding: 8px; background: var(--verde); color: white; text-align: center; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                            Ver Perfil
+                        </a>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="sin-resultados">
+                    <p>No se encontraron proveedores con los criterios de búsqueda.</p>
+                </div>
+            }
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="~/lib/country-state-city/country-state-city.umd.min.js"></script>
+    <script>
+        // Variables globales
+        let map;
+        let mapRadar;
+        let circle;
+        let circleRadar;
+        let userMarker;
+        let userMarkerRadar;
+        let proveedoresMarkers = [];
+        let userLat = @(ViewBag.Latitud?.ToString() ?? "null");
+        let userLng = @(ViewBag.Longitud?.ToString() ?? "null");
+        let radioKm = @(ViewBag.RadioKm ?? 10);
+        let isDragging = false;
+        let timeoutBusqueda = null;
+        let animacionRadar = null;
+
+        // Menu lateral
+        const menu = document.getElementById("menuLateral");
+        const overlay = document.getElementById("overlay");
+        const overlayFiltros = document.getElementById("overlayFiltros");
+        const abrir = document.getElementById("abrirMenu");
+        const cerrar = document.getElementById("cerrarMenu");
+
+        function cerrarMenu() {
+            menu.classList.remove("abierto");
+            overlay.classList.remove("activo");
+        }
+
+        abrir.addEventListener("click", (e) => {
+            e.stopPropagation();
+            menu.classList.add("abierto");
+            overlay.classList.add("activo");
+        });
+
+        cerrar.addEventListener("click", cerrarMenu);
+        overlay.addEventListener("click", cerrarMenu);
+
+        // Panel de filtros
+        const panelFiltros = document.getElementById("panelFiltros");
+        const btnFiltros = document.getElementById("btnFiltros");
+
+        function abrirFiltros() {
+            if (panelFiltros) {
+                panelFiltros.classList.add("abierto");
+            }
+            if (overlayFiltros) {
+                overlayFiltros.classList.add("activo");
+            }
+            document.body.style.overflow = 'hidden';
+        }
+
+        function cerrarFiltros() {
+            if (panelFiltros) {
+                panelFiltros.classList.remove("abierto");
+            }
+            if (overlayFiltros) {
+                overlayFiltros.classList.remove("activo");
+            }
+            document.body.style.overflow = '';
+        }
+
+        if (btnFiltros) {
+            btnFiltros.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                if (panelFiltros && panelFiltros.classList.contains("abierto")) {
+                    cerrarFiltros();
+                } else {
+                    abrirFiltros();
+                }
+            });
+        }
+
+        if (overlayFiltros) {
+            overlayFiltros.addEventListener("click", cerrarFiltros);
+        }
+
+        // Función para aplicar filtros automáticamente
+        function aplicarFiltrosAutomatico() {
+            if (timeoutBusqueda) {
+                clearTimeout(timeoutBusqueda);
+            }
+            timeoutBusqueda = setTimeout(() => {
+                buscarProveedores();
+            }, 500);
+        }
+
+        // Sliders con aplicación automática
+        const precioMaxInput = document.getElementById("precioMax");
+        if (precioMaxInput) {
+            precioMaxInput.addEventListener("input", function() {
+                const precioMaxValor = document.getElementById("precioMaxValor");
+                if (precioMaxValor) {
+                    precioMaxValor.textContent = this.value;
+                }
+                aplicarFiltrosAutomatico();
+            });
+        }
+
+        const calificacionMinInput = document.getElementById("calificacionMin");
+        if (calificacionMinInput) {
+            calificacionMinInput.addEventListener("input", function() {
+                const calificacionMinValor = document.getElementById("calificacionMinValor");
+                if (calificacionMinValor) {
+                    calificacionMinValor.textContent = parseFloat(this.value).toFixed(1);
+                }
+                aplicarFiltrosAutomatico();
+            });
+        }
+
+        const radioKmInput = document.getElementById("radioKm");
+        if (radioKmInput) {
+            radioKmInput.addEventListener("input", function() {
+                const valor = parseInt(this.value);
+                const radioKmValor = document.getElementById("radioKmValor");
+                if (radioKmValor) {
+                    radioKmValor.textContent = valor;
+                }
+                radioKm = valor;
+                actualizarCirculo();
+                actualizarMapaRadar();
+                aplicarFiltrosAutomatico();
+            });
+        }
+
+        // Selects con aplicación automática
+        const tipoServicioSelect = document.getElementById("tipoServicio");
+        if (tipoServicioSelect) {
+            tipoServicioSelect.addEventListener("change", aplicarFiltrosAutomatico);
+        }
+        const especieSelect = document.getElementById("especie");
+        if (especieSelect) {
+            especieSelect.addEventListener("change", aplicarFiltrosAutomatico);
+        }
+
+        // Inicializar mapa
+        function initMap() {
+            const latInicial = userLat || -34.6037;
+            const lngInicial = userLng || -58.3816;
+            const zoomInicial = userLat ? 13 : 12;
+
+            map = L.map('map').setView([latInicial, lngInicial], zoomInicial);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(map);
+
+            if (userLat && userLng) {
+                agregarMarcadorUsuario(userLat, userLng);
+                actualizarCirculo();
+            }
+
+            agregarMarcadoresProveedores();
+
+            map.on('click', function(e) {
+                if (isDragging) return;
+                userLat = e.latlng.lat;
+                userLng = e.latlng.lng;
+                agregarMarcadorUsuario(userLat, userLng);
+                actualizarCirculo();
+                buscarProveedores();
+            });
+        }
+
+        // Inicializar mapa de radar
+        function initMapRadar() {
+            if (!userLat || !userLng) return;
+
+            const container = document.getElementById("mapaRadarContainer");
+            if (!container) return;
+
+            if (mapRadar) {
+                mapRadar.remove();
+            }
+
+            mapRadar = L.map('mapRadar').setView([userLat, userLng], 13);
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors',
+                maxZoom: 19
+            }).addTo(mapRadar);
+
+            const iconoUsuario = L.divIcon({
+                className: 'marcador-usuario-radar',
+                html: '<div style="background: #4A90E2; width: 30px; height: 30px; border-radius: 50%; border: 4px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.4); z-index: 1000;"></div>',
+                iconSize: [30, 30],
+                iconAnchor: [15, 15]
+            });
+
+            userMarkerRadar = L.marker([userLat, userLng], { 
+                icon: iconoUsuario,
+                zIndexOffset: 1000
+            }).addTo(mapRadar);
+
+            crearCirculoRadarAnimado();
+
+            document.querySelectorAll('.proveedor-card').forEach(card => {
+                const lat = parseFloat(card.dataset.lat);
+                const lng = parseFloat(card.dataset.lng);
+
+                if (lat && lng) {
+                    const icono = L.divIcon({
+                        className: 'marcador-proveedor-radar',
+                        html: '<div style="background: #8B5E3C; width: 18px; height: 18px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3);"></div>',
+                        iconSize: [18, 18],
+                        iconAnchor: [9, 9]
+                    });
+
+                    L.marker([lat, lng], { icon: icono }).addTo(mapRadar);
+                }
+            });
+
+            if (circleRadar) {
+                mapRadar.fitBounds(circleRadar.getBounds(), { padding: [30, 30] });
+            }
+        }
+
+        // Crear círculo animado para el radar
+        function crearCirculoRadarAnimado() {
+            if (!userLat || !userLng || !mapRadar) return;
+
+            if (animacionRadar) {
+                clearInterval(animacionRadar);
+                animacionRadar = null;
+            }
+
+            if (circleRadar) {
+                mapRadar.removeLayer(circleRadar);
+            }
+            if (window.pulsosRadar) {
+                window.pulsosRadar.forEach(p => {
+                    if (mapRadar.hasLayer(p)) {
+                        mapRadar.removeLayer(p);
+                    }
+                });
+            }
+            window.pulsosRadar = [];
+
+            circleRadar = L.circle([userLat, userLng], {
+                radius: radioKm * 1000,
+                color: '#4A90E2',
+                fillColor: '#4A90E2',
+                fillOpacity: 0.15,
+                weight: 3
+            }).addTo(mapRadar);
+
+            function crearPulso() {
+                const pulso = L.circle([userLat, userLng], {
+                    radius: radioKm * 1000,
+                    color: '#4A90E2',
+                    fillColor: '#4A90E2',
+                    fillOpacity: 0.4,
+                    weight: 2
+                }).addTo(mapRadar);
+
+                window.pulsosRadar.push(pulso);
+
+                let scale = 1;
+                const maxScale = 2.0;
+                const step = 0.03;
+                const interval = 30;
+
+                const animar = setInterval(() => {
+                    scale += step;
+                    if (scale >= maxScale) {
+                        if (mapRadar.hasLayer(pulso)) {
+                            mapRadar.removeLayer(pulso);
+                        }
+                        const index = window.pulsosRadar.indexOf(pulso);
+                        if (index > -1) {
+                            window.pulsosRadar.splice(index, 1);
+                        }
+                        clearInterval(animar);
+                    } else {
+                        const nuevoRadio = (radioKm * 1000) * scale;
+                        pulso.setRadius(nuevoRadio);
+                        const opacity = 0.4 * (1 - (scale - 1) / (maxScale - 1));
+                        pulso.setStyle({
+                            fillOpacity: Math.max(0, opacity),
+                            color: '#4A90E2',
+                            fillColor: '#4A90E2',
+                            weight: 2
+                        });
+                    }
+                }, interval);
+            }
+
+            crearPulso();
+            animacionRadar = setInterval(crearPulso, 1500);
+        }
+
+        function actualizarMapaRadar() {
+            const container = document.getElementById("mapaRadarContainer");
+            if (!container) return;
+
+            if (userLat && userLng && radioKm > 0) {
+                container.classList.remove("oculto");
+                setTimeout(() => {
+                    if (container.offsetHeight > 0) {
+                        initMapRadar();
+                    } else {
+                        setTimeout(() => {
+                            if (container.offsetHeight > 0) {
+                                initMapRadar();
+                            }
+                        }, 200);
+                    }
+                }, 150);
+            } else {
+                container.classList.add("oculto");
+                if (animacionRadar) {
+                    clearInterval(animacionRadar);
+                    animacionRadar = null;
+                }
+                if (window.pulsosRadar) {
+                    window.pulsosRadar.forEach(p => {
+                        if (mapRadar && mapRadar.hasLayer(p)) {
+                            mapRadar.removeLayer(p);
+                        }
+                    });
+                    window.pulsosRadar = [];
+                }
+            }
+        }
+
+        function agregarMarcadorUsuario(lat, lng) {
+            if (userMarker) {
+                map.removeLayer(userMarker);
+            }
+
+            const icono = L.divIcon({
+                className: 'marcador-usuario',
+                html: '<div style="background: #3ac37d; width: 20px; height: 20px; border-radius: 50%; border: 3px solid white; box-shadow: 0 2px 8px rgba(0,0,0,0.3);"></div>',
+                iconSize: [20, 20],
+                iconAnchor: [10, 10]
+            });
+
+            userMarker = L.marker([lat, lng], { 
+                icon: icono,
+                draggable: true,
+                zIndexOffset: 1000
+            }).addTo(map);
+
+            userMarker.on('dragstart', function() {
+                isDragging = true;
+            });
+
+            userMarker.on('dragend', function() {
+                isDragging = false;
+                userLat = userMarker.getLatLng().lat;
+                userLng = userMarker.getLatLng().lng;
+                actualizarCirculo();
+                buscarProveedores();
+            });
+        }
+
+        function actualizarCirculo() {
+            if (!userLat || !userLng) return;
+
+            if (circle) {
+                map.removeLayer(circle);
+            }
+
+            circle = L.circle([userLat, userLng], {
+                radius: radioKm * 1000,
+                color: '#3ac37d',
+                fillColor: '#3ac37d',
+                fillOpacity: 0.2,
+                weight: 2
+            }).addTo(map);
+
+            actualizarMapaRadar();
+        }
+
+        function agregarMarcadoresProveedores() {
+            proveedoresMarkers.forEach(marker => map.removeLayer(marker));
+            proveedoresMarkers = [];
+
+            document.querySelectorAll('.proveedor-card').forEach(card => {
+                const lat = parseFloat(card.dataset.lat);
+                const lng = parseFloat(card.dataset.lng);
+                const id = card.dataset.id;
+
+                if (lat && lng) {
+                    const icono = L.divIcon({
+                        className: 'marcador-proveedor',
+                        html: '<div style="background: #8B5E3C; width: 16px; height: 16px; border-radius: 50%; border: 2px solid white; box-shadow: 0 2px 6px rgba(0,0,0,0.3);"></div>',
+                        iconSize: [16, 16],
+                        iconAnchor: [8, 8]
+                    });
+
+                    const marker = L.marker([lat, lng], { icon: icono }).addTo(map);
+                    
+                    marker.on('click', function() {
+                        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        card.classList.add('activo');
+                        setTimeout(() => card.classList.remove('activo'), 2000);
+                    });
+
+                    card.addEventListener('click', function(e) {
+                        if (e.target.tagName === 'A') return;
+                        map.setView([lat, lng], 15);
+                        card.classList.add('activo');
+                        setTimeout(() => card.classList.remove('activo'), 2000);
+                        window.location.href = `/Home/PerfilProveedor/${id}`;
+                    });
+
+                    proveedoresMarkers.push(marker);
+                }
+            });
+        }
+
+        // Botón mi ubicación
+        const btnMiUbicacion = document.getElementById("btnMiUbicacion");
+        if (btnMiUbicacion) {
+            btnMiUbicacion.addEventListener("click", function() {
+            if (!navigator.geolocation) {
+                alert('Tu navegador no soporta geolocalización');
+                return;
+            }
+
+            const btn = this;
+            btn.textContent = '📍 Obteniendo...';
+            btn.disabled = true;
+
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    userLat = position.coords.latitude;
+                    userLng = position.coords.longitude;
+                    agregarMarcadorUsuario(userLat, userLng);
+                    actualizarCirculo();
+                    actualizarMapaRadar();
+                    buscarProveedores();
+                    btn.textContent = '📍 Mi Ubicación';
+                    btn.disabled = false;
+                },
+                function(error) {
+                    alert('No se pudo obtener tu ubicación');
+                    btn.textContent = '📍 Mi Ubicación';
+                    btn.disabled = false;
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+            });
+        }
+
+        // Buscar proveedores
+        function buscarProveedores() {
+            const form = document.createElement('form');
+            form.method = 'GET';
+            form.action = '/Home/BuscarProveedores';
+
+            const params = new FormData(document.getElementById('formFiltros'));
+            
+            if (userLat && userLng) {
+                form.appendChild(crearInput('latitud', userLat));
+                form.appendChild(crearInput('longitud', userLng));
+            }
+
+            params.forEach((value, key) => {
+                if (value) {
+                    form.appendChild(crearInput(key, value));
+                }
+            });
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+
+        function crearInput(name, value) {
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            input.value = value;
+            return input;
+        }
+
+        // Aplicar filtros (botón manual)
+        const btnAplicarFiltros = document.getElementById("btnAplicarFiltros");
+        if (btnAplicarFiltros) {
+            btnAplicarFiltros.addEventListener("click", function() {
+                buscarProveedores();
+            });
+        }
+
+        // Buscador
+        const buscadorInput = document.getElementById("buscadorInput");
+        if (buscadorInput) {
+            buscadorInput.addEventListener("keypress", function(e) {
+                if (e.key === 'Enter') {
+                    buscarProveedores();
+                }
+            });
+        }
+
+        // Inicializar country-state-city
+        function initCountryStateCity() {
+            if (typeof window.csc === 'undefined') {
+                setTimeout(initCountryStateCity, 100);
+                return;
+            }
+
+            const { Country, State, City } = window.csc;
+            const pais = document.getElementById("Pais");
+            const prov = document.getElementById("Provincia");
+            const ciudad = document.getElementById("Ciudad");
+
+            if (!pais || !prov || !ciudad) return;
+
+            const flag = a2 => String.fromCodePoint(...[...a2.toUpperCase()].map(c => 127397 + c.charCodeAt(0)));
+            const countries = Country.getAllCountries();
+            
+            const paisGuardado = '@ViewBag.Pais';
+            pais.innerHTML = '<option value="">Todos los países</option>' + 
+                countries.map(c => {
+                    const selected = c.name === paisGuardado ? 'selected' : '';
+                    return `<option value="${c.name}" ${selected}>${flag(c.isoCode)} ${c.name}</option>`;
+                }).join("");
+
+            if (paisGuardado) {
+                const isoPais = countries.find(c => c.name === paisGuardado)?.isoCode;
+                if (isoPais) {
+                    const provincias = State.getStatesOfCountry(isoPais);
+                    const provGuardada = '@ViewBag.Provincia';
+                    prov.innerHTML = '<option value="">Todas las provincias</option>' + 
+                        provincias.map(s => {
+                            const selected = s.name === provGuardada ? 'selected' : '';
+                            return `<option value="${s.name}" ${selected}>${s.name}</option>`;
+                        }).join("");
+                    prov.disabled = provincias.length === 0;
+
+                    if (provGuardada) {
+                        const estado = State.getStatesOfCountry(isoPais).find(s => s.name === provGuardada);
+                        if (estado) {
+                            const ciudades = City.getCitiesOfState(isoPais, estado.isoCode);
+                            const ciudadGuardada = '@ViewBag.Ciudad';
+                            ciudad.innerHTML = '<option value="">Todas las ciudades</option>' + 
+                                ciudades.map(c => {
+                                    const selected = c.name === ciudadGuardada ? 'selected' : '';
+                                    return `<option value="${c.name}" ${selected}>${c.name}</option>`;
+                                }).join("");
+                            ciudad.disabled = ciudades.length === 0;
+                        }
+                    }
+                }
+            }
+
+            pais.addEventListener("change", function() {
+                const iso = countries.find(c => c.name === this.value)?.isoCode;
+                if (iso) {
+                    const provincias = State.getStatesOfCountry(iso);
+                    prov.innerHTML = '<option value="">Todas las provincias</option>' + 
+                        provincias.map(s => `<option value="${s.name}">${s.name}</option>`).join("");
+                    prov.disabled = provincias.length === 0;
+                    ciudad.innerHTML = '<option value="">Todas las ciudades</option>';
+                    ciudad.disabled = true;
+                } else {
+                    prov.innerHTML = '<option value="">Todas las provincias</option>';
+                    prov.disabled = true;
+                    ciudad.innerHTML = '<option value="">Todas las ciudades</option>';
+                    ciudad.disabled = true;
+                }
+                aplicarFiltrosAutomatico();
+            });
+
+            prov.addEventListener("change", function() {
+                const isoPais = countries.find(c => c.name === pais.value)?.isoCode;
+                if (isoPais && this.value) {
+                    const estado = State.getStatesOfCountry(isoPais).find(s => s.name === this.value);
+                    if (estado) {
+                        const ciudades = City.getCitiesOfState(isoPais, estado.isoCode);
+                        ciudad.innerHTML = '<option value="">Todas las ciudades</option>' + 
+                            ciudades.map(c => `<option value="${c.name}">${c.name}</option>`).join("");
+                        ciudad.disabled = ciudades.length === 0;
+                    }
+                } else {
+                    ciudad.innerHTML = '<option value="">Todas las ciudades</option>';
+                    ciudad.disabled = true;
+                }
+                aplicarFiltrosAutomatico();
+            });
+
+            ciudad.addEventListener("change", aplicarFiltrosAutomatico);
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            initMap();
+            initCountryStateCity();
+            setTimeout(() => {
+                if (userLat && userLng && radioKm > 0) {
+                    actualizarMapaRadar();
+                }
+            }, 300);
+        });
+    </script>
+</body>
+</html>
+

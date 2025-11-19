@@ -1,0 +1,434 @@
+@{
+    ViewData["Title"] = "Perfil Proveedor - Zooni";
+    Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>@ViewData["Title"]</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/zooni-design-system.css" />
+    <style>
+        :root {
+            --verde: #3ac37d;
+            --marron: #8B5E3C;
+            --fondo-claro: #f9f9f8;
+            --fondo-oscuro: #121212;
+            --texto-claro: #3c2a1b;
+            --texto-oscuro: #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+            min-height: 100vh;
+            padding: 20px;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+        }
+
+        body.tema-oscuro {
+            background-color: rgba(0, 0, 0, 0.5);
+            background-blend-mode: overlay;
+            filter: brightness(0.6);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            transition: background-color .4s ease;
+        }
+
+        .proveedor-header {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .proveedor-foto {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #f0f0f0;
+            flex-shrink: 0;
+        }
+
+        .proveedor-info {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        h1 {
+            margin: 0 0 10px 0;
+            color: var(--marron);
+            font-size: 28px;
+        }
+
+        .calificacion {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .calificacion-estrellas {
+            color: #FFD700;
+            font-size: 24px;
+        }
+
+        .calificacion-texto {
+            font-weight: 600;
+            font-size: 20px;
+        }
+
+        .calificacion-resenas {
+            color: @(tema == "oscuro" ? "#aaa" : "#999");
+            font-size: 14px;
+        }
+
+        .precio {
+            font-weight: 600;
+            font-size: 18px;
+            color: @(tema == "oscuro" ? "#aaa" : "#6c757d");
+            margin: 15px 0;
+        }
+
+        .detalles {
+            color: @(tema == "oscuro" ? "#aaa" : "#666");
+            margin: 15px 0;
+        }
+
+        .botones {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 150px;
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+            transition: background 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .btn-verde {
+            background-color: var(--verde);
+            color: white;
+        }
+
+        .btn-verde:hover {
+            background-color: #2ea968;
+        }
+
+        .btn-azul {
+            background-color: #4A90E2;
+            color: white;
+        }
+
+        .btn-azul:hover {
+            background-color: #357ABD;
+        }
+
+        .seccion {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid @(tema == "oscuro" ? "#333" : "#eee");
+        }
+
+        h3 {
+            color: var(--marron);
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .descripcion {
+            color: @(tema == "oscuro" ? "#aaa" : "#666");
+            line-height: 1.6;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .tag {
+            background: @(tema == "oscuro" ? "#2a2a2a" : "#6c757d");
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+
+        .tag-verde {
+            background: var(--verde);
+        }
+
+        .resena {
+            padding: 15px;
+            background: @(tema == "oscuro" ? "#2a2a2a" : "#f9f9f9");
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .resena-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .resena-nombre {
+            font-weight: 600;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+        }
+
+        .resena-fecha {
+            color: @(tema == "oscuro" ? "#aaa" : "#999");
+            font-size: 12px;
+        }
+
+        .resena-estrellas {
+            color: #FFD700;
+        }
+
+        .resena-comentario {
+            color: @(tema == "oscuro" ? "#aaa" : "#666");
+            margin: 0;
+        }
+
+        .btn-volver {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 12px 24px;
+            background-color: #6c757d;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .btn-volver:hover {
+            background-color: #5a6268;
+        }
+
+        @media (max-width: 768px) {
+            .proveedor-header {
+                flex-direction: column;
+            }
+
+            .proveedor-foto {
+                width: 100%;
+                max-width: 200px;
+                margin: 0 auto;
+            }
+
+            .botones {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            h1 {
+                font-size: 24px;
+                text-align: center;
+            }
+
+            .proveedor-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body class="tema-@tema">
+<div class="container">
+    @if (ViewBag.Proveedor != null)
+    {
+        <div class="card">
+            <div class="proveedor-header">
+                @if (!string.IsNullOrEmpty(ViewBag.Proveedor["FotoPerfil"]?.ToString()))
+                {
+                    <img src="@ViewBag.Proveedor["FotoPerfil"]" alt="Foto" class="proveedor-foto" />
+                }
+                else
+                {
+                    <div class="proveedor-foto" style="display: flex; align-items: center; justify-content: center; color: #999;">
+                        Sin foto
+                    </div>
+                }
+                
+                <div class="proveedor-info">
+                    <h1>@ViewBag.Proveedor["NombreCompleto"]</h1>
+                    
+                    <div class="calificacion">
+                        <div>
+                            <span class="calificacion-estrellas">⭐</span>
+                            <span class="calificacion-texto">@ViewBag.Proveedor["Calificacion_Promedio"]</span>
+                            <span class="calificacion-resenas">(@ViewBag.Proveedor["Cantidad_Resenas"] reseñas)</span>
+                        </div>
+                        @if (ViewBag.Proveedor["Precio_Hora"] != null && ViewBag.Proveedor["Precio_Hora"] != DBNull.Value)
+                        {
+                            <div class="precio">$@ViewBag.Proveedor["Precio_Hora"]/hora</div>
+                        }
+                    </div>
+                    
+                    <div class="detalles">
+                        <p style="margin: 5px 0;">📍 @ViewBag.Proveedor["Ciudad"], @ViewBag.Proveedor["Provincia"]</p>
+                        <p style="margin: 5px 0;">📅 @ViewBag.Proveedor["Experiencia_Anios"] años de experiencia</p>
+                    </div>
+
+                    <div class="botones">
+                        <a href="/Home/ContratarProveedor/@ViewBag.Proveedor["Id_Proveedor"]" class="btn btn-verde">
+                            📅 Contratar Servicio
+                        </a>
+                        <button onclick="iniciarChat(@ViewBag.Proveedor["Id_User"])" class="btn btn-azul">
+                            💬 Chatear
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            @if (!string.IsNullOrEmpty(ViewBag.Proveedor["Descripcion"]?.ToString()))
+            {
+                <div class="seccion">
+                    <h3>Sobre mí</h3>
+                    <p class="descripcion">@ViewBag.Proveedor["Descripcion"]</p>
+                </div>
+            }
+            
+            @if (ViewBag.TiposServicio != null && ViewBag.TiposServicio.Rows.Count > 0)
+            {
+                <div class="seccion">
+                    <h3>Servicios que Ofrezco</h3>
+                    <div class="tags">
+                        @foreach (System.Data.DataRow tipo in ViewBag.TiposServicio.Rows)
+                        {
+                            <span class="tag">@tipo["Descripcion"]</span>
+                        }
+                    </div>
+                </div>
+            }
+            
+            @if (ViewBag.Especies != null && ViewBag.Especies.Rows.Count > 0)
+            {
+                <div class="seccion">
+                    <h3>Especies que Atiendo</h3>
+                    <div class="tags">
+                        @foreach (System.Data.DataRow especie in ViewBag.Especies.Rows)
+                        {
+                            <span class="tag tag-verde">@especie["Especie"]</span>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+        
+        @if (ViewBag.Resenas != null && ViewBag.Resenas.Rows.Count > 0)
+        {
+            <div class="card">
+                <h2 style="color: var(--marron); margin-bottom: 20px;">Reseñas</h2>
+                <div>
+                    @foreach (System.Data.DataRow resena in ViewBag.Resenas.Rows)
+                    {
+                        <div class="resena">
+                            <div class="resena-header">
+                                <div>
+                                    <span class="resena-nombre">@resena["Nombre"] @resena["Apellido"]</span>
+                                    <span class="resena-fecha">@resena["Fecha"]</span>
+                                </div>
+                                <div class="resena-estrellas">
+                                    @for (int i = 0; i < Convert.ToInt32(resena["Calificacion"]); i++)
+                                    {
+                                        <span>⭐</span>
+                                    }
+                                </div>
+                            </div>
+                            @if (!string.IsNullOrEmpty(resena["Comentario"]?.ToString()))
+                            {
+                                <p class="resena-comentario">@resena["Comentario"]</p>
+                            }
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="card" style="text-align: center;">
+                <p style="color: @(tema == "oscuro" ? "#aaa" : "#999");">Aún no hay reseñas para este proveedor.</p>
+            </div>
+        }
+        
+        <div style="text-align: center;">
+            <a href="/Home/BuscarProveedores" class="btn-volver">
+                ← Volver a Búsqueda
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="card" style="text-align: center; padding: 40px;">
+            <p style="color: @(tema == "oscuro" ? "#aaa" : "#999"); font-size: 18px;">Proveedor no encontrado.</p>
+            <a href="/Home/BuscarProveedores" class="btn-volver" style="margin-top: 20px;">
+                Volver a Búsqueda
+            </a>
+        </div>
+    }
+</div>
+</body>
+</html>
+
+<script>
+async function iniciarChat(idProveedorUser) {
+    try {
+        const response = await fetch('/Home/ObtenerOCrearChat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(idProveedorUser)
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            window.location.href = '/Home/Mensajes?chatId=' + data.chatId;
+        } else {
+            alert(data.message || 'Error al iniciar el chat');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al iniciar el chat');
+    }
+}
+</script>
+

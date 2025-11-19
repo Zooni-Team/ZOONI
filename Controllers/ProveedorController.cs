@@ -303,14 +303,60 @@ namespace Zooni.Controllers
                 }
 
                 // Solo verificar si el correo ya existe (NO crear usuario todavía)
+                // Intentar buscar primero con correo encriptado (si los datos están encriptados)
+                string correoNormalizado = correo.ToLower().Trim();
+                string correoEncrypted = EncryptionHelper.Encrypt(correoNormalizado);
+                
                 string checkQuery = @"
-                    SELECT TOP 1 U.Id_User, U.Id_TipoUsuario 
+                    SELECT TOP 1 U.Id_User, U.Id_TipoUsuario, M.Correo, M.Contrasena
                     FROM [User] U 
                     INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail 
                     WHERE M.Correo = @Correo";
                 
-                var checkParams = new Dictionary<string, object> { { "@Correo", correo } };
+                var checkParams = new Dictionary<string, object> { { "@Correo", correoEncrypted } };
                 DataTable dt = BD.ExecuteQuery(checkQuery, checkParams);
+                
+                // Si no encontró con correo encriptado, intentar buscar todos y comparar desencriptando
+                if (dt.Rows.Count == 0)
+                {
+                    Console.WriteLine("⚠️ No se encontró con correo encriptado en Registro1, intentando buscar desencriptando...");
+                    string queryAll = @"
+                        SELECT U.Id_User, U.Id_TipoUsuario, M.Correo, M.Contrasena
+                        FROM [User] U 
+                        INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail";
+                    
+                    DataTable dtAll = BD.ExecuteQuery(queryAll, new Dictionary<string, object>());
+                    
+                    foreach (DataRow row in dtAll.Rows)
+                    {
+                        try
+                        {
+                            string correoStored = row["Correo"].ToString() ?? "";
+                            string correoDesencriptado = EncryptionHelper.Decrypt(correoStored);
+                            
+                            // Comparar correos
+                            if (correoDesencriptado.ToLower().Trim() == correoNormalizado || 
+                                (correoDesencriptado == correoStored && correoStored.ToLower().Trim() == correoNormalizado))
+                            {
+                                // Crear un DataTable con solo esta fila
+                                dt = dtAll.Clone();
+                                dt.ImportRow(row);
+                                break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"⚠️ Error al desencriptar correo en Registro1: {ex.Message}");
+                            // Si falla la desencriptación, comparar directamente (puede que no esté encriptado)
+                            if (row["Correo"].ToString()?.ToLower().Trim() == correoNormalizado)
+                            {
+                                dt = dtAll.Clone();
+                                dt.ImportRow(row);
+                                break;
+                            }
+                        }
+                    }
+                }
 
                 if (dt.Rows.Count > 0)
                 {
@@ -343,15 +389,25 @@ namespace Zooni.Controllers
                     // Usuario existe, verificar si ya es proveedor
                     int idUser = Convert.ToInt32(dt.Rows[0]["Id_User"]);
                     
-                    // Verificar contraseña
-                    string passQuery = @"
-                        SELECT M.Contrasena FROM Mail M 
-                        INNER JOIN [User] U ON U.Id_Mail = M.Id_Mail 
-                        WHERE U.Id_User = @UserId";
-                    object? passResult = BD.ExecuteScalar(passQuery, new Dictionary<string, object> { { "@UserId", idUser } });
-                    string? passActual = passResult != null && passResult != DBNull.Value ? passResult.ToString() : null;
+                    // Verificar contraseña usando PasswordHelper (puede estar hasheada)
+                    string? passActual = dt.Rows[0]["Contrasena"]?.ToString();
                     
-                    if (passActual != contrasena)
+                    if (string.IsNullOrEmpty(passActual))
+                    {
+                        ViewBag.Error = "Error al verificar la contraseña.";
+                        return View();
+                    }
+                    
+                    // Intentar verificar con PasswordHelper primero (si está hasheada)
+                    bool passwordCorrecta = PasswordHelper.VerifyPassword(contrasena, passActual);
+                    
+                    // Si no funciona con hash, comparar directamente (para contraseñas antiguas sin hash)
+                    if (!passwordCorrecta && passActual == contrasena)
+                    {
+                        passwordCorrecta = true;
+                    }
+                    
+                    if (!passwordCorrecta)
                     {
                         ViewBag.Error = "Contraseña incorrecta.";
                         return View();

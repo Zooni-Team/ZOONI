@@ -26,11 +26,21 @@ namespace Zooni.Controllers
 
             try
             {
-                // Obtener mascotas del usuario
+                // Obtener mascotas del usuario (solo una por combinación de nombre y raza)
                 string mascotasQuery = @"
+                    WITH MascotasUnicas AS (
+                        SELECT 
+                            Id_Mascota, 
+                            Nombre, 
+                            Especie, 
+                            Raza,
+                            ROW_NUMBER() OVER (PARTITION BY Nombre, Raza ORDER BY Id_Mascota DESC) AS rn
+                        FROM Mascota
+                        WHERE Id_User = @UserId AND (Archivada IS NULL OR Archivada = 0)
+                    )
                     SELECT Id_Mascota, Nombre, Especie, Raza
-                    FROM Mascota
-                    WHERE Id_User = @UserId AND (Archivada IS NULL OR Archivada = 0)
+                    FROM MascotasUnicas
+                    WHERE rn = 1
                     ORDER BY Nombre ASC";
                 DataTable mascotasDt = BD.ExecuteQuery(mascotasQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
                 ViewBag.Mascotas = mascotasDt;

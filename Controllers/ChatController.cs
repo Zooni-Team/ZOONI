@@ -207,7 +207,7 @@ FICHA MÉDICA:
 - Ver historial médico: Desde FichaMedica
 
 PROVEEDORES DE SERVICIOS:
-- Buscar paseadores/cuidadores: /BuscarProveedor
+- Buscar paseadores/cuidadores: /Home/BuscarProveedores
 - Registrarse como proveedor: Botón "Registrarse como Proveedor" en el login
 - Los proveedores pueden marcar su zona de atención en un mapa
 

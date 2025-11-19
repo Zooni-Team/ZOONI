@@ -90,6 +90,13 @@ namespace Zooni.Utils
 
             try
             {
+                // Verificar si el texto parece estar encriptado (Base64 válido y longitud mínima)
+                if (cipherText.Length < 16 || !IsBase64String(cipherText))
+                {
+                    // Probablemente no está encriptado, retornar tal cual
+                    return cipherText;
+                }
+
                 byte[] iv = new byte[16];
                 byte[] buffer = Convert.FromBase64String(cipherText);
 
@@ -114,12 +121,43 @@ namespace Zooni.Utils
                     }
                 }
             }
+            catch (FormatException)
+            {
+                // No es Base64 válido, probablemente no está encriptado
+                return cipherText;
+            }
+            catch (CryptographicException ex)
+            {
+                Console.WriteLine($"⚠️ Error criptográfico al desencriptar (posible clave incorrecta): {ex.Message}");
+                // Si falla la desencriptación, puede ser que el dato no esté encriptado o la clave sea diferente
+                // Retornar el texto original
+                return cipherText;
+            }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error al desencriptar: {ex.Message}");
+                Console.WriteLine($"⚠️ Error al desencriptar: {ex.Message}");
                 // Si falla la desencriptación, puede ser que el dato no esté encriptado (datos antiguos)
                 // Retornar el texto original
                 return cipherText;
+            }
+        }
+
+        /// <summary>
+        /// Verifica si una cadena es Base64 válido
+        /// </summary>
+        private static bool IsBase64String(string s)
+        {
+            if (string.IsNullOrEmpty(s) || s.Length % 4 != 0)
+                return false;
+
+            try
+            {
+                Convert.FromBase64String(s);
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
 

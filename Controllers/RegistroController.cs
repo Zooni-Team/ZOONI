@@ -4,6 +4,7 @@ using Zooni.Models;
 using Zooni.Utils;
 using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace Zooni.Controllers
 {
@@ -29,9 +30,44 @@ public IActionResult CrearUsuarioDesdeLogin(string correo, string contrasena)
 {
     try
     {
+        // Buscar correo (puede estar encriptado o no)
+        string correoNormalizado = correo.ToLower().Trim();
+        string correoEncrypted = EncryptionHelper.Encrypt(correoNormalizado);
+        
         string checkQuery = "SELECT TOP 1 U.Id_User FROM [User] U INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail WHERE M.Correo = @Correo";
-        var checkParams = new Dictionary<string, object> { { "@Correo", correo } };
+        var checkParams = new Dictionary<string, object> { { "@Correo", correoEncrypted } };
         object existingId = BD.ExecuteScalar(checkQuery, checkParams);
+        
+        // Si no encontró con correo encriptado, buscar desencriptando
+        if (existingId == null || existingId == DBNull.Value)
+        {
+            string queryAll = "SELECT U.Id_User, M.Correo FROM [User] U INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail";
+            DataTable dtAll = BD.ExecuteQuery(queryAll, new Dictionary<string, object>());
+            
+            foreach (DataRow row in dtAll.Rows)
+            {
+                try
+                {
+                    string correoStored = row["Correo"].ToString() ?? "";
+                    string correoDesencriptado = EncryptionHelper.Decrypt(correoStored);
+                    
+                    if (correoDesencriptado.ToLower().Trim() == correoNormalizado || 
+                        (correoDesencriptado == correoStored && correoStored.ToLower().Trim() == correoNormalizado))
+                    {
+                        existingId = row["Id_User"];
+                        break;
+                    }
+                }
+                catch
+                {
+                    if (row["Correo"].ToString()?.ToLower().Trim() == correoNormalizado)
+                    {
+                        existingId = row["Id_User"];
+                        break;
+                    }
+                }
+            }
+        }
 
         int idUser;
 
@@ -41,6 +77,9 @@ public IActionResult CrearUsuarioDesdeLogin(string correo, string contrasena)
         }
         else
         {
+            // Encriptar correo y hashear contraseña antes de guardar
+            string contrasenaHashed = PasswordHelper.HashPassword(contrasena ?? "zooni@123");
+            
             string queryMail = @"
                 INSERT INTO Mail (Correo, Contrasena, Fecha_Creacion)
                 VALUES (@Correo, @Contrasena, SYSDATETIME());
@@ -48,8 +87,8 @@ public IActionResult CrearUsuarioDesdeLogin(string correo, string contrasena)
 
             var mailParams = new Dictionary<string, object>
             {
-                { "@Correo", correo },
-                { "@Contrasena", contrasena ?? "zooni@123" }
+                { "@Correo", correoEncrypted },
+                { "@Contrasena", contrasenaHashed }
             };
 
             int idMail = Convert.ToInt32(BD.ExecuteScalar(queryMail, mailParams));
@@ -95,9 +134,44 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
         if (existingUserId != null)
             return RedirectToAction("Registro2", "Registro");
 
+        // Buscar correo (puede estar encriptado o no)
+        string correoNormalizado = correo.ToLower().Trim();
+        string correoEncrypted = EncryptionHelper.Encrypt(correoNormalizado);
+        
         string checkQuery = "SELECT TOP 1 U.Id_User FROM [User] U INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail WHERE M.Correo = @Correo";
-        var checkParams = new Dictionary<string, object> { { "@Correo", correo } };
+        var checkParams = new Dictionary<string, object> { { "@Correo", correoEncrypted } };
         object existingId = BD.ExecuteScalar(checkQuery, checkParams);
+        
+        // Si no encontró con correo encriptado, buscar desencriptando
+        if (existingId == null || existingId == DBNull.Value)
+        {
+            string queryAll = "SELECT U.Id_User, M.Correo FROM [User] U INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail";
+            DataTable dtAll = BD.ExecuteQuery(queryAll, new Dictionary<string, object>());
+            
+            foreach (DataRow row in dtAll.Rows)
+            {
+                try
+                {
+                    string correoStored = row["Correo"].ToString() ?? "";
+                    string correoDesencriptado = EncryptionHelper.Decrypt(correoStored);
+                    
+                    if (correoDesencriptado.ToLower().Trim() == correoNormalizado || 
+                        (correoDesencriptado == correoStored && correoStored.ToLower().Trim() == correoNormalizado))
+                    {
+                        existingId = row["Id_User"];
+                        break;
+                    }
+                }
+                catch
+                {
+                    if (row["Correo"].ToString()?.ToLower().Trim() == correoNormalizado)
+                    {
+                        existingId = row["Id_User"];
+                        break;
+                    }
+                }
+            }
+        }
 
         if (existingId != null && existingId != DBNull.Value)
         {
@@ -105,8 +179,11 @@ public IActionResult CrearUsuarioRapido(string correo, string contrasena)
             return RedirectToAction("Registro2", "Registro");
         }
 
-        // Encriptar correo y hashear contraseña
-        string correoEncrypted = EncryptionHelper.Encrypt((correo ?? $"temp_{Guid.NewGuid()}@zooni.app").ToLower().Trim());
+        // Encriptar correo y hashear contraseña (correoEncrypted ya está definido arriba)
+        if (string.IsNullOrEmpty(correo))
+        {
+            correoEncrypted = EncryptionHelper.Encrypt($"temp_{Guid.NewGuid()}@zooni.app");
+        }
         string contrasenaHashed = PasswordHelper.HashPassword(contrasena ?? "temp123");
         
         string queryMail = @"

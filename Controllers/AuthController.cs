@@ -63,9 +63,13 @@ namespace Zooni.Controllers
                 }
 
                 // 🔍 Buscar usuario y validar credenciales
-                // Primero buscar el usuario por correo (encriptado)
-                string correoEncrypted = EncryptionHelper.Encrypt(correo.ToLower().Trim());
+                // Intentar buscar primero con correo encriptado (si los datos están encriptados)
+                string correoNormalizado = correo.ToLower().Trim();
+                string correoEncrypted = EncryptionHelper.Encrypt(correoNormalizado);
                 
+                DataTable dt = null;
+                
+                // Primero intentar buscar con correo encriptado
                 string query = @"
                     SELECT TOP 1 
                         U.Id_User, U.Nombre, U.Apellido, 
@@ -80,9 +84,56 @@ namespace Zooni.Controllers
                     { "@Correo", correoEncrypted }
                 };
 
-                DataTable dt = BD.ExecuteQuery(query, parametros);
+                dt = BD.ExecuteQuery(query, parametros);
 
+                // Si no encontró con correo encriptado, intentar buscar todos y comparar desencriptando
                 if (dt.Rows.Count == 0)
+                {
+                    Console.WriteLine("⚠️ No se encontró con correo encriptado, intentando buscar desencriptando...");
+                    string queryAll = @"
+                        SELECT 
+                            U.Id_User, U.Nombre, U.Apellido, 
+                            M.Correo, M.Contrasena,
+                            U.Pais, U.Provincia, U.Ciudad, U.Telefono
+                        FROM [User] U
+                        INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
+                        WHERE U.Estado = 1";
+                    
+                    DataTable dtAll = BD.ExecuteQuery(queryAll, new Dictionary<string, object>());
+                    
+                    foreach (DataRow row in dtAll.Rows)
+                    {
+                        try
+                        {
+                            string correoStored = row["Correo"].ToString() ?? "";
+                            string correoDesencriptado = EncryptionHelper.Decrypt(correoStored);
+                            
+                            // Si la desencriptación devuelve el mismo texto, significa que no estaba encriptado
+                            // Comparar directamente
+                            if (correoDesencriptado.ToLower().Trim() == correoNormalizado || 
+                                (correoDesencriptado == correoStored && correoStored.ToLower().Trim() == correoNormalizado))
+                            {
+                                // Crear un DataTable con solo esta fila
+                                dt = dtAll.Clone();
+                                dt.ImportRow(row);
+                                break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"⚠️ Error al desencriptar correo: {ex.Message}");
+                            // Si falla la desencriptación, comparar directamente (puede que no esté encriptado)
+                            if (row["Correo"].ToString()?.ToLower().Trim() == correoNormalizado)
+                            {
+                                dt = dtAll.Clone();
+                                dt.ImportRow(row);
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (dt == null || dt.Rows.Count == 0)
                 {
                     ViewBag.Error = "Usuario o contraseña incorrectos.";
                     return View();
