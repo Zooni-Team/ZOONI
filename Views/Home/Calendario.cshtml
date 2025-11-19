@@ -211,6 +211,14 @@ main {
     box-shadow: 0 5px 10px rgba(0,0,0,0.25);
     transition: background .3s ease;
 }
+.boton-agregar.centrado {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: auto;
+    right: auto;
+}
 .boton-agregar:hover { background: #2fa66a; }
 
 .modal {
@@ -237,12 +245,12 @@ main {
 }
 .modal-content input, .modal-content textarea, .modal-content select {
     width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-family: inherit;
-    font-size: 0.95rem;
+    padding: 13px 16px;
+    margin-bottom: 14px;
+    border-radius: 5px;
+    border: 1.8px solid #ccc;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
 }
 .modal-content button {
     background: var(--verde);
@@ -274,12 +282,12 @@ main {
 .modal-content textarea,
 .modal-content select {
     width: 100%;
-    padding: 10px 12px;
+    padding: 13px 16px;
     margin-bottom: 14px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-family: inherit;
-    font-size: 0.95rem;
+    border-radius: 5px;
+    border: 1.8px solid #ccc;
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
     box-sizing: border-box; /* 💡 evita desbordes horizontales */
 }
 
@@ -321,7 +329,7 @@ main {
     <a href="/Home/Index">🏠 Inicio</a>
     <a href="/Home/Comunidad">👥 Comunidad</a>
     <a href="/Home/BuscarProveedores">🔍 Buscar Proveedores</a>
-    <a href="/Planificador">📅 Planificador de Servicios</a>
+    <a href="/Home/Planificador">📅 Planificador de Servicios</a>
     <a href="/Marketplace">🛒 Marketplace</a>
     <a href="/home/FichaMedica">💉 Ficha médica</a>
     <a href="/home/calendario">📅 Calendario</a>
@@ -371,7 +379,7 @@ main {
     </div>
 </main>
 
-<button class="boton-agregar" onclick="abrirModal()">＋</button>
+<button class="boton-agregar @(Model?.Eventos?.Count > 0 ? "" : "centrado")" onclick="abrirModal()">＋</button>
 
 <div id="modal" class="modal">
   <div class="modal-content">

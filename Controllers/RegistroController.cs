@@ -465,6 +465,17 @@ public IActionResult Registro3Post(string Sexo, string Raza, decimal Peso, int E
             edadFinal = Edad;
         }
 
+        // ✅ Verificar que los datos básicos de la mascota existan en sesión
+        string nombreMascota = HttpContext.Session.GetString("MascotaNombre");
+        string especieMascota = HttpContext.Session.GetString("MascotaEspecie");
+        
+        if (string.IsNullOrEmpty(nombreMascota) || string.IsNullOrEmpty(especieMascota))
+        {
+            Console.WriteLine($"❌ [REGISTRO3 POST] Faltan datos básicos de mascota - Nombre: {nombreMascota}, Especie: {especieMascota}");
+            TempData["Error"] = "Faltan datos de la mascota. Volvé a completar los pasos anteriores 🐾";
+            return RedirectToAction("Registro2");
+        }
+
         // 🧠 Guardar en sesión
         HttpContext.Session.SetString("MascotaSexo", Sexo ?? "");
         HttpContext.Session.SetString("MascotaRaza", Raza ?? "");
@@ -507,6 +518,28 @@ if (modoFinal == "nuevamascota")
         edadFinal = EdadHelper.CalcularEdadEnMeses(fechaNacimiento);
     }
 
+    // ✅ Validar que no exista una mascota con el mismo nombre y raza
+    string checkDuplicado = @"
+        SELECT COUNT(*) FROM Mascota 
+        WHERE Id_User = @U 
+          AND LOWER(LTRIM(RTRIM(Nombre))) = LOWER(LTRIM(RTRIM(@Nombre))) 
+          AND LOWER(LTRIM(RTRIM(Raza))) = LOWER(LTRIM(RTRIM(@Raza)))
+          AND (Archivada IS NULL OR Archivada = 0)";
+    
+    var paramCheck = new Dictionary<string, object>
+    {
+        { "@U", userId.Value },
+        { "@Nombre", nombre },
+        { "@Raza", raza ?? "" }
+    };
+    
+    int existeDuplicado = Convert.ToInt32(BD.ExecuteScalar(checkDuplicado, paramCheck));
+    if (existeDuplicado > 0)
+    {
+        TempData["Error"] = $"Ya tenés una mascota llamada '{nombre}' de raza '{raza}'. No se pueden tener dos mascotas con el mismo nombre y raza.";
+        return RedirectToAction("Registro3", new { modo = modoFinal });
+    }
+
     string queryInsert = @"
         INSERT INTO Mascota (Id_User, Nombre, Especie, Raza, Sexo, Peso, Edad, Foto, Fecha_Nacimiento, PesoDisplay)
         VALUES (@U, @Nombre, @Especie, @Raza, @Sexo, @Peso, @Edad, @Foto, @FechaNac, @PesoDisplay);
@@ -542,8 +575,9 @@ if (modoFinal == "nuevamascota")
 
 
 // 🔹 Si no es modo nueva mascota, continuar el registro normal
-Console.WriteLine("➡️ Redirigiendo a Registro4 (modo normal)");
-return RedirectToAction("Registro4", "Registro");
+string modoRegistroFinal = HttpContext.Session.GetString("ModoRegistro") ?? "normal";
+Console.WriteLine($"➡️ Redirigiendo a Registro4 (modo: {modoRegistroFinal})");
+return RedirectToAction("Registro4", "Registro", new { modo = modoRegistroFinal });
 
     }
     catch (Exception ex)
@@ -566,8 +600,17 @@ public IActionResult Registro4(string modo = "")
         return RedirectToAction("Registro1");
     }
 
-    var nombreMascota = HttpContext.Session.GetString("MascotaNombre") ?? "MiMascota";
-    var especie = HttpContext.Session.GetString("MascotaEspecie") ?? "Desconocida";
+    // ✅ Verificar que los datos de la mascota existan
+    var nombreMascota = HttpContext.Session.GetString("MascotaNombre");
+    var especie = HttpContext.Session.GetString("MascotaEspecie");
+    
+    if (string.IsNullOrEmpty(nombreMascota) || string.IsNullOrEmpty(especie))
+    {
+        Console.WriteLine($"❌ [REGISTRO4 GET] Faltan datos de mascota - Nombre: {nombreMascota}, Especie: {especie}");
+        TempData["Error"] = "Faltan datos de la mascota. Volvé a completar el paso anterior 🐾";
+        return RedirectToAction("Registro3", new { modo = modo });
+    }
+
     var raza = HttpContext.Session.GetString("MascotaRaza") ?? "(vacía)";
     var peso = decimal.TryParse(HttpContext.Session.GetString("MascotaPeso"), out var p) ? p : 0;
 
@@ -931,7 +974,7 @@ public IActionResult Registro5(string pais, string provincia, string ciudad, str
 
 [HttpGet]
 [Route("Registro/NuevaMascota")]
-public IActionResult NuevaMascota()
+public IActionResult NuevaMascota(string origen = "")
 {
     var userId = HttpContext.Session.GetInt32("UserId");
     if (userId == null)
@@ -942,6 +985,12 @@ public IActionResult NuevaMascota()
 
     // ✅ Establecer modo "nuevamascota" en la sesión
     HttpContext.Session.SetString("ModoRegistro", "nuevamascota");
+    
+    // ✅ Guardar origen si viene desde configuración
+    if (origen == "configuracion")
+    {
+        HttpContext.Session.SetString("OrigenRegistro", "configuracion");
+    }
     
     return View("Registro2", new Mascota());
 }
@@ -988,6 +1037,28 @@ public IActionResult NuevaMascotaPost(Mascota model)
         {
             TempData["Error"] = $"El peso ingresado es demasiado alto para un {model.Especie}";
             return RedirectToAction("Configuracion", "Home");
+        }
+
+        // ✅ Validar que no exista una mascota con el mismo nombre y raza
+        string checkDuplicado = @"
+            SELECT COUNT(*) FROM Mascota 
+            WHERE Id_User = @Id_User 
+              AND LOWER(LTRIM(RTRIM(Nombre))) = LOWER(LTRIM(RTRIM(@Nombre))) 
+              AND LOWER(LTRIM(RTRIM(Raza))) = LOWER(LTRIM(RTRIM(@Raza)))
+              AND (Archivada IS NULL OR Archivada = 0)";
+        
+        var paramCheck = new Dictionary<string, object>
+        {
+            { "@Id_User", userId.Value },
+            { "@Nombre", model.Nombre ?? "MiMascota" },
+            { "@Raza", model.Raza ?? "" }
+        };
+        
+        int existeDuplicado = Convert.ToInt32(BD.ExecuteScalar(checkDuplicado, paramCheck));
+        if (existeDuplicado > 0)
+        {
+            TempData["Error"] = $"Ya tenés una mascota llamada '{model.Nombre}' de raza '{model.Raza}'. No se pueden tener dos mascotas con el mismo nombre y raza.";
+            return RedirectToAction("NuevaMascota", "Registro");
         }
 
         // Asignar valores por defecto si no se proporcionan

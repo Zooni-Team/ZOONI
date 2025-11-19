@@ -583,7 +583,7 @@ body.tema-oscuro .modal-content input {
     <a href="/Home/Index">🏠 Inicio</a>
     <a href="/Home/Comunidad">👥 Comunidad</a>
     <a href="/Home/BuscarProveedores">🔍 Buscar Proveedores</a>
-    <a href="/Planificador">📅 Planificador de Servicios</a>
+    <a href="/Home/Planificador">📅 Planificador de Servicios</a>
     <a href="/Marketplace">🛒 Marketplace</a>
     <a href="/Home/FichaMedica">💉 Ficha médica</a>
     <a href="/Home/Calendario">📅 Calendario</a>
@@ -682,6 +682,11 @@ body.tema-oscuro .modal-content input {
         <div style="margin-bottom: 15px;">
             <label style="display: block; margin-bottom: 5px; font-weight: 600;">Teléfono de Contacto: *</label>
             <input type="text" id="inputTelefonoCartel" placeholder="Ej: +54 11 1234-5678" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd;" required />
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label style="display: block; margin-bottom: 5px; font-weight: 600;">Foto de la Mascota (opcional):</label>
+            <input type="file" id="inputFotoCartel" accept="image/*" style="width: 100%; padding: 8px; border-radius: 8px; border: 1px solid #ddd;" />
+            <small style="color: #666; font-size: 0.85rem;">Formatos aceptados: JPG, PNG, GIF</small>
         </div>
         <div class="modal-buttons">
             <button class="btn-modal btn-primary" onclick="crearCartel()">Crear Cartel</button>
@@ -1537,13 +1542,14 @@ function cargarCarteles() {
                     }).addTo(map);
                     
                     const popupContent = `
-                        <div style="padding: 8px; max-width: 250px;">
+                        <div style="padding: 8px; max-width: 300px;">
                             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                                 <span style="font-size: 20px;">${iconoEmoji}</span>
                                 <h4 style="margin: 0; font-size: 1rem; font-weight: 600;">${cartel.tipo === 'Perdida' ? 'Mascota Perdida' : 'Mascota Encontrada'}</h4>
                             </div>
+                            ${cartel.fotoCartel ? `<img src="${cartel.fotoCartel}" alt="Foto" style="width: 100%; max-height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 8px;" />` : ''}
                             ${cartel.nombreMascota ? `<p style="margin: 0 0 5px 0; font-size: 0.9rem; font-weight: 600;">🐾 ${cartel.nombreMascota}</p>` : ''}
-                            ${cartel.especieMascota ? `<p style="margin: 0 0 5px 0; font-size: 0.85rem; color: #666;">${cartel.especieMascota}</p>` : ''}
+                            ${cartel.especieMascota ? `<p style="margin: 0 0 3px 0; font-size: 0.85rem; color: #666;">${cartel.especieMascota}${cartel.razaMascota ? ` - ${cartel.razaMascota}` : ''}</p>` : ''}
                             ${cartel.descripcion ? `<p style="margin: 0 0 8px 0; font-size: 0.85rem; color: #666;">${cartel.descripcion}</p>` : ''}
                             <p style="margin: 0 0 5px 0; font-size: 0.85rem;"><strong>📞 Contacto:</strong> ${cartel.telefono}</p>
                             <p style="margin: 0 0 8px 0; font-size: 0.75rem; color: #999;">Publicado por: ${cartel.nombreUsuario}</p>
@@ -1553,7 +1559,7 @@ function cargarCarteles() {
                     `;
                     
                     const popup = L.popup({
-                        maxWidth: 250
+                        maxWidth: 300
                     }).setContent(popupContent);
                     
                     marker.bindPopup(popup);
@@ -1579,10 +1585,25 @@ function cargarMascotasParaCartel() {
             if (data.success) {
                 const select = document.getElementById('selectMascotaCartel');
                 select.innerHTML = '<option value="">Ninguna (mascota genérica)</option>';
+                
+                // Filtrar mascotas duplicadas por raza y nombre
+                const mascotasUnicas = [];
+                const mascotasVistas = new Set();
+                
                 data.mascotas.forEach(mascota => {
+                    const clave = `${mascota.nombre.toLowerCase()}_${(mascota.raza || '').toLowerCase()}`;
+                    if (!mascotasVistas.has(clave)) {
+                        mascotasVistas.add(clave);
+                        mascotasUnicas.push(mascota);
+                    }
+                });
+                
+                mascotasUnicas.forEach(mascota => {
                     const option = document.createElement('option');
                     option.value = mascota.id;
-                    option.textContent = `${mascota.nombre} (${mascota.especie})`;
+                    const razaTexto = mascota.raza ? ` - ${mascota.raza}` : '';
+                    option.textContent = `${mascota.nombre} (${mascota.especie}${razaTexto})`;
+                    option.dataset.raza = mascota.raza || '';
                     select.appendChild(option);
                 });
             }
@@ -1605,15 +1626,19 @@ function cerrarModalCartel() {
     document.getElementById('selectMascotaCartel').value = '';
     document.getElementById('textareaDescripcionCartel').value = '';
     document.getElementById('inputTelefonoCartel').value = '';
+    const fotoInput = document.getElementById('inputFotoCartel');
+    if (fotoInput) fotoInput.value = '';
     modalCartelLat = null;
     modalCartelLng = null;
 }
 
 function crearCartel() {
     const tipo = document.getElementById('selectTipoCartel').value;
-    const idMascota = document.getElementById('selectMascotaCartel').value;
+    const idMascotaSelect = document.getElementById('selectMascotaCartel');
+    const idMascota = idMascotaSelect.value;
     const descripcion = document.getElementById('textareaDescripcionCartel').value.trim();
     const telefono = document.getElementById('inputTelefonoCartel').value.trim();
+    const fotoInput = document.getElementById('inputFotoCartel');
     
     if (!telefono) {
         mostrarMensaje("El teléfono de contacto es requerido", "error");
@@ -1625,19 +1650,32 @@ function crearCartel() {
         return;
     }
     
+    // Validar que latitud y longitud sean números
+    const latitud = parseFloat(modalCartelLat);
+    const longitud = parseFloat(modalCartelLng);
+    
+    if (isNaN(latitud) || isNaN(longitud)) {
+        mostrarMensaje("Error: coordenadas inválidas", "error");
+        return;
+    }
+    
+    // Siempre usar FormData para mantener consistencia
+    const formData = new FormData();
+    formData.append('tipo', tipo);
+    formData.append('latitud', latitud.toString());
+    formData.append('longitud', longitud.toString());
+    formData.append('descripcion', descripcion);
+    formData.append('telefono', telefono);
+    formData.append('idMascota', idMascota || '');
+    
+    // Agregar foto si existe
+    if (fotoInput && fotoInput.files && fotoInput.files.length > 0) {
+        formData.append('foto', fotoInput.files[0]);
+    }
+    
     fetch('/Home/CrearCartel', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            tipo: tipo,
-            latitud: modalCartelLat,
-            longitud: modalCartelLng,
-            descripcion: descripcion,
-            telefono: telefono,
-            idMascota: idMascota || null
-        })
+        body: formData
     })
     .then(response => response.json())
     .then(data => {

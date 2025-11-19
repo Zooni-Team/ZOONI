@@ -111,7 +111,7 @@
         width: 100%;
         max-width: 320px;
         padding: 12px;
-        border-radius: 20px;
+        border-radius: 5px;
         border: 1.8px solid var(--gris-claro);
         font-size: 15px;
         text-align: center;
@@ -131,8 +131,8 @@
         color: #fff;
         border: none;
         border-radius: 25px;
-        padding: 13px 40px;
-        font-size: 1.1rem;
+        padding: 16px 40px;
+        font-size: 1.2rem;
         cursor: pointer;
         transition: 0.2s ease;
         margin-top: 18px;
@@ -243,8 +243,8 @@
     @Html.AntiForgeryToken()
 
     <div class="fila">
-        <input type="text" name="nombre" placeholder="Nombre" required autocomplete="off" value="@(ViewBag.Nombre ?? "")" />
-        <input type="text" name="apellido" placeholder="Apellido" required autocomplete="off" value="@(ViewBag.Apellido ?? "")" />
+        <input type="text" name="nombre" placeholder="Nombre" required autocomplete="off" value="@(ViewBag.Nombre ?? "")" style="padding: 16px; font-size: 16px;" />
+        <input type="text" name="apellido" placeholder="Apellido" required autocomplete="off" value="@(ViewBag.Apellido ?? "")" style="padding: 16px; font-size: 16px;" />
     </div>
 
     <input type="email" id="mail" name="mail" placeholder="Mail" required autocomplete="off" value="@(ViewBag.Mail ?? "")" onblur="verificarMail()" />

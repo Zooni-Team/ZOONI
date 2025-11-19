@@ -242,7 +242,7 @@ namespace Zooni.Controllers
         // GET: /Proveedor/Registro1
         // ============================
         [HttpGet]
-        [Route("Proveedor/Registro1")]
+        [Route("Home/Proveedor/Registro1")]
         public IActionResult Registro1()
         {
             AsegurarTablasProveedores();
@@ -458,10 +458,10 @@ namespace Zooni.Controllers
         }
 
         // ============================
-        // GET: /Proveedor/Registro2
+        // GET: /Home/Proveedor/Registro2
         // ============================
         [HttpGet]
-        [Route("Proveedor/Registro2")]
+        [Route("Home/Proveedor/Registro2")]
         public IActionResult Registro2()
         {
             AsegurarTablasProveedores();
@@ -533,11 +533,11 @@ namespace Zooni.Controllers
         }
 
         // ============================
-        // POST: /Proveedor/Registro2
+        // POST: /Home/Proveedor/Registro2
         // ============================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Proveedor/Registro2")]
+        [Route("Home/Proveedor/Registro2")]
         public IActionResult Registro2(string dni, string nombreCompleto, int experiencia, string? descripcion)
         {
             try
@@ -672,10 +672,10 @@ namespace Zooni.Controllers
         }
 
         // ============================
-        // GET: /Proveedor/Registro3
+        // GET: /Home/Proveedor/Registro3
         // ============================
         [HttpGet]
-        [Route("Proveedor/Registro3")]
+        [Route("Home/Proveedor/Registro3")]
         public IActionResult Registro3()
         {
             AsegurarTablasProveedores();

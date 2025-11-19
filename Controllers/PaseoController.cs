@@ -28,11 +28,11 @@ namespace Zooni.Controllers
         }
 
         // ============================
-        // GET: /Paseo/MapaActivos
+        // GET: /Home/Paseo/MapaActivos
         // Mapa con proveedores activos y sus mascotas
         // ============================
         [HttpGet]
-        [Route("Paseo/MapaActivos")]
+        [Route("Home/Paseo/MapaActivos")]
         public IActionResult MapaActivos()
         {
             AsegurarTablasProveedores();
@@ -42,15 +42,15 @@ namespace Zooni.Controllers
                 return RedirectToAction("Login", "Auth");
             }
 
-            return View();
+            return View("~/Views/Home/Paseo/MapaActivos.cshtml");
         }
 
         // ============================
-        // GET: /Paseo/ProveedoresActivos
+        // GET: /Home/Paseo/ProveedoresActivos
         // API para obtener proveedores con servicios activos
         // ============================
         [HttpGet]
-        [Route("Paseo/ProveedoresActivos")]
+        [Route("Home/Paseo/ProveedoresActivos")]
         public IActionResult ProveedoresActivos()
         {
             try
@@ -130,11 +130,11 @@ namespace Zooni.Controllers
         }
 
         // ============================
-        // GET: /Paseo/Tracking/{idReserva}
+        // GET: /Home/Paseo/Tracking/{idReserva}
         // Vista de tracking en tiempo real del paseo
         // ============================
         [HttpGet]
-        [Route("Paseo/Tracking/{idReserva}")]
+        [Route("Home/Paseo/Tracking/{idReserva}")]
         public IActionResult Tracking(int idReserva)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
@@ -442,11 +442,11 @@ namespace Zooni.Controllers
         }
 
         // ============================
-        // GET: /Paseo/Resumen/{idReserva}
+        // GET: /Home/Paseo/Resumen/{idReserva}
         // Vista de resumen del paseo
         // ============================
         [HttpGet]
-        [Route("Paseo/Resumen/{idReserva}")]
+        [Route("Home/Paseo/Resumen/{idReserva}")]
         public IActionResult Resumen(int idReserva)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
@@ -486,11 +486,11 @@ namespace Zooni.Controllers
 
                 ViewBag.Reserva = dt.Rows[0];
                 ViewBag.IdReserva = idReserva;
-                return View();
+                return View("~/Views/Home/Paseo/Resumen.cshtml");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("❌ Error en Paseo/Resumen: " + ex.Message);
+                Console.WriteLine("❌ Error en Home/Paseo/Resumen: " + ex.Message);
                 TempData["Error"] = "Error al cargar el resumen.";
                 return RedirectToAction("Index", "Home");
             }

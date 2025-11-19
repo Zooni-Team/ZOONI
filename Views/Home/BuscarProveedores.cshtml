@@ -451,7 +451,7 @@
         }
 
         /* Responsive */
-        @@@media (min-width: 769px) {
+        @@media (min-width: 769px) {
             header {
                 flex-wrap: nowrap;
             }
@@ -494,7 +494,7 @@
             }
         }
 
-        @@@media (max-width: 768px) {
+        @@media (max-width: 768px) {
             header {
                 padding: 10px 12px;
             }
@@ -565,7 +565,7 @@
     <!-- Header -->
     <header>
         <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
-        <button class="btn-volver" onclick="window.history.back()">‹</button>
+        <button class="btn-volver" onclick="window.history.back()">←</button>
         <div class="buscador-container">
             <input type="text" class="buscador-input" id="buscadorInput" placeholder="Buscar proveedores..." />
             <button class="btn-filtros" id="btnFiltros">
@@ -580,14 +580,14 @@
         <a href="/Home/Index">🏠 Inicio</a>
         <a href="/Home/Comunidad">👥 Comunidad</a>
         <a href="/Home/BuscarProveedores">🔍 Buscar Proveedores</a>
-        <a href="/Planificador">📅 Planificador de Servicios</a>
+        <a href="/Home/Planificador">📅 Planificador de Servicios</a>
         <a href="/Marketplace">🛒 Marketplace</a>
-        <a href="/home/FichaMedica">💉 Ficha médica</a>
-        <a href="/home/calendario">📅 Calendario</a>
+        <a href="/Home/FichaMedica">💉 Ficha médica</a>
+        <a href="/Home/Calendario">📅 Calendario</a>
         <a href="/Chat/ChatZooni">💬 ChatBot</a>
         <a href="/Home/Closet">👕 Closet</a>
         <a href="/Home/Perfil">👤 Perfil</a>
-        <a href="/Home/configuracion">⚙️ Configuración</a>
+        <a href="/Home/Configuracion">⚙️ Configuración</a>
         <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
     </div>
 
@@ -866,32 +866,63 @@
 
         // Inicializar mapa
         function initMap() {
+            if (typeof L === 'undefined') {
+                console.error('Leaflet no está cargado');
+                setTimeout(initMap, 100);
+                return;
+            }
+
+            const mapElement = document.getElementById('map');
+            if (!mapElement) {
+                console.error('Elemento #map no encontrado');
+                return;
+            }
+
+            // Si el mapa ya existe, removerlo
+            if (map) {
+                map.remove();
+            }
+
             const latInicial = userLat || -34.6037;
             const lngInicial = userLng || -58.3816;
             const zoomInicial = userLat ? 13 : 12;
 
-            map = L.map('map').setView([latInicial, lngInicial], zoomInicial);
+            try {
+                map = L.map('map').setView([latInicial, lngInicial], zoomInicial);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors',
-                maxZoom: 19
-            }).addTo(map);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 19
+                }).addTo(map);
 
-            if (userLat && userLng) {
-                agregarMarcadorUsuario(userLat, userLng);
-                actualizarCirculo();
+                if (userLat && userLng) {
+                    agregarMarcadorUsuario(userLat, userLng);
+                    actualizarCirculo();
+                }
+
+                // Esperar un poco antes de agregar marcadores para asegurar que el mapa esté renderizado
+                setTimeout(() => {
+                    agregarMarcadoresProveedores();
+                }, 200);
+
+                map.on('click', function(e) {
+                    if (isDragging) return;
+                    userLat = e.latlng.lat;
+                    userLng = e.latlng.lng;
+                    agregarMarcadorUsuario(userLat, userLng);
+                    actualizarCirculo();
+                    buscarProveedores();
+                });
+
+                // Invalidar el tamaño del mapa después de un breve delay para asegurar que se renderice correctamente
+                setTimeout(() => {
+                    if (map) {
+                        map.invalidateSize();
+                    }
+                }, 300);
+            } catch (error) {
+                console.error('Error al inicializar el mapa:', error);
             }
-
-            agregarMarcadoresProveedores();
-
-            map.on('click', function(e) {
-                if (isDragging) return;
-                userLat = e.latlng.lat;
-                userLng = e.latlng.lng;
-                agregarMarcadorUsuario(userLat, userLng);
-                actualizarCirculo();
-                buscarProveedores();
-            });
         }
 
         // Inicializar mapa de radar
@@ -1178,22 +1209,51 @@
 
         // Buscar proveedores
         function buscarProveedores() {
+            const formFiltros = document.getElementById('formFiltros');
+            if (!formFiltros) {
+                console.error('Formulario de filtros no encontrado');
+                return;
+            }
+
             const form = document.createElement('form');
             form.method = 'GET';
             form.action = '/Home/BuscarProveedores';
 
-            const params = new FormData(document.getElementById('formFiltros'));
+            const params = new FormData(formFiltros);
             
             if (userLat && userLng) {
-                form.appendChild(crearInput('latitud', userLat));
-                form.appendChild(crearInput('longitud', userLng));
+                form.appendChild(crearInput('latitud', userLat.toString()));
+                form.appendChild(crearInput('longitud', userLng.toString()));
             }
 
+            // Agregar término de búsqueda si existe
+            const buscadorInput = document.getElementById("buscadorInput");
+            if (buscadorInput && buscadorInput.value.trim()) {
+                // Si hay texto de búsqueda, buscar por nombre en lugar de filtros geográficos
+                // Por ahora lo ignoramos, pero podrías agregarlo como filtro adicional
+            }
+
+            // Agregar todos los parámetros del formulario
             params.forEach((value, key) => {
-                if (value) {
+                if (value && value !== '') {
                     form.appendChild(crearInput(key, value));
                 }
             });
+
+            // También agregar valores de los sliders directamente
+            const precioMax = document.getElementById('precioMax');
+            const calificacionMin = document.getElementById('calificacionMin');
+            const radioKmInput = document.getElementById('radioKm');
+            
+            if (precioMax && precioMax.value) {
+                form.appendChild(crearInput('precioMax', precioMax.value));
+            }
+            if (calificacionMin && calificacionMin.value) {
+                form.appendChild(crearInput('calificacionMin', calificacionMin.value));
+            }
+            if (radioKmInput && radioKmInput.value) {
+                form.appendChild(crearInput('radioKm', radioKmInput.value));
+            }
 
             document.body.appendChild(form);
             form.submit();
@@ -1220,9 +1280,32 @@
         if (buscadorInput) {
             buscadorInput.addEventListener("keypress", function(e) {
                 if (e.key === 'Enter') {
+                    e.preventDefault();
                     buscarProveedores();
                 }
             });
+            
+            // También agregar botón de búsqueda si no existe
+            if (!document.getElementById("btnBuscar")) {
+                const btnBuscar = document.createElement("button");
+                btnBuscar.id = "btnBuscar";
+                btnBuscar.className = "btn-filtros";
+                btnBuscar.innerHTML = "🔍 Buscar";
+                btnBuscar.style.marginLeft = "8px";
+                btnBuscar.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    buscarProveedores();
+                });
+                
+                // Insertar el botón antes del botón de filtros
+                const buscadorContainer = buscadorInput.parentNode;
+                if (buscadorContainer && btnFiltros) {
+                    buscadorContainer.insertBefore(btnBuscar, btnFiltros);
+                } else if (buscadorContainer) {
+                    buscadorContainer.appendChild(btnBuscar);
+                }
+            }
         }
 
         // Inicializar country-state-city
@@ -1316,14 +1399,55 @@
         }
 
         // Inicializar
-        document.addEventListener('DOMContentLoaded', function() {
+        function inicializarTodo() {
+            // Esperar a que Leaflet esté cargado
+            if (typeof L === 'undefined') {
+                setTimeout(inicializarTodo, 100);
+                return;
+            }
+            
+            // Asegurar que el contenedor del mapa existe y tiene dimensiones
+            const mapContainer = document.getElementById('map');
+            if (mapContainer && mapContainer.offsetHeight === 0) {
+                // Si el contenedor no tiene altura, esperar un poco más
+                setTimeout(inicializarTodo, 200);
+                return;
+            }
+            
             initMap();
             initCountryStateCity();
             setTimeout(() => {
                 if (userLat && userLng && radioKm > 0) {
                     actualizarMapaRadar();
                 }
+                // Forzar invalidación del tamaño del mapa después de que todo esté cargado
+                if (map) {
+                    setTimeout(() => {
+                        map.invalidateSize();
+                    }, 500);
+                }
             }, 300);
+        }
+
+        // Inicializar cuando el DOM esté listo
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', inicializarTodo);
+        } else {
+            inicializarTodo();
+        }
+        
+        // También invalidar el mapa cuando la ventana cambia de tamaño
+        window.addEventListener('resize', function() {
+            if (map) {
+                setTimeout(() => {
+                    map.invalidateSize();
+                }, 100);
+            }
+            if (mapRadar) {
+                setTimeout(() => {
+                    mapRadar.invalidateSize();
+                }, 100);
+            }
         });
     </script>
 </body>

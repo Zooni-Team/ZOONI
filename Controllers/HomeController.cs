@@ -2634,11 +2634,26 @@ public IActionResult CambiarAvatar(string avatarRuta)
                         Longitud DECIMAL(11, 8) NOT NULL,
                         Descripcion NVARCHAR(500) NULL,
                         TelefonoContacto NVARCHAR(50) NOT NULL,
+                        FotoCartel NVARCHAR(500) NULL,
+                        RazaMascota NVARCHAR(100) NULL,
                         FechaCreacion DATETIME2 NOT NULL DEFAULT GETDATE(),
                         Activo BIT NOT NULL DEFAULT 1,
                         FOREIGN KEY (Id_User) REFERENCES [User](Id_User),
                         FOREIGN KEY (Id_Mascota) REFERENCES Mascota(Id_Mascota)
                     )
+                END
+                ELSE
+                BEGIN
+                    -- Agregar columna FotoCartel si no existe
+                    IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('CartelMascota') AND name = 'FotoCartel')
+                    BEGIN
+                        ALTER TABLE CartelMascota ADD FotoCartel NVARCHAR(500) NULL;
+                    END
+                    -- Agregar columna RazaMascota si no existe
+                    IF NOT EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('CartelMascota') AND name = 'RazaMascota')
+                    BEGIN
+                        ALTER TABLE CartelMascota ADD RazaMascota NVARCHAR(100) NULL;
+                    END
                 END";
             BD.ExecuteNonQuery(query, new Dictionary<string, object>());
         }
@@ -2673,10 +2688,13 @@ public IActionResult CambiarAvatar(string avatarRuta)
                     C.Descripcion,
                     C.TelefonoContacto,
                     C.FechaCreacion,
+                    C.FotoCartel,
+                    C.RazaMascota,
                     U.Nombre + ' ' + U.Apellido AS NombreUsuario,
                     M.Nombre AS NombreMascota,
                     M.Foto AS FotoMascota,
-                    M.Especie AS EspecieMascota
+                    M.Especie AS EspecieMascota,
+                    M.Raza AS RazaMascotaBD
                 FROM CartelMascota C
                 INNER JOIN [User] U ON C.Id_User = U.Id_User
                 LEFT JOIN Mascota M ON C.Id_Mascota = M.Id_Mascota
@@ -2688,6 +2706,20 @@ public IActionResult CambiarAvatar(string avatarRuta)
             
             foreach (DataRow row in dt.Rows)
             {
+                // Usar RazaMascota del cartel si existe, sino de la mascota
+                string raza = row["RazaMascota"]?.ToString();
+                if (string.IsNullOrEmpty(raza) && row.Table.Columns.Contains("RazaMascotaBD"))
+                {
+                    raza = row["RazaMascotaBD"]?.ToString();
+                }
+                
+                // Usar FotoCartel si existe, sino FotoMascota
+                string foto = row["FotoCartel"]?.ToString();
+                if (string.IsNullOrEmpty(foto))
+                {
+                    foto = row["FotoMascota"]?.ToString() ?? "/img/mascotas/default.png";
+                }
+                
                 carteles.Add(new
                 {
                     id = Convert.ToInt32(row["Id_Cartel"]),
@@ -2702,7 +2734,9 @@ public IActionResult CambiarAvatar(string avatarRuta)
                     nombreUsuario = row["NombreUsuario"].ToString(),
                     nombreMascota = row["NombreMascota"]?.ToString(),
                     fotoMascota = row["FotoMascota"]?.ToString() ?? "/img/mascotas/default.png",
+                    fotoCartel = foto,
                     especieMascota = row["EspecieMascota"]?.ToString(),
+                    razaMascota = raza,
                     esMio = Convert.ToInt32(row["Id_User"]) == userId.Value
                 });
             }
@@ -2720,7 +2754,7 @@ public IActionResult CambiarAvatar(string avatarRuta)
     // POST: Crear cartel de mascota
     // ============================
     [HttpPost]
-    public IActionResult CrearCartel([FromBody] dynamic request)
+    public async Task<IActionResult> CrearCartel()
     {
         var userId = HttpContext.Session.GetInt32("UserId");
         if (userId == null)
@@ -2730,12 +2764,63 @@ public IActionResult CambiarAvatar(string avatarRuta)
         {
             AsegurarTablaCartelesMascota();
             
-            string tipo = request.tipo?.ToString() ?? "Perdida";
-            decimal latitud = Convert.ToDecimal(request.latitud);
-            decimal longitud = Convert.ToDecimal(request.longitud);
-            string descripcion = request.descripcion?.ToString() ?? "";
-            string telefono = request.telefono?.ToString() ?? "";
-            int? idMascota = request.idMascota != null ? Convert.ToInt32(request.idMascota) : (int?)null;
+            string tipo = "";
+            decimal latitud = 0;
+            decimal longitud = 0;
+            string descripcion = "";
+            string telefono = "";
+            int? idMascota = null;
+            string razaMascota = null;
+            string fotoCartel = null;
+            
+            // Verificar si es FormData (con foto) o JSON
+            if (Request.HasFormContentType)
+            {
+                tipo = Request.Form["tipo"].ToString();
+                latitud = decimal.Parse(Request.Form["latitud"].ToString());
+                longitud = decimal.Parse(Request.Form["longitud"].ToString());
+                descripcion = Request.Form["descripcion"].ToString();
+                telefono = Request.Form["telefono"].ToString();
+                var idMascotaStr = Request.Form["idMascota"].ToString();
+                if (!string.IsNullOrEmpty(idMascotaStr))
+                {
+                    idMascota = int.Parse(idMascotaStr);
+                }
+                
+                // Procesar foto si existe
+                if (Request.Form.Files.Count > 0 && Request.Form.Files["foto"] != null && Request.Form.Files["foto"].Length > 0)
+                {
+                    var file = Request.Form.Files["foto"];
+                    var uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "carteles");
+                    if (!Directory.Exists(uploadsFolder))
+                    {
+                        Directory.CreateDirectory(uploadsFolder);
+                    }
+                    
+                    var fileExtension = Path.GetExtension(file.FileName);
+                    var uniqueFileName = $"{userId}_{DateTime.Now.Ticks}{fileExtension}";
+                    var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                    
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    
+                    fotoCartel = $"/uploads/carteles/{uniqueFileName}";
+                }
+            }
+            else
+            {
+                // Es JSON
+                var request = await System.Text.Json.JsonSerializer.DeserializeAsync<System.Text.Json.JsonElement>(Request.Body);
+                tipo = request.TryGetProperty("tipo", out var tipoProp) ? tipoProp.GetString() ?? "Perdida" : "Perdida";
+                latitud = request.TryGetProperty("latitud", out var latProp) ? latProp.GetDecimal() : 0;
+                longitud = request.TryGetProperty("longitud", out var lngProp) ? lngProp.GetDecimal() : 0;
+                descripcion = request.TryGetProperty("descripcion", out var descProp) ? descProp.GetString() ?? "" : "";
+                telefono = request.TryGetProperty("telefono", out var telProp) ? telProp.GetString() ?? "" : "";
+                idMascota = request.TryGetProperty("idMascota", out var mascotaProp) && mascotaProp.ValueKind != System.Text.Json.JsonValueKind.Null 
+                    ? mascotaProp.GetInt32() : (int?)null;
+            }
             
             if (string.IsNullOrWhiteSpace(telefono))
             {
@@ -2747,9 +2832,24 @@ public IActionResult CambiarAvatar(string avatarRuta)
                 return Json(new { success = false, message = "Tipo inválido" });
             }
             
+            // Obtener raza de la mascota si existe
+            if (idMascota.HasValue)
+            {
+                string razaQuery = "SELECT Raza FROM Mascota WHERE Id_Mascota = @IdMascota AND Id_User = @IdUser";
+                var razaResult = BD.ExecuteScalar(razaQuery, new Dictionary<string, object>
+                {
+                    { "@IdMascota", idMascota.Value },
+                    { "@IdUser", userId.Value }
+                });
+                if (razaResult != null && razaResult != DBNull.Value)
+                {
+                    razaMascota = razaResult.ToString();
+                }
+            }
+            
             string query = @"
-                INSERT INTO CartelMascota (Id_User, Id_Mascota, Tipo, Latitud, Longitud, Descripcion, TelefonoContacto)
-                VALUES (@IdUser, @IdMascota, @Tipo, @Latitud, @Longitud, @Descripcion, @Telefono)";
+                INSERT INTO CartelMascota (Id_User, Id_Mascota, Tipo, Latitud, Longitud, Descripcion, TelefonoContacto, FotoCartel, RazaMascota)
+                VALUES (@IdUser, @IdMascota, @Tipo, @Latitud, @Longitud, @Descripcion, @Telefono, @FotoCartel, @RazaMascota)";
             
             var param = new Dictionary<string, object>
             {
@@ -2759,10 +2859,12 @@ public IActionResult CambiarAvatar(string avatarRuta)
                 { "@Latitud", latitud },
                 { "@Longitud", longitud },
                 { "@Descripcion", descripcion },
-                { "@Telefono", telefono }
+                { "@Telefono", telefono },
+                { "@FotoCartel", string.IsNullOrEmpty(fotoCartel) ? DBNull.Value : (object)fotoCartel },
+                { "@RazaMascota", string.IsNullOrEmpty(razaMascota) ? DBNull.Value : (object)razaMascota }
             };
             
-                BD.ExecuteNonQuery(query, param);
+            BD.ExecuteNonQuery(query, param);
             
             // Crear notificaciones para usuarios cercanos
             NotificarCartelCercano(latitud, longitud, tipo, userId.Value);
@@ -3041,18 +3143,23 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
             AsegurarTablaApodoAmigo();
             AsegurarColumnasEstadoOnline();
 
+            // Verificar si la tabla ProveedorServicio existe
+            string checkTable = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ProveedorServicio'";
+            object? tableExists = BD.ExecuteScalar(checkTable);
+            bool tieneProveedorServicio = tableExists != null && Convert.ToInt32(tableExists) > 0;
+
             // Obtener amigos del círculo de confianza (solo los que tienen solicitud aceptada)
             // Verificar que existe una invitación aceptada o están en CirculoConfianza
             // Solo mostrar ubicación según el estado de MostrableUbicacion (nadie/amigos/todos)
             // Por defecto es 'amigos' si no está configurado
-            string qAmigos = @"
+            string qAmigos = $@"
                 SELECT DISTINCT
                     U.Id_User,
                     U.Nombre + ' ' + U.Apellido as NombreCompleto,
-                    ISNULL(PS.NombreCompleto, U.Nombre + ' ' + U.Apellido) as NombreMostrar,
-                    ISNULL(PS.FotoPerfil, P.FotoPerfil) as FotoPerfil,
-                    ISNULL(PS.Latitud, UB.Latitud) as Lat,
-                    ISNULL(PS.Longitud, UB.Longitud) as Lng,
+                    {(tieneProveedorServicio ? "ISNULL(PS.NombreCompleto, U.Nombre + ' ' + U.Apellido)" : "U.Nombre + ' ' + U.Apellido")} as NombreMostrar,
+                    {(tieneProveedorServicio ? "ISNULL(PS.FotoPerfil, P.FotoPerfil)" : "P.FotoPerfil")} as FotoPerfil,
+                    {(tieneProveedorServicio ? "ISNULL(PS.Latitud, UB.Latitud)" : "UB.Latitud")} as Lat,
+                    {(tieneProveedorServicio ? "ISNULL(PS.Longitud, UB.Longitud)" : "UB.Longitud")} as Lng,
                     (SELECT TOP 1 Nombre FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaNombre,
                     (SELECT TOP 1 Foto FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaFoto,
                     (SELECT TOP 1 Especie FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaEspecie,
@@ -3064,7 +3171,7 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                         ELSE 0
                     END as EstaOnline,
                     U.UltimaActividad,
-                    CASE WHEN PS.Id_Proveedor IS NOT NULL THEN 1 ELSE 0 END as EsProveedor
+                    {(tieneProveedorServicio ? "CASE WHEN PS.Id_Proveedor IS NOT NULL THEN 1 ELSE 0 END" : "0")} as EsProveedor
                 FROM (
                     SELECT Id_Amigo as Id_User FROM CirculoConfianza WHERE Id_User = @UserId
                     UNION
@@ -3076,11 +3183,11 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                 ) AS AmigosIds
                 INNER JOIN [User] U ON AmigosIds.Id_User = U.Id_User
                 LEFT JOIN Perfil P ON P.Id_Usuario = U.Id_User
-                LEFT JOIN ProveedorServicio PS ON PS.Id_User = U.Id_User
+                {(tieneProveedorServicio ? "LEFT JOIN ProveedorServicio PS ON PS.Id_User = U.Id_User" : "")}
                 LEFT JOIN Ubicacion UB ON UB.Id_Ubicacion = U.Id_Ubicacion
                 LEFT JOIN ConfiguracionUsuario CU ON CU.Id_User = U.Id_User
                 WHERE U.Estado = 1
-                AND (ISNULL(CU.MostrableUbicacion, 'amigos') IN ('amigos', 'todos') OR PS.Id_Proveedor IS NOT NULL)";
+                AND (ISNULL(CU.MostrableUbicacion, 'amigos') IN ('amigos', 'todos'){(tieneProveedorServicio ? " OR PS.Id_Proveedor IS NOT NULL" : "")})";
 
         var dtAmigos = BD.ExecuteQuery(qAmigos, new Dictionary<string, object> { { "@UserId", userId.Value } });
 
@@ -3278,7 +3385,7 @@ public IActionResult AgregarAmigo([FromBody] AgregarAmigoRequest request)
             "Nueva solicitud de amistad",
             $"{nombreEmisor} te envió una solicitud de amistad",
             amigoId,
-            "/Home/Mensajes"
+            "/Home/Comunidad"
         );
 
         return Json(new { success = true, message = "Solicitud de amistad enviada" });
@@ -3377,20 +3484,25 @@ public IActionResult BuscarUsuarios(string query)
 
         try
         {
+            // Verificar si la tabla ProveedorServicio existe
+            string checkTable = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ProveedorServicio'";
+            object? tableExists = BD.ExecuteScalar(checkTable);
+            bool tieneProveedorServicio = tableExists != null && Convert.ToInt32(tableExists) > 0;
+
             // Obtener usuarios sugeridos (dueños de mascotas y proveedores)
-            string query = @"
+            string query = $@"
                 SELECT TOP 10
                     U.Id_User as id,
                     U.Nombre + ' ' + U.Apellido as nombre,
                     M.Correo as email,
-                    ISNULL(PR.FotoPerfil, PS.FotoPerfil) as fotoPerfil,
+                    {(tieneProveedorServicio ? "ISNULL(PR.FotoPerfil, PS.FotoPerfil)" : "PR.FotoPerfil")} as fotoPerfil,
                     ISNULL((SELECT TOP 1 Nombre FROM Mascota WHERE Id_User = U.Id_User), 'Sin mascota') as mascotaNombre,
-                    CASE WHEN PS.Id_Proveedor IS NOT NULL THEN 1 ELSE 0 END as esProveedor,
-                    PS.NombreCompleto as nombreProveedor
+                    {(tieneProveedorServicio ? "CASE WHEN PS.Id_Proveedor IS NOT NULL THEN 1 ELSE 0 END" : "0")} as esProveedor,
+                    {(tieneProveedorServicio ? "PS.NombreCompleto" : "NULL")} as nombreProveedor
                 FROM [User] U
                 INNER JOIN Mail M ON U.Id_Mail = M.Id_Mail
                 LEFT JOIN Perfil PR ON PR.Id_Usuario = U.Id_User
-                LEFT JOIN ProveedorServicio PS ON PS.Id_User = U.Id_User
+                {(tieneProveedorServicio ? "LEFT JOIN ProveedorServicio PS ON PS.Id_User = U.Id_User" : "")}
                 WHERE U.Id_User != @UserId
                   AND U.Id_User NOT IN (
                       SELECT Id_Amigo FROM CirculoConfianza WHERE Id_User = @UserId
@@ -3406,7 +3518,8 @@ public IActionResult BuscarUsuarios(string query)
             var sugeridos = new List<object>();
             foreach (System.Data.DataRow row in dt.Rows)
             {
-                string nombreMostrar = row["esProveedor"].ToString() == "1" && row["nombreProveedor"] != DBNull.Value
+                bool esProveedor = tieneProveedorServicio && Convert.ToInt32(row["esProveedor"]) == 1;
+                string nombreMostrar = esProveedor && row["nombreProveedor"] != DBNull.Value && row["nombreProveedor"] != null
                     ? row["nombreProveedor"].ToString()
                     : row["nombre"].ToString();
                 
@@ -3417,7 +3530,7 @@ public IActionResult BuscarUsuarios(string query)
                     email = row["email"].ToString(),
                     fotoPerfil = row["fotoPerfil"]?.ToString() ?? "/img/perfil/default.png",
                     mascotaNombre = row["mascotaNombre"]?.ToString() ?? "Sin mascota",
-                    esProveedor = Convert.ToInt32(row["esProveedor"]) == 1
+                    esProveedor = esProveedor
                 });
             }
             
@@ -3907,7 +4020,8 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
 
         try
         {
-            // Verificar que el amigo existe en el círculo de confianza o invitación aceptada
+            // Verificar que el usuario existe y es amigo o proveedor
+            // Permitir chat con amigos o con proveedores (sin necesidad de ser amigos)
             string qVerificar = @"
                 SELECT COUNT(*) FROM (
                     SELECT Id_Amigo as Id_User FROM CirculoConfianza WHERE Id_User = @UserId AND Id_Amigo = @AmigoId
@@ -3917,7 +4031,10 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                     UNION
                     SELECT Id_Emisor as Id_User FROM Invitacion 
                     WHERE Id_Receptor = @UserId AND Id_Emisor = @AmigoId AND Rol = 'Amigo' AND Estado = 'Aceptada'
-                ) AS Amigos";
+                    UNION
+                    -- Permitir chat con proveedores
+                    SELECT PS.Id_User FROM ProveedorServicio PS WHERE PS.Id_User = @AmigoId AND PS.Estado = 1
+                ) AS Usuarios";
 
             int existe = Convert.ToInt32(BD.ExecuteScalar(qVerificar, new Dictionary<string, object>
             {
@@ -5057,28 +5174,29 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
     {
         try
         {
-            // Buscar usuarios cercanos (dentro de 5 km)
+            // Buscar usuarios cercanos (dentro de 5 km) usando la tabla Ubicacion
             string query = @"
                 SELECT DISTINCT U.Id_User, U.Nombre + ' ' + U.Apellido as NombreCompleto
                 FROM [User] U
+                INNER JOIN Ubicacion UB ON U.Id_Ubicacion = UB.Id_Ubicacion
                 WHERE U.Id_User != @IdUsuarioCreador
-                  AND U.Latitud IS NOT NULL 
-                  AND U.Longitud IS NOT NULL
+                  AND UB.Latitud IS NOT NULL 
+                  AND UB.Longitud IS NOT NULL
                   AND (
                       6371 * acos(
-                          cos(radians(@Latitud)) * 
-                          cos(radians(CAST(U.Latitud AS FLOAT))) * 
-                          cos(radians(CAST(U.Longitud AS FLOAT)) - radians(@Longitud)) + 
-                          sin(radians(@Latitud)) * 
-                          sin(radians(CAST(U.Latitud AS FLOAT)))
+                          cos(radians(CAST(@Latitud AS FLOAT))) * 
+                          cos(radians(CAST(UB.Latitud AS FLOAT))) * 
+                          cos(radians(CAST(UB.Longitud AS FLOAT)) - radians(CAST(@Longitud AS FLOAT))) + 
+                          sin(radians(CAST(@Latitud AS FLOAT))) * 
+                          sin(radians(CAST(UB.Latitud AS FLOAT)))
                       )
                   ) <= 5";
 
             DataTable dt = BD.ExecuteQuery(query, new Dictionary<string, object>
             {
                 { "@IdUsuarioCreador", idUsuarioCreador },
-                { "@Latitud", (double)latitud },
-                { "@Longitud", (double)longitud }
+                { "@Latitud", latitud },
+                { "@Longitud", longitud }
             });
 
             string tipoMensaje = tipo == "Perdida" ? "perdida" : "encontrada";
@@ -5096,6 +5214,8 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                     "/Home/Comunidad"
                 );
             }
+            
+            Console.WriteLine($"✅ Notificaciones enviadas a {dt.Rows.Count} usuarios cercanos");
         }
         catch (Exception ex)
         {
@@ -5505,15 +5625,25 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
         // ============================
         [HttpPost]
         [Route("Home/CrearReserva")]
-        public IActionResult CrearReserva(int idProveedor, int idMascota, int idTipoServicio, DateTime fechaInicio, TimeSpan horaInicio, decimal? duracionHoras, string? notas)
+        public IActionResult CrearReserva([FromBody] System.Text.Json.JsonElement request)
         {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+                return Json(new { success = false, message = "No autenticado" });
+
             try
             {
-                var userId = HttpContext.Session.GetInt32("UserId");
-                if (userId == null)
-                {
-                    return Json(new { success = false, message = "No autorizado" });
-                }
+                int idProveedor = request.TryGetProperty("idProveedor", out var provProp) ? provProp.GetInt32() : 0;
+                int idMascota = request.TryGetProperty("idMascota", out var mascProp) ? mascProp.GetInt32() : 0;
+                int idTipoServicio = request.TryGetProperty("idTipoServicio", out var tipoProp) ? tipoProp.GetInt32() : 0;
+                DateTime fechaInicio = request.TryGetProperty("fechaInicio", out var fechaProp) ? DateTime.Parse(fechaProp.GetString() ?? "") : DateTime.Now;
+                TimeSpan horaInicio = request.TryGetProperty("horaInicio", out var horaProp) ? TimeSpan.Parse(horaProp.GetString() ?? "") : TimeSpan.Zero;
+                decimal duracionHoras = request.TryGetProperty("duracionHoras", out var durProp) ? durProp.GetDecimal() : 1.0M;
+                string? notas = request.TryGetProperty("notas", out var notasProp) ? notasProp.GetString() : null;
+                string? direccionServicio = request.TryGetProperty("direccionServicio", out var dirProp) ? dirProp.GetString() : null;
+                decimal? latitudServicio = request.TryGetProperty("latitudServicio", out var latProp) && latProp.ValueKind != System.Text.Json.JsonValueKind.Null ? latProp.GetDecimal() : null;
+                decimal? longitudServicio = request.TryGetProperty("longitudServicio", out var lngProp) && lngProp.ValueKind != System.Text.Json.JsonValueKind.Null ? lngProp.GetDecimal() : null;
+                bool compartirUbicacion = request.TryGetProperty("compartirUbicacion", out var compProp) ? compProp.GetBoolean() : false;
 
                 // Obtener precio del proveedor
                 string precioQuery = "SELECT Precio_Hora FROM ProveedorServicio WHERE Id_Proveedor = @IdProveedor";
@@ -5524,17 +5654,47 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                     precioHora = Convert.ToDecimal(precioDt.Rows[0]["Precio_Hora"]);
                 }
 
-                decimal duracion = duracionHoras ?? 1.0M;
-                decimal precioTotal = precioHora * duracion;
+                decimal precioTotal = precioHora * duracionHoras;
+
+                // Verificar disponibilidad
+                string checkDisponibilidad = @"
+                    SELECT COUNT(*) 
+                    FROM ReservaProveedor
+                    WHERE Id_Proveedor = @IdProveedor
+                      AND CAST(Fecha_Inicio AS DATE) = @Fecha
+                      AND Id_EstadoReserva IN (1, 2, 3)
+                      AND (
+                          (@HoraInicio >= Hora_Inicio AND @HoraInicio < DATEADD(HOUR, Duracion_Horas, Hora_Inicio))
+                          OR (DATEADD(HOUR, @Duracion, @HoraInicio) > Hora_Inicio AND DATEADD(HOUR, @Duracion, @HoraInicio) <= DATEADD(HOUR, Duracion_Horas, Hora_Inicio))
+                          OR (@HoraInicio <= Hora_Inicio AND DATEADD(HOUR, @Duracion, @HoraInicio) >= DATEADD(HOUR, Duracion_Horas, Hora_Inicio))
+                      )";
+                
+                int conflictos = Convert.ToInt32(BD.ExecuteScalar(checkDisponibilidad, new Dictionary<string, object>
+                {
+                    { "@IdProveedor", idProveedor },
+                    { "@Fecha", fechaInicio.Date },
+                    { "@HoraInicio", horaInicio },
+                    { "@Duracion", duracionHoras }
+                }));
+
+                if (conflictos > 0)
+                {
+                    return Json(new { success = false, message = "El proveedor no está disponible en ese horario" });
+                }
 
                 // Crear reserva
                 string insertQuery = @"
                     INSERT INTO ReservaProveedor 
-                    (Id_User, Id_Proveedor, Id_Mascota, Id_TipoServicio, Fecha_Inicio, Hora_Inicio, Duracion_Horas, Precio_Total, Id_EstadoReserva, Notas, Fecha_Creacion)
+                    (Id_User, Id_Proveedor, Id_Mascota, Id_TipoServicio, Fecha_Inicio, Hora_Inicio, Duracion_Horas, 
+                     Precio_Total, Id_EstadoReserva, Notas, Direccion_Servicio, Latitud_Servicio, Longitud_Servicio, 
+                     Compartir_Ubicacion, Fecha_Creacion)
                     VALUES 
-                    (@IdUser, @IdProveedor, @IdMascota, @IdTipoServicio, @FechaInicio, @HoraInicio, @DuracionHoras, @PrecioTotal, 1, @Notas, GETDATE())";
+                    (@IdUser, @IdProveedor, @IdMascota, @IdTipoServicio, @FechaInicio, @HoraInicio, @DuracionHoras, 
+                     @PrecioTotal, 1, @Notas, @DireccionServicio, @LatitudServicio, @LongitudServicio, 
+                     @CompartirUbicacion, GETDATE());
+                    SELECT CAST(SCOPE_IDENTITY() AS INT);";
                 
-                BD.ExecuteNonQuery(insertQuery, new Dictionary<string, object>
+                int idReserva = Convert.ToInt32(BD.ExecuteScalar(insertQuery, new Dictionary<string, object>
                 {
                     { "@IdUser", userId.Value },
                     { "@IdProveedor", idProveedor },
@@ -5542,14 +5702,18 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                     { "@IdTipoServicio", idTipoServicio },
                     { "@FechaInicio", fechaInicio },
                     { "@HoraInicio", horaInicio },
-                    { "@DuracionHoras", duracion },
+                    { "@DuracionHoras", duracionHoras },
                     { "@PrecioTotal", precioTotal },
-                    { "@Notas", notas ?? "" }
-                });
+                    { "@Notas", notas ?? "" },
+                    { "@DireccionServicio", direccionServicio ?? (object)DBNull.Value },
+                    { "@LatitudServicio", latitudServicio ?? (object)DBNull.Value },
+                    { "@LongitudServicio", longitudServicio ?? (object)DBNull.Value },
+                    { "@CompartirUbicacion", compartirUbicacion }
+                }));
 
                 // Obtener información del proveedor para la notificación
                 string qProveedor = @"
-                    SELECT PS.Id_User, PS.NombreCompleto, TS.Descripcion as TipoServicio
+                    SELECT PS.Id_User, TS.Descripcion as TipoServicio
                     FROM ProveedorServicio PS
                     INNER JOIN TipoServicio TS ON @IdTipoServicio = TS.Id_TipoServicio
                     WHERE PS.Id_Proveedor = @IdProveedor";
@@ -5576,11 +5740,48 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                     );
                 }
 
-                return Json(new { success = true, message = "Reserva creada exitosamente" });
+                return Json(new { success = true, idReserva = idReserva, message = "Reserva creada exitosamente" });
             }
             catch (Exception ex)
             {
                 Console.WriteLine("❌ Error en Home/CrearReserva: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // ============================
+        // POST: /Home/CancelarReserva
+        // ============================
+        [HttpPost]
+        [Route("Home/CancelarReserva")]
+        public IActionResult CancelarReserva([FromBody] System.Text.Json.JsonElement request)
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+                return Json(new { success = false, message = "No autenticado" });
+
+            try
+            {
+                int idReserva = request.TryGetProperty("idReserva", out var idProp) ? idProp.GetInt32() : 0;
+
+                // Verificar que la reserva pertenece al usuario
+                string verificarQuery = "SELECT Id_User FROM ReservaProveedor WHERE Id_Reserva = @IdReserva";
+                object? idUserResult = BD.ExecuteScalar(verificarQuery, new Dictionary<string, object> { { "@IdReserva", idReserva } });
+                
+                if (idUserResult == null || Convert.ToInt32(idUserResult) != userId.Value)
+                {
+                    return Json(new { success = false, message = "No autorizado" });
+                }
+
+                // Actualizar estado a Cancelada (5)
+                string updateQuery = "UPDATE ReservaProveedor SET Id_EstadoReserva = 5 WHERE Id_Reserva = @IdReserva";
+                BD.ExecuteNonQuery(updateQuery, new Dictionary<string, object> { { "@IdReserva", idReserva } });
+
+                return Json(new { success = true, message = "Reserva cancelada exitosamente" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error CancelarReserva: " + ex.Message);
                 return Json(new { success = false, message = ex.Message });
             }
         }
@@ -5668,7 +5869,9 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                         P.Id_Proveedor,
                         P.NombreCompleto,
                         P.Precio_Hora,
-                        P.Estado
+                        P.Estado,
+                        P.FotoPerfil,
+                        P.Calificacion_Promedio
                     FROM ProveedorServicio P
                     WHERE P.Estado = 1
                     ORDER BY P.NombreCompleto ASC";
@@ -5682,7 +5885,9 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                     {
                         id = Convert.ToInt32(row["Id_Proveedor"]),
                         nombre = EncryptionHelper.Decrypt(row["NombreCompleto"].ToString() ?? ""),
-                        precioHora = row["Precio_Hora"] != DBNull.Value ? Convert.ToDecimal(row["Precio_Hora"]) : 0
+                        precioHora = row["Precio_Hora"] != DBNull.Value ? Convert.ToDecimal(row["Precio_Hora"]) : (decimal?)null,
+                        fotoPerfil = row["FotoPerfil"]?.ToString() ?? null,
+                        calificacion = row["Calificacion_Promedio"] != DBNull.Value ? Convert.ToDouble(row["Calificacion_Promedio"]) : (double?)null
                     });
                 }
                 

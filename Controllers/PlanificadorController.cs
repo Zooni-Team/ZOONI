@@ -14,6 +14,7 @@ namespace Zooni.Controllers
         // GET: Planificador de Servicios
         // ============================
         [HttpGet]
+        [Route("Home/Planificador")]
         public IActionResult Index()
         {
             var userId = HttpContext.Session.GetInt32("UserId");
@@ -58,6 +59,7 @@ namespace Zooni.Controllers
                         M.Nombre AS MascotaNombre,
                         M.Especie AS MascotaEspecie,
                         PS.NombreCompleto AS ProveedorNombre,
+                        PS.Id_Proveedor,
                         TS.Descripcion AS TipoServicio,
                         RP.Notas
                     FROM ReservaProveedor RP
@@ -91,7 +93,7 @@ namespace Zooni.Controllers
                 ViewBag.Favoritos = favoritosDt;
 
                 ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
-                return View();
+                return View("~/Views/Home/Planificador/Index.cshtml");
             }
             catch (Exception ex)
             {

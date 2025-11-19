@@ -240,7 +240,7 @@
             background-color: #5a6268;
         }
 
-        @@@media (max-width: 768px) {
+        @@media (max-width: 768px) {
             .proveedor-header {
                 flex-direction: column;
             }
@@ -411,7 +411,8 @@
 <script>
 async function iniciarChat(idProveedorUser) {
     try {
-        const response = await fetch('/Home/ObtenerOCrearChatProveedor', {
+        // Usar el mismo sistema de chat que los amigos
+        const response = await fetch('/Home/ObtenerOCrearChat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

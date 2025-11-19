@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Net.Mail;
 using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace Zooni.Models
 {
     public static class EmailHelper
     {
-        // Validar formato de email
+        // Validar formato de email usando MailAddress (más robusto y conforme a RFC 5322)
         public static bool ValidarFormatoEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
@@ -16,12 +17,43 @@ namespace Zooni.Models
 
             try
             {
-                // Regex para validar formato de email
-                string pattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
-                return Regex.IsMatch(email.Trim(), pattern, RegexOptions.IgnoreCase);
+                email = email.Trim();
+                
+                // Usar MailAddress que es el método estándar de .NET para validar emails
+                // Es más robusto que regex y acepta formatos válidos según RFC 5322
+                var mailAddress = new MailAddress(email);
+                
+                // Verificar que el dominio tenga al menos un punto (ej: gmail.com)
+                // y que la parte local no esté vacía
+                if (string.IsNullOrWhiteSpace(mailAddress.Address) || 
+                    string.IsNullOrWhiteSpace(mailAddress.User) ||
+                    !mailAddress.Host.Contains("."))
+                {
+                    return false;
+                }
+                
+                // Verificar que el dominio tenga una extensión válida (al menos 2 caracteres)
+                string[] dominioPartes = mailAddress.Host.Split('.');
+                if (dominioPartes.Length < 2 || dominioPartes[dominioPartes.Length - 1].Length < 2)
+                {
+                    return false;
+                }
+                
+                return true;
+            }
+            catch (FormatException)
+            {
+                // MailAddress lanza FormatException si el formato no es válido
+                return false;
+            }
+            catch (ArgumentException)
+            {
+                // MailAddress lanza ArgumentException si la dirección es null o vacía
+                return false;
             }
             catch
             {
+                // Cualquier otra excepción, considerar inválido
                 return false;
             }
         }
@@ -34,8 +66,18 @@ namespace Zooni.Models
 
             try
             {
-                // Extraer dominio del email
-                string dominio = email.Split('@')[1].ToLower();
+                email = email.Trim();
+                
+                // Verificar que el email tenga el formato correcto antes de extraer el dominio
+                if (!email.Contains("@"))
+                    return false;
+                
+                // Extraer dominio del email de forma segura
+                string[] partes = email.Split('@');
+                if (partes.Length != 2 || string.IsNullOrWhiteSpace(partes[1]))
+                    return false;
+                
+                string dominio = partes[1].ToLower();
 
                 // Lista de dominios comunes de email válidos
                 string[] dominiosValidos = {
@@ -90,7 +132,16 @@ namespace Zooni.Models
 
             try
             {
-                string dominio = email.Split('@')[1].ToLower();
+                email = email.Trim();
+                
+                if (!email.Contains("@"))
+                    return false;
+                
+                string[] partes = email.Split('@');
+                if (partes.Length != 2 || string.IsNullOrWhiteSpace(partes[1]))
+                    return false;
+                
+                string dominio = partes[1].ToLower();
                 return dominio == "gmail.com" || dominio == "googlemail.com";
             }
             catch

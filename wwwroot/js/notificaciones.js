@@ -42,10 +42,16 @@ function actualizarBadgeNotificaciones() {
     }
 }
 
+// Variable global para almacenar notificaciones
+let notificacionesGlobales = [];
+
 // Mostrar notificaciones en el panel
 function mostrarNotificacionesEnPanel(notificaciones) {
     const container = document.getElementById('notificacionesList');
     if (!container) return;
+
+    // Guardar notificaciones globalmente para acceso en eventos
+    notificacionesGlobales = notificaciones;
 
     if (notificaciones.length === 0) {
         container.innerHTML = '<div class="notificacion-vacia">No tenés notificaciones</div>';
@@ -57,8 +63,18 @@ function mostrarNotificacionesEnPanel(notificaciones) {
         const fecha = formatearFecha(notif.fecha);
         const claseLeida = notif.leida ? 'leida' : '';
         
+        // Determinar URL para el botón Ver
+        let urlVer = '';
+        if (notif.tipo === 'Mensaje' && notif.idReferencia) {
+            urlVer = `/Home/Mensajes?amigoId=${notif.idReferencia}`;
+        } else if (notif.tipo === 'SolicitudAmistad') {
+            urlVer = '/Home/Comunidad';
+        } else if (notif.url) {
+            urlVer = notif.url;
+        }
+        
         return `
-            <div class="notificacion-item ${claseLeida}" data-id="${notif.id}">
+            <div class="notificacion-item ${claseLeida}" data-id="${notif.id}" data-tipo="${notif.tipo}" data-id-referencia="${notif.idReferencia || ''}" data-url="${notif.url || ''}">
                 <div class="notificacion-icono">${icono}</div>
                 <div class="notificacion-contenido">
                     <div class="notificacion-titulo">${notif.titulo}</div>
@@ -66,18 +82,45 @@ function mostrarNotificacionesEnPanel(notificaciones) {
                     <div class="notificacion-fecha">${fecha}</div>
                 </div>
                 <div class="notificacion-acciones">
-                    ${notif.url ? `<a href="${notif.url}" class="btn-notif-ver">Ver</a>` : ''}
-                    <button class="btn-notif-eliminar" onclick="eliminarNotificacion(${notif.id})" title="Eliminar">✕</button>
+                    ${urlVer ? `<a href="${urlVer}" class="btn-notif-ver" onclick="event.stopPropagation();">Ver</a>` : ''}
+                    <button class="btn-notif-eliminar" onclick="event.stopPropagation(); eliminarNotificacion(${notif.id})" title="Eliminar">✕</button>
                 </div>
             </div>
         `;
     }).join('');
 
-    // Agregar eventos de clic para marcar como leída
-    container.querySelectorAll('.notificacion-item:not(.leida)').forEach(item => {
+    // Agregar eventos de clic para marcar como leída y redirigir
+    container.querySelectorAll('.notificacion-item').forEach(item => {
         item.addEventListener('click', function(e) {
-            if (!e.target.classList.contains('btn-notif-eliminar') && !e.target.closest('.notificacion-acciones')) {
-                marcarNotificacionLeida(parseInt(this.dataset.id));
+            // No hacer nada si se hizo clic en los botones de acción
+            if (e.target.classList.contains('btn-notif-eliminar') || 
+                e.target.closest('.notificacion-acciones') || 
+                e.target.classList.contains('btn-notif-ver') ||
+                e.target.closest('.btn-notif-ver')) {
+                return;
+            }
+            
+            const notifId = parseInt(this.dataset.id);
+            const tipo = this.dataset.tipo;
+            const idReferencia = this.dataset.idReferencia ? parseInt(this.dataset.idReferencia) : null;
+            const url = this.dataset.url || '';
+            
+            // Marcar como leída si no está leída
+            const notif = notificacionesGlobales.find(n => n.id === notifId);
+            if (notif && !notif.leida) {
+                marcarNotificacionLeida(notifId);
+            }
+            
+            // Redirigir según el tipo de notificación
+            if (tipo === 'Mensaje' && idReferencia) {
+                // Redirigir al chat específico
+                window.location.href = `/Home/Mensajes?amigoId=${idReferencia}`;
+            } else if (tipo === 'SolicitudAmistad') {
+                // Redirigir a Comunidad para ver solicitudes
+                window.location.href = '/Home/Comunidad';
+            } else if (url) {
+                // Usar la URL si está disponible
+                window.location.href = url;
             }
         });
     });
@@ -152,15 +195,33 @@ async function eliminarNotificacion(idNotificacion) {
         if (data.success) {
             const item = document.querySelector(`.notificacion-item[data-id="${idNotificacion}"]`);
             if (item) {
+                // Verificar si estaba leída antes de remover
+                const estabaLeida = item.classList.contains('leida');
                 item.remove();
-                if (!item.classList.contains('leida')) {
+                
+                // Actualizar contador solo si no estaba leída
+                if (!estabaLeida) {
                     notificacionesNoLeidas = Math.max(0, notificacionesNoLeidas - 1);
                     actualizarBadgeNotificaciones();
                 }
+                
+                // Actualizar lista global
+                notificacionesGlobales = notificacionesGlobales.filter(n => n.id !== idNotificacion);
+                
+                // Si no quedan notificaciones, mostrar mensaje
+                if (notificacionesGlobales.length === 0) {
+                    const container = document.getElementById('notificacionesList');
+                    if (container) {
+                        container.innerHTML = '<div class="notificacion-vacia">No tenés notificaciones</div>';
+                    }
+                }
             }
+        } else {
+            alert(data.message || 'Error al eliminar la notificación');
         }
     } catch (error) {
         console.error('Error al eliminar notificación:', error);
+        alert('Error al eliminar la notificación');
     }
 }
 
