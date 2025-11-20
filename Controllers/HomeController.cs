@@ -2134,6 +2134,7 @@ public IActionResult EditarMascota(int id)
     ViewBag.PesoDisplay = pesoDisplayBD ?? PesoHelper.FormatearPeso(m.Peso);
     
     ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
+    ViewBag.Especie = m.Especie; // Pasar especie para el select de razas
     return View(m);
 }
 
@@ -5933,6 +5934,155 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
             catch (Exception ex)
             {
                 Console.WriteLine("Error ObtenerTiposServicio: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // ============================
+        // GET: Obtener Id_User de un proveedor
+        // ============================
+        [HttpGet]
+        [Route("Home/ObtenerUserIdProveedor/{idProveedor}")]
+        public IActionResult ObtenerUserIdProveedor(int idProveedor)
+        {
+            try
+            {
+                string query = "SELECT Id_User FROM ProveedorServicio WHERE Id_Proveedor = @IdProveedor";
+                DataTable dt = BD.ExecuteQuery(query, new Dictionary<string, object> { { "@IdProveedor", idProveedor } });
+                
+                if (dt.Rows.Count > 0)
+                {
+                    int userId = Convert.ToInt32(dt.Rows[0]["Id_User"]);
+                    return Json(new { success = true, userId = userId });
+                }
+                
+                return Json(new { success = false, message = "Proveedor no encontrado" });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error ObtenerUserIdProveedor: " + ex.Message);
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
+        // ============================
+        // GET: Obtener proveedores para Comunidad (con ubicación y detalles)
+        // ============================
+        [HttpGet]
+        [Route("Home/ObtenerProveedoresParaComunidad")]
+        public IActionResult ObtenerProveedoresParaComunidad()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+                return Json(new { success = false, message = "No autenticado" });
+
+            try
+            {
+                // Obtener ubicación del usuario si existe
+                string qUbicacion = @"
+                    SELECT Latitud, Longitud FROM Ubicacion WHERE Id_Ubicacion = 
+                    (SELECT Id_Ubicacion FROM [User] WHERE Id_User = @UserId)";
+                var dtUbicacion = BD.ExecuteQuery(qUbicacion, new Dictionary<string, object> { { "@UserId", userId.Value } });
+                
+                decimal? latUsuario = null;
+                decimal? lngUsuario = null;
+                if (dtUbicacion.Rows.Count > 0 && dtUbicacion.Rows[0]["Latitud"] != DBNull.Value)
+                {
+                    latUsuario = Convert.ToDecimal(dtUbicacion.Rows[0]["Latitud"]);
+                    lngUsuario = Convert.ToDecimal(dtUbicacion.Rows[0]["Longitud"]);
+                }
+
+                string query = @"
+                    SELECT DISTINCT
+                        P.Id_Proveedor,
+                        P.Id_User,
+                        P.NombreCompleto,
+                        P.Descripcion,
+                        P.FotoPerfil,
+                        P.Ciudad,
+                        P.Provincia,
+                        P.Precio_Hora,
+                        P.Calificacion_Promedio,
+                        P.Cantidad_Resenas,
+                        P.Experiencia_Anios,
+                        P.Latitud,
+                        P.Longitud,
+                        P.Radio_Atencion_Km,
+                        P.Tipo_Ubicacion";
+
+                if (latUsuario.HasValue && lngUsuario.HasValue)
+                {
+                    query += @",
+                        (6371 * acos(
+                            cos(radians(@Latitud)) * 
+                            cos(radians(P.Latitud)) * 
+                            cos(radians(P.Longitud) - radians(@Longitud)) + 
+                            sin(radians(@Latitud)) * 
+                            sin(radians(P.Latitud))
+                        )) AS Distancia_Km";
+                }
+
+                query += @"
+                    FROM ProveedorServicio P
+                    WHERE P.Estado = 1 AND P.Latitud IS NOT NULL AND P.Longitud IS NOT NULL";
+
+                var parametros = new Dictionary<string, object>();
+                if (latUsuario.HasValue && lngUsuario.HasValue)
+                {
+                    parametros.Add("@Latitud", latUsuario.Value);
+                    parametros.Add("@Longitud", lngUsuario.Value);
+                    query += " ORDER BY Distancia_Km ASC, P.Calificacion_Promedio DESC";
+                }
+                else
+                {
+                    query += " ORDER BY P.Calificacion_Promedio DESC, P.Cantidad_Resenas DESC";
+                }
+
+                DataTable dt = BD.ExecuteQuery(query, parametros);
+                var proveedores = new List<object>();
+
+                foreach (DataRow row in dt.Rows)
+                {
+                    // Obtener tipos de servicio
+                    string qTipos = @"
+                        SELECT TS.Descripcion
+                        FROM ProveedorServicio_TipoServicio PST
+                        INNER JOIN TipoServicio TS ON PST.Id_TipoServicio = TS.Id_TipoServicio
+                        WHERE PST.Id_Proveedor = @IdProveedor";
+                    var dtTipos = BD.ExecuteQuery(qTipos, new Dictionary<string, object> { { "@IdProveedor", Convert.ToInt32(row["Id_Proveedor"]) } });
+                    var tiposServicio = new List<string>();
+                    foreach (DataRow tipoRow in dtTipos.Rows)
+                    {
+                        tiposServicio.Add(tipoRow["Descripcion"].ToString());
+                    }
+
+                    proveedores.Add(new
+                    {
+                        id = Convert.ToInt32(row["Id_Proveedor"]),
+                        idUser = Convert.ToInt32(row["Id_User"]),
+                        nombreCompleto = row["NombreCompleto"]?.ToString() ?? "Proveedor",
+                        descripcion = row["Descripcion"]?.ToString() ?? "",
+                        fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png",
+                        ciudad = row["Ciudad"]?.ToString() ?? "",
+                        provincia = row["Provincia"]?.ToString() ?? "",
+                        precioHora = row["Precio_Hora"] != DBNull.Value ? Convert.ToDecimal(row["Precio_Hora"]) : (decimal?)null,
+                        calificacion = row["Calificacion_Promedio"] != DBNull.Value ? Convert.ToDecimal(row["Calificacion_Promedio"]) : (decimal?)null,
+                        cantidadResenas = row["Cantidad_Resenas"] != DBNull.Value ? Convert.ToInt32(row["Cantidad_Resenas"]) : 0,
+                        experienciaAnios = row["Experiencia_Anios"] != DBNull.Value ? Convert.ToInt32(row["Experiencia_Anios"]) : 0,
+                        lat = row["Latitud"] != DBNull.Value ? Convert.ToDouble(row["Latitud"]) : (double?)null,
+                        lng = row["Longitud"] != DBNull.Value ? Convert.ToDouble(row["Longitud"]) : (double?)null,
+                        radioAtencionKm = row["Radio_Atencion_Km"] != DBNull.Value ? Convert.ToDouble(row["Radio_Atencion_Km"]) : 5.0,
+                        tipoUbicacion = row["Tipo_Ubicacion"]?.ToString() ?? "Cobertura",
+                        distanciaKm = row.Table.Columns.Contains("Distancia_Km") && row["Distancia_Km"] != DBNull.Value ? Convert.ToDouble(row["Distancia_Km"]) : (double?)null,
+                        tiposServicio = tiposServicio
+                    });
+                }
+
+                return Json(new { success = true, proveedores = proveedores });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error ObtenerProveedores: " + ex.Message);
                 return Json(new { success = false, message = ex.Message });
             }
         }

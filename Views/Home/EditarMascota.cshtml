@@ -339,7 +339,6 @@ body.tema-oscuro .btn-cancelar:hover {
     <div class="cerrar-menu" id="cerrarMenu">✖</div>
     <a href="/Home/Index">🏠 Inicio</a>
     <a href="/Home/Comunidad">👥 Comunidad</a>
-    <a href="/Home/BuscarProveedores">🔍 Buscar Proveedores</a>
     <a href="/Home/Planificador">📅 Planificador de Servicios</a>
     <a href="/Marketplace">🛒 Marketplace</a>
     <a href="/Home/FichaMedica">💉 Ficha médica</a>
@@ -368,7 +367,9 @@ body.tema-oscuro .btn-cancelar:hover {
 
             <div class="form-group">
                 <label for="Raza">Raza</label>
-                <input type="text" asp-for="Raza" />
+                <select id="Raza" name="Raza" asp-for="Raza">
+                    <option value="">Seleccionar raza</option>
+                </select>
             </div>
 
             <div class="form-group">
@@ -415,7 +416,7 @@ body.tema-oscuro .btn-cancelar:hover {
                 <label for="Peso">⚖️ Peso (slider)</label>
                 <div class="slider-container">
                     @{
-                        decimal pesoSlider = Model.Peso;
+                        decimal pesoSlider = 0.1M;
                         if (!string.IsNullOrEmpty(pesoDisplay))
                         {
                             string pesoLimpio = pesoDisplay.Replace(" kg", "").Replace(",", ".");
@@ -424,6 +425,19 @@ body.tema-oscuro .btn-cancelar:hover {
                                 pesoSlider = pesoParseado;
                             }
                         }
+                        else
+                        {
+                            // Usar Model.Peso solo si no hay pesoDisplay, pero verificar si está multiplicado
+                            pesoSlider = Model.Peso;
+                            // Si el peso parece estar multiplicado por 10 (>= 10 y no tiene decimales significativos)
+                            if (pesoSlider >= 10 && pesoSlider % 1 == 0)
+                            {
+                                pesoSlider = pesoSlider / 10;
+                            }
+                        }
+                        // Asegurar que el peso esté en un rango válido
+                        if (pesoSlider < 0.1M) pesoSlider = 0.1M;
+                        if (pesoSlider > 80M) pesoSlider = 80M;
                     }
                     <input type="range" id="Peso" name="Peso" min="0.1" max="80" step="0.1" 
                            value="@pesoSlider.ToString("F1", System.Globalization.CultureInfo.InvariantCulture)" />
@@ -489,10 +503,21 @@ function formatearPeso(valor) {
     return valor.toFixed(decimales).replace(".", ",") + " kg";
 }
 
+// Sincronizar valor inicial del input con el slider
+if (pesoInput && pesoInput.value) {
+    const valorInicial = parseFloat(pesoInput.value.replace(",", "."));
+    if (!isNaN(valorInicial) && valorInicial >= 0.1 && valorInicial <= 80) {
+        pesoSlider.value = valorInicial;
+        pesoTexto.textContent = formatearPeso(valorInicial);
+    }
+}
+
 pesoSlider.addEventListener("input", () => {
     const valor = parseFloat(pesoSlider.value);
     pesoTexto.textContent = formatearPeso(valor);
-    pesoInput.value = valor.toFixed(2);
+    if (pesoInput) {
+        pesoInput.value = valor.toFixed(2).replace(".", ",");
+    }
 });
 
 pesoInput.addEventListener("input", () => {
@@ -559,6 +584,40 @@ fechaNacimiento.addEventListener("change", () => {
         edadTexto.textContent = texto;
     }
 });
+
+// Select de razas según especie
+const razasPorEspecie = {
+    "Perro": ["Labrador Retriever","Golden Retriever","Bulldog","Beagle","Caniche","Caniche negro","Chihuahua","Pug","Dálmata","Husky Siberiano","Cocker Spaniel","Pastor Alemán","Salchicha","Border Collie","Rottweiler","Boxer","Shih Tzu","Doberman","Jack Russell Terrier","Pitbull","Yorkshire Terrier","Maltés","Schnauzer","Akita Inu","San Bernardo","Pomerania","Weimaraner","Basset Hound","Galgo","Samoyedo","Otra raza"],
+    "Gato": ["Persa","Siames","Maine Coon","Bengala","Ragdoll","British Shorthair","Bombay","Esfinge","Angora Turco","Siberiano","Abisinio","Azul Ruso","Scottish Fold","Bosque de Noruega","Birmano","Oriental de Pelo Corto","Himalayo","Savannah","Cornish Rex","Otra raza"],
+    "Conejo": ["Mini Lop","Angora","Rex","Belier","Cabeza de León","Otra raza"],
+    "Ave": ["Cacatúa","Guacamayo","Periquito","Amazonas","Agapornis","Otra raza"],
+    "Pez": ["Betta","Goldfish","Guppy","Cíclido","Koi","Otra raza"],
+    "Reptil": ["Iguana","Camaleón","Tortuga","Gecko","Boa","Serpiente del maíz","Camaleón pantera","Tortuga acuática","Gecko crestado","Varano","Dragón Barbudo","Gecko Leopardo","Otra raza"],
+    "Hamster": ["Sirio (Doradito)","Ruso","Campbell","Roborovski","Chino","Otra raza"],
+    "Raton": ["Doméstico","Blanco de laboratorio","Fancy","Rata Dumbo","Rata Rex","Otra raza"]
+};
+
+const razaSelect = document.getElementById("Raza");
+const especieActual = "@Model.Especie";
+const razaActual = "@Model.Raza";
+
+// Llenar el select con las razas según la especie
+function llenarSelectRazas(especie) {
+    const razas = razasPorEspecie[especie] || razasPorEspecie["Perro"];
+    razaSelect.innerHTML = "<option value=''>Seleccionar raza</option>";
+    razas.forEach(raza => {
+        const option = document.createElement("option");
+        option.value = raza;
+        option.textContent = raza;
+        if (raza === razaActual) {
+            option.selected = true;
+        }
+        razaSelect.appendChild(option);
+    });
+}
+
+// Inicializar con la especie actual
+llenarSelectRazas(especieActual);
 </script>
 </body>
 </html>

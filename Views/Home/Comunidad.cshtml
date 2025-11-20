@@ -225,6 +225,33 @@ body.tema-oscuro .leaflet-control-zoom-in {
     gap: 10px;
 }
 
+.btn-servicios-flotante {
+    position: fixed;
+    bottom: 340px;
+    right: 20px;
+    z-index: 1001;
+    background: linear-gradient(135deg, var(--verde) 0%, #2ea968 100%);
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(58, 195, 125, 0.4);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-servicios-flotante:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(58, 195, 125, 0.5);
+}
+.btn-servicios-flotante:active {
+    transform: translateY(-1px);
+}
+
 .btn-control {
     background: var(--card-claro);
     border: 2px solid rgba(0,0,0,0.1);
@@ -262,8 +289,12 @@ body.tema-oscuro .btn-control {
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     z-index: 1000;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
+    transition: max-height 0.3s ease;
+}
+.panel-amigos.tab-servicios-activo {
+    max-height: 60vh;
 }
 body.tema-oscuro .panel-amigos {
     background: var(--card-oscuro);
@@ -296,6 +327,23 @@ body.tema-oscuro .tabs {
     border-radius: 8px;
     transition: all .2s ease;
     opacity: 0.6;
+}
+.tab-btn.tab-servicios {
+    background: linear-gradient(135deg, var(--verde) 0%, #2ea968 100%);
+    color: white !important;
+    opacity: 1;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(58, 195, 125, 0.3);
+    transform: scale(1.05);
+}
+.tab-btn.tab-servicios:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 12px rgba(58, 195, 125, 0.4);
+}
+.tab-btn.tab-servicios.activo {
+    background: linear-gradient(135deg, var(--verde) 0%, #2ea968 100%);
+    opacity: 1;
+    box-shadow: 0 4px 12px rgba(58, 195, 125, 0.5);
 }
 .tab-btn.activo {
     opacity: 1;
@@ -561,6 +609,9 @@ body.tema-oscuro .modal-content input {
         right: 10px;
         bottom: 10px;
     }
+    .panel-amigos.tab-servicios-activo {
+        max-height: 70vh;
+    }
     .controles-mapa {
         top: 70px;
         right: 10px;
@@ -568,6 +619,24 @@ body.tema-oscuro .modal-content input {
     .btn-control {
         padding: 10px 12px;
         font-size: 0.85rem;
+    }
+    .btn-servicios-flotante {
+        bottom: 320px;
+        right: 15px;
+        padding: 12px 18px;
+        font-size: 0.9rem;
+    }
+    .tab-btn.tab-servicios {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+    }
+    .tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .tabs::-webkit-scrollbar {
+        display: none;
     }
 }
 </style>
@@ -582,7 +651,6 @@ body.tema-oscuro .modal-content input {
     <div class="cerrar-menu" id="cerrarMenu">✖</div>
     <a href="/Home/Index">🏠 Inicio</a>
     <a href="/Home/Comunidad">👥 Comunidad</a>
-    <a href="/Home/BuscarProveedores">🔍 Buscar Proveedores</a>
     <a href="/Home/Planificador">📅 Planificador de Servicios</a>
     <a href="/Marketplace">🛒 Marketplace</a>
     <a href="/Home/FichaMedica">💉 Ficha médica</a>
@@ -603,9 +671,14 @@ body.tema-oscuro .modal-content input {
     <button class="btn-control" id="btnCrearCartel" onclick="activarModoCrearCartel()" style="background: #e74c3c;">🚨 Crear Cartel</button>
 </div>
 
+<button class="btn-servicios-flotante" onclick="cambiarTab('proveedores'); setTimeout(() => { document.getElementById('panelAmigos').scrollIntoView({ behavior: 'smooth', block: 'end' }); }, 100);">
+    🔧 Ver Servicios
+</button>
+
 <div class="panel-amigos" id="panelAmigos">
     <div class="tabs">
         <button class="tab-btn activo" onclick="cambiarTab('amigos')">👥 Amigos</button>
+        <button class="tab-btn tab-servicios" onclick="cambiarTab('proveedores')">🔧 Servicios</button>
         <button class="tab-btn" onclick="cambiarTab('solicitudes')">📩 Solicitudes</button>
         <button class="tab-btn" onclick="cambiarTab('buscar')">🔍 Buscar</button>
         <button class="tab-btn" onclick="cambiarTab('sugeridos')">⭐ Sugeridos</button>
@@ -646,6 +719,18 @@ body.tema-oscuro .modal-content input {
             <p style="text-align: center; opacity: 0.7; color: inherit;">Cargando sugeridos...</p>
         </div>
     </div>
+    
+    <div class="tab-content oculto" id="tabProveedores">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+            <h3 style="margin: 0;">🔧 Servicios Disponibles</h3>
+            <input type="text" id="buscarServicios" placeholder="🔍 Buscar servicios..." 
+                   style="padding: 8px 12px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.1); width: 200px; font-size: 0.9rem;"
+                   onkeyup="filtrarServicios(this.value)" />
+        </div>
+        <div class="lista-amigos" id="listaProveedores">
+            <p style="text-align: center; opacity: 0.7; color: inherit;">Cargando servicios...</p>
+        </div>
+    </div>
 </div>
 
 <div class="modal-agregar-amigo" id="modalAmigo">
@@ -655,6 +740,15 @@ body.tema-oscuro .modal-content input {
         <div class="modal-buttons">
             <button class="btn-modal btn-primary" onclick="agregarAmigo()">Agregar</button>
             <button class="btn-modal btn-secondary" onclick="cerrarModalAmigo()">Cancelar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-agregar-amigo" id="modalContratar">
+    <div class="modal-content" style="max-width: 500px;">
+        <h3>📅 Contratar Servicio</h3>
+        <div id="modalContratarContent">
+            <p>Cargando...</p>
         </div>
     </div>
 </div>
@@ -700,6 +794,9 @@ let map;
 let miMarcador;
 let marcadoresAmigos = {};
 let marcadoresCarteles = {};
+let marcadoresProveedores = {};
+let circuloProveedor = null;
+let proveedorSeleccionado = null;
 let miUbicacion = null;
 let watchId = null;
 let modalCartelLat = null;
@@ -761,6 +858,9 @@ function initMap() {
     
     // Cargar carteles de mascotas
     cargarCarteles();
+    
+    // Cargar proveedores
+    cargarProveedores();
     
     // Agregar listener para doble clic en el mapa (crear cartel)
     map.on('dblclick', function(e) {
@@ -955,11 +1055,43 @@ function mostrarAmigos(amigos) {
 function cambiarTab(tab) {
     // Ocultar todos los tabs
     document.querySelectorAll('.tab-content').forEach(t => t.classList.add('oculto'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('activo'));
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('activo');
+        // Mantener el estilo destacado del tab de servicios
+        if (b.classList.contains('tab-servicios')) {
+            b.classList.add('tab-servicios');
+        }
+    });
+    
+    // Mapear nombres de tabs a IDs
+    const tabMap = {
+        'amigos': 'tabAmigos',
+        'solicitudes': 'tabSolicitudes',
+        'buscar': 'tabBuscar',
+        'sugeridos': 'tabSugeridos',
+        'proveedores': 'tabProveedores'
+    };
     
     // Mostrar el tab seleccionado
-    document.getElementById(`tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`).classList.remove('oculto');
-    event.target.classList.add('activo');
+    const tabId = tabMap[tab] || `tab${tab.charAt(0).toUpperCase() + tab.slice(1)}`;
+    const tabActivo = document.getElementById(tabId);
+    if (tabActivo) {
+        tabActivo.classList.remove('oculto');
+    } else {
+        console.error('Tab no encontrado:', tabId);
+    }
+    
+    // Activar el botón correspondiente
+    const btnActivo = document.querySelector(`.tab-btn[onclick*="'${tab}'"]`);
+    if (btnActivo) {
+        btnActivo.classList.add('activo');
+        // Si es el tab de servicios, expandir el panel
+        if (btnActivo.classList.contains('tab-servicios')) {
+            document.getElementById('panelAmigos').classList.add('tab-servicios-activo');
+        } else {
+            document.getElementById('panelAmigos').classList.remove('tab-servicios-activo');
+        }
+    }
     
     // Cargar datos según el tab
     if (tab === 'sugeridos') {
@@ -968,6 +1100,8 @@ function cambiarTab(tab) {
         cargarAmigos();
     } else if (tab === 'solicitudes') {
         cargarSolicitudes();
+    } else if (tab === 'proveedores') {
+        cargarProveedores();
     }
 }
 
@@ -1724,6 +1858,451 @@ function eliminarCartel(idCartel) {
 document.getElementById('modalCartel')?.addEventListener('click', function(e) {
     if (e.target === this) {
         cerrarModalCartel();
+    }
+});
+
+// ============================
+// Funciones para proveedores
+// ============================
+function cargarProveedores() {
+    fetch('/Home/ObtenerProveedoresParaComunidad')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                mostrarProveedores(data.proveedores);
+                actualizarMarcadoresProveedores(data.proveedores);
+            } else {
+                document.getElementById('listaProveedores').innerHTML = 
+                    '<p style="text-align: center; opacity: 0.7; color: inherit; padding: 20px;">Error al cargar servicios</p>';
+            }
+        })
+        .catch(err => {
+            console.error('Error al cargar servicios:', err);
+            document.getElementById('listaProveedores').innerHTML = 
+                '<p style="text-align: center; opacity: 0.7; color: inherit; padding: 20px;">Error al cargar servicios</p>';
+        });
+}
+
+let todosLosProveedores = [];
+
+function mostrarProveedores(proveedores) {
+    todosLosProveedores = proveedores;
+    const lista = document.getElementById('listaProveedores');
+    if (!proveedores || proveedores.length === 0) {
+        lista.innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit; padding: 20px;">No hay servicios disponibles en este momento</p>';
+        return;
+    }
+    
+    renderizarProveedores(proveedores);
+}
+
+function renderizarProveedores(proveedores) {
+    const lista = document.getElementById('listaProveedores');
+    lista.innerHTML = proveedores.map(prov => {
+        const distanciaTexto = prov.distanciaKm != null 
+            ? (prov.distanciaKm < 1 ? `${(prov.distanciaKm * 1000).toFixed(0)} m` : `${prov.distanciaKm.toFixed(1)} km`)
+            : '';
+        const precioTexto = prov.precioHora != null ? `$${prov.precioHora.toFixed(2)}/hora` : 'Consultar precio';
+        const calificacionTexto = prov.calificacion != null ? `⭐ ${prov.calificacion.toFixed(1)}` : 'Sin calificación';
+        const tiposTexto = prov.tiposServicio && prov.tiposServicio.length > 0 
+            ? prov.tiposServicio.join(', ') 
+            : 'Servicios varios';
+        const tipoIcono = prov.tipoUbicacion === 'Cobertura' ? '🐾' : '🏠';
+        
+        return `
+        <div class="servicio-card" data-nombre="${prov.nombreCompleto.toLowerCase()}" data-servicios="${tiposTexto.toLowerCase()}" 
+             onclick="seleccionarProveedor(${prov.id}, ${prov.lat}, ${prov.lng}, ${prov.radioAtencionKm || 5}, '${prov.tipoUbicacion || 'Cobertura'}')" 
+             style="cursor: pointer; background: var(--card-claro); border-radius: 12px; padding: 15px; margin-bottom: 12px; border: 2px solid transparent; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+            <div style="display: flex; gap: 12px; align-items: flex-start;">
+                <img src="${prov.fotoPerfil || '/img/perfil/default.png'}" alt="${prov.nombreCompleto}" 
+                     style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover; border: 3px solid var(--verde); flex-shrink: 0;" 
+                     onerror="this.src='/img/perfil/default.png'" />
+                <div style="flex: 1; min-width: 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 6px;">
+                        <h4 style="margin: 0; font-size: 1rem; font-weight: 600; color: inherit;">${prov.nombreCompleto}</h4>
+                        <span style="font-size: 1.2rem;">${tipoIcono}</span>
+                    </div>
+                    <p style="margin: 0 0 6px 0; font-size: 0.85rem; color: var(--verde); font-weight: 500;">${tiposTexto}</p>
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 8px;">
+                        <span style="font-size: 0.8rem; color: inherit; opacity: 0.8;">${calificacionTexto} ${prov.cantidadResenas > 0 ? `(${prov.cantidadResenas})` : ''}</span>
+                        ${distanciaTexto ? `<span style="font-size: 0.8rem; color: inherit; opacity: 0.8;">📍 ${distanciaTexto}</span>` : ''}
+                        <span style="font-size: 0.85rem; font-weight: 600; color: var(--verde);">${precioTexto}</span>
+                    </div>
+                    <div style="display: flex; gap: 8px; margin-top: 8px;">
+                        <button onclick="event.stopPropagation(); window.location.href='/Home/PerfilProveedor/${prov.id}'" 
+                                style="flex: 1; padding: 8px 12px; background: var(--verde); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s;">
+                            👤 Ver Perfil
+                        </button>
+                        <button onclick="event.stopPropagation(); mostrarModalContratar(${prov.id}, '${prov.nombreCompleto.replace(/'/g, "\\'")}', ${prov.precioHora || 0})" 
+                                style="flex: 1; padding: 8px 12px; background: #3498db; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; transition: all 0.2s;">
+                            📅 Contratar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `}).join('');
+    
+    // Agregar estilos hover
+    document.querySelectorAll('.servicio-card').forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.borderColor = 'var(--verde)';
+            this.style.transform = 'translateY(-2px)';
+            this.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+        });
+        card.addEventListener('mouseleave', function() {
+            this.style.borderColor = 'transparent';
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+        });
+    });
+}
+
+function filtrarServicios(termino) {
+    if (!termino || termino.trim() === '') {
+        renderizarProveedores(todosLosProveedores);
+        return;
+    }
+    
+    const terminoLower = termino.toLowerCase();
+    const filtrados = todosLosProveedores.filter(prov => {
+        const nombre = prov.nombreCompleto.toLowerCase();
+        const servicios = prov.tiposServicio ? prov.tiposServicio.join(' ').toLowerCase() : '';
+        return nombre.includes(terminoLower) || servicios.includes(terminoLower);
+    });
+    
+    renderizarProveedores(filtrados);
+}
+
+function actualizarMarcadoresProveedores(proveedores) {
+    // Remover marcadores antiguos
+    Object.values(marcadoresProveedores).forEach(marker => map.removeLayer(marker));
+    marcadoresProveedores = {};
+    
+    if (!proveedores || proveedores.length === 0) return;
+    
+    proveedores.forEach(prov => {
+        if (prov.lat && prov.lng) {
+            const iconoProveedor = L.divIcon({
+                className: 'proveedor-marker',
+                html: `<div style="background: #8B5E3C; width: 30px; height: 30px; border-radius: 50%; border: 3px solid white; box-shadow: 0 3px 10px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 16px;">🔧</div>`,
+                iconSize: [30, 30],
+                iconAnchor: [15, 15]
+            });
+            
+            const marker = L.marker([prov.lat, prov.lng], {
+                icon: iconoProveedor,
+                title: prov.nombreCompleto
+            }).addTo(map);
+            
+            const popup = L.popup({
+                maxWidth: 250
+            }).setContent(`
+                <div style="padding: 8px;">
+                    <h4 style="margin: 0 0 8px 0; font-size: 1rem; font-weight: 600;">${prov.nombreCompleto}</h4>
+                    ${prov.tiposServicio && prov.tiposServicio.length > 0 ? `<p style="margin: 0 0 5px 0; font-size: 0.85rem; color: #666;">🔧 ${prov.tiposServicio.join(', ')}</p>` : ''}
+                    ${prov.calificacion != null ? `<p style="margin: 0 0 5px 0; font-size: 0.85rem; color: #666;">⭐ ${prov.calificacion.toFixed(1)} ${prov.cantidadResenas > 0 ? `(${prov.cantidadResenas} reseñas)` : ''}</p>` : ''}
+                    ${prov.precioHora != null ? `<p style="margin: 0 0 5px 0; font-size: 0.85rem; color: #666; font-weight: 600; color: var(--verde);">$${prov.precioHora.toFixed(2)}/hora</p>` : ''}
+                    ${prov.distanciaKm != null ? `<p style="margin: 0 0 8px 0; font-size: 0.85rem; color: #666;">📍 A ${prov.distanciaKm < 1 ? (prov.distanciaKm * 1000).toFixed(0) + ' m' : prov.distanciaKm.toFixed(1) + ' km'}</p>` : ''}
+                    <div style="display: flex; gap: 5px; flex-direction: column;">
+                        <button onclick="window.location.href='/Home/PerfilProveedor/${prov.id}'" 
+                                style="padding: 6px 12px; background: var(--verde); color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; width: 100%;">
+                            👤 Ver Perfil
+                        </button>
+                        <button onclick="seleccionarProveedor(${prov.id}, ${prov.lat}, ${prov.lng}, ${prov.radioAtencionKm || 5}, '${prov.tipoUbicacion || 'Cobertura'}')" 
+                                style="padding: 6px 12px; background: #8B5E3C; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; width: 100%;">
+                            📍 Ver Zona
+                        </button>
+                        <button onclick="mostrarModalContratar(${prov.id}, '${prov.nombreCompleto.replace(/'/g, "\\'")}', ${prov.precioHora || 0})" 
+                                style="padding: 6px 12px; background: #3498db; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 0.85rem; width: 100%;">
+                            📅 Contratar
+                        </button>
+                    </div>
+                </div>
+            `);
+            
+            marker.bindPopup(popup);
+            marker.on('click', function() {
+                seleccionarProveedor(prov.id, prov.lat, prov.lng, prov.radioAtencionKm || 5, prov.tipoUbicacion || 'Cobertura');
+            });
+            
+            marcadoresProveedores[prov.id] = marker;
+        }
+    });
+}
+
+function seleccionarProveedor(id, lat, lng, radioKm, tipoUbicacion) {
+    // Remover círculo anterior si existe
+    if (circuloProveedor) {
+        map.removeLayer(circuloProveedor);
+        circuloProveedor = null;
+    }
+    
+    // Si es el mismo proveedor, deseleccionar
+    if (proveedorSeleccionado === id) {
+        proveedorSeleccionado = null;
+        map.closePopup();
+        return;
+    }
+    
+    proveedorSeleccionado = id;
+    
+    // Centrar mapa en el proveedor
+    map.setView([lat, lng], 14);
+    
+    // Crear círculo de zona de atención
+    const radioMetros = radioKm * 1000;
+    const color = tipoUbicacion === 'Cobertura' ? '#8B5E3C' : '#3498db';
+    
+    circuloProveedor = L.circle([lat, lng], {
+        radius: radioMetros,
+        color: color,
+        fillColor: color,
+        fillOpacity: 0.2,
+        weight: 3
+    }).addTo(map);
+    
+    // Abrir popup del marcador
+    if (marcadoresProveedores[id]) {
+        marcadoresProveedores[id].openPopup();
+    }
+    
+    // Scroll al proveedor en la lista
+    const lista = document.getElementById('listaProveedores');
+    const items = lista.querySelectorAll('.usuario-item');
+    items.forEach((item, index) => {
+        if (item.onclick && item.onclick.toString().includes(`seleccionarProveedor(${id}`)) {
+            item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            item.style.background = 'var(--amarillo)';
+            setTimeout(() => {
+                item.style.background = '';
+            }, 2000);
+        }
+    });
+}
+
+// Modal de contratación rápida
+let proveedorActualContratar = null;
+let mascotasUsuario = [];
+
+function mostrarModalContratar(idProveedor, nombreProveedor, precioHora, tiposServicio) {
+    proveedorActualContratar = idProveedor;
+    const modal = document.getElementById('modalContratar');
+    const content = document.getElementById('modalContratarContent');
+    
+    // Cargar mascotas y tipos de servicio del proveedor
+    Promise.all([
+        fetch('/Home/ObtenerMascotas').then(r => r.json()),
+        fetch(`/Home/ObtenerTiposServicio/${idProveedor}`).then(r => r.json())
+    ])
+        .then(([mascotasData, tiposData]) => {
+            if (mascotasData.success) {
+                mascotasUsuario = mascotasData.mascotas || [];
+            }
+            const tipos = tiposData.success ? tiposData.tipos : [];
+            mostrarFormularioContratar(nombreProveedor, precioHora, tipos);
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            content.innerHTML = '<p>Error al cargar datos</p>';
+        });
+    
+    modal.classList.add('activo');
+}
+
+function mostrarFormularioContratar(nombreProveedor, precioHora, tiposServicio) {
+    const content = document.getElementById('modalContratarContent');
+    const tiposArray = Array.isArray(tiposServicio) ? tiposServicio : [];
+    const tiposOptions = tiposArray.map(t => `<option value="${t.id || ''}">${t.descripcion || t}</option>`).join('');
+    
+    const mascotasOptions = mascotasUsuario.map(m => 
+        `<option value="${m.id}">${m.nombre} (${m.especie})</option>`
+    ).join('');
+    
+    const hoy = new Date().toISOString().split('T')[0];
+    const ahora = new Date().toTimeString().slice(0, 5);
+    
+    content.innerHTML = `
+        <div style="margin-bottom: 15px; padding: 10px; background: rgba(0,0,0,0.05); border-radius: 8px;">
+            <strong>${nombreProveedor}</strong>
+            ${precioHora > 0 ? `<div style="color: var(--verde); font-weight: 600; margin-top: 5px;">$${precioHora.toFixed(2)}/hora</div>` : ''}
+        </div>
+        <form id="formContratarRapido" onsubmit="enviarContratacionRapida(event)">
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">🐾 Mascota *</label>
+                <select id="mascotaContratar" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                    <option value="">Seleccionar...</option>
+                    ${mascotasOptions}
+                </select>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">🔧 Servicio *</label>
+                <select id="tipoServicioContratar" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                    <option value="">Seleccionar...</option>
+                    ${tiposOptions}
+                </select>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem;">📅 Fecha *</label>
+                    <input type="date" id="fechaContratar" required min="${hoy}" value="${hoy}" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;" />
+                </div>
+                <div>
+                    <label style="display: block; margin-bottom: 5px; font-weight: 600; font-size: 0.9rem;">🕐 Hora *</label>
+                    <input type="time" id="horaContratar" required value="${ahora}" style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;" />
+                </div>
+            </div>
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; font-weight: 600;">⏱️ Duración *</label>
+                <select id="duracionContratar" required style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ddd;">
+                    <option value="0.5">30 min</option>
+                    <option value="1" selected>1 hora</option>
+                    <option value="1.5">1.5 horas</option>
+                    <option value="2">2 horas</option>
+                    <option value="3">3 horas</option>
+                    <option value="4">4 horas</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="submit" class="btn-modal btn-primary" style="flex: 1;">✅ Confirmar</button>
+                <button type="button" class="btn-modal btn-secondary" onclick="cerrarModalContratar()" style="flex: 1;">Cancelar</button>
+            </div>
+        </form>
+    `;
+}
+
+function cerrarModalContratar() {
+    document.getElementById('modalContratar').classList.remove('activo');
+    proveedorActualContratar = null;
+}
+
+async function enviarContratacionRapida(event) {
+    event.preventDefault();
+    
+    if (!proveedorActualContratar) {
+        mostrarMensaje('Error: Servicio no seleccionado', 'error');
+        return;
+    }
+    
+    // Obtener tipos de servicio del proveedor
+    const tipoServicioSelect = document.getElementById('tipoServicioContratar');
+    const tipoServicioId = tipoServicioSelect.value;
+    
+    if (!tipoServicioId) {
+        mostrarMensaje('Seleccioná un tipo de servicio', 'error');
+        return;
+    }
+    
+    const mascotaSelect = document.getElementById('mascotaContratar');
+    const mascotaId = parseInt(mascotaSelect.value);
+    const mascotaNombre = mascotaSelect.options[mascotaSelect.selectedIndex].text;
+    const tipoServicioNombre = tipoServicioSelect.options[tipoServicioSelect.selectedIndex].text;
+    const fecha = document.getElementById('fechaContratar').value;
+    const hora = document.getElementById('horaContratar').value;
+    const duracion = parseFloat(document.getElementById('duracionContratar').value);
+    
+    const formData = {
+        idProveedor: proveedorActualContratar,
+        idMascota: mascotaId,
+        idTipoServicio: parseInt(tipoServicioId),
+        fechaInicio: fecha,
+        horaInicio: hora,
+        duracionHoras: duracion,
+        notas: ''
+    };
+    
+    try {
+        const response = await fetch('/Home/CrearReserva', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            // Enviar mensaje automático con los datos de la reserva
+            await enviarMensajeReserva(proveedorActualContratar, mascotaNombre, tipoServicioNombre, fecha, hora, duracion);
+            
+            mostrarMensaje('¡Servicio contratado exitosamente! Se envió un mensaje al proveedor con los detalles.', 'exito');
+            cerrarModalContratar();
+            
+            // Opcional: redirigir a mensajes después de 2 segundos
+            setTimeout(() => {
+                if (confirm('¿Querés ver la conversación con el proveedor?')) {
+                    // Obtener el Id_User del proveedor
+                    const proveedor = todosLosProveedores.find(p => p.id === proveedorActualContratar);
+                    if (proveedor && proveedor.idUser) {
+                        window.location.href = `/Home/Mensajes?amigoId=${proveedor.idUser}`;
+                    }
+                }
+            }, 2000);
+        } else {
+            mostrarMensaje(data.message || 'Error al contratar servicio', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        mostrarMensaje('Error al contratar servicio', 'error');
+    }
+}
+
+async function enviarMensajeReserva(idProveedor, mascotaNombre, tipoServicio, fecha, hora, duracion) {
+    try {
+        // Obtener el Id_User del proveedor desde los datos ya cargados
+        const proveedor = todosLosProveedores.find(p => p.id === idProveedor);
+        if (!proveedor || !proveedor.idUser) {
+            // Si no está en cache, obtenerlo
+            const userProvResponse = await fetch(`/Home/ObtenerUserIdProveedor/${idProveedor}`);
+            const userProvData = await userProvResponse.json();
+            if (!userProvData.success) return;
+            var idProveedorUser = userProvData.userId;
+        } else {
+            var idProveedorUser = proveedor.idUser;
+        }
+        
+        // Obtener o crear chat
+        const chatResponse = await fetch('/Home/ObtenerOCrearChatProveedor', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(idProveedorUser)
+        });
+        
+        const chatData = await chatResponse.json();
+        if (!chatData.success || !chatData.chatId) return;
+        
+        // Formatear fecha y hora
+        const fechaObj = new Date(fecha);
+        const fechaFormateada = fechaObj.toLocaleDateString('es-AR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+        const horaFormateada = hora.substring(0, 5);
+        const duracionTexto = duracion === 0.5 ? '30 minutos' : duracion === 1 ? '1 hora' : `${duracion} horas`;
+        
+        // Crear mensaje con los datos de la reserva
+        const mensaje = `¡Hola! Acabo de contratar tu servicio de ${tipoServicio} para mi mascota ${mascotaNombre}.
+
+📅 Fecha: ${fechaFormateada}
+🕐 Hora: ${horaFormateada}
+⏱️ Duración: ${duracionTexto}
+
+Por favor confirmame si estás disponible en ese horario. ¡Gracias!`;
+        
+        // Enviar mensaje
+        await fetch('/Home/EnviarMensaje', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chatId: chatData.chatId,
+                contenido: mensaje
+            })
+        });
+    } catch (error) {
+        console.error('Error al enviar mensaje de reserva:', error);
+        // No mostramos error al usuario porque la reserva ya se creó
+    }
+}
+
+// Cerrar modal al hacer clic fuera
+document.getElementById('modalContratar')?.addEventListener('click', function(e) {
+    if (e.target === this) {
+        cerrarModalContratar();
     }
 });
 </script>

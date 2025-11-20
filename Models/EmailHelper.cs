@@ -9,53 +9,16 @@ namespace Zooni.Models
 {
     public static class EmailHelper
     {
-        // Validar formato de email usando MailAddress (más robusto y conforme a RFC 5322)
+        // Validar formato de email: solo verifica que contenga "@"
         public static bool ValidarFormatoEmail(string email)
         {
             if (string.IsNullOrWhiteSpace(email))
                 return false;
 
-            try
-            {
-                email = email.Trim();
-                
-                // Usar MailAddress que es el método estándar de .NET para validar emails
-                // Es más robusto que regex y acepta formatos válidos según RFC 5322
-                var mailAddress = new MailAddress(email);
-                
-                // Verificar que el dominio tenga al menos un punto (ej: gmail.com)
-                // y que la parte local no esté vacía
-                if (string.IsNullOrWhiteSpace(mailAddress.Address) || 
-                    string.IsNullOrWhiteSpace(mailAddress.User) ||
-                    !mailAddress.Host.Contains("."))
-                {
-                    return false;
-                }
-                
-                // Verificar que el dominio tenga una extensión válida (al menos 2 caracteres)
-                string[] dominioPartes = mailAddress.Host.Split('.');
-                if (dominioPartes.Length < 2 || dominioPartes[dominioPartes.Length - 1].Length < 2)
-                {
-                    return false;
-                }
-                
-                return true;
-            }
-            catch (FormatException)
-            {
-                // MailAddress lanza FormatException si el formato no es válido
-                return false;
-            }
-            catch (ArgumentException)
-            {
-                // MailAddress lanza ArgumentException si la dirección es null o vacía
-                return false;
-            }
-            catch
-            {
-                // Cualquier otra excepción, considerar inválido
-                return false;
-            }
+            email = email.Trim();
+            
+            // Solo verificar que contenga "@"
+            return email.Contains("@");
         }
 
         // Verificar que el dominio del email existe (DNS lookup)

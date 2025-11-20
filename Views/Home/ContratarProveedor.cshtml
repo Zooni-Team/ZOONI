@@ -27,20 +27,38 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: @(tema == "oscuro" ? "var(--fondo-oscuro)" : "var(--fondo-claro)");
             margin: 0;
-            padding: 20px;
+            padding: 0;
             min-height: 100vh;
             color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
         }
 
+        .btn-volver {
+            position: fixed;
+            top: 15px;
+            left: 20px;
+            background: @(tema == "oscuro" ? "rgba(30,30,30,0.95)" : "rgba(255,255,255,0.95)");
+            border: none;
+            font-size: 24px;
+            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 50%;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: transform 0.2s;
+        }
+
+        .btn-volver:hover { transform: scale(1.1); }
+
         .container {
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 500px;
+            margin: 80px auto 20px;
             background: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
             border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            padding: 25px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
             transition: background-color .4s ease;
         }
 
@@ -133,6 +151,7 @@
     </style>
 </head>
 <body>
+    <button class="btn-volver" onclick="window.history.back()">←</button>
     <div class="container">
         <h1>📅 Contratar Servicio</h1>
         
@@ -145,15 +164,18 @@
         {
             <div class="proveedor-info">
                 <strong>@ViewBag.Proveedor["NombreCompleto"]</strong>
-                @if (ViewBag.Proveedor["Precio_Hora"] != null && ViewBag.Proveedor["Precio_Hora"] != DBNull.Value)
-                {
-                    <div style="margin-top: 5px; color: @(tema == "oscuro" ? "#aaa" : "var(--gris)");">$@ViewBag.Proveedor["Precio_Hora"]/hora</div>
+                @{
+                    var precioHora = ViewBag.Proveedor["Precio_Hora"];
+                    if (precioHora != null && !Convert.IsDBNull(precioHora))
+                    {
+                        <div style="margin-top: 5px; color: @(tema == "oscuro" ? "#aaa" : "var(--gris)");">$@precioHora/hora</div>
+                    }
                 }
             </div>
 
             <form id="formContratar" onsubmit="enviarReserva(event)">
                 <div class="campo">
-                    <label>Mascota *</label>
+                    <label>🐾 Mascota *</label>
                     <select id="idMascota" name="idMascota" required>
                         <option value="">Seleccionar mascota</option>
                         @if (ViewBag.Mascotas != null)
@@ -167,7 +189,7 @@
                 </div>
 
                 <div class="campo">
-                    <label>Tipo de Servicio *</label>
+                    <label>🔧 Tipo de Servicio *</label>
                     <select id="idTipoServicio" name="idTipoServicio" required>
                         <option value="">Seleccionar servicio</option>
                         @if (ViewBag.TiposServicio != null)
@@ -180,24 +202,35 @@
                     </select>
                 </div>
 
-                <div class="campo">
-                    <label>Fecha *</label>
-                    <input type="date" id="fechaInicio" name="fechaInicio" required min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <div class="campo">
+                        <label>📅 Fecha *</label>
+                        <input type="date" id="fechaInicio" name="fechaInicio" required min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    </div>
+
+                    <div class="campo">
+                        <label>🕐 Hora *</label>
+                        <input type="time" id="horaInicio" name="horaInicio" required />
+                    </div>
                 </div>
 
                 <div class="campo">
-                    <label>Hora *</label>
-                    <input type="time" id="horaInicio" name="horaInicio" required />
+                    <label>⏱️ Duración *</label>
+                    <select id="duracionHoras" name="duracionHoras" required>
+                        <option value="0.5">30 minutos</option>
+                        <option value="1" selected>1 hora</option>
+                        <option value="1.5">1.5 horas</option>
+                        <option value="2">2 horas</option>
+                        <option value="3">3 horas</option>
+                        <option value="4">4 horas</option>
+                        <option value="6">6 horas</option>
+                        <option value="8">8 horas</option>
+                    </select>
                 </div>
 
                 <div class="campo">
-                    <label>Duración (horas) *</label>
-                    <input type="number" id="duracionHoras" name="duracionHoras" min="0.5" max="24" step="0.5" value="1" required />
-                </div>
-
-                <div class="campo">
-                    <label>Notas (opcional)</label>
-                    <textarea id="notas" name="notas" placeholder="Instrucciones especiales, preferencias, etc."></textarea>
+                    <label>📝 Notas (opcional)</label>
+                    <textarea id="notas" name="notas" placeholder="Instrucciones especiales, preferencias, etc." style="min-height: 80px;"></textarea>
                 </div>
 
                 <button type="submit" class="btn">Contratar Servicio</button>

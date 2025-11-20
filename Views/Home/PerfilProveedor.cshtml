@@ -296,9 +296,12 @@
                             <span class="calificacion-texto">@ViewBag.Proveedor["Calificacion_Promedio"]</span>
                             <span class="calificacion-resenas">(@ViewBag.Proveedor["Cantidad_Resenas"] reseñas)</span>
                         </div>
-                        @if (ViewBag.Proveedor["Precio_Hora"] != null && ViewBag.Proveedor["Precio_Hora"] != DBNull.Value)
-                        {
-                            <div class="precio">$@ViewBag.Proveedor["Precio_Hora"]/hora</div>
+                        @{
+                            var precioHora = ViewBag.Proveedor["Precio_Hora"];
+                            if (precioHora != null && !Convert.IsDBNull(precioHora))
+                            {
+                                <div class="precio">$@precioHora/hora</div>
+                            }
                         }
                     </div>
                     
@@ -390,8 +393,8 @@
         }
         
         <div style="text-align: center;">
-            <a href="/Home/BuscarProveedores" class="btn-volver">
-                ← Volver a Búsqueda
+            <a href="/Home/Comunidad" class="btn-volver">
+                ← Volver a Comunidad
             </a>
         </div>
     }
@@ -399,8 +402,8 @@
     {
         <div class="card" style="text-align: center; padding: 40px;">
             <p style="color: @(tema == "oscuro" ? "#aaa" : "#999"); font-size: 18px;">Proveedor no encontrado.</p>
-            <a href="/Home/BuscarProveedores" class="btn-volver" style="margin-top: 20px;">
-                Volver a Búsqueda
+            <a href="/Home/Comunidad" class="btn-volver" style="margin-top: 20px;">
+                Volver a Comunidad
             </a>
         </div>
     }

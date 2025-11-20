@@ -1,596 +1,600 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\css\\global.css",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\css\\global.css",
       "PackagePath": "staticwebassets\\css\\global.css"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\css\\notificaciones.css",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\css\\notificaciones.css",
       "PackagePath": "staticwebassets\\css\\notificaciones.css"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\css\\registro.css",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\css\\registro.css",
       "PackagePath": "staticwebassets\\css\\registro.css"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\css\\site.css",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\css\\zooni-design-system.css",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\css\\zooni-design-system.css",
       "PackagePath": "staticwebassets\\css\\zooni-design-system.css"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\data\\consejos.json",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\data\\consejos.json",
       "PackagePath": "staticwebassets\\data\\consejos.json"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\data\\consejos.readme",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\data\\consejos.readme",
       "PackagePath": "staticwebassets\\data\\consejos.readme"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\data\\tratamientos.json",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\data\\tratamientos.json",
       "PackagePath": "staticwebassets\\data\\tratamientos.json"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\data\\vacunas.json",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\data\\vacunas.json",
       "PackagePath": "staticwebassets\\data\\vacunas.json"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\data\\veterinarios.json",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\data\\veterinarios.json",
       "PackagePath": "staticwebassets\\data\\veterinarios.json"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\favicon.ico",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\apple-icon.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\apple-icon.png",
       "PackagePath": "staticwebassets\\img\\apple-icon.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\Cajas.ReadMe",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\cajas\\Cajas.ReadMe",
       "PackagePath": "staticwebassets\\img\\cajas\\Cajas.ReadMe"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\avecaja.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\cajas\\avecaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\avecaja.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\conejocaja.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\cajas\\conejocaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\conejocaja.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\gatocaja.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\cajas\\gatocaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\gatocaja.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\hamstercaja.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\cajas\\hamstercaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\hamstercaja.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\perrocaja.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\cajas\\perrocaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\perrocaja.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\pezcaja.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\cajas\\pezcaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\pezcaja.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\ratoncaja.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\cajas\\ratoncaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\ratoncaja.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\cajas\\reptilcaja.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\cajas\\reptilcaja.png",
       "PackagePath": "staticwebassets\\img\\cajas\\reptilcaja.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\facebook-icon.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\facebook-icon.png",
       "PackagePath": "staticwebassets\\img\\facebook-icon.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\fondos\\bosque.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\fondos\\bosque.png",
       "PackagePath": "staticwebassets\\img\\fondos\\bosque.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\google-icon.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\google-icon.png",
       "PackagePath": "staticwebassets\\img\\google-icon.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\icons\\hamburger.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\icons\\hamburger.png",
       "PackagePath": "staticwebassets\\img\\icons\\hamburger.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas-bienvenida.png",
       "PackagePath": "staticwebassets\\img\\mascotas-bienvenida.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\Cacatúa\\ave_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\aves\\Cacatúa\\ave_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\aves\\Cacatúa\\ave_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\agapornis\\ave_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\aves\\agapornis\\ave_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\aves\\agapornis\\ave_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\amazonas\\ave_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\aves\\amazonas\\ave_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\aves\\amazonas\\ave_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\guacamayo\\ave_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\aves\\guacamayo\\ave_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\aves\\guacamayo\\ave_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\otra raza\\ave_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\aves\\otra raza\\ave_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\aves\\otra raza\\ave_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\aves\\periquito\\ave_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\aves\\periquito\\ave_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\aves\\periquito\\ave_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\Angora\\conejo_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\conejos\\Angora\\conejo_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\conejos\\Angora\\conejo_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\Belier\\conejo_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\conejos\\Belier\\conejo_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\conejos\\Belier\\conejo_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\Cabeza de león\\conejo_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\conejos\\Cabeza de león\\conejo_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\conejos\\Cabeza de león\\conejo_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\Mini Lop\\conejo_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\conejos\\Mini Lop\\conejo_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\conejos\\Mini Lop\\conejo_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\Rex\\conejo_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\conejos\\Rex\\conejo_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\conejos\\Rex\\conejo_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\conejos\\otra raza\\conejo_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\conejos\\otra raza\\conejo_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\conejos\\otra raza\\conejo_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\abisinio\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\abisinio\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\abisinio\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\angora turco\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\angora turco\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\angora turco\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\azul ruso\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\azul ruso\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\azul ruso\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\bengala\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\bengala\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\bengala\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\birmano\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\birmano\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\birmano\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\bombay\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\bombay\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\bombay\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\bosque de noruega\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\bosque de noruega\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\bosque de noruega\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\british shorthair\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\british shorthair\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\british shorthair\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\cornish rex\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\cornish rex\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\cornish rex\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\esfinge\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\esfinge\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\himalayo\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\himalayo\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\himalayo\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\maine coon\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\maine coon\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\maine coon\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\oriental de pelo corto\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\oriental de pelo corto\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\oriental de pelo corto\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\otra raza\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\otra raza\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\otra raza\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\persa\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\persa\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\persa\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\ragdoll\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\ragdoll\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\ragdoll\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\savannah\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\savannah\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\savannah\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\scottish fold\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\scottish fold\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\scottish fold\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\siames\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\siames\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\siames\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\gatos\\siberiano\\gato_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\gatos\\siberiano\\gato_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\gatos\\siberiano\\gato_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\hamsters\\campbell\\hamster_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\hamsters\\campbell\\hamster_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\hamsters\\campbell\\hamster_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\hamsters\\chino\\hamster_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\hamsters\\chino\\hamster_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\hamsters\\chino\\hamster_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\hamsters\\otra raza\\hamster_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\hamsters\\otra raza\\hamster_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\hamsters\\otra raza\\hamster_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\hamsters\\roborovski\\hamster_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\hamsters\\roborovski\\hamster_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\hamsters\\roborovski\\hamster_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\hamsters\\ruso\\hamster_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\hamsters\\ruso\\hamster_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\hamsters\\ruso\\hamster_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\hamsters\\sirio (doradito)\\hamster_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\hamsters\\sirio (doradito)\\hamster_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\hamsters\\sirio (doradito)\\hamster_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Akita Inu\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Akita Inu\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Akita Inu\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Basset Hound\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Basset Hound\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Basset Hound\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Border Collie\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Border Collie\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Border Collie\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Boxer\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Boxer\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Boxer\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Caniche\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Caniche\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Caniche\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Doberman\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Doberman\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Doberman\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Jack Russell Terrier\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Jack Russell Terrier\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Jack Russell Terrier\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Maltés\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Maltés\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Maltés\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Pastor Alemán\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Pastor Alemán\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Pastor Alemán\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Pitbull\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Pitbull\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Pitbull\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Pomerania\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Pomerania\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Pomerania\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Rottweiler\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Rottweiler\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Rottweiler\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Salchicha\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Salchicha\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Salchicha\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\San Bernardo\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\San Bernardo\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\San Bernardo\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Schnauzer\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Schnauzer\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Schnauzer\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Shih Tzu\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Shih Tzu\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Shih Tzu\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Weimaraner\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Weimaraner\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Weimaraner\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\Yorkshire Terrier\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\Yorkshire Terrier\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\Yorkshire Terrier\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\beagle\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\beagle\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\bulldog\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\bulldog\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\bulldog\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\caniche negro\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\caniche negro\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\caniche negro\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\chihuahua\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\chihuahua\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\chihuahua\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\cocker spaniel\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\dálmata\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\dálmata\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\dálmata\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\galgo\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\galgo\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\galgo\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\golden retriever\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\golden retriever\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\golden retriever\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\husky siberiano\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\labrador retriever\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\labrador retriever\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\labrador retriever\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perrito_confundido.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perrito_confundido.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\otra raza\\perrito_confundido.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_ballindeverdad.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_ballindeverdad.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\otra raza\\perro_ballindeverdad.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\otra raza\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_bienagustin.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_bienagustin.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\otra raza\\perro_bienagustin.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_breakingbad.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\otra raza\\perro_breakingbad.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\otra raza\\perro_breakingbad.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\pug\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\pug\\perro_smoking.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\pug\\perro_smoking.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\perros\\someyado\\perro_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\perros\\someyado\\perro_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\perros\\someyado\\perro_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\Cíclido\\pez_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\pezs\\Cíclido\\pez_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\pezs\\Cíclido\\pez_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\Goldfish\\pez_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\pezs\\Goldfish\\pez_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\pezs\\Goldfish\\pez_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\Guppy\\pez_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\pezs\\Guppy\\pez_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\pezs\\Guppy\\pez_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\Koi\\pez_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\pezs\\Koi\\pez_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\pezs\\Koi\\pez_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\betta\\pez_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\pezs\\betta\\pez_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\pezs\\betta\\pez_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\pezs\\otra raza\\pez_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\pezs\\otra raza\\pez_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\pezs\\otra raza\\pez_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\ratons\\blanco de laboratorio\\raton_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\ratons\\blanco de laboratorio\\raton_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\ratons\\blanco de laboratorio\\raton_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\ratons\\doméstico\\raton_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\ratons\\doméstico\\raton_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\ratons\\doméstico\\raton_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\ratons\\fancy\\raton_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\ratons\\fancy\\raton_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\ratons\\fancy\\raton_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\ratons\\otra raza\\raton_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\ratons\\otra raza\\raton_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\ratons\\otra raza\\raton_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\ratons\\rata dumbo\\raton_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\ratons\\rata dumbo\\raton_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\ratons\\rata dumbo\\raton_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\ratons\\rata rex\\raton_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\ratons\\rata rex\\raton_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\ratons\\rata rex\\raton_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Boa\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\Boa\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\Boa\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Camaleón pantera\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\Camaleón pantera\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\Camaleón pantera\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Dragón Barbudo\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\Dragón Barbudo\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\Dragón Barbudo\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Gecko Leopardo\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\Gecko Leopardo\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\Gecko Leopardo\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Gecko crestado\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\Gecko crestado\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\Gecko crestado\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Serpiente del maíz\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\Serpiente del maíz\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\Serpiente del maíz\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Tortuga acuática\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\Tortuga acuática\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\Tortuga acuática\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\Varano\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\Varano\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\Varano\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\camaleón\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\camaleón\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\camaleón\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\iguana\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\iguana\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\iguana\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\otra raza\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\otra raza\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\otra raza\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\mascotas\\reptils\\tortuga\\reptil_basico.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\mascotas\\reptils\\tortuga\\reptil_basico.png",
       "PackagePath": "staticwebassets\\img\\mascotas\\reptils\\tortuga\\reptil_basico.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\perfil\\default.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\perfil\\default.png",
       "PackagePath": "staticwebassets\\img\\perfil\\default.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\img\\recursos\\corazon.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\img\\recursos\\corazon.png",
       "PackagePath": "staticwebassets\\img\\recursos\\corazon.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\js\\heartbeat.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\js\\heartbeat.js",
       "PackagePath": "staticwebassets\\js\\heartbeat.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\js\\notificaciones.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\js\\notificaciones.js",
       "PackagePath": "staticwebassets\\js\\notificaciones.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\js\\peso-handler.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\js\\peso-handler.js",
       "PackagePath": "staticwebassets\\js\\peso-handler.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\js\\registro.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\js\\registro.js",
       "PackagePath": "staticwebassets\\js\\registro.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\js\\site.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\js\\tema.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\js\\tema.js",
       "PackagePath": "staticwebassets\\js\\tema.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\country-state-city\\country-state-city.umd.min.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\country-state-city\\country-state-city.umd.min.js",
       "PackagePath": "staticwebassets\\lib\\country-state-city\\country-state-city.umd.min.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation-unobtrusive\\jquery.validate.unobtrusive.min.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery-validation\\LICENSE.md",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\LICENSE.md"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\additional-methods.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\additional-methods.min.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery-validation\\dist\\jquery.validate.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery-validation\\dist\\jquery.validate.min.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery\\LICENSE.txt",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery\\LICENSE.txt",
       "PackagePath": "staticwebassets\\lib\\jquery\\LICENSE.txt"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.js",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\lib\\jquery\\dist\\jquery.min.map",
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.min.map"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\sw-tracker.js",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\sw-tracker.js",
       "PackagePath": "staticwebassets\\sw-tracker.js"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\uploads\\mascota_35f3b8aa-00b1-4f13-bacd-ae2c1255df6d.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\uploads\\mascota_35f3b8aa-00b1-4f13-bacd-ae2c1255df6d.png",
       "PackagePath": "staticwebassets\\uploads\\mascota_35f3b8aa-00b1-4f13-bacd-ae2c1255df6d.png"
     },
     {
-      "Id": "C:\\Users\\49317356\\zooni\\wwwroot\\uploads\\mascota_e1667674-76bb-4b87-94d3-27802d296b3d.png",
+      "Id": "C:\\Users\\knk\\asdasdsadd\\asdasdasdasd\\dasdasdas\\zooni\\wwwroot\\uploads\\mascota_e1667674-76bb-4b87-94d3-27802d296b3d.png",
       "PackagePath": "staticwebassets\\uploads\\mascota_e1667674-76bb-4b87-94d3-27802d296b3d.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Zooni.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Zooni.Microsoft.AspNetCore.StaticWebAssets.props",
