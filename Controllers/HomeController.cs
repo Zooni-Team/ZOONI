@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 using System.Data;
 using System.Collections.Generic;
 using System;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using iText.Kernel.Pdf;
@@ -2631,8 +2632,8 @@ public IActionResult CambiarAvatar(string avatarRuta)
                         Id_User INT NOT NULL,
                         Id_Mascota INT NULL,
                         Tipo VARCHAR(20) NOT NULL CHECK (Tipo IN ('Perdida', 'Encontrada')),
-                        Latitud DECIMAL(10, 8) NOT NULL,
-                        Longitud DECIMAL(11, 8) NOT NULL,
+                        Latitud DECIMAL(11, 8) NOT NULL,
+                        Longitud DECIMAL(12, 8) NOT NULL,
                         Descripcion NVARCHAR(500) NULL,
                         TelefonoContacto NVARCHAR(50) NOT NULL,
                         FotoCartel NVARCHAR(500) NULL,
@@ -2752,6 +2753,211 @@ public IActionResult CambiarAvatar(string avatarRuta)
     }
 
     // ============================
+    // Método para corregir tipo de dato de TelefonoContacto
+    // ============================
+    private void CorregirTipoTelefonoContacto()
+    {
+        try
+        {
+            // Verificar si el campo es numérico y corregirlo
+            string checkQuery = @"
+                SELECT t.name as TipoDato
+                FROM sys.columns c
+                INNER JOIN sys.types t ON c.user_type_id = t.user_type_id
+                WHERE c.object_id = OBJECT_ID('CartelMascota') 
+                AND c.name = 'TelefonoContacto'";
+            
+            var tipoResult = BD.ExecuteScalar(checkQuery, new Dictionary<string, object>());
+            
+            if (tipoResult != null)
+            {
+                string tipoDato = tipoResult.ToString().ToLower();
+                if (tipoDato.Contains("numeric") || tipoDato.Contains("int") || tipoDato.Contains("decimal") || 
+                    tipoDato.Contains("float") || tipoDato.Contains("real") || tipoDato.Contains("bigint") ||
+                    tipoDato.Contains("smallint") || tipoDato.Contains("tinyint"))
+                {
+                    // Verificar estado de las columnas
+                    string checkCols = @"
+                        SELECT 
+                            CASE WHEN EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('CartelMascota') AND name = 'TelefonoContacto') THEN 1 ELSE 0 END as ExisteOriginal,
+                            CASE WHEN EXISTS (SELECT 1 FROM sys.columns WHERE object_id = OBJECT_ID('CartelMascota') AND name = 'TelefonoContacto_Temp') THEN 1 ELSE 0 END as ExisteTemp";
+                    
+                    var dtCols = BD.ExecuteQuery(checkCols, new Dictionary<string, object>());
+                    bool existeOriginal = Convert.ToInt32(dtCols.Rows[0]["ExisteOriginal"]) == 1;
+                    bool existeTemp = Convert.ToInt32(dtCols.Rows[0]["ExisteTemp"]) == 1;
+                    
+                    if (existeOriginal && !existeTemp)
+                    {
+                        // Caso normal: columna original existe, temporal no
+                        // Paso 1: Crear columna temporal
+                        string step1 = "ALTER TABLE CartelMascota ADD TelefonoContacto_Temp NVARCHAR(50) NULL";
+                        BD.ExecuteNonQuery(step1, new Dictionary<string, object>());
+                        
+                        // Paso 2: Copiar y convertir datos
+                        string step2 = "UPDATE CartelMascota SET TelefonoContacto_Temp = CAST(TelefonoContacto AS NVARCHAR(50))";
+                        BD.ExecuteNonQuery(step2, new Dictionary<string, object>());
+                        
+                        // Paso 3: Eliminar columna antigua
+                        string step3 = "ALTER TABLE CartelMascota DROP COLUMN TelefonoContacto";
+                        BD.ExecuteNonQuery(step3, new Dictionary<string, object>());
+                        
+                        // Paso 4: Renombrar columna temporal
+                        string step4 = "EXEC sp_rename 'CartelMascota.TelefonoContacto_Temp', 'TelefonoContacto', 'COLUMN'";
+                        BD.ExecuteNonQuery(step4, new Dictionary<string, object>());
+                    }
+                    else if (!existeOriginal && existeTemp)
+                    {
+                        // Caso: migración incompleta, solo completar renombrado
+                        string step4 = "EXEC sp_rename 'CartelMascota.TelefonoContacto_Temp', 'TelefonoContacto', 'COLUMN'";
+                        BD.ExecuteNonQuery(step4, new Dictionary<string, object>());
+                    }
+                    else if (!existeOriginal && !existeTemp)
+                    {
+                        // Caso: algo salió mal, crear columna directamente
+                        string step1 = "ALTER TABLE CartelMascota ADD TelefonoContacto NVARCHAR(50) NOT NULL DEFAULT '0000000000'";
+                        BD.ExecuteNonQuery(step1, new Dictionary<string, object>());
+                        return; // Ya está corregido
+                    }
+                    
+                    // Paso 5: Establecer como NOT NULL (si la columna ya existe como texto)
+                    if (existeOriginal || existeTemp)
+                    {
+                        try
+                        {
+                            string step5 = "ALTER TABLE CartelMascota ALTER COLUMN TelefonoContacto NVARCHAR(50) NOT NULL";
+                            BD.ExecuteNonQuery(step5, new Dictionary<string, object>());
+                        }
+                        catch
+                        {
+                            // Si falla, puede ser que ya sea NOT NULL o tenga datos NULL
+                            // Intentar hacerlo NULL primero y luego NOT NULL
+                            try
+                            {
+                                BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN TelefonoContacto NVARCHAR(50) NULL", new Dictionary<string, object>());
+                                BD.ExecuteNonQuery("UPDATE CartelMascota SET TelefonoContacto = '0000000000' WHERE TelefonoContacto IS NULL", new Dictionary<string, object>());
+                                BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN TelefonoContacto NVARCHAR(50) NOT NULL", new Dictionary<string, object>());
+                            }
+                            catch { }
+                        }
+                    }
+                    
+                    Console.WriteLine("✅ Tipo de dato de TelefonoContacto corregido a NVARCHAR(50)");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"⚠️ Error al corregir tipo de TelefonoContacto: {ex.Message}");
+            // No lanzar excepción, solo registrar el error
+        }
+    }
+
+    // ============================
+    // Método para corregir precisión de coordenadas
+    // ============================
+    private void CorregirPrecisionCoordenadas()
+    {
+        try
+        {
+            // Verificar precisión actual de Latitud
+            string checkLat = @"
+                SELECT c.precision, c.scale
+                FROM sys.columns c
+                WHERE c.object_id = OBJECT_ID('CartelMascota') 
+                AND c.name = 'Latitud'";
+            
+            var latInfo = BD.ExecuteQuery(checkLat, new Dictionary<string, object>());
+            if (latInfo.Rows.Count > 0)
+            {
+                int precision = Convert.ToInt32(latInfo.Rows[0]["precision"]);
+                int scale = Convert.ToInt32(latInfo.Rows[0]["scale"]);
+                
+                Console.WriteLine($"📍 Latitud actual: DECIMAL({precision},{scale})");
+                
+                // Si la precisión es menor a 11, corregirla
+                if (precision < 11 || scale < 8)
+                {
+                    Console.WriteLine($"⚠️ Latitud tiene precisión {precision},{scale}, corrigiendo a 11,8...");
+                    try
+                    {
+                        BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Latitud DECIMAL(11, 8) NOT NULL", new Dictionary<string, object>());
+                        Console.WriteLine("✅ Precisión de Latitud corregida a DECIMAL(11,8).");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"❌ Error al corregir Latitud: {ex.Message}");
+                        // Intentar hacerlo NULL primero
+                        try
+                        {
+                            BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Latitud DECIMAL(11, 8) NULL", new Dictionary<string, object>());
+                            BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Latitud DECIMAL(11, 8) NOT NULL", new Dictionary<string, object>());
+                            Console.WriteLine("✅ Precisión de Latitud corregida (con paso intermedio).");
+                        }
+                        catch (Exception ex2)
+                        {
+                            Console.WriteLine($"❌ Error crítico al corregir Latitud: {ex2.Message}");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"✅ Latitud ya tiene precisión correcta: DECIMAL({precision},{scale})");
+                }
+            }
+            
+            // Verificar precisión actual de Longitud
+            string checkLng = @"
+                SELECT c.precision, c.scale
+                FROM sys.columns c
+                WHERE c.object_id = OBJECT_ID('CartelMascota') 
+                AND c.name = 'Longitud'";
+            
+            var lngInfo = BD.ExecuteQuery(checkLng, new Dictionary<string, object>());
+            if (lngInfo.Rows.Count > 0)
+            {
+                int precision = Convert.ToInt32(lngInfo.Rows[0]["precision"]);
+                int scale = Convert.ToInt32(lngInfo.Rows[0]["scale"]);
+                
+                Console.WriteLine($"📍 Longitud actual: DECIMAL({precision},{scale})");
+                
+                // Si la precisión es menor a 12, corregirla
+                if (precision < 12 || scale < 8)
+                {
+                    Console.WriteLine($"⚠️ Longitud tiene precisión {precision},{scale}, corrigiendo a 12,8...");
+                    try
+                    {
+                        BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Longitud DECIMAL(12, 8) NOT NULL", new Dictionary<string, object>());
+                        Console.WriteLine("✅ Precisión de Longitud corregida a DECIMAL(12,8).");
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"❌ Error al corregir Longitud: {ex.Message}");
+                        // Intentar hacerlo NULL primero
+                        try
+                        {
+                            BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Longitud DECIMAL(12, 8) NULL", new Dictionary<string, object>());
+                            BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Longitud DECIMAL(12, 8) NOT NULL", new Dictionary<string, object>());
+                            Console.WriteLine("✅ Precisión de Longitud corregida (con paso intermedio).");
+                        }
+                        catch (Exception ex2)
+                        {
+                            Console.WriteLine($"❌ Error crítico al corregir Longitud: {ex2.Message}");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"✅ Longitud ya tiene precisión correcta: DECIMAL({precision},{scale})");
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"⚠️ Error al verificar precisión de coordenadas: {ex.Message}");
+        }
+    }
+
+    // ============================
     // POST: Crear cartel de mascota
     // ============================
     [HttpPost]
@@ -2764,6 +2970,71 @@ public IActionResult CambiarAvatar(string avatarRuta)
         try
         {
             AsegurarTablaCartelesMascota();
+            
+            // Forzar corrección del tipo de dato antes de continuar
+            Console.WriteLine("🔧 Verificando y corrigiendo tipo de dato de TelefonoContacto...");
+            CorregirTipoTelefonoContacto();
+            
+            // Corregir precisión de Latitud y Longitud si es necesario
+            Console.WriteLine("🔧 Verificando precisión de Latitud y Longitud...");
+            CorregirPrecisionCoordenadas();
+            
+            // Verificar que la corrección funcionó
+            string verifyQuery = @"
+                SELECT t.name as TipoDato
+                FROM sys.columns c
+                INNER JOIN sys.types t ON c.user_type_id = t.user_type_id
+                WHERE c.object_id = OBJECT_ID('CartelMascota') 
+                AND c.name = 'TelefonoContacto'";
+            var verifyResult = BD.ExecuteScalar(verifyQuery, new Dictionary<string, object>());
+            if (verifyResult != null)
+            {
+                string tipoDato = verifyResult.ToString().ToLower();
+                if (tipoDato.Contains("numeric") || tipoDato.Contains("int") || tipoDato.Contains("decimal"))
+                {
+                    Console.WriteLine($"⚠️ ADVERTENCIA: TelefonoContacto sigue siendo {tipoDato}. Intentando corrección forzada...");
+                    // Intentar corrección forzada paso a paso
+                    try
+                    {
+                        // Paso 1: Eliminar columna temporal si existe
+                        try
+                        {
+                            BD.ExecuteNonQuery("ALTER TABLE CartelMascota DROP COLUMN TelefonoContacto_Temp", new Dictionary<string, object>());
+                        }
+                        catch { }
+                        
+                        // Paso 2: Crear columna temporal
+                        BD.ExecuteNonQuery("ALTER TABLE CartelMascota ADD TelefonoContacto_Temp NVARCHAR(50) NULL", new Dictionary<string, object>());
+                        
+                        // Paso 3: Copiar datos usando SQL dinámico
+                        string copySql = "UPDATE CartelMascota SET TelefonoContacto_Temp = CONVERT(NVARCHAR(50), TelefonoContacto)";
+                        BD.ExecuteNonQuery(copySql, new Dictionary<string, object>());
+                        
+                        // Paso 4: Eliminar columna antigua
+                        BD.ExecuteNonQuery("ALTER TABLE CartelMascota DROP COLUMN TelefonoContacto", new Dictionary<string, object>());
+                        
+                        // Paso 5: Renombrar
+                        BD.ExecuteNonQuery("EXEC sp_rename 'CartelMascota.TelefonoContacto_Temp', 'TelefonoContacto', 'COLUMN'", new Dictionary<string, object>());
+                        
+                        // Paso 6: Actualizar NULLs
+                        BD.ExecuteNonQuery("UPDATE CartelMascota SET TelefonoContacto = '0000000000' WHERE TelefonoContacto IS NULL", new Dictionary<string, object>());
+                        
+                        // Paso 7: NOT NULL
+                        BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN TelefonoContacto NVARCHAR(50) NOT NULL", new Dictionary<string, object>());
+                        
+                        Console.WriteLine("✅ Corrección forzada completada.");
+                    }
+                    catch (Exception fixEx)
+                    {
+                        Console.WriteLine($"❌ Error en corrección forzada: {fixEx.Message}");
+                        return Json(new { success = false, message = $"Error de configuración de base de datos. Por favor ejecuta el script SQL/FixCartelMascotaTelefono.sql manualmente en SQL Server Management Studio. Error: {fixEx.Message}" });
+                    }
+                }
+                else
+                {
+                    Console.WriteLine($"✅ TelefonoContacto es de tipo {tipoDato} (correcto)");
+                }
+            }
             
             string tipo = "";
             decimal latitud = 0;
@@ -2778,8 +3049,17 @@ public IActionResult CambiarAvatar(string avatarRuta)
             if (Request.HasFormContentType)
             {
                 tipo = Request.Form["tipo"].ToString();
-                latitud = decimal.Parse(Request.Form["latitud"].ToString());
-                longitud = decimal.Parse(Request.Form["longitud"].ToString());
+                string latStr = Request.Form["latitud"].ToString();
+                string lngStr = Request.Form["longitud"].ToString();
+                
+                Console.WriteLine($"📍 Valores recibidos - Latitud: {latStr}, Longitud: {lngStr}");
+                
+                // Usar InvariantCulture para parsear correctamente los decimales con punto
+                latitud = decimal.Parse(latStr, CultureInfo.InvariantCulture);
+                longitud = decimal.Parse(lngStr, CultureInfo.InvariantCulture);
+                
+                Console.WriteLine($"📍 Valores parseados - Latitud: {latitud}, Longitud: {longitud}");
+                
                 descripcion = Request.Form["descripcion"].ToString();
                 telefono = Request.Form["telefono"].ToString();
                 var idMascotaStr = Request.Form["idMascota"].ToString();
@@ -2815,8 +3095,29 @@ public IActionResult CambiarAvatar(string avatarRuta)
                 // Es JSON
                 var request = await System.Text.Json.JsonSerializer.DeserializeAsync<System.Text.Json.JsonElement>(Request.Body);
                 tipo = request.TryGetProperty("tipo", out var tipoProp) ? tipoProp.GetString() ?? "Perdida" : "Perdida";
-                latitud = request.TryGetProperty("latitud", out var latProp) ? latProp.GetDecimal() : 0;
-                longitud = request.TryGetProperty("longitud", out var lngProp) ? lngProp.GetDecimal() : 0;
+                
+                if (request.TryGetProperty("latitud", out var latProp))
+                {
+                    // JSON ya parsea correctamente los decimales
+                    latitud = latProp.GetDecimal();
+                    Console.WriteLine($"📍 Latitud desde JSON: {latitud}");
+                }
+                else
+                {
+                    latitud = 0;
+                }
+                
+                if (request.TryGetProperty("longitud", out var lngProp))
+                {
+                    // JSON ya parsea correctamente los decimales
+                    longitud = lngProp.GetDecimal();
+                    Console.WriteLine($"📍 Longitud desde JSON: {longitud}");
+                }
+                else
+                {
+                    longitud = 0;
+                }
+                
                 descripcion = request.TryGetProperty("descripcion", out var descProp) ? descProp.GetString() ?? "" : "";
                 telefono = request.TryGetProperty("telefono", out var telProp) ? telProp.GetString() ?? "" : "";
                 idMascota = request.TryGetProperty("idMascota", out var mascotaProp) && mascotaProp.ValueKind != System.Text.Json.JsonValueKind.Null 
@@ -2847,6 +3148,52 @@ public IActionResult CambiarAvatar(string avatarRuta)
                     razaMascota = razaResult.ToString();
                 }
             }
+            
+            // Forzar corrección de precisión ANTES de insertar
+            Console.WriteLine("🔧 Forzando corrección de precisión de coordenadas antes de insertar...");
+            try
+            {
+                BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Latitud DECIMAL(11, 8) NOT NULL", new Dictionary<string, object>());
+                Console.WriteLine("✅ Latitud corregida a DECIMAL(11,8)");
+            }
+            catch
+            {
+                try
+                {
+                    BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Latitud DECIMAL(11, 8) NULL", new Dictionary<string, object>());
+                    BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Latitud DECIMAL(11, 8) NOT NULL", new Dictionary<string, object>());
+                    Console.WriteLine("✅ Latitud corregida a DECIMAL(11,8) (con paso intermedio)");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"⚠️ No se pudo corregir Latitud: {ex.Message}");
+                }
+            }
+            
+            try
+            {
+                BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Longitud DECIMAL(12, 8) NOT NULL", new Dictionary<string, object>());
+                Console.WriteLine("✅ Longitud corregida a DECIMAL(12,8)");
+            }
+            catch
+            {
+                try
+                {
+                    BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Longitud DECIMAL(12, 8) NULL", new Dictionary<string, object>());
+                    BD.ExecuteNonQuery("ALTER TABLE CartelMascota ALTER COLUMN Longitud DECIMAL(12, 8) NOT NULL", new Dictionary<string, object>());
+                    Console.WriteLine("✅ Longitud corregida a DECIMAL(12,8) (con paso intermedio)");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"⚠️ No se pudo corregir Longitud: {ex.Message}");
+                }
+            }
+            
+            // Redondear coordenadas a 8 decimales para asegurar que no excedan la precisión
+            latitud = Math.Round(latitud, 8);
+            longitud = Math.Round(longitud, 8);
+            
+            Console.WriteLine($"📍 Valores finales a insertar - Latitud: {latitud}, Longitud: {longitud}");
             
             string query = @"
                 INSERT INTO CartelMascota (Id_User, Id_Mascota, Tipo, Latitud, Longitud, Descripcion, TelefonoContacto, FotoCartel, RazaMascota)

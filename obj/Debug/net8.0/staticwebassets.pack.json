@@ -589,6 +589,34 @@
       "PackagePath": "staticwebassets\\sw-tracker.js"
     },
     {
+      "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\carteles\\23_638993214074520097.png",
+      "PackagePath": "staticwebassets\\uploads\\carteles\\23_638993214074520097.png"
+    },
+    {
+      "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\carteles\\23_638993214955124437.png",
+      "PackagePath": "staticwebassets\\uploads\\carteles\\23_638993214955124437.png"
+    },
+    {
+      "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\carteles\\23_638993214963308730.png",
+      "PackagePath": "staticwebassets\\uploads\\carteles\\23_638993214963308730.png"
+    },
+    {
+      "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\carteles\\23_638993214964833550.png",
+      "PackagePath": "staticwebassets\\uploads\\carteles\\23_638993214964833550.png"
+    },
+    {
+      "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\carteles\\23_638993214966764768.png",
+      "PackagePath": "staticwebassets\\uploads\\carteles\\23_638993214966764768.png"
+    },
+    {
+      "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\carteles\\23_638993214970970997.png",
+      "PackagePath": "staticwebassets\\uploads\\carteles\\23_638993214970970997.png"
+    },
+    {
+      "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\carteles\\23_638993215047630262.png",
+      "PackagePath": "staticwebassets\\uploads\\carteles\\23_638993215047630262.png"
+    },
+    {
       "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\mascota_0107dbff-1b45-46c1-a2f4-f1b47e1c46a8.png",
       "PackagePath": "staticwebassets\\uploads\\mascota_0107dbff-1b45-46c1-a2f4-f1b47e1c46a8.png"
     },
@@ -599,6 +627,14 @@
     {
       "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\mascota_e1667674-76bb-4b87-94d3-27802d296b3d.png",
       "PackagePath": "staticwebassets\\uploads\\mascota_e1667674-76bb-4b87-94d3-27802d296b3d.png"
+    },
+    {
+      "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\perfiles\\perfil_23_24cd5107-af41-4428-ab25-b099fe3c8044.png",
+      "PackagePath": "staticwebassets\\uploads\\perfiles\\perfil_23_24cd5107-af41-4428-ab25-b099fe3c8044.png"
+    },
+    {
+      "Id": "C:\\Users\\nacho\\zooni\\wwwroot\\uploads\\publicaciones\\pub_0a75ef97-3626-4035-8c37-ce26e9eb63cd.png",
+      "PackagePath": "staticwebassets\\uploads\\publicaciones\\pub_0a75ef97-3626-4035-8c37-ce26e9eb63cd.png"
     },
     {
       "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Zooni.Microsoft.AspNetCore.StaticWebAssets.props",
