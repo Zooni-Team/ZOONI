@@ -165,7 +165,7 @@ main {
 .ficha-card {
     border-radius: 28px;
     box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-    width: 90%; max-width: 430px;
+    width: 90%; max-width: 400px;
     padding: 2rem 1.6rem;
     margin-bottom: 25px;
     text-align: center;
@@ -216,10 +216,10 @@ body.tema-oscuro .ficha-card {
     width: 200px;
     height: auto;
     margin: 14px 0 16px;
-    animation: flotar 3s ease-in-out infinite;
+    animation: flotar 6s ease-in-out infinite;
     filter: drop-shadow(0 3px 6px rgba(0,0,0,0.25));
 }
-@@keyframes flotar { 0%,100%{transform:translateY(-8px);}50%{transform:translateY(-14px);} }
+@@keyframes flotar { 0%,100%{transform:translateY(0px);}50%{transform:translateY(-3px);} }
 
 
 .dato {
@@ -340,7 +340,7 @@ body.tema-oscuro #fechaEditForm .btn-cancelar:hover {
 
 
 .historial {
-    width: 90%; max-width: 430px;
+    width: 90%; max-width: 400px;
     display: flex; flex-direction: column;
     gap: 12px;}
 
@@ -377,7 +377,7 @@ body.tema-oscuro .btn-historial {
 
 .consejos-panel {
     margin-top: 24px;
-    width: 90%; max-width: 450px;
+    width: 90%; max-width: 400px;
     border-radius: 24px;
     padding: 1.6rem;
     box-shadow: 0 6px 14px rgba(0,0,0,0.1);
@@ -415,8 +415,19 @@ body.tema-oscuro .consejo {
     color: #ffd85a;
 }
 
+@@media (max-width: 768px) {
+    .ficha-card, .historial, .consejos-panel { 
+        max-width: 370px; 
+        padding: 1.6rem; 
+    }
+    .mascota-img { width: 180px; }
+}
+
 @@media (max-width: 480px) {
-    .ficha-card, .consejos-panel { padding: 1.2rem; }
+    .ficha-card, .historial, .consejos-panel { 
+        max-width: 340px; 
+        padding: 1.2rem; 
+    }
     .mascota-img { width: 160px; }
 }
 .menu-lateral {

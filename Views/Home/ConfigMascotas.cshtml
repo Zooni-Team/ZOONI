@@ -51,6 +51,14 @@ header {
     top: 15px;
     left: 20px;
     z-index: 10;
+    transition: opacity .3s ease, visibility .3s ease;
+}
+
+.menu-lateral.abierto ~ .overlay ~ body header,
+.menu-lateral.abierto ~ body header {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .menu-icon {
@@ -64,6 +72,13 @@ body.tema-oscuro .menu-icon {
     filter: brightness(0) invert(1);
 }
 .menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral.abierto ~ .overlay ~ body header .menu-icon,
+body:has(.menu-lateral.abierto) header .menu-icon {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 
 .menu-lateral {
     position: fixed;
@@ -599,16 +614,29 @@ body.tema-oscuro .card:hover {
 <script>
 const menu = document.getElementById("menuLateral");
 const overlay = document.getElementById("overlay");
+const header = document.querySelector("header");
+
 document.getElementById("abrirMenu").onclick = () => {
     menu.classList.add("abierto");
     overlay.classList.add("activo");
+    if(header) {
+        header.style.opacity = "0";
+        header.style.visibility = "hidden";
+        header.style.pointerEvents = "none";
+    }
 };
+
 document.getElementById("cerrarMenu").onclick = cerrarMenu;
 overlay.onclick = cerrarMenu;
 
 function cerrarMenu() {
     menu.classList.remove("abierto");
     overlay.classList.remove("activo");
+    if(header) {
+        header.style.opacity = "1";
+        header.style.visibility = "visible";
+        header.style.pointerEvents = "auto";
+    }
 }
 </script>
 </body>

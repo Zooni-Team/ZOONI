@@ -40,14 +40,29 @@
             left: 20px;
             background: @(tema == "oscuro" ? "rgba(30,30,30,0.95)" : "rgba(255,255,255,0.95)");
             border: none;
-            font-size: 24px;
-            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
+            padding: 0;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            padding: 8px 12px;
             border-radius: 50%;
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
             z-index: 1000;
             transition: transform 0.2s;
+        }
+
+        .btn-volver img {
+            width: 22px;
+            height: 22px;
+            display: block;
+            filter: brightness(0);
+            transition: transform 0.2s ease;
+        }
+
+        body.tema-oscuro .btn-volver img {
+            filter: brightness(0) invert(1);
         }
 
         .btn-volver:hover { transform: scale(1.1); }
@@ -151,7 +166,7 @@
     </style>
 </head>
 <body>
-    <button class="btn-volver" onclick="window.history.back()">←</button>
+    <button class="btn-volver" onclick="window.history.back()"><img src="~/img/icons/back-arrow-ios.svg" alt="Volver" /></button>
     <div class="container">
         <h1>📅 Contratar Servicio</h1>
         

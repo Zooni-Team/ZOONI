@@ -51,6 +51,14 @@ header {
     top: 15px;
     left: 20px;
     z-index: 10;
+    transition: opacity .3s ease, visibility .3s ease;
+}
+
+.menu-lateral.abierto ~ .overlay ~ body header,
+.menu-lateral.abierto ~ body header {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .menu-icon {
@@ -64,6 +72,13 @@ body.tema-oscuro .menu-icon {
     filter: brightness(0) invert(1);
 }
 .menu-icon:hover { transform: scale(1.1); }
+
+.menu-lateral.abierto ~ .overlay ~ body header .menu-icon,
+body:has(.menu-lateral.abierto) header .menu-icon {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 
 .menu-lateral {
     position: fixed;
@@ -155,26 +170,89 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
     padding: 20px;
     padding-bottom: 60px;
+    box-sizing: border-box;
 }
 
 .form-card {
-    border-radius: 28px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-    width: 90%;
-    max-width: 500px;
-    padding: 2rem 1.6rem;
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
     text-align: center;
-    backdrop-filter: blur(12px);
-    transition: background .4s ease, color .4s ease;
-}
-body.tema-claro .form-card {
-    background: rgba(255,255,255,0.95);
+    padding: 2rem 2.2rem;
+    width: 95%;
+    max-width: 600px;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
 }
 body.tema-oscuro .form-card {
     background: rgba(30,30,30,0.95);
-    box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.titulo-con-flecha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0.5rem 0 1.3rem;
+    width: 100%;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    position: relative;
+}
+
+.volver {
+    background: none;
+    border: none;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    font-weight: normal;
+    text-decoration: none;
+    position: absolute;
+    left: 0;
+}
+
+.volver:focus {
+    outline: none;
+}
+
+.volver:focus-visible {
+    outline: 2px solid var(--verde);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.volver img {
+    width: 26px;
+    height: 26px;
+    display: block;
+    filter: brightness(0) saturate(100%) invert(30%) sepia(25%) saturate(1500%) hue-rotate(15deg) brightness(0.85);
+    transition: transform 0.2s ease, filter 0.2s ease;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.volver:hover {
+    transform: scale(1.1);
+}
+
+.volver:hover img {
+    filter: brightness(0) saturate(100%) invert(65%) sepia(90%) saturate(500%) hue-rotate(100deg) brightness(1);
 }
 
 .form-card h2 {
@@ -182,11 +260,15 @@ body.tema-oscuro .form-card {
     margin-bottom: 1.5rem;
     font-size: 1.9rem;
     color: inherit;
+    flex: 1;
+    text-align: center;
 }
 
 .form-group {
     margin-bottom: 1.5rem;
     text-align: left;
+    width: 100%;
+    max-width: 360px;
 }
 
 .form-group label {
@@ -201,19 +283,26 @@ body.tema-oscuro .form-card {
 .form-group input[type="date"],
 .form-group select {
     width: 100%;
-    padding: 0.8rem;
-    border: 2px solid rgba(0,0,0,0.1);
-    border-radius: 12px;
-    font-size: 1rem;
+    padding: 14px 12px !important;
+    border: 1.8px solid rgba(0,0,0,0.1);
+    border-radius: 5px;
+    font-size: 14px !important;
     font-family: 'Poppins', sans-serif;
     transition: all .25s ease;
     background: inherit;
     color: inherit;
+    height: 52px !important;
+    line-height: 1.7 !important;
+    text-align: center !important;
+    text-align-last: center !important;
+    box-sizing: border-box;
+    overflow: visible;
 }
 body.tema-claro .form-group input,
 body.tema-claro .form-group select {
     background: white;
     color: var(--texto-claro);
+    border-color: #ccc;
 }
 body.tema-oscuro .form-group input,
 body.tema-oscuro .form-group select {
@@ -225,6 +314,24 @@ body.tema-oscuro .form-group select {
 .form-group select:focus {
     outline: none;
     border-color: var(--verde);
+    box-shadow: 0 0 0 2px rgba(58, 195, 125, 0.25);
+}
+
+.form-group input::placeholder {
+    text-align: center !important;
+}
+
+.form-group select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    padding-right: 30px;
+}
+
+.form-group select option {
+    text-align: center !important;
+    text-align-last: center !important;
 }
 
 .slider-container {
@@ -312,19 +419,52 @@ body.tema-oscuro .btn-cancelar:hover {
     background: #555;
 }
 
+@@media (max-width: 768px) {
+    main {
+        margin-top: 80px;
+        padding: 15px;
+    }
+    .form-card {
+        padding: 1.6rem;
+        max-width: 550px;
+        width: 95%;
+    }
+    .form-card h2 {
+        font-size: 1.7rem;
+    }
+}
+
 @@media (max-width: 480px) {
     main {
         margin-top: 70px;       
         padding: 15px;
     }
     .form-card {
-        padding: 1.5rem 1.2rem;
+        padding: 1.2rem;
+        max-width: 100%;
+        width: 100%;
     }
     .form-card h2 {
         font-size: 1.5rem;
     }
     .btn-group {
         flex-direction: column;
+    }
+    .form-group {
+        max-width: 100%;
+    }
+    .volver { 
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+    }
+    .volver img {
+        width: 24px;
+        height: 24px;
+    }
+    .titulo-con-flecha {
+        gap: 8px;
+        padding: 0 4px;
     }
 }
 </style>
@@ -354,7 +494,10 @@ body.tema-oscuro .btn-cancelar:hover {
 
 <main>
     <div class="form-card">
-        <h2>Editar Mascota 🐾</h2>
+        <div class="titulo-con-flecha">
+            <button class="volver" onclick="window.location.href='/Home/ConfigMascotas'"><img src="~/img/icons/back-arrow-ios.svg" alt="Volver" /></button>
+            <h2>Editar Mascota 🐾</h2>
+        </div>
         
         <form asp-action="GuardarMascotaEditada" asp-controller="Home" method="post">
             @Html.AntiForgeryToken()
@@ -480,16 +623,29 @@ body.tema-oscuro .btn-cancelar:hover {
 <script>
 const menu = document.getElementById("menuLateral");
 const overlay = document.getElementById("overlay");
+const header = document.querySelector("header");
+
 document.getElementById("abrirMenu").onclick = () => {
     menu.classList.add("abierto");
     overlay.classList.add("activo");
+    if(header) {
+        header.style.opacity = "0";
+        header.style.visibility = "hidden";
+        header.style.pointerEvents = "none";
+    }
 };
+
 document.getElementById("cerrarMenu").onclick = cerrarMenu;
 overlay.onclick = cerrarMenu;
 
 function cerrarMenu() {
     menu.classList.remove("abierto");
     overlay.classList.remove("activo");
+    if(header) {
+        header.style.opacity = "1";
+        header.style.visibility = "visible";
+        header.style.pointerEvents = "auto";
+    }
 }
 
 // Slider de peso

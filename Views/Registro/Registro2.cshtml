@@ -83,31 +83,69 @@
             }
         }
 
+        .titulo-con-flecha {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 0.5rem 0 1.3rem;
+            width: 100%;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
         .volver {
-            position: absolute;
-            top: 16px;
-            left: 16px;
             background: none;
             border: none;
-            font-size: 26px;
-            color: var(--marron);
+            padding: 0;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: transform 0.2s ease, color 0.2s ease;
-            z-index: 5;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+            font-weight: normal;
+            text-decoration: none;
+        }
+
+        .volver:focus {
+            outline: none;
+        }
+
+        .volver:focus-visible {
+            outline: 2px solid var(--verde);
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        .volver img {
+            width: 26px;
+            height: 26px;
+            display: block;
+            filter: brightness(0) saturate(100%) invert(30%) sepia(25%) saturate(1500%) hue-rotate(15deg) brightness(0.85);
+            transition: transform 0.2s ease, filter 0.2s ease;
+            font-weight: normal;
+            font-style: normal;
         }
 
         .volver:hover {
             transform: scale(1.1);
-            color: var(--verde);
+        }
+
+        .volver:hover img {
+            filter: brightness(0) saturate(100%) invert(65%) sepia(90%) saturate(500%) hue-rotate(100deg) brightness(1);
         }
 
         .subtitulo {
             color: var(--marron);
             font-size: 1.45rem;
             font-weight: 700;
-            margin: 0.5rem 0 1.3rem;
             line-height: 1.3;
-            text-align: center;
+            margin: 0;
+            white-space: nowrap;
+            flex-shrink: 1;
         }
 
         .formulario {
@@ -178,6 +216,23 @@
             box-shadow: 0 0 10px rgba(58, 195, 125, 0.3);
         }
 
+        .opciones input[type="radio"]:focus {
+            outline: none;
+        }
+
+        .opciones input[type="radio"]:focus + label {
+            outline: 2px solid var(--verde);
+            outline-offset: 2px;
+        }
+
+        /* Prevenir que la flecha se vuelva negrita cuando se selecciona una mascota */
+        .volver *,
+        .volver *::before,
+        .volver *::after {
+            font-weight: normal !important;
+            font-style: normal !important;
+        }
+
         .emoji {
             font-size: 2rem;
             margin-bottom: 0.3rem;
@@ -226,9 +281,21 @@
 
         @@media (max-width: 480px) {
             .contenedor { padding: 1.2rem; max-width: 340px; }
-            .subtitulo { font-size: 1.2rem; }
+            .subtitulo { font-size: 1.15rem; }
             input { font-size: 14px; }
-            .volver { top: 10px; left: 10px; font-size: 24px; }
+            .volver { 
+                width: 32px;
+                height: 32px;
+                flex-shrink: 0;
+            }
+            .volver img {
+                width: 24px;
+                height: 24px;
+            }
+            .titulo-con-flecha {
+                gap: 8px;
+                padding: 0 4px;
+            }
         }
     </style>
 </head>
@@ -240,9 +307,10 @@
     </div>
 
     <div class="contenedor">
-<button class="volver" onclick="volver()">←</button>
-
-        <h3 class="subtitulo">Contanos sobre tu mascota 🐾</h3>
+        <div class="titulo-con-flecha">
+            <button class="volver" onclick="volver()"><img src="~/img/icons/back-arrow-ios.svg" alt="Volver" /></button>
+            <h3 class="subtitulo">Contanos sobre tu mascota 🐾</h3>
+        </div>
 
         <form asp-action="Registro2" asp-controller="Registro" method="post" class="formulario">
             <input type="text" name="Nombre" placeholder="Nombre de tu mascota" required autocomplete="off" />
@@ -284,7 +352,7 @@
 function volver() {
   const origen = sessionStorage.getItem("OrigenRegistro") || "";
   if (origen === "configuracion") {
-    window.location.href = "/Home/Configuracion";
+    window.location.href = "/Home/ConfigMascotas";
   } else {
     window.location.href = "/Auth/Login";
   }

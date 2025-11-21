@@ -53,6 +53,11 @@ body.tema-oscuro .menu-icon {
 }
 .menu-icon:hover { transform: scale(1.1); }
 
+header.menu-oculto .menu-icon {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .menu-lateral {
     position: fixed;
     top: 0;
@@ -60,6 +65,7 @@ body.tema-oscuro .menu-icon {
     transform: translateX(-100%);
     width: 250px;
     height: 100%;
+    background: #ffffff;
     box-shadow: 4px 0 12px rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
@@ -67,6 +73,8 @@ body.tema-oscuro .menu-icon {
     gap: 1rem;
     transition: transform 0.35s ease, background .4s ease, color .4s ease;
     z-index: 999;
+    border-top-right-radius: 18px;
+    border-bottom-right-radius: 18px;
 }
 body.tema-claro .menu-lateral {
     background: #ffffff;
@@ -83,7 +91,7 @@ body.tema-oscuro .menu-lateral {
     padding: 0.5rem 0.8rem;
     border-radius: 10px;
     transition: all .25s ease;
-    color: inherit;
+    color: var(--gris);
 }
 body.tema-claro .menu-lateral a {
     color: var(--gris);
@@ -106,7 +114,7 @@ body.tema-oscuro .menu-lateral a:hover {
     cursor: pointer;
     margin-bottom: 1.5rem;
     transition: transform 0.2s ease;
-    color: inherit;
+    color: var(--gris);
 }
 body.tema-claro .cerrar-menu {
     color: var(--gris);
@@ -404,9 +412,25 @@ main {
 // ======= MENÚ =======
 const menu = document.getElementById("menuLateral");
 const overlay = document.getElementById("overlay");
-document.getElementById("abrirMenu").onclick = () => { menu.classList.add("abierto"); overlay.classList.add("activo"); };
-document.getElementById("cerrarMenu").onclick = () => { menu.classList.remove("abierto"); overlay.classList.remove("activo"); };
-overlay.onclick = () => { menu.classList.remove("abierto"); overlay.classList.remove("activo"); };
+const header = document.querySelector("header");
+
+document.getElementById("abrirMenu").onclick = () => { 
+    menu.classList.add("abierto"); 
+    overlay.classList.add("activo");
+    if (header) header.classList.add("menu-oculto");
+};
+
+document.getElementById("cerrarMenu").onclick = () => { 
+    menu.classList.remove("abierto"); 
+    overlay.classList.remove("activo");
+    if (header) header.classList.remove("menu-oculto");
+};
+
+overlay.onclick = () => { 
+    menu.classList.remove("abierto"); 
+    overlay.classList.remove("activo");
+    if (header) header.classList.remove("menu-oculto");
+};
 
 // ======= MODAL =======
 function abrirModal(){ document.getElementById('modal').style.display='flex'; }

@@ -3149,6 +3149,18 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
             object? tableExists = BD.ExecuteScalar(checkTable);
             bool tieneProveedorServicio = tableExists != null && Convert.ToInt32(tableExists) > 0;
 
+            // Verificar si las columnas de ubicación existen en ProveedorServicio
+            bool tieneColumnasUbicacion = false;
+            if (tieneProveedorServicio)
+            {
+                string checkLatitud = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Latitud'";
+                string checkLongitud = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Longitud'";
+                object? latExists = BD.ExecuteScalar(checkLatitud);
+                object? lngExists = BD.ExecuteScalar(checkLongitud);
+                tieneColumnasUbicacion = latExists != null && Convert.ToInt32(latExists) > 0 && 
+                                         lngExists != null && Convert.ToInt32(lngExists) > 0;
+            }
+
             // Obtener amigos del círculo de confianza (solo los que tienen solicitud aceptada)
             // Verificar que existe una invitación aceptada o están en CirculoConfianza
             // Solo mostrar ubicación según el estado de MostrableUbicacion (nadie/amigos/todos)
@@ -3159,8 +3171,8 @@ public IActionResult GuardarUbicacion([FromBody] UbicacionRequest request)
                     U.Nombre + ' ' + U.Apellido as NombreCompleto,
                     {(tieneProveedorServicio ? "ISNULL(PS.NombreCompleto, U.Nombre + ' ' + U.Apellido)" : "U.Nombre + ' ' + U.Apellido")} as NombreMostrar,
                     {(tieneProveedorServicio ? "ISNULL(PS.FotoPerfil, P.FotoPerfil)" : "P.FotoPerfil")} as FotoPerfil,
-                    {(tieneProveedorServicio ? "ISNULL(PS.Latitud, UB.Latitud)" : "UB.Latitud")} as Lat,
-                    {(tieneProveedorServicio ? "ISNULL(PS.Longitud, UB.Longitud)" : "UB.Longitud")} as Lng,
+                    {(tieneColumnasUbicacion ? "ISNULL(PS.Latitud, UB.Latitud)" : "UB.Latitud")} as Lat,
+                    {(tieneColumnasUbicacion ? "ISNULL(PS.Longitud, UB.Longitud)" : "UB.Longitud")} as Lng,
                     (SELECT TOP 1 Nombre FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaNombre,
                     (SELECT TOP 1 Foto FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaFoto,
                     (SELECT TOP 1 Especie FROM Mascota WHERE Id_User = U.Id_User ORDER BY Id_Mascota DESC) as MascotaEspecie,
@@ -4407,6 +4419,20 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
     {
         try
         {
+            // Verificar si la tabla existe antes de consultarla
+            string checkTableQuery = @"
+                SELECT COUNT(*) as TableExists
+                FROM INFORMATION_SCHEMA.TABLES
+                WHERE TABLE_NAME = 'CuriosidadRaza'";
+            
+            DataTable checkTable = BD.ExecuteQuery(checkTableQuery, new Dictionary<string, object>());
+            
+            if (checkTable.Rows.Count == 0 || Convert.ToInt32(checkTable.Rows[0]["TableExists"]) == 0)
+            {
+                // La tabla no existe, devolver lista vacía
+                return Json(new { success = true, curiosidades = new List<object>() });
+            }
+            
             string query = @"
                 SELECT Curiosidad, Categoria
                 FROM CuriosidadRaza
@@ -4434,7 +4460,8 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
         catch (Exception ex)
         {
             Console.WriteLine("Error ObtenerCuriosidades: " + ex.Message);
-            return Json(new { success = false, message = ex.Message });
+            // En caso de error, devolver lista vacía en lugar de fallar
+            return Json(new { success = true, curiosidades = new List<object>() });
         }
     }
 
@@ -5242,13 +5269,30 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                     Console.WriteLine("⚠️ La tabla ProveedorServicio no existe. Se debe ejecutar el script SQL.");
                 }
                 
+                // Verificar si las columnas de ubicación existen
+                string checkLatitud = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Latitud'";
+                string checkLongitud = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Longitud'";
+                string checkRadio = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Radio_Atencion_Km'";
+                string checkTipo = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Tipo_Ubicacion'";
+                
+                object? latExists = BD.ExecuteScalar(checkLatitud);
+                object? lngExists = BD.ExecuteScalar(checkLongitud);
+                object? radioExists = BD.ExecuteScalar(checkRadio);
+                object? tipoExists = BD.ExecuteScalar(checkTipo);
+                
+                bool tieneLatitud = latExists != null && Convert.ToInt32(latExists) > 0;
+                bool tieneLongitud = lngExists != null && Convert.ToInt32(lngExists) > 0;
+                bool tieneRadio = radioExists != null && Convert.ToInt32(radioExists) > 0;
+                bool tieneTipo = tipoExists != null && Convert.ToInt32(tipoExists) > 0;
+                bool tieneColumnasUbicacion = tieneLatitud && tieneLongitud;
+                
                 // Cargar tipos de servicio
                 string tiposQuery = "SELECT Id_TipoServicio, Descripcion FROM TipoServicio ORDER BY Descripcion";
                 DataTable tiposDt = BD.ExecuteQuery(tiposQuery);
                 ViewBag.TiposServicio = tiposDt;
 
                 // Construir query de búsqueda
-                string query = @"
+                string query = $@"
                     SELECT DISTINCT
                         P.Id_Proveedor,
                         P.NombreCompleto,
@@ -5259,14 +5303,14 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                         P.Precio_Hora,
                         P.Calificacion_Promedio,
                         P.Cantidad_Resenas,
-                        P.Experiencia_Anios,
-                        P.Latitud,
-                        P.Longitud,
-                        P.Radio_Atencion_Km,
-                        P.Tipo_Ubicacion";
+                        P.Experiencia_Anios
+                        {(tieneLatitud ? ", P.Latitud" : "")}
+                        {(tieneLongitud ? ", P.Longitud" : "")}
+                        {(tieneRadio ? ", P.Radio_Atencion_Km" : "")}
+                        {(tieneTipo ? ", P.Tipo_Ubicacion" : "")}";
 
                 // Si hay coordenadas, calcular distancia
-                if (latitud.HasValue && longitud.HasValue)
+                if (latitud.HasValue && longitud.HasValue && tieneColumnasUbicacion)
                 {
                     query += @",
                         (6371 * acos(
@@ -5283,7 +5327,7 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                     WHERE P.Estado = 1";
                     
                 // Si hay coordenadas, solo buscar proveedores con ubicación
-                if (latitud.HasValue && longitud.HasValue)
+                if (latitud.HasValue && longitud.HasValue && tieneColumnasUbicacion)
                 {
                     query += @" AND P.Latitud IS NOT NULL AND P.Longitud IS NOT NULL";
                 }
@@ -5309,13 +5353,16 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                 }
 
                 // Filtrado por ubicación (radio de búsqueda)
-                if (latitud.HasValue && longitud.HasValue)
+                if (latitud.HasValue && longitud.HasValue && tieneColumnasUbicacion)
                 {
                     parametros.Add("@Latitud", latitud.Value);
                     parametros.Add("@Longitud", longitud.Value);
                     
                     decimal radioBusqueda = radioKm ?? 10.0M;
-                    query += @"
+                    string tipoUbicacionCheck = tieneTipo ? "P.Tipo_Ubicacion" : "'Cobertura'";
+                    string radioAtencionCheck = tieneRadio ? "P.Radio_Atencion_Km" : "5.00";
+                    
+                    query += $@"
                         AND (
                             (6371 * acos(
                                 cos(radians(@Latitud)) * 
@@ -5325,8 +5372,8 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                                 sin(radians(P.Latitud))
                             )) <= 
                             CASE 
-                                WHEN P.Tipo_Ubicacion = 'Precisa' THEN @RadioBusqueda
-                                WHEN P.Tipo_Ubicacion = 'Cobertura' THEN (P.Radio_Atencion_Km + @RadioBusqueda)
+                                WHEN {tipoUbicacionCheck} = 'Precisa' THEN @RadioBusqueda
+                                WHEN {tipoUbicacionCheck} = 'Cobertura' THEN ({radioAtencionCheck} + @RadioBusqueda)
                                 ELSE @RadioBusqueda
                             END
                         )";
@@ -5634,6 +5681,36 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
 
             try
             {
+                // Verificar y crear tabla ReservaProveedor si no existe
+                string checkTableReserva = "SELECT COUNT(*) FROM sys.tables WHERE name = 'ReservaProveedor'";
+                object? tableReservaExists = BD.ExecuteScalar(checkTableReserva);
+                if (tableReservaExists == null || Convert.ToInt32(tableReservaExists) == 0)
+                {
+                    string createTableReserva = @"
+                        CREATE TABLE [dbo].[ReservaProveedor](
+                            [Id_Reserva] [int] IDENTITY(1,1) NOT NULL,
+                            [Id_User] [int] NOT NULL,
+                            [Id_Proveedor] [int] NOT NULL,
+                            [Id_Mascota] [int] NOT NULL,
+                            [Id_TipoServicio] [int] NOT NULL,
+                            [Fecha_Inicio] [datetime2](7) NOT NULL,
+                            [Fecha_Fin] [datetime2](7) NULL,
+                            [Hora_Inicio] [time](0) NOT NULL,
+                            [Hora_Fin] [time](0) NULL,
+                            [Duracion_Horas] [decimal](5,2) NULL,
+                            [Precio_Total] [decimal](12, 2) NOT NULL,
+                            [Id_EstadoReserva] [int] NOT NULL DEFAULT 1,
+                            [Notas] [nvarchar](1000) NULL,
+                            [Direccion_Servicio] [nvarchar](500) NULL,
+                            [Latitud_Servicio] [decimal](10, 8) NULL,
+                            [Longitud_Servicio] [decimal](11, 8) NULL,
+                            [Compartir_Ubicacion] [bit] NOT NULL DEFAULT 0,
+                            [Fecha_Creacion] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                            CONSTRAINT [PK_ReservaProveedor] PRIMARY KEY CLUSTERED ([Id_Reserva] ASC)
+                        )";
+                    BD.ExecuteNonQuery(createTableReserva);
+                }
+
                 int idProveedor = request.TryGetProperty("idProveedor", out var provProp) ? provProp.GetInt32() : 0;
                 int idMascota = request.TryGetProperty("idMascota", out var mascProp) ? mascProp.GetInt32() : 0;
                 int idTipoServicio = request.TryGetProperty("idTipoServicio", out var tipoProp) ? tipoProp.GetInt32() : 0;
@@ -5978,6 +6055,23 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
 
             try
             {
+                // Verificar si las columnas de ubicación existen en ProveedorServicio
+                string checkLatitud = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Latitud'";
+                string checkLongitud = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Longitud'";
+                string checkRadio = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Radio_Atencion_Km'";
+                string checkTipo = "SELECT COUNT(*) FROM sys.columns WHERE object_id = OBJECT_ID(N'[dbo].[ProveedorServicio]') AND name = 'Tipo_Ubicacion'";
+                
+                object? latExists = BD.ExecuteScalar(checkLatitud);
+                object? lngExists = BD.ExecuteScalar(checkLongitud);
+                object? radioExists = BD.ExecuteScalar(checkRadio);
+                object? tipoExists = BD.ExecuteScalar(checkTipo);
+                
+                bool tieneLatitud = latExists != null && Convert.ToInt32(latExists) > 0;
+                bool tieneLongitud = lngExists != null && Convert.ToInt32(lngExists) > 0;
+                bool tieneRadio = radioExists != null && Convert.ToInt32(radioExists) > 0;
+                bool tieneTipo = tipoExists != null && Convert.ToInt32(tipoExists) > 0;
+                bool tieneColumnasUbicacion = tieneLatitud && tieneLongitud;
+
                 // Obtener ubicación del usuario si existe
                 string qUbicacion = @"
                     SELECT Latitud, Longitud FROM Ubicacion WHERE Id_Ubicacion = 
@@ -5992,7 +6086,7 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                     lngUsuario = Convert.ToDecimal(dtUbicacion.Rows[0]["Longitud"]);
                 }
 
-                string query = @"
+                string query = $@"
                     SELECT DISTINCT
                         P.Id_Proveedor,
                         P.Id_User,
@@ -6004,13 +6098,13 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                         P.Precio_Hora,
                         P.Calificacion_Promedio,
                         P.Cantidad_Resenas,
-                        P.Experiencia_Anios,
-                        P.Latitud,
-                        P.Longitud,
-                        P.Radio_Atencion_Km,
-                        P.Tipo_Ubicacion";
+                        P.Experiencia_Anios
+                        {(tieneLatitud ? ", P.Latitud" : "")}
+                        {(tieneLongitud ? ", P.Longitud" : "")}
+                        {(tieneRadio ? ", P.Radio_Atencion_Km" : "")}
+                        {(tieneTipo ? ", P.Tipo_Ubicacion" : "")}";
 
-                if (latUsuario.HasValue && lngUsuario.HasValue)
+                if (latUsuario.HasValue && lngUsuario.HasValue && tieneColumnasUbicacion)
                 {
                     query += @",
                         (6371 * acos(
@@ -6024,10 +6118,17 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
 
                 query += @"
                     FROM ProveedorServicio P
-                    WHERE P.Estado = 1 AND P.Latitud IS NOT NULL AND P.Longitud IS NOT NULL";
+                    WHERE P.Estado = 1";
+                
+                // Solo filtrar por ubicación si el usuario tiene ubicación y queremos mostrar solo los cercanos
+                // Si no tiene ubicación, mostrar todos los proveedores
+                if (tieneColumnasUbicacion && latUsuario.HasValue && lngUsuario.HasValue)
+                {
+                    query += " AND P.Latitud IS NOT NULL AND P.Longitud IS NOT NULL";
+                }
 
                 var parametros = new Dictionary<string, object>();
-                if (latUsuario.HasValue && lngUsuario.HasValue)
+                if (latUsuario.HasValue && lngUsuario.HasValue && tieneColumnasUbicacion)
                 {
                     parametros.Add("@Latitud", latUsuario.Value);
                     parametros.Add("@Longitud", lngUsuario.Value);
@@ -6056,23 +6157,37 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                         tiposServicio.Add(tipoRow["Descripcion"].ToString());
                     }
 
+                    // Desencriptar campos encriptados
+                    string nombreCompletoDecrypted = row["NombreCompleto"] != DBNull.Value 
+                        ? EncryptionHelper.Decrypt(row["NombreCompleto"].ToString() ?? "") 
+                        : "Proveedor";
+                    string descripcionDecrypted = row["Descripcion"] != DBNull.Value 
+                        ? EncryptionHelper.Decrypt(row["Descripcion"].ToString() ?? "") 
+                        : "";
+                    string ciudadDecrypted = row["Ciudad"] != DBNull.Value 
+                        ? EncryptionHelper.Decrypt(row["Ciudad"].ToString() ?? "") 
+                        : "";
+                    string provinciaDecrypted = row["Provincia"] != DBNull.Value 
+                        ? EncryptionHelper.Decrypt(row["Provincia"].ToString() ?? "") 
+                        : "";
+
                     proveedores.Add(new
                     {
                         id = Convert.ToInt32(row["Id_Proveedor"]),
                         idUser = Convert.ToInt32(row["Id_User"]),
-                        nombreCompleto = row["NombreCompleto"]?.ToString() ?? "Proveedor",
-                        descripcion = row["Descripcion"]?.ToString() ?? "",
+                        nombreCompleto = nombreCompletoDecrypted,
+                        descripcion = descripcionDecrypted,
                         fotoPerfil = row["FotoPerfil"]?.ToString() ?? "/img/perfil/default.png",
-                        ciudad = row["Ciudad"]?.ToString() ?? "",
-                        provincia = row["Provincia"]?.ToString() ?? "",
+                        ciudad = ciudadDecrypted,
+                        provincia = provinciaDecrypted,
                         precioHora = row["Precio_Hora"] != DBNull.Value ? Convert.ToDecimal(row["Precio_Hora"]) : (decimal?)null,
                         calificacion = row["Calificacion_Promedio"] != DBNull.Value ? Convert.ToDecimal(row["Calificacion_Promedio"]) : (decimal?)null,
                         cantidadResenas = row["Cantidad_Resenas"] != DBNull.Value ? Convert.ToInt32(row["Cantidad_Resenas"]) : 0,
                         experienciaAnios = row["Experiencia_Anios"] != DBNull.Value ? Convert.ToInt32(row["Experiencia_Anios"]) : 0,
-                        lat = row["Latitud"] != DBNull.Value ? Convert.ToDouble(row["Latitud"]) : (double?)null,
-                        lng = row["Longitud"] != DBNull.Value ? Convert.ToDouble(row["Longitud"]) : (double?)null,
-                        radioAtencionKm = row["Radio_Atencion_Km"] != DBNull.Value ? Convert.ToDouble(row["Radio_Atencion_Km"]) : 5.0,
-                        tipoUbicacion = row["Tipo_Ubicacion"]?.ToString() ?? "Cobertura",
+                        lat = tieneLatitud && row.Table.Columns.Contains("Latitud") && row["Latitud"] != DBNull.Value ? Convert.ToDouble(row["Latitud"]) : (double?)null,
+                        lng = tieneLongitud && row.Table.Columns.Contains("Longitud") && row["Longitud"] != DBNull.Value ? Convert.ToDouble(row["Longitud"]) : (double?)null,
+                        radioAtencionKm = tieneRadio && row.Table.Columns.Contains("Radio_Atencion_Km") && row["Radio_Atencion_Km"] != DBNull.Value ? Convert.ToDouble(row["Radio_Atencion_Km"]) : 5.0,
+                        tipoUbicacion = tieneTipo && row.Table.Columns.Contains("Tipo_Ubicacion") ? row["Tipo_Ubicacion"]?.ToString() ?? "Cobertura" : "Cobertura",
                         distanciaKm = row.Table.Columns.Contains("Distancia_Km") && row["Distancia_Km"] != DBNull.Value ? Convert.ToDouble(row["Distancia_Km"]) : (double?)null,
                         tiposServicio = tiposServicio
                     });

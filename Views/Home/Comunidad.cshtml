@@ -166,7 +166,7 @@ body.tema-oscuro .cerrar-menu {
     box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
     border-radius: 12px !important;
     overflow: hidden !important;
-    margin-top: 180px !important; /* Mover debajo de los botones de control */
+    margin-top: 250px !important; /* Bajar los controles de zoom debajo de los botones */
     margin-right: 20px !important;
 }
 
@@ -217,7 +217,7 @@ body.tema-oscuro .leaflet-control-zoom-in {
 
 .controles-mapa {
     position: fixed;
-    top: 80px;
+    top: 65px;
     right: 20px;
     z-index: 1000;
     display: flex;
@@ -227,7 +227,7 @@ body.tema-oscuro .leaflet-control-zoom-in {
 
 .btn-servicios-flotante {
     position: fixed;
-    bottom: 340px;
+    bottom: 360px; /* Valor inicial, se actualizará dinámicamente */
     right: 20px;
     z-index: 1001;
     background: linear-gradient(135deg, var(--verde) 0%, #2ea968 100%);
@@ -239,7 +239,7 @@ body.tema-oscuro .leaflet-control-zoom-in {
     font-size: 1rem;
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(58, 195, 125, 0.4);
-    transition: all 0.3s ease;
+    transition: bottom 0.3s ease, transform 0.2s ease;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -291,10 +291,66 @@ body.tema-oscuro .btn-control {
     z-index: 1000;
     max-height: 400px;
     overflow-y: auto;
-    transition: max-height 0.3s ease;
+    transition: max-height 0.4s ease, bottom 0.4s ease;
 }
 .panel-amigos.tab-servicios-activo {
     max-height: 60vh;
+}
+.panel-amigos.colapsado {
+    max-height: 80px !important;
+    bottom: 20px;
+    padding: 10px 20px;
+}
+.panel-amigos.colapsado .tab-content {
+    opacity: 0.3;
+    pointer-events: none;
+    overflow: hidden;
+    max-height: 0;
+}
+.panel-amigos.colapsado .tabs {
+    margin-bottom: 0;
+}
+
+.btn-toggle-panel {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: transparent;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
+    box-shadow: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    padding: 0;
+}
+.btn-toggle-panel img {
+    width: 20px;
+    height: 20px;
+    display: block;
+    filter: brightness(0);
+    transition: transform 0.3s ease;
+    transform: rotate(90deg); /* Rotar 90° para que apunte hacia abajo cuando está expandido */
+}
+body.tema-oscuro .btn-toggle-panel img {
+    filter: brightness(0) invert(1);
+}
+.btn-toggle-panel:hover {
+    opacity: 0.7;
+}
+.btn-toggle-panel:hover img {
+    transform: rotate(90deg) scale(1.15);
+}
+.panel-amigos.colapsado .btn-toggle-panel img {
+    transform: rotate(-90deg); /* Rotar -90° para que apunte hacia arriba cuando está colapsado */
+}
+.panel-amigos.colapsado .btn-toggle-panel:hover img {
+    transform: rotate(-90deg) scale(1.15);
 }
 body.tema-oscuro .panel-amigos {
     background: var(--card-oscuro);
@@ -311,6 +367,7 @@ body.tema-oscuro .panel-amigos {
     margin-bottom: 15px;
     border-bottom: 2px solid rgba(0,0,0,0.1);
     padding-bottom: 10px;
+    padding-right: 35px; /* Espacio para el botón toggle */
 }
 body.tema-oscuro .tabs {
     border-bottom-color: rgba(255,255,255,0.1);
@@ -329,21 +386,16 @@ body.tema-oscuro .tabs {
     opacity: 0.6;
 }
 .tab-btn.tab-servicios {
-    background: linear-gradient(135deg, var(--verde) 0%, #2ea968 100%);
-    color: white !important;
-    opacity: 1;
-    font-weight: 700;
-    box-shadow: 0 2px 8px rgba(58, 195, 125, 0.3);
-    transform: scale(1.05);
+    /* Sin estilo especial cuando no está activo */
 }
 .tab-btn.tab-servicios:hover {
-    transform: scale(1.08);
-    box-shadow: 0 4px 12px rgba(58, 195, 125, 0.4);
+    opacity: 0.8;
 }
 .tab-btn.tab-servicios.activo {
-    background: linear-gradient(135deg, var(--verde) 0%, #2ea968 100%);
+    background: var(--verde);
+    color: white !important;
     opacity: 1;
-    box-shadow: 0 4px 12px rgba(58, 195, 125, 0.5);
+    box-shadow: 0 2px 8px rgba(58, 195, 125, 0.3);
 }
 .tab-btn.activo {
     opacity: 1;
@@ -612,8 +664,11 @@ body.tema-oscuro .modal-content input {
     .panel-amigos.tab-servicios-activo {
         max-height: 70vh;
     }
+    .panel-amigos.colapsado {
+        max-height: 70px !important;
+    }
     .controles-mapa {
-        top: 70px;
+        top: 55px;
         right: 10px;
     }
     .btn-control {
@@ -676,6 +731,7 @@ body.tema-oscuro .modal-content input {
 </button>
 
 <div class="panel-amigos" id="panelAmigos">
+    <button class="btn-toggle-panel" id="btnTogglePanel" onclick="togglePanel()" title="Colapsar/Expandir"><img src="~/img/icons/back-arrow-ios.svg" alt="Toggle" /></button>
     <div class="tabs">
         <button class="tab-btn activo" onclick="cambiarTab('amigos')">👥 Amigos</button>
         <button class="tab-btn tab-servicios" onclick="cambiarTab('proveedores')">🔧 Servicios</button>
@@ -819,6 +875,60 @@ function cerrarMenu() {
 // Inicializar mapa cuando la página carga
 document.addEventListener('DOMContentLoaded', function() {
     initMap();
+    
+    // Inicializar posición del botón "Ver Servicios"
+    setTimeout(() => {
+        actualizarPosicionBotonServicios();
+    }, 500);
+    
+    // Observar cambios en el tamaño del panel para actualizar la posición del botón
+    const panel = document.getElementById('panelAmigos');
+    if (panel) {
+        let rafId = null;
+        let updateInterval = null;
+        
+        const actualizarConIntervalo = () => {
+            // Actualizar inmediatamente
+            actualizarPosicionBotonServicios();
+            
+            // Limpiar intervalo anterior si existe
+            if (updateInterval) clearInterval(updateInterval);
+            
+            // Actualizar cada 16ms (aproximadamente 60fps) durante 350ms para coincidir con la transición de 0.3s
+            let elapsed = 0;
+            updateInterval = setInterval(() => {
+                actualizarPosicionBotonServicios();
+                elapsed += 16;
+                if (elapsed >= 350) {
+                    clearInterval(updateInterval);
+                    updateInterval = null;
+                }
+            }, 16);
+        };
+        
+        const resizeObserver = new ResizeObserver(() => {
+            // Usar requestAnimationFrame para actualizaciones suaves durante la transición
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                actualizarConIntervalo();
+            });
+        });
+        resizeObserver.observe(panel);
+        
+        // También observar cambios en el contenido del panel
+        const mutationObserver = new MutationObserver(() => {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(() => {
+                actualizarConIntervalo();
+            });
+        });
+        mutationObserver.observe(panel, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ['class']
+        });
+    }
 });
 
 function initMap() {
@@ -959,7 +1069,12 @@ function obtenerMiUbicacion() {
             );
         },
         function(error) {
-            mostrarMensaje("No se pudo obtener tu ubicación", "error");
+            // Solo mostrar mensaje si no es un error de permiso denegado
+            // Error code 1 = PERMISSION_DENIED (usuario denegó el permiso)
+            if (error.code !== 1) {
+                console.error("Error obteniendo ubicación:", error);
+                // No mostrar mensaje de error, simplemente continuar sin ubicación
+            }
         },
         { enableHighAccuracy: true, timeout: 10000 }
     );
@@ -1022,6 +1137,7 @@ function mostrarAmigos(amigos) {
     const lista = document.getElementById('listaAmigos');
     if (!amigos || amigos.length === 0) {
         lista.innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">No tenés amigos agregados aún</p>';
+        requestAnimationFrame(() => actualizarPosicionBotonServicios());
         return;
     }
     
@@ -1050,6 +1166,33 @@ function mostrarAmigos(amigos) {
            </div>
         </div>
     `}).join('');
+    requestAnimationFrame(() => actualizarPosicionBotonServicios());
+}
+
+// Función para actualizar la posición del botón "Ver Servicios" basándose en la altura del panel
+function actualizarPosicionBotonServicios() {
+    const panel = document.getElementById('panelAmigos');
+    const boton = document.querySelector('.btn-servicios-flotante');
+    
+    if (panel && boton) {
+        // Obtener la altura del panel y su posición desde abajo
+        const panelRect = panel.getBoundingClientRect();
+        const panelHeight = panelRect.height;
+        const panelBottom = window.innerHeight - panelRect.bottom; // Distancia desde el bottom de la ventana
+        
+        // Calcular la nueva posición del botón: arriba del panel + un margen
+        const margen = 20; // Margen entre el botón y el panel
+        const nuevaPosicion = panelHeight + panelBottom + margen;
+        
+        // Obtener la posición actual del botón
+        const posicionActual = parseFloat(boton.style.bottom) || 360;
+        
+        // Solo actualizar si hay un cambio significativo (más de 1px) para evitar actualizaciones innecesarias
+        if (Math.abs(nuevaPosicion - posicionActual) > 1) {
+            // Actualizar la posición del botón (la transición CSS se encargará de la animación suave)
+            boton.style.bottom = nuevaPosicion + 'px';
+        }
+    }
 }
 
 function cambiarTab(tab) {
@@ -1092,6 +1235,19 @@ function cambiarTab(tab) {
             document.getElementById('panelAmigos').classList.remove('tab-servicios-activo');
         }
     }
+    
+    // Actualizar posición del botón inmediatamente y luego durante la transición
+    actualizarPosicionBotonServicios();
+    
+    // Actualizar continuamente durante la transición (cada 16ms = ~60fps durante 350ms para coincidir con la transición de 0.3s)
+    let elapsed = 0;
+    const updateInterval = setInterval(() => {
+        actualizarPosicionBotonServicios();
+        elapsed += 16;
+        if (elapsed >= 350) {
+            clearInterval(updateInterval);
+        }
+    }, 16);
     
     // Cargar datos según el tab
     if (tab === 'sugeridos') {
@@ -1454,6 +1610,7 @@ function mostrarSolicitudes(solicitudes) {
     const lista = document.getElementById('listaSolicitudes');
     if (!solicitudes || solicitudes.length === 0) {
         lista.innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit;">No tenés solicitudes pendientes</p>';
+        requestAnimationFrame(() => actualizarPosicionBotonServicios());
         return;
     }
     
@@ -1470,6 +1627,7 @@ function mostrarSolicitudes(solicitudes) {
             </div>
         </div>
     `).join('');
+    requestAnimationFrame(() => actualizarPosicionBotonServicios());
 }
 
 function aceptarSolicitud(invitacionId) {
@@ -1890,14 +2048,23 @@ function mostrarProveedores(proveedores) {
     const lista = document.getElementById('listaProveedores');
     if (!proveedores || proveedores.length === 0) {
         lista.innerHTML = '<p style="text-align: center; opacity: 0.7; color: inherit; padding: 20px;">No hay servicios disponibles en este momento</p>';
+        actualizarPosicionBotonServicios();
+        requestAnimationFrame(() => actualizarPosicionBotonServicios());
         return;
     }
+    
+    // Actualizar antes de renderizar
+    actualizarPosicionBotonServicios();
     
     renderizarProveedores(proveedores);
 }
 
 function renderizarProveedores(proveedores) {
     const lista = document.getElementById('listaProveedores');
+    
+    // Actualizar posición antes de renderizar
+    actualizarPosicionBotonServicios();
+    
     lista.innerHTML = proveedores.map(prov => {
         const distanciaTexto = prov.distanciaKm != null 
             ? (prov.distanciaKm < 1 ? `${(prov.distanciaKm * 1000).toFixed(0)} m` : `${prov.distanciaKm.toFixed(1)} km`)
@@ -1956,6 +2123,19 @@ function renderizarProveedores(proveedores) {
             this.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
         });
     });
+    
+    // Actualizar posición inmediatamente después de renderizar
+    actualizarPosicionBotonServicios();
+    
+    // Actualizar continuamente durante la transición del panel (cada 16ms durante 350ms = ~60fps)
+    let elapsed = 0;
+    const renderUpdateInterval = setInterval(() => {
+        actualizarPosicionBotonServicios();
+        elapsed += 16;
+        if (elapsed >= 350) {
+            clearInterval(renderUpdateInterval);
+        }
+    }, 16);
 }
 
 function filtrarServicios(termino) {
@@ -2042,10 +2222,15 @@ function seleccionarProveedor(id, lat, lng, radioKm, tipoUbicacion) {
     if (proveedorSeleccionado === id) {
         proveedorSeleccionado = null;
         map.closePopup();
+        // Expandir el panel cuando se deselecciona
+        expandirPanel();
         return;
     }
     
     proveedorSeleccionado = id;
+    
+    // Colapsar el panel para que se vea el mapa
+    colapsarPanel();
     
     // Centrar mapa en el proveedor
     map.setView([lat, lng], 14);
@@ -2069,7 +2254,7 @@ function seleccionarProveedor(id, lat, lng, radioKm, tipoUbicacion) {
     
     // Scroll al proveedor en la lista
     const lista = document.getElementById('listaProveedores');
-    const items = lista.querySelectorAll('.usuario-item');
+    const items = lista.querySelectorAll('.servicio-card');
     items.forEach((item, index) => {
         if (item.onclick && item.onclick.toString().includes(`seleccionarProveedor(${id}`)) {
             item.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2081,12 +2266,55 @@ function seleccionarProveedor(id, lat, lng, radioKm, tipoUbicacion) {
     });
 }
 
+// Funciones para colapsar y expandir el panel
+function colapsarPanel() {
+    const panel = document.getElementById('panelAmigos');
+    if (panel) {
+        panel.classList.add('colapsado');
+        // Actualizar posición del botón inmediatamente y durante la transición
+        actualizarPosicionBotonServicios();
+        setTimeout(() => actualizarPosicionBotonServicios(), 50);
+        setTimeout(() => actualizarPosicionBotonServicios(), 100);
+        setTimeout(() => actualizarPosicionBotonServicios(), 200);
+        setTimeout(() => actualizarPosicionBotonServicios(), 400);
+    }
+}
+
+function expandirPanel() {
+    const panel = document.getElementById('panelAmigos');
+    if (panel) {
+        panel.classList.remove('colapsado');
+        // Actualizar posición del botón inmediatamente y durante la transición
+        actualizarPosicionBotonServicios();
+        setTimeout(() => actualizarPosicionBotonServicios(), 50);
+        setTimeout(() => actualizarPosicionBotonServicios(), 100);
+        setTimeout(() => actualizarPosicionBotonServicios(), 200);
+        setTimeout(() => actualizarPosicionBotonServicios(), 400);
+    }
+}
+
+function togglePanel() {
+    const panel = document.getElementById('panelAmigos');
+    if (panel) {
+        if (panel.classList.contains('colapsado')) {
+            expandirPanel();
+        } else {
+            colapsarPanel();
+        }
+    }
+}
+
 // Modal de contratación rápida
 let proveedorActualContratar = null;
+let proveedorActualUserId = null; // Guardar también el userId del proveedor
 let mascotasUsuario = [];
 
 function mostrarModalContratar(idProveedor, nombreProveedor, precioHora, tiposServicio) {
     proveedorActualContratar = idProveedor;
+    
+    // Obtener el userId del proveedor desde la lista cargada
+    const proveedor = todosLosProveedores.find(p => p.id === idProveedor);
+    proveedorActualUserId = proveedor?.idUser || null;
     const modal = document.getElementById('modalContratar');
     const content = document.getElementById('modalContratarContent');
     
@@ -2174,6 +2402,7 @@ function mostrarFormularioContratar(nombreProveedor, precioHora, tiposServicio) 
 function cerrarModalContratar() {
     document.getElementById('modalContratar').classList.remove('activo');
     proveedorActualContratar = null;
+    proveedorActualUserId = null;
 }
 
 async function enviarContratacionRapida(event) {
@@ -2227,12 +2456,80 @@ async function enviarContratacionRapida(event) {
             cerrarModalContratar();
             
             // Opcional: redirigir a mensajes después de 2 segundos
-            setTimeout(() => {
+            setTimeout(async () => {
                 if (confirm('¿Querés ver la conversación con el proveedor?')) {
-                    // Obtener el Id_User del proveedor
-                    const proveedor = todosLosProveedores.find(p => p.id === proveedorActualContratar);
-                    if (proveedor && proveedor.idUser) {
-                        window.location.href = `/Home/Mensajes?amigoId=${proveedor.idUser}`;
+                    try {
+                        let proveedorUserId = proveedorActualUserId;
+                        
+                        // Si no tenemos el userId guardado, intentar obtenerlo
+                        if (!proveedorUserId) {
+                            // Intentar desde la lista cargada
+                            if (todosLosProveedores && todosLosProveedores.length > 0) {
+                                const proveedor = todosLosProveedores.find(p => p.id === proveedorActualContratar);
+                                if (proveedor && proveedor.idUser) {
+                                    proveedorUserId = proveedor.idUser;
+                                }
+                            }
+                            
+                            // Si aún no lo tenemos, obtenerlo del servidor
+                            if (!proveedorUserId) {
+                                try {
+                                    const response = await fetch(`/Home/ObtenerUserIdProveedor/${proveedorActualContratar}`);
+                                    if (!response.ok) {
+                                        throw new Error(`HTTP error! status: ${response.status}`);
+                                    }
+                                    const data = await response.json();
+                                    
+                                    if (data.success && data.userId) {
+                                        proveedorUserId = data.userId;
+                                    } else {
+                                        console.error('Error obteniendo userId del proveedor:', data);
+                                        // No redirigir si no se puede obtener el userId
+                                        return;
+                                    }
+                                } catch (fetchError) {
+                                    console.error('Error en fetch:', fetchError);
+                                    // No redirigir si hay un error
+                                    return;
+                                }
+                            }
+                        }
+                        
+                        if (!proveedorUserId) {
+                            // Si no se puede obtener el userId, simplemente no redirigir (no mostrar error)
+                            console.warn('No se pudo obtener el userId del proveedor, no se redirigirá a mensajes');
+                            return;
+                        }
+                        
+                        // Obtener o crear el chat con el proveedor
+                        const chatResponse = await fetch('/Home/ObtenerOCrearChatProveedor', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(proveedorUserId)
+                        });
+                        
+                        const chatData = await chatResponse.json();
+                        if (chatData.success && chatData.chatId) {
+                            window.location.href = `/Home/Mensajes?chatId=${chatData.chatId}`;
+                        } else {
+                            // Si no se puede crear el chat, intentar con el endpoint normal
+                            const chatResponse2 = await fetch('/Home/ObtenerOCrearChat', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(proveedorUserId)
+                            });
+                            
+                            const chatData2 = await chatResponse2.json();
+                            if (chatData2.success && chatData2.chatId) {
+                                window.location.href = `/Home/Mensajes?chatId=${chatData2.chatId}`;
+                            } else {
+                                // Último recurso: redirigir con amigoId
+                                window.location.href = `/Home/Mensajes?amigoId=${proveedorUserId}`;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        mostrarMensaje('Error al abrir la conversación', 'error');
                     }
                 }
             }, 2000);

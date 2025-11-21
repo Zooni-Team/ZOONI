@@ -94,18 +94,32 @@
             left: 18px;
             background: none;
             border: none;
-            font-size: 28px;
-            color: var(--marron);
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: transform 0.2s ease, color 0.2s ease;
+            transition: transform 0.2s ease;
             z-index: 5;
             text-decoration: none;
-            line-height: 1;
+        }
+
+        .volver img {
+            width: 20px;
+            height: 20px;
+            display: block;
+            filter: brightness(0) saturate(100%) invert(30%) sepia(25%) saturate(1500%) hue-rotate(15deg) brightness(0.85);
+            transition: transform 0.2s ease, filter 0.2s ease;
         }
 
         .volver:hover {
             transform: scale(1.1);
-            color: var(--verde);
+        }
+
+        .volver:hover img {
+            filter: brightness(0) saturate(100%) invert(65%) sepia(90%) saturate(500%) hue-rotate(100deg) brightness(1);
         }
 
         .formulario {
@@ -298,7 +312,7 @@
     </div>
 
     <div class="contenedor">
-        <a href="/Home/Proveedor/Registro2" class="volver">←</a>
+        <a href="/Home/Proveedor/Registro2" class="volver"><img src="~/img/icons/back-arrow-ios.svg" alt="Volver" /></a>
 
         @if (TempData["Error"] != null)
         {

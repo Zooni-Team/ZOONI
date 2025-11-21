@@ -52,18 +52,30 @@ body.tema-oscuro .menu-icon {
 .menu-icon:hover { transform: scale(1.1); }
 
 .back {
-  font-size: 1.8rem;
-  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
   text-decoration: none;
   margin-left: 8px;
-  color: inherit;
-  transition: color .3s ease;
+  transition: transform .3s ease;
 }
-body.tema-claro .back {
-  color: var(--marron);
+
+.back img {
+  width: 22px;
+  height: 22px;
+  display: block;
+  filter: brightness(0);
+  transition: transform .2s ease, filter .3s ease;
 }
-body.tema-oscuro .back {
-  color: #ffffff;
+
+body.tema-oscuro .back img {
+  filter: brightness(0) invert(1);
+}
+
+.back:hover {
+  transform: scale(1.1);
 }
 
 /* ===== MENU LATERAL ===== */
@@ -245,7 +257,7 @@ button:hover { background: #2fa567; transform: translateY(-2px); }
 <body>
 <header>
   <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
-  <a href="/Home/Configuracion" class="back">‹</a>
+  <a href="/Home/Configuracion" class="back"><img src="~/img/icons/back-arrow-ios.svg" alt="Volver" /></a>
 </header>
 
 <div class="menu-lateral" id="menuLateral">

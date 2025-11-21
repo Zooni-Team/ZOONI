@@ -15,121 +15,379 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
 <style>
 :root {
-    --marron:#8B5E3C;
-    --verde:#3ac37d;
-    --gris-claro:#ccc;
+    --marron: #8B5E3C;
+    --verde: #3ac37d;
+    --gris: #555;
+    --gris-claro: #ccc;
 }
-body{
-    font-family:'Poppins',sans-serif;
-    background:#fff;
-    margin:0;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    min-height:100vh;
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
 }
-h1{color:var(--marron);font-size:2.3rem;margin:1rem 0 0;font-weight:700;}
-h2{color:#555;font-weight:700;margin:.3rem 0 1rem;font-size:1.1rem;}
-.contenedor{
-    background:#fff;
-    border-radius:25px;
-    box-shadow:0 8px 25px rgba(0,0,0,.08);
-    text-align:center;
-    padding:2rem;
-    width:90%;
-    max-width:400px;
-    position:relative;
-    z-index:2;
+
+h1 {
+    color: var(--marron);
+    font-size: 2.3rem;
+    margin-bottom: 0;
+    margin-top: 1rem;
+    font-weight: 700;
+    z-index: 3;
 }
-.volver{
-    position:absolute;
-    top:15px;
-    left:15px;
-    background:none;
-    border:none;
-    font-size:28px;
-    color:var(--marron);
-    cursor:pointer;
-    transition:transform .2s ease,color .2s ease;
+
+h2 {
+    color: var(--gris);
+    font-weight: 700;
+    margin-top: 0.3rem;
+    font-size: 1.2rem;
+    z-index: 3;
 }
-.volver:hover{transform:scale(1.1);color:var(--verde);}
-.nombre-mascota{font-weight:700;font-size:1.4rem;color:#000;margin-bottom:.4rem;}
-.mascota-img{width:200px;height:auto;margin:.5rem 0 1rem;object-fit:contain;z-index:3;}
-form{display:flex;flex-direction:column;align-items:center;gap:12px;}
-.fila{display:flex;justify-content:center;gap:10px;width:100%;max-width:320px;}
-input,select{
-    width:100%;
-    max-width:320px;
-    padding:12px;
-    border-radius:20px;
-    border:1.8px solid var(--gris-claro);
-    font-size:15px;
-    text-align:center;
-    outline:none;
+
+.titulo-con-flecha {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 0.5rem 0 1.3rem;
+    width: 100%;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    position: relative;
 }
-input:focus,select:focus{border-color:var(--verde);}
-.btn-principal{
-    background:var(--verde);
-    color:#fff;
-    border:none;
-    border-radius:25px;
-    padding:12px 40px;
-    font-size:1.1rem;
-    cursor:pointer;
-    margin-top:1rem;
-    width:100%;
-    max-width:320px;
-    font-weight:600;
+
+.volver {
+    background: none;
+    border: none;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+    font-weight: normal;
+    text-decoration: none;
+    position: absolute;
+    left: 0;
 }
-.imagen-bienvenida{
-    position:absolute;
-    bottom:0;
-    width:100%;
-    display:flex;
-    justify-content:center;
-    z-index:1;
+
+.volver:focus {
+    outline: none;
 }
-.imagen-bienvenida img{width:100%;max-width:900px;object-fit:cover;}
+
+.volver:focus-visible {
+    outline: 2px solid var(--verde);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+.volver img {
+    width: 26px;
+    height: 26px;
+    display: block;
+    filter: brightness(0) saturate(100%) invert(30%) sepia(25%) saturate(1500%) hue-rotate(15deg) brightness(0.85);
+    transition: transform 0.2s ease, filter 0.2s ease;
+    font-weight: normal;
+    font-style: normal;
+}
+
+.volver:hover {
+    transform: scale(1.1);
+}
+
+.volver:hover img {
+    filter: brightness(0) saturate(100%) invert(65%) sepia(90%) saturate(500%) hue-rotate(100deg) brightness(1);
+}
+
+.nombre-mascota {
+    font-weight: 700;
+    font-size: 1.45rem;
+    margin: 0;
+    color: var(--marron);
+    z-index: 3;
+    white-space: nowrap;
+    flex-shrink: 1;
+    text-align: center;
+    flex: 1;
+}
+
+.mascota-img {
+    width: 200px;
+    height: auto;
+    margin: 0.5rem 0 1rem 0;
+    object-fit: contain;
+    z-index: 3;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    z-index: 4;
+    position: relative;
+}
+
+.fila {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; 
+    width: 100%;
+    max-width: 360px;
+}
+
+input, select {
+    width: 100%;
+    max-width: 360px;
+    padding: 14px 12px !important;
+    border-radius: 5px;
+    border: 1.8px solid var(--gris-claro);
+    font-size: 14px !important;
+    text-align: center !important;
+    text-align-last: center !important;
+    outline: none;
+    transition: border 0.2s ease, box-shadow 0.2s ease;
+    background: #fff;
+    z-index: 4;
+    font-family: 'Poppins', sans-serif !important;
+    box-sizing: border-box;
+    height: 52px !important;
+    line-height: 1.7 !important;
+    direction: ltr;
+    display: block;
+    margin: 0 auto;
+    overflow: visible;
+}
+
+input[type="tel"], input[type="text"], input[type="email"], input[type="password"] {
+    padding: 14px 12px !important;
+    text-align: center !important;
+    text-align-last: center !important;
+    font-size: 14px !important;
+    line-height: 1.7 !important;
+    height: 52px !important;
+    overflow: visible;
+}
+
+input::placeholder {
+    text-align: center !important;
+    text-align-last: center !important;
+}
+
+input:focus, select:focus {
+    border-color: var(--verde);
+    box-shadow: 0 0 0 2px rgba(58, 195, 125, 0.25);
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    cursor: pointer;
+    padding: 14px 12px !important;
+    text-align: center !important;
+    text-align-last: center !important;
+    font-size: 14px !important;
+    direction: ltr;
+    overflow: visible;
+    line-height: 1.7 !important;
+    height: 52px !important;
+}
+
+select option {
+    text-align: center !important;
+    text-align-last: center !important;
+    direction: ltr;
+}
+
+select:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-principal {
+    background-color: var(--verde);
+    color: #fff;
+    border: none;
+    border-radius: 25px;
+    padding: 16px 40px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.2s ease;
+    margin-top: 18px;
+    width: 100%;
+    max-width: 360px;
+    font-weight: 600;
+    z-index: 5;
+}
+
+.btn-principal:hover {
+    background-color: #2fa567;
+    transform: translateY(-2px);
+}
+
+.imagen-bienvenida {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.imagen-bienvenida img {
+    width: 100%;
+    max-width: 900px;
+    object-fit: cover;
+}
+
+.contenedor {
+    background: #fff;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    padding: 2rem 2.2rem;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@@media (max-width: 768px) {
+        .contenedor {
+            padding: 1.6rem;
+            max-width: 370px;
+        }
+
+        .mascota-img {
+            width: 170px;
+        }
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        .btn-principal {
+            font-size: 1rem;
+        }
+
+        .nombre-mascota {
+            font-size: 1.3rem;
+        }
+    }
+
+@@media (max-width: 480px) {
+    .contenedor {
+        padding: 1.2rem;
+        max-width: 340px;
+    }
+
+    .mascota-img {
+        width: 150px;
+    }
+
+    h1 {
+        font-size: 1.7rem;
+    }
+
+    input, select {
+        font-size: 14px !important;
+        padding: 12px 10px !important;
+        height: 50px !important;
+        line-height: 1.7 !important;
+        overflow: visible !important;
+    }
+    
+    select {
+        padding: 12px 10px !important;
+    }
+    
+    .fila {
+        max-width: 360px;
+    }
+
+    .volver { 
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+    }
+    .volver img {
+        width: 24px;
+        height: 24px;
+    }
+    .titulo-con-flecha {
+        gap: 8px;
+        padding: 0 4px;
+    }
+    .nombre-mascota {
+        font-size: 1.15rem;
+    }
+}
+
+.mascota-img {
+    width: 68%;
+}
 </style>
 </head>
 <body>
-<h1>Zooni</h1>
-<h2>¡Registrate!</h2>
+    <h1>Zooni</h1>
+    <h2>¡Registrate!</h2>
 
-<div class="contenedor">
-    <button class="volver" onclick="window.location.href='/Registro/Registro4'">←</button>
-    <div class="nombre-mascota">@mascotaNombre</div>
-    <img src="@rutaImagen" alt="Mascota" class="mascota-img" />
-    <p style="font-weight:600;color:#444;">¡Ya falta poco!</p>
-
-    <form asp-action="Registro5" asp-controller="Registro" method="post">
-        @Html.AntiForgeryToken()
-
-        <div class="fila">
-            <select id="Pais" name="Pais" required></select>
-            <select id="Provincia" name="Provincia" required disabled>
-                <option value="">Provincia</option>
-            </select>
+    <div class="contenedor">
+        <div class="titulo-con-flecha">
+            <button class="volver" onclick="window.location.href='/Registro/Registro4'"><img src="~/img/icons/back-arrow-ios.svg" alt="Volver" /></button>
+            <div class="nombre-mascota">@mascotaNombre</div>
         </div>
+        <img src="@rutaImagen" alt="Mascota" class="mascota-img" />
+        <p style="font-weight:600; color:#444;">¡Ya falta poco!</p>
 
-        <select id="Ciudad" name="Ciudad" required disabled>
-            <option value="">Ciudad / Barrio</option>
-        </select>
+        <form asp-action="Registro5" asp-controller="Registro" method="post">
+            @Html.AntiForgeryToken()
 
-        <div class="fila">
-            <select id="CodigoPais" name="CodigoPais" required>
-                <option value="">Código</option>
+            <div class="fila">
+                <select id="Pais" name="Pais" required></select>
+                <select id="Provincia" name="Provincia" required disabled>
+                    <option value="">Provincia</option>
+                </select>
+            </div>
+
+            <select id="Ciudad" name="Ciudad" required disabled>
+                <option value="">Ciudad / Barrio</option>
             </select>
-            <input type="tel" id="Telefono" name="Telefono" placeholder="Teléfono" required autocomplete="off" pattern="[0-9]*" inputmode="numeric" onkeypress="return soloNumeros(event)" />
-        </div>
 
-        <button type="submit" class="btn-principal">Continuar</button>
-    </form>
-</div>
+            <div class="fila">
+                <select id="CodigoPais" name="CodigoPais" required>
+                    <option value="">Código</option>
+                </select>
+                <input type="tel" id="Telefono" name="Telefono" placeholder="Teléfono" required autocomplete="off" pattern="[0-9]*" inputmode="numeric" onkeypress="return soloNumeros(event)" />
+            </div>
 
-<div class="imagen-bienvenida">
-    <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
-</div>
+            <button type="submit" class="btn-principal">Continuar</button>
+        </form>
+    </div>
+
+    <div class="imagen-bienvenida">
+        <img src="~/img/mascotas-bienvenida.png" alt="Mascotas Bienvenida" />
+    </div>
 
 <script src="~/lib/country-state-city/country-state-city.umd.min.js"></script>
 <script>
@@ -146,6 +404,29 @@ document.addEventListener("DOMContentLoaded",()=>{
   pais.innerHTML = '<option value="">País</option>' + countries.map(c=>`<option value="${c.isoCode}" data-phone="+${c.phonecode}">${flag(c.isoCode)} ${c.name}</option>`).join("");
   codigo.innerHTML = '<option value="">Código</option>' + countries.map(c=>`<option value="+${c.phonecode}">+${c.phonecode}</option>`).join("");
 
+  // Función para forzar centrado y posicionamiento idéntico
+  function centrarCampo(elemento) {
+      if(!elemento) return;
+      elemento.style.textAlign = 'center';
+      elemento.style.textAlignLast = 'center';
+      elemento.style.padding = '14px 12px';
+      elemento.style.fontSize = '14px';
+      elemento.style.lineHeight = '1.7';
+      elemento.style.height = '52px';
+      elemento.style.overflow = 'visible';
+  }
+
+  // Aplicar centrado a todos los campos (selects e inputs)
+  [pais, prov, ciudad, codigo, tel].forEach(campo => {
+      if(campo) {
+          centrarCampo(campo);
+          if(campo.tagName === 'SELECT') {
+              campo.addEventListener('change', () => centrarCampo(campo));
+          }
+          campo.addEventListener('input', () => centrarCampo(campo));
+      }
+  });
+
   pais.addEventListener("change",()=>{
       const iso=pais.value;
       const phone=pais.selectedOptions[0]?.dataset?.phone||"";
@@ -154,6 +435,10 @@ document.addEventListener("DOMContentLoaded",()=>{
       prov.disabled=provincias.length===0;
       ciudad.innerHTML='<option value="">Ciudad / Barrio</option>'; ciudad.disabled=true;
       codigo.value=phone; tel.value=""; tel.focus();
+      centrarCampo(pais);
+      centrarCampo(prov);
+      centrarCampo(codigo);
+      centrarCampo(tel);
   });
 
   prov.addEventListener("change",()=>{
@@ -161,6 +446,12 @@ document.addEventListener("DOMContentLoaded",()=>{
       const cities=City.getCitiesOfState(isoP,isoProv);
       ciudad.innerHTML='<option value="">Ciudad / Barrio</option>'+cities.map(c=>`<option value="${c}">${c}</option>`).join("");
       ciudad.disabled=cities.length===0;
+      centrarCampo(prov);
+      centrarCampo(ciudad);
+  });
+  
+  codigo.addEventListener("change", () => {
+      centrarCampo(codigo);
   });
   
   // Solo permitir números en el campo teléfono

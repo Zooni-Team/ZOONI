@@ -54,6 +54,11 @@ body.tema-oscuro .menu-icon {
 }
 .menu-icon:hover { transform: scale(1.1); }
 
+header.menu-oculto .menu-icon {
+    opacity: 0;
+    pointer-events: none;
+}
+
 /* MENÚ LATERAL */
 .menu-lateral {
     position: fixed;
@@ -61,6 +66,7 @@ body.tema-oscuro .menu-icon {
     left: 0;
     width: 240px;
     height: 100%;
+    background: #ffffff;
     box-shadow: 4px 0 14px var(--sombra);
     display: none;
     flex-direction: column;
@@ -89,7 +95,7 @@ body.tema-oscuro .menu-lateral {
     cursor: pointer;
     margin-bottom: 1.5rem;
     transition: transform 0.2s ease, color .3s ease;
-    color: inherit;
+    color: var(--marron);
 }
 body.tema-claro .cerrar-menu {
     color: var(--marron);
@@ -107,7 +113,7 @@ body.tema-oscuro .cerrar-menu {
     padding: 0.6rem 0.8rem;
     border-radius: 12px;
     transition: all .25s ease;
-    color: inherit;
+    color: var(--marron);
 }
 body.tema-claro .menu-lateral a {
     color: var(--marron);
@@ -314,15 +320,20 @@ const menu = document.getElementById("menuLateral");
 const overlay = document.getElementById("overlay");
 const abrir = document.getElementById("abrirMenu");
 const cerrar = document.getElementById("cerrarMenu");
+const header = document.querySelector("header");
 
 function cerrarMenu() {
     menu.classList.remove("abierto");
     overlay.classList.remove("activo");
+    if (header) header.classList.remove("menu-oculto");
 }
 abrir.addEventListener("click", () => {
     menu.classList.add("abierto");
     overlay.classList.add("activo");
+    if (header) header.classList.add("menu-oculto");
 });
+cerrar.addEventListener("click", cerrarMenu);
+overlay.addEventListener("click", cerrarMenu);
 cerrar.addEventListener("click", cerrarMenu);
 overlay.addEventListener("click", cerrarMenu);
 

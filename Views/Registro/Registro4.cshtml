@@ -53,31 +53,74 @@
 
     
 
+    .titulo-con-flecha {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin: 0.5rem 0 1.3rem;
+        width: 100%;
+        flex-wrap: nowrap;
+        white-space: nowrap;
+        position: relative;
+    }
+
     .volver {
-        position: absolute;
-        top: 15px;
-        left: 15px;
         background: none;
         border: none;
-        font-size: 28px;
-        color: var(--marron);
+        padding: 0;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         cursor: pointer;
-        transition: transform 0.2s ease, color 0.2s ease;
-        z-index: 5;
+        transition: transform 0.2s ease;
+        flex-shrink: 0;
+        font-weight: normal;
+        text-decoration: none;
+        position: absolute;
+        left: 0;
+    }
+
+    .volver:focus {
+        outline: none;
+    }
+
+    .volver:focus-visible {
+        outline: 2px solid var(--verde);
+        outline-offset: 2px;
+        border-radius: 4px;
+    }
+
+    .volver img {
+        width: 26px;
+        height: 26px;
+        display: block;
+        filter: brightness(0) saturate(100%) invert(30%) sepia(25%) saturate(1500%) hue-rotate(15deg) brightness(0.85);
+        transition: transform 0.2s ease, filter 0.2s ease;
+        font-weight: normal;
+        font-style: normal;
     }
 
     .volver:hover {
         transform: scale(1.1);
-        color: var(--verde);
+    }
+
+    .volver:hover img {
+        filter: brightness(0) saturate(100%) invert(65%) sepia(90%) saturate(500%) hue-rotate(100deg) brightness(1);
     }
 
     .nombre-mascota {
         font-weight: 700;
-        font-size: 1.4rem;
-        margin-top: 0.5rem;
-        margin-bottom: 0.6rem;
-        color: #000;
+        font-size: 1.45rem;
+        margin: 0;
+        color: var(--marron);
         z-index: 3;
+        white-space: nowrap;
+        flex-shrink: 1;
+        text-align: center;
+        flex: 1;
     }
 
     .mascota-img {
@@ -110,15 +153,19 @@
     input {
         width: 100%;
         max-width: 320px;
-        padding: 12px;
+        padding: 16px;
         border-radius: 5px;
         border: 1.8px solid var(--gris-claro);
-        font-size: 15px;
+        font-size: 16px;
         text-align: center;
         outline: none;
         transition: border 0.2s ease, box-shadow 0.2s ease;
         background: #fff;
         z-index: 4;
+        font-family: 'Poppins', sans-serif;
+        box-sizing: border-box;
+        height: 48px;
+        line-height: 1.5;
     }
 
     input:focus {
@@ -180,8 +227,8 @@
     }
     @@media (max-width: 768px) {
         .contenedor {
-            padding: 1.5rem;
-            max-width: 360px;
+            padding: 1.6rem;
+            max-width: 370px;
         }
 
         .mascota-img {
@@ -194,6 +241,10 @@
 
         .btn-principal {
             font-size: 1rem;
+        }
+
+        .nombre-mascota {
+            font-size: 1.3rem;
         }
     }
 
@@ -212,13 +263,27 @@
         }
 
         input {
-            font-size: 14px;
+            font-size: 16px;
+            padding: 14px;
+            height: 46px;
         }
 
-        .volver {
-            top: 12px;
-            left: 12px;
-            font-size: 24px;
+        .nombre-mascota {
+            font-size: 1.15rem;
+        }
+
+        .volver { 
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+        }
+        .volver img {
+            width: 24px;
+            height: 24px;
+        }
+        .titulo-con-flecha {
+            gap: 8px;
+            padding: 0 4px;
         }
     }
     .mascota-img
@@ -233,35 +298,37 @@
     <h2>¡Registrate!</h2>
 
     <div class="contenedor">
-<button class="volver" onclick="if(confirm('¿Volver atrás? Se perderán los datos de usuario cargados.')) window.location.href='/Registro/Registro3?volver=true'">←</button>
-        <div class="nombre-mascota">@ViewBag.MascotaNombre</div>
+        <div class="titulo-con-flecha">
+            <button class="volver" onclick="if(confirm('¿Volver atrás? Se perderán los datos de usuario cargados.')) window.location.href='/Registro/Registro3?volver=true'"><img src="~/img/icons/back-arrow-ios.svg" alt="Volver" /></button>
+            <div class="nombre-mascota">@ViewBag.MascotaNombre</div>
+        </div>
         <img src="@rutaImagen" alt="Mascota" class="mascota-img" class="mascota-img"/>
 
         <p style="font-weight:600; color:#444;">¡Ahora ingrese tus datos!</p>
+
+        @if (TempData["Error"] != null)
+        {
+            <div id="mensajeError" style="background: #ffebee; color: #c62828; padding: 12px; border-radius: 10px; margin-bottom: 10px; font-weight: 600; text-align: center; width: 100%; max-width: 320px;">
+                @TempData["Error"]
+            </div>
+        }
+        @if (TempData["Exito"] != null)
+        {
+            <div style="background: #e8f5e9; color: #2e7d32; padding: 12px; border-radius: 10px; margin-bottom: 10px; font-weight: 600; text-align: center; width: 100%; max-width: 320px;">
+                @TempData["Exito"]
+            </div>
+        }
+        <p id="errorMail" style="color:red; font-weight:600; display:none; margin-bottom: 10px; width: 100%; max-width: 320px; text-align: center;">Este correo ya está registrado.</p>
 
 <form asp-action="Registro4" asp-controller="Registro" method="post" onsubmit="return validarFormulario()">
     @Html.AntiForgeryToken()
 
     <div class="fila">
-        <input type="text" name="nombre" placeholder="Nombre" required autocomplete="off" value="@(ViewBag.Nombre ?? "")" style="padding: 16px; font-size: 16px;" />
-        <input type="text" name="apellido" placeholder="Apellido" required autocomplete="off" value="@(ViewBag.Apellido ?? "")" style="padding: 16px; font-size: 16px;" />
+        <input type="text" name="nombre" placeholder="Nombre" required autocomplete="off" value="@(ViewBag.Nombre ?? "")" />
+        <input type="text" name="apellido" placeholder="Apellido" required autocomplete="off" value="@(ViewBag.Apellido ?? "")" />
     </div>
 
     <input type="email" id="mail" name="mail" placeholder="Mail" required autocomplete="off" value="@(ViewBag.Mail ?? "")" onblur="verificarMail()" />
-    <p id="errorMail" style="color:red; font-weight:600; display:none;">Este correo ya está registrado.</p>
-    
-    @if (TempData["Error"] != null)
-    {
-        <div id="mensajeError" style="background: #ffebee; color: #c62828; padding: 12px; border-radius: 10px; margin-top: 10px; font-weight: 600; text-align: center;">
-            @TempData["Error"]
-        </div>
-    }
-    @if (TempData["Exito"] != null)
-    {
-        <div style="background: #e8f5e9; color: #2e7d32; padding: 12px; border-radius: 10px; margin-top: 10px; font-weight: 600; text-align: center;">
-            @TempData["Exito"]
-        </div>
-    }
 
     <input type="password" id="Contrasena" name="contrasena" placeholder="Contraseña" required autocomplete="off" />
     <input type="password" id="ConfirmarContrasena" name="confirmarContrasena" placeholder="Confirmar contraseña" required autocomplete="off" />
