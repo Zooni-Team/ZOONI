@@ -6,7 +6,7 @@ namespace Zooni.Models
     public static class BD
     {
         private static string connectionString =
-            @"Server=NACHO\SQLEXPRESS;Database=Zooni;Integrated Security=True;TrustServerCertificate=True;";
+            @"Server=Localhost;Database=Zooni;Integrated Security=True;TrustServerCertificate=True;";
 
         // ======================================================
         // 🔹 Devuelve conexión abierta
