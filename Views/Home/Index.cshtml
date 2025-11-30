@@ -35,12 +35,13 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
-    overflow-x: hidden;
+    overflow: hidden;
     font-family: 'Poppins', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     transition: background .4s ease, color .4s ease;
+    position: fixed;
 }
 
 body.tema-claro {
@@ -274,6 +275,7 @@ body.tema-oscuro .mascota-nombre {
     gap: 15px;
     width: 100%;
     margin-top: -5%;
+    padding-bottom: 100px; /* Espacio para los botones flotantes */
 }
 .boton {
     background: linear-gradient(180deg, #FFD85A 0%, #FFCA3B 100%);
@@ -289,6 +291,7 @@ body.tema-oscuro .mascota-nombre {
     text-decoration: none;
     display: block;
     width: 100%;
+    box-sizing: border-box;
 }
 .boton:hover {
     background: linear-gradient(180deg, #FFE17C 0%, #FFD85A 100%);
@@ -329,6 +332,280 @@ body.tema-oscuro .boton-sos {
 body.tema-oscuro .boton-logout {
     background: linear-gradient(180deg, #888888 0%, #666666 100%);
     color: #ffffff;
+}
+
+/* ----------------- BOTONES FLOTANTES ------------------ */
+.boton-flotante {
+    position: fixed;
+    bottom: 25px;
+    background: var(--verde);
+    color: white;
+    font-size: 1.8rem;
+    border: none;
+    border-radius: 50%;
+    width: 58px;
+    height: 58px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    transition: all .3s ease;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.boton-flotante:hover {
+    background: #2fa66a;
+    transform: scale(1.1);
+    box-shadow: 0 7px 20px rgba(0,0,0,0.4);
+}
+.boton-agregar {
+    right: 25px;
+}
+.boton-ordenar {
+    right: 95px;
+}
+
+/* ----------------- MODAL ------------------ */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+.modal-overlay.activo {
+    display: flex;
+}
+.modal {
+    background: white;
+    border-radius: 20px;
+    padding: 30px;
+    max-width: 90%;
+    width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    position: relative;
+}
+body.tema-oscuro .modal {
+    background: #2a2a2a;
+    color: #ffffff;
+}
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--marron);
+}
+body.tema-oscuro .modal-header h2 {
+    color: #ffffff;
+}
+.cerrar-modal {
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #999;
+    transition: color .2s;
+}
+.cerrar-modal:hover {
+    color: #ff4444;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--marron);
+}
+body.tema-oscuro .form-group label {
+    color: #ffffff;
+}
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+body.tema-oscuro .form-group input,
+body.tema-oscuro .form-group select {
+    background: #1a1a1a;
+    border-color: #444;
+    color: #ffffff;
+}
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--verde);
+}
+.btn-modal {
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .2s;
+    width: 100%;
+    margin-top: 10px;
+}
+.btn-modal:hover {
+    background: #2fa66a;
+    transform: translateY(-2px);
+}
+.btn-eliminar {
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.btn-eliminar:hover {
+    background: #cc0000;
+}
+
+/* Modo ordenar - Flechas */
+.boton {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.controles-orden {
+    position: absolute;
+    right: 15px;
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    z-index: 10;
+}
+.modo-ordenar .controles-orden {
+    display: flex;
+}
+.btn-flecha-orden {
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+    padding: 0;
+    line-height: 1;
+}
+.btn-flecha-orden:hover {
+    background: #2fa66a;
+    transform: scale(1.05);
+}
+.btn-flecha-orden:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.4;
+}
+.btn-eliminar-boton {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #ff4444;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    transition: all .2s;
+    box-shadow: 0 2px 6px rgba(255, 68, 68, 0.3);
+}
+.modo-ordenar .btn-eliminar-boton {
+    display: flex;
+}
+.btn-eliminar-boton:hover {
+    background: #cc0000;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 3px 8px rgba(255, 68, 68, 0.5);
+}
+
+/* Lista de servicios */
+.lista-servicios {
+    max-height: 400px;
+    overflow-y: auto;
+}
+.servicio-item {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    margin-bottom: 8px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all .2s;
+    border: 2px solid transparent;
+}
+body.tema-oscuro .servicio-item {
+    background: #333;
+}
+.servicio-item:not([style*="opacity"]) {
+    cursor: pointer;
+}
+.servicio-item:not([style*="opacity"]):hover {
+    background: var(--amarillo);
+    transform: translateX(5px);
+    border-color: var(--verde);
+}
+body.tema-oscuro .servicio-item:not([style*="opacity"]):hover {
+    background: #444;
+}
+.servicio-item.seleccionado {
+    background: var(--verde);
+    color: white;
+    border-color: var(--verde);
+}
+body.tema-oscuro .servicio-item.seleccionado {
+    background: var(--verde);
+    color: white;
+}
+.servicio-item input[type="checkbox"] {
+    margin-right: 12px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+.servicio-item span {
+    flex: 1;
+    font-weight: 500;
+    user-select: none;
 }
 
 /* ----------------- FOOTER ------------------ */
@@ -443,13 +720,32 @@ body.tema-oscuro footer {
     </div>
 
     <div class="panel">
-        <div class="botones">
-            <button class="boton boton-sos" onclick="location.href='/Home/ServicioVeterinarios'">🚨 S.O.S Veterinario</button>
-            <button class="boton" onclick="location.href='@Url.Action("ConfigMascotas", "Home")'">🐾 Mis Mascotas</button>
-            <button class="boton" onclick="location.href='@Url.Action("Perfil", "Home")'">👤 Perfil</button>
-            <button class="boton boton-logout" onclick="location.href='@Url.Action("Logout", "Auth")'">🚪 Cerrar Sesión</button>
+        <div class="botones" id="contenedorBotones">
+            <button class="boton" data-url="@Url.Action("Comunidad", "Home")" data-default="true">👥 Comunidad</button>
+            <button class="boton" data-url="@Url.Action("FichaMedica", "Home")" data-default="true">💉 Ficha Médica</button>
+            <button class="boton" data-url="@Url.Action("ConfigMascotas", "Home")" data-default="true">🐾 Mis Mascotas</button>
+            <button class="boton boton-sos" data-url="/Home/ServicioVeterinarios" data-default="true">🚨 S.O.S Veterinario</button>
         </div>
     </div>
+    
+    <!-- Botones flotantes -->
+    <button class="boton-flotante boton-agregar" id="btnAgregar" title="Agregar botón personalizado">➕</button>
+    <button class="boton-flotante boton-ordenar" id="btnOrdenar" title="Ordenar botones">🔄</button>
+    
+    <!-- Modal para agregar botón -->
+    <div class="modal-overlay" id="modalAgregar">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>➕ Agregar Servicios</h2>
+                <button class="cerrar-modal" onclick="cerrarModalAgregar()">✖</button>
+            </div>
+            <div class="lista-servicios" id="listaServicios">
+                <!-- Se llenará dinámicamente -->
+            </div>
+            <button class="btn-modal" onclick="agregarServiciosSeleccionados()">Agregar Seleccionados</button>
+        </div>
+    </div>
+    
 }
 else
 {
@@ -473,6 +769,434 @@ abrir.addEventListener("click", () => {
 });
 cerrar.addEventListener("click", cerrarMenu);
 overlay.addEventListener("click", cerrarMenu);
+
+// ========== PERSONALIZACIÓN DE BOTONES ==========
+const STORAGE_KEY = 'zooni_botones_personalizados';
+const contenedorBotones = document.getElementById('contenedorBotones');
+let modoOrdenar = false;
+
+// Obtener botones por defecto del HTML
+function obtenerBotonesPorDefecto() {
+    return Array.from(contenedorBotones.querySelectorAll('.boton[data-default="true"]')).map(btn => {
+        const textoSpan = btn.querySelector('span:not(.drag-handle)');
+        return {
+            texto: textoSpan ? textoSpan.textContent.trim() : btn.textContent.trim(),
+            url: btn.getAttribute('data-url'),
+            tipo: btn.classList.contains('boton-sos') ? 'sos' : 'normal',
+            personalizado: false
+        };
+    });
+}
+
+// Cargar botones guardados
+function cargarBotones() {
+    const guardados = localStorage.getItem(STORAGE_KEY);
+    if (guardados) {
+        try {
+            const botones = JSON.parse(guardados);
+            contenedorBotones.innerHTML = '';
+            botones.forEach(btn => {
+                crearBoton(btn.texto, btn.url, btn.tipo, btn.personalizado);
+            });
+        } catch (e) {
+            console.error('Error al cargar botones:', e);
+            // Si hay error, reconstruir los botones por defecto
+            reconstruirBotonesPorDefecto();
+        }
+    } else {
+        // Si no hay guardados, reconstruir los botones por defecto
+        reconstruirBotonesPorDefecto();
+        guardarBotones(); // Guardar los por defecto
+    }
+    // Agregar event listeners a los botones
+    agregarEventListeners();
+}
+
+// Reconstruir botones por defecto desde el HTML
+function reconstruirBotonesPorDefecto() {
+    const botonesDefault = Array.from(contenedorBotones.querySelectorAll('.boton[data-default="true"]'));
+    if (botonesDefault.length > 0) {
+        const botonesData = botonesDefault.map(btn => {
+            const textoSpan = btn.querySelector('span:not(.drag-handle)');
+            return {
+                texto: textoSpan ? textoSpan.textContent.trim() : btn.textContent.trim(),
+                url: btn.getAttribute('data-url'),
+                tipo: btn.classList.contains('boton-sos') ? 'sos' : 'normal',
+                personalizado: false
+            };
+        });
+        contenedorBotones.innerHTML = '';
+        botonesData.forEach(btn => {
+            crearBoton(btn.texto, btn.url, btn.tipo, btn.personalizado);
+        });
+    }
+}
+
+// Lista de servicios disponibles
+const serviciosDisponibles = [
+    { texto: '👥 Comunidad', url: '/Home/Comunidad', tipo: 'normal' },
+    { texto: '💉 Ficha Médica', url: '/Home/FichaMedica', tipo: 'normal' },
+    { texto: '🐾 Mis Mascotas', url: '/Home/ConfigMascotas', tipo: 'normal' },
+    { texto: '🚨 S.O.S Veterinario', url: '/Home/ServicioVeterinarios', tipo: 'sos' },
+    { texto: '📅 Planificador de Servicios', url: '/Home/Planificador', tipo: 'normal' },
+    { texto: '🛒 Marketplace', url: '/Marketplace', tipo: 'normal' },
+    { texto: '📅 Calendario', url: '/Home/Calendario', tipo: 'normal' },
+    { texto: '💬 ChatBot', url: '/Chat/ChatZooni', tipo: 'normal' },
+    { texto: '👕 Closet', url: '/Home/Closet', tipo: 'normal' },
+    { texto: '👤 Perfil', url: '/Home/Perfil', tipo: 'normal' },
+    { texto: '⚙️ Configuración', url: '/Home/Configuracion', tipo: 'normal' },
+    { texto: '💉 Ficha Vacunas', url: '/Home/FichaVacunas', tipo: 'normal' },
+    { texto: '💊 Ficha Tratamientos', url: '/Home/FichaTratamientos', tipo: 'normal' },
+    { texto: '🐾 Curiosidades', url: '/Home/FichaOtros', tipo: 'normal' }
+];
+
+// Crear un botón
+function crearBoton(texto, url, tipo = 'normal', personalizado = false) {
+    const boton = document.createElement('button');
+    boton.className = tipo === 'sos' ? 'boton boton-sos' : 'boton';
+    boton.setAttribute('data-url', url);
+    boton.setAttribute('data-tipo', tipo);
+    if (personalizado) {
+        boton.setAttribute('data-personalizado', 'true');
+    } else {
+        boton.setAttribute('data-default', 'true');
+    }
+    
+    // Botón eliminar - A LA IZQUIERDA (todos los botones se pueden eliminar)
+    const btnEliminar = document.createElement('button');
+    btnEliminar.className = 'btn-eliminar-boton';
+    btnEliminar.textContent = '✖';
+    btnEliminar.title = 'Eliminar';
+    btnEliminar.type = 'button';
+    if (personalizado) {
+        btnEliminar.setAttribute('data-personalizado', 'true');
+    }
+    btnEliminar.onclick = (e) => {
+        e.stopPropagation();
+        e.preventDefault();
+        if (confirm('¿Eliminar este botón?')) {
+            boton.remove();
+            guardarBotones();
+            actualizarFlechasOrden();
+        }
+        return false;
+    };
+    
+    // Texto del botón
+    const textoSpan = document.createElement('span');
+    textoSpan.textContent = texto;
+    textoSpan.style.flex = '1';
+    textoSpan.style.textAlign = 'center';
+    textoSpan.style.pointerEvents = 'none';
+    
+    // Controles de orden (flechas arriba/abajo) - A LA DERECHA
+    const controlesOrden = document.createElement('div');
+    controlesOrden.className = 'controles-orden';
+    
+    const btnArriba = document.createElement('button');
+    btnArriba.className = 'btn-flecha-orden';
+    btnArriba.textContent = '↑';
+    btnArriba.title = 'Subir';
+    btnArriba.type = 'button';
+    btnArriba.onclick = (e) => {
+        e.stopPropagation();
+        moverBotonArriba(boton);
+    };
+    
+    const btnAbajo = document.createElement('button');
+    btnAbajo.className = 'btn-flecha-orden';
+    btnAbajo.textContent = '↓';
+    btnAbajo.title = 'Bajar';
+    btnAbajo.type = 'button';
+    btnAbajo.onclick = (e) => {
+        e.stopPropagation();
+        moverBotonAbajo(boton);
+    };
+    
+    controlesOrden.appendChild(btnArriba);
+    controlesOrden.appendChild(btnAbajo);
+    
+    boton.appendChild(btnEliminar);
+    boton.appendChild(textoSpan);
+    boton.appendChild(controlesOrden);
+    
+    boton.onclick = () => {
+        if (!modoOrdenar) {
+            location.href = url;
+        }
+    };
+    
+    contenedorBotones.appendChild(boton);
+    return boton;
+}
+
+// Funciones para mover botones
+function moverBotonArriba(boton) {
+    const botones = Array.from(contenedorBotones.querySelectorAll('.boton'));
+    const index = botones.indexOf(boton);
+    if (index > 0) {
+        contenedorBotones.insertBefore(boton, botones[index - 1]);
+        guardarBotones();
+        actualizarFlechasOrden();
+    }
+}
+
+function moverBotonAbajo(boton) {
+    const botones = Array.from(contenedorBotones.querySelectorAll('.boton'));
+    const index = botones.indexOf(boton);
+    if (index < botones.length - 1) {
+        contenedorBotones.insertBefore(botones[index + 1], boton);
+        guardarBotones();
+        actualizarFlechasOrden();
+    }
+}
+
+function actualizarFlechasOrden() {
+    const botones = Array.from(contenedorBotones.querySelectorAll('.boton'));
+    botones.forEach((boton, index) => {
+        const controles = boton.querySelector('.controles-orden');
+        if (controles) {
+            const btnArriba = controles.querySelector('.btn-flecha-orden:first-child');
+            const btnAbajo = controles.querySelector('.btn-flecha-orden:last-child');
+            if (btnArriba) btnArriba.disabled = index === 0;
+            if (btnAbajo) btnAbajo.disabled = index === botones.length - 1;
+        }
+    });
+}
+
+// Agregar event listeners
+function agregarEventListeners() {
+    document.querySelectorAll('.boton').forEach(btn => {
+        const url = btn.getAttribute('data-url');
+        if (url) {
+            btn.onclick = () => {
+                if (!modoOrdenar) {
+                    location.href = url;
+                }
+            };
+        }
+    });
+    if (modoOrdenar) {
+        actualizarFlechasOrden();
+    }
+}
+
+// Guardar botones
+function guardarBotones() {
+    const botones = Array.from(contenedorBotones.querySelectorAll('.boton')).map(btn => {
+        const textoSpan = btn.querySelector('span:not(.drag-handle)');
+        return {
+            texto: textoSpan ? textoSpan.textContent : btn.textContent,
+            url: btn.getAttribute('data-url'),
+            tipo: btn.getAttribute('data-tipo') || (btn.classList.contains('boton-sos') ? 'sos' : 'normal'),
+            personalizado: btn.getAttribute('data-personalizado') === 'true'
+        };
+    });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(botones));
+}
+
+// Inicializar: cargar botones al iniciar
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', cargarBotones);
+} else {
+    cargarBotones();
+}
+
+// Modal agregar
+document.getElementById('btnAgregar').addEventListener('click', () => {
+    abrirModalAgregar();
+});
+
+function abrirModalAgregar() {
+    const modal = document.getElementById('modalAgregar');
+    const lista = document.getElementById('listaServicios');
+    lista.innerHTML = '';
+    
+    // Contar botones personalizados actuales
+    const botonesPersonalizados = Array.from(contenedorBotones.querySelectorAll('.boton')).filter(b => 
+        b.querySelector('.btn-eliminar-boton')?.getAttribute('data-personalizado') === 'true'
+    );
+    const cantidadPersonalizados = botonesPersonalizados.length;
+    const maxPersonalizados = 4;
+    const disponibles = maxPersonalizados - cantidadPersonalizados;
+    
+    // Obtener el botón del modal
+    const btnModal = document.querySelector('#modalAgregar .btn-modal');
+    
+    // Mostrar mensaje si ya se alcanzó el límite
+    if (disponibles <= 0) {
+        const mensaje = document.createElement('div');
+        mensaje.style.cssText = 'padding: 15px; text-align: center; color: #ff4444; font-weight: 600; font-size: 0.9rem; line-height: 1.4;';
+        mensaje.textContent = `Ya tenés el máximo de ${maxPersonalizados} botones personalizados. Eliminá alguno para agregar más.`;
+        lista.appendChild(mensaje);
+        
+        // Cambiar el botón a "Ok" y que cierre el modal
+        if (btnModal) {
+            btnModal.textContent = 'Ok';
+            btnModal.onclick = (e) => {
+                e.preventDefault();
+                cerrarModalAgregar();
+            };
+        }
+        
+        modal.classList.add('activo');
+        return;
+    }
+    
+    // Restaurar el botón original si no está en modo límite
+    if (btnModal) {
+        btnModal.textContent = 'Agregar Seleccionados';
+        btnModal.onclick = (e) => {
+            e.preventDefault();
+            agregarServiciosSeleccionados();
+        };
+    }
+    
+    // Mostrar cuántos botones se pueden agregar
+    const info = document.createElement('div');
+    info.style.cssText = 'padding: 8px 12px; margin-bottom: 12px; background: #e8f5e9; border-radius: 8px; text-align: center; font-size: 0.85rem;';
+    info.textContent = `Podés agregar hasta ${disponibles} botón(es) más`;
+    lista.appendChild(info);
+    
+    // Obtener URLs de botones ya agregados
+    const botonesExistentes = Array.from(contenedorBotones.querySelectorAll('.boton')).map(b => b.getAttribute('data-url'));
+    
+    serviciosDisponibles.forEach(servicio => {
+        const yaExiste = botonesExistentes.includes(servicio.url);
+        
+        const item = document.createElement('div');
+        item.className = 'servicio-item';
+        if (yaExiste) {
+            item.style.opacity = '0.5';
+            item.style.cursor = 'not-allowed';
+        }
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.value = servicio.url;
+        checkbox.disabled = yaExiste;
+        checkbox.dataset.texto = servicio.texto;
+        checkbox.dataset.tipo = servicio.tipo;
+        
+        const label = document.createElement('span');
+        label.textContent = servicio.texto;
+        
+        item.appendChild(checkbox);
+        item.appendChild(label);
+        
+        if (!yaExiste) {
+            item.addEventListener('click', (e) => {
+                if (!checkbox.disabled && e.target !== checkbox) {
+                    // Verificar límite antes de seleccionar
+                    const seleccionados = document.querySelectorAll('#listaServicios input[type="checkbox"]:checked:not(:disabled)').length;
+                    if (!checkbox.checked && seleccionados >= disponibles) {
+                        alert(`Solo podés seleccionar hasta ${disponibles} botón(es) más`);
+                        return;
+                    }
+                    checkbox.checked = !checkbox.checked;
+                    item.classList.toggle('seleccionado', checkbox.checked);
+                }
+            });
+            checkbox.addEventListener('change', (e) => {
+                const seleccionados = document.querySelectorAll('#listaServicios input[type="checkbox"]:checked:not(:disabled)').length;
+                if (checkbox.checked && seleccionados > disponibles) {
+                    checkbox.checked = false;
+                    alert(`Solo podés seleccionar hasta ${disponibles} botón(es) más`);
+                    return;
+                }
+                item.classList.toggle('seleccionado', checkbox.checked);
+            });
+        }
+        
+        lista.appendChild(item);
+    });
+    
+    modal.classList.add('activo');
+}
+
+function cerrarModalAgregar() {
+    document.getElementById('modalAgregar').classList.remove('activo');
+}
+
+function agregarServiciosSeleccionados() {
+    const checkboxes = document.querySelectorAll('#listaServicios input[type="checkbox"]:checked:not(:disabled)');
+    
+    // Contar botones personalizados actuales
+    const botonesPersonalizados = Array.from(contenedorBotones.querySelectorAll('.boton')).filter(b => 
+        b.querySelector('.btn-eliminar-boton')?.getAttribute('data-personalizado') === 'true'
+    );
+    const cantidadPersonalizados = botonesPersonalizados.length;
+    const maxPersonalizados = 4;
+    
+    if (cantidadPersonalizados >= maxPersonalizados) {
+        alert(`Ya tenés el máximo de ${maxPersonalizados} botones personalizados. Eliminá alguno para agregar más.`);
+        return;
+    }
+    
+    let agregados = 0;
+    const disponibles = maxPersonalizados - cantidadPersonalizados;
+    
+    checkboxes.forEach((checkbox, index) => {
+        if (agregados >= disponibles) {
+            return; // Ya se alcanzó el límite
+        }
+        
+        const texto = checkbox.dataset.texto;
+        const url = checkbox.value;
+        const tipo = checkbox.dataset.tipo;
+        
+        // Verificar que no exista ya
+        const existe = Array.from(contenedorBotones.querySelectorAll('.boton')).some(b => b.getAttribute('data-url') === url);
+        if (!existe) {
+            crearBoton(texto, url, tipo, true);
+            agregados++;
+        }
+    });
+    
+    if (agregados > 0) {
+        guardarBotones();
+        cerrarModalAgregar();
+        if (agregados < checkboxes.length) {
+            alert(`Se agregaron ${agregados} botón(es). Límite de ${maxPersonalizados} botones personalizados alcanzado.`);
+        }
+    } else {
+        alert('No hay servicios seleccionados o ya están agregados');
+    }
+}
+
+// El botón de ordenar activa el modo de ordenar con flechas
+document.getElementById('btnOrdenar').addEventListener('click', () => {
+    modoOrdenar = !modoOrdenar;
+    if (modoOrdenar) {
+        contenedorBotones.classList.add('modo-ordenar');
+        const botones = contenedorBotones.querySelectorAll('.boton');
+        botones.forEach(boton => {
+            boton.style.cursor = 'default';
+        });
+        actualizarFlechasOrden();
+    } else {
+        contenedorBotones.classList.remove('modo-ordenar');
+        const botones = contenedorBotones.querySelectorAll('.boton');
+        botones.forEach(boton => {
+            boton.style.cursor = 'pointer';
+            // Reconfigurar el onclick
+            const url = boton.getAttribute('data-url');
+            if (url) {
+                boton.onclick = () => {
+                    location.href = url;
+                };
+            }
+        });
+    }
+});
+
+// Cerrar modales al hacer clic fuera
+document.getElementById('modalAgregar').addEventListener('click', (e) => {
+    if (e.target.id === 'modalAgregar') {
+        cerrarModalAgregar();
+    }
+});
+
 </script>
 
 <script>

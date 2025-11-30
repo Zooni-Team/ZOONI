@@ -1,7 +1,7 @@
 @{
     ViewData["Title"] = "Ayuda y Soporte 🐾";
     Layout = null;
-    var tema = ViewBag.Tema ?? "claro";
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
 }
 
 <!DOCTYPE html>
@@ -15,7 +15,8 @@
 <style>
 :root {
   --verde: #3ac37d;
-  --marron: #3a2a1b;
+  --amarillo: #FFD85A;
+  --marron: #4B3B2B;
   --rojo: #e74c3c;
   --fondo-claro: #f9f9f8;
 }
@@ -24,8 +25,20 @@
 body {
   margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: @(tema == "oscuro" ? "#181818" : "var(--fondo-claro)");
-  color: @(tema == "oscuro" ? "#fff" : "var(--marron)");
+  transition: background .4s ease, color .4s ease;
+}
+
+body.tema-claro {
+  background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+  color: var(--marron);
+}
+
+body.tema-oscuro {
+  background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: overlay;
+  filter: brightness(0.6);
+  color: #ffffff;
 }
 
 /* ===== HEADER ===== */
@@ -40,43 +53,17 @@ header {
 }
 
 .menu-icon {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   cursor: pointer;
   transition: transform .25s ease, filter .3s ease;
-  filter: brightness(0); /* negro en modo claro */
+  filter: brightness(0);
 }
 body.tema-oscuro .menu-icon {
-  filter: brightness(0) invert(1); /* blanco en modo oscuro */
+  filter: brightness(0) invert(1);
 }
 .menu-icon:hover { transform: scale(1.1); }
 
-.back {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  text-decoration: none;
-  margin-left: 8px;
-  transition: transform .3s ease;
-}
-
-.back img {
-  width: 22px;
-  height: 22px;
-  display: block;
-  filter: brightness(0);
-  transition: transform .2s ease, filter .3s ease;
-}
-
-body.tema-oscuro .back img {
-  filter: brightness(0) invert(1);
-}
-
-.back:hover {
-  transform: scale(1.1);
-}
 
 /* ===== MENU LATERAL ===== */
 .menu-lateral {
@@ -84,60 +71,64 @@ body.tema-oscuro .back img {
   top: 0;
   left: 0;
   transform: translateX(-100%);
-  width: 250px;
+  width: 240px;
   height: 100%;
   backdrop-filter: blur(12px);
-  box-shadow: 4px 0 12px rgba(0,0,0,0.2);
+  box-shadow: 4px 0 12px rgba(0,0,0,0.15);
   display: flex;
   flex-direction: column;
   padding: 2.5rem 1.2rem;
   gap: 1rem;
   transition: transform .35s ease, background .4s ease, color .4s ease;
   z-index: 999;
+  border-right: none;
 }
 body.tema-claro .menu-lateral {
-  background: rgba(255,255,255,0.96);
+  background: rgba(255, 255, 255, 0.97);
 }
 body.tema-oscuro .menu-lateral {
-  background: rgba(30,30,30,0.96);
-  box-shadow: 4px 0 12px rgba(0,0,0,0.5);
+  background: rgba(30, 30, 30, 0.97);
+  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
 }
 .menu-lateral.abierto { transform: translateX(0); }
 
 .menu-lateral a {
   text-decoration: none;
   font-weight: 600;
-  font-size: 1.05rem;
-  padding: 0.5rem 0.8rem;
-  border-radius: 10px;
+  font-size: 1.1rem;
+  padding: 0.6rem 0.8rem;
+  border-radius: 12px;
   transition: all .25s ease;
   color: inherit;
 }
 body.tema-claro .menu-lateral a {
-  color: #2c2c2c;
+  color: var(--marron);
 }
 body.tema-oscuro .menu-lateral a {
-  color: #f1f1f1;
+  color: #ffffff;
 }
-body.tema-claro .menu-lateral a:hover,
+body.tema-claro .menu-lateral a:hover {
+  background: var(--amarillo);
+  color: #3c2a00;
+}
 body.tema-oscuro .menu-lateral a:hover {
   background: var(--verde);
-  color: #fff;
+  color: #ffffff;
 }
 
 .cerrar-menu {
   align-self: flex-end;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   cursor: pointer;
   margin-bottom: 1.5rem;
-  transition: transform 0.2s ease, color .3s ease;
+  transition: transform 0.2s ease;
   color: inherit;
 }
 body.tema-claro .cerrar-menu {
-  color: #2c2c2c;
+  color: var(--marron);
 }
 body.tema-oscuro .cerrar-menu {
-  color: #f1f1f1;
+  color: #ffffff;
 }
 .cerrar-menu:hover {
   transform: scale(1.2);
@@ -157,93 +148,223 @@ body.tema-oscuro .cerrar-menu {
 
 /* ===== MAIN ===== */
 main {
-  margin: 100px auto 50px auto;
-  max-width: 500px;
-  background: @(tema == "oscuro" ? "#242424" : "#fff");
-  border-radius: 22px;
-  padding: 25px;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.15);
+  margin: 80px auto 15px auto;
+  max-width: 480px;
+  width: 100%;
+  padding: 0 12px 25px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 h1 {
   text-align: center;
-  color: var(--verde);
-  font-size: 1.5rem;
-  margin-bottom: 25px;
+  color: inherit;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0 0 12px 0;
 }
 
 /* ===== SECCIONES ===== */
 section {
-  margin-bottom: 35px;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  width: 100%;
+  padding: 0.9rem 0.9rem;
+  margin-bottom: 10px;
+  backdrop-filter: blur(10px);
+  transition: background .4s ease, box-shadow .4s ease;
+}
+
+body.tema-claro section {
+  background: rgba(255,255,255,0.95);
+}
+
+body.tema-oscuro section {
+  background: rgba(30,30,30,0.95);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.5);
+}
+
+section h3 {
+  font-size: 0.95rem;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+  color: inherit;
+  border-bottom: 2px solid var(--verde);
+  padding-bottom: 4px;
 }
 
 /* FAQ */
 .faq-item {
-  background: @(tema == "oscuro" ? "#2d2d2d" : "#f9f9f9");
-  border: 1px solid @(tema == "oscuro" ? "#444" : "#ddd");
-  border-radius: 14px;
-  margin-bottom: 10px;
+  background: rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 8px;
+  margin-bottom: 5px;
   overflow: hidden;
+  transition: all .2s ease;
 }
+
+body.tema-oscuro .faq-item {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.1);
+}
+
+.faq-item:hover {
+  background: rgba(0,0,0,0.05);
+  transform: translateX(3px);
+}
+
+body.tema-oscuro .faq-item:hover {
+  background: rgba(255,255,255,0.08);
+}
+
 .faq-question {
-  padding: 14px 18px;
+  padding: 8px 10px;
   cursor: pointer;
   font-weight: 600;
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: background .2s ease;
+  color: inherit;
+  font-size: 0.85rem;
 }
+
 .faq-question:hover {
   background: rgba(57,183,124,0.15);
 }
+
 .faq-answer {
-  padding: 0 18px 14px 18px;
+  padding: 0 10px 8px 10px;
   display: none;
-  font-size: 0.95rem;
-  color: @(tema == "oscuro" ? "#ddd" : "#555");
+  font-size: 0.8rem;
+  color: inherit;
+  opacity: 0.9;
+  line-height: 1.4;
 }
 
 /* FORMULARIO */
 form {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
 }
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 5px;
+  color: inherit;
+  font-size: 0.85rem;
+}
+
 input, textarea {
-  border-radius: 12px;
-  border: 1.5px solid @(tema == "oscuro" ? "#555" : "#ddd");
-  padding: 10px 14px;
-  font-size: 1rem;
-  background: @(tema == "oscuro" ? "#1e1e1e" : "#fff");
-  color: @(tema == "oscuro" ? "#fff" : "#222");
+  width: 100%;
+  border-radius: 8px;
+  border: 2px solid rgba(0,0,0,0.1);
+  padding: 7px 10px;
+  font-size: 0.85rem;
+  font-family: 'Poppins', sans-serif;
   outline: none;
   resize: none;
+  box-sizing: border-box;
+  transition: all .3s ease;
 }
-textarea { min-height: 100px; }
+
+body.tema-claro input,
+body.tema-claro textarea {
+  background: white;
+  color: var(--marron);
+  border-color: rgba(0,0,0,0.1);
+}
+
+body.tema-oscuro input,
+body.tema-oscuro textarea {
+  background: rgba(40,40,40,0.8);
+  color: #ffffff;
+  border-color: rgba(255,255,255,0.1);
+}
+
+textarea { 
+  min-height: 60px; 
+}
+
 input:focus, textarea:focus {
   border-color: var(--verde);
-  box-shadow: 0 0 0 3px rgba(57,183,124,0.25);
+  box-shadow: 0 0 0 3px rgba(57, 195, 125, 0.1);
 }
+
 button {
   background: var(--verde);
   border: none;
-  border-radius: 25px;
-  padding: 12px 18px;
+  border-radius: 8px;
+  padding: 9px 16px;
   color: white;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.25s ease;
+  transition: all .3s ease;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  width: 100%;
+  margin-top: 5px;
 }
-button:hover { background: #2fa567; transform: translateY(-2px); }
+
+button:hover { 
+  background: #2fa66a; 
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(57, 195, 125, 0.3);
+}
 
 /* CONSEJOS */
 .tip {
-  background: rgba(57,183,124,0.12);
-  padding: 12px 18px;
-  border-radius: 12px;
-  margin-bottom: 10px;
-  font-size: 0.95rem;
-  border-left: 4px solid var(--verde);
+  background: rgba(58, 195, 125, 0.1);
+  padding: 7px 10px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  font-size: 0.8rem;
+  border-left: 3px solid var(--verde);
+  color: inherit;
+  line-height: 1.4;
+}
+
+body.tema-oscuro .tip {
+  background: rgba(58, 195, 125, 0.15);
+}
+
+/* MENSAJES */
+.mensaje {
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.mensaje-exito {
+  background: rgba(57, 195, 125, 0.2);
+  color: #2d5a3d;
+  border: 1px solid var(--verde);
+}
+
+body.tema-oscuro .mensaje-exito {
+  background: rgba(57, 195, 125, 0.3);
+  color: #a8e6c7;
+}
+
+.mensaje-error {
+  background: rgba(255, 107, 107, 0.2);
+  color: #8b0000;
+  border: 1px solid #ff4444;
+}
+
+body.tema-oscuro .mensaje-error {
+  background: rgba(255, 107, 107, 0.3);
+  color: #ffcccc;
 }
 
 /* ANIMACIONES */
@@ -251,13 +372,24 @@ button:hover { background: #2fa567; transform: translateY(-2px); }
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@@media (max-width: 600px) {
+  main {
+    padding: 0 15px 60px 15px;
+  }
+  section {
+    padding: 1.5rem 1.3rem;
+  }
+  h1 {
+    font-size: 1.6rem;
+  }
+}
 </style>
 </head>
 
-<body>
+<body class="tema-@tema">
 <header>
   <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
-  <a href="/Home/Configuracion" class="back"><img src="~/img/icons/back-arrow-ios.svg" alt="Volver" /></a>
 </header>
 
 <div class="menu-lateral" id="menuLateral">
@@ -300,16 +432,14 @@ button:hover { background: #2fa567; transform: translateY(-2px); }
 
   @if (TempData["Error"] != null)
   {
-      <div style="background:#ffefef;border:1px solid #e74c3c;color:#b30000;padding:10px 14px;
-                  border-radius:10px;font-weight:600;margin-bottom:10px;text-align:center;">
+      <div class="mensaje mensaje-error">
           @TempData["Error"]
       </div>
   }
 
   @if (TempData["Exito"] != null)
   {
-      <div style="background:#e7f8ee;border:1px solid #3ac37d;color:#167e4a;padding:10px 14px;
-                  border-radius:10px;font-weight:600;margin-bottom:10px;text-align:center;">
+      <div class="mensaje mensaje-exito">
           @TempData["Exito"]
       </div>
   }

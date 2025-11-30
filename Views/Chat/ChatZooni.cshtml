@@ -1,6 +1,6 @@
 @using Zooni.Models
 @{
-    ViewData["Title"] = "Chat con ZooniVet 🩵";
+    ViewData["Title"] = "ChatBot - Zooni";
     Layout = null;
 }
 
@@ -26,11 +26,24 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background: url('/img/fondos/bosque.jpg') center/cover no-repeat fixed;
     font-family: 'Poppins', sans-serif;
     color: var(--marron);
     display: flex;
     flex-direction: column;
+    transition: background .4s ease, color .4s ease;
+}
+
+body.tema-claro {
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+    color: var(--marron);
+}
+
+body.tema-oscuro {
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: overlay;
+    filter: brightness(0.6);
+    color: var(--marron);
 }
 
 /* HEADER */
@@ -268,7 +281,7 @@ h1 { margin-top: -10%; text-align:center; }
 </style>
 </head>
 
-<body>
+<body class="tema-@(ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro")">
 <header>
     <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
 </header>

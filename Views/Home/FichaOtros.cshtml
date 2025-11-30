@@ -1,10 +1,20 @@
+@using Zooni.Models
 @{
     ViewData["Title"] = "Curiosidades - Zooni";
     Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
 
     var mascotaNombre = ViewBag.MascotaNombre ?? "Tu Mascota";
     var mascotaEspecie = ViewBag.MascotaEspecie?.ToString()?.ToLower() ?? "perro";
     var mascotaRaza = ViewBag.MascotaRaza?.ToString() ?? "Desconocida";
+    var mascotaEdadMeses = Convert.ToInt32(ViewBag.MascotaEdad ?? 0);
+    
+    // ✅ Peso con corrección automática usando PesoHelper
+    decimal pesoDecimal = 0;
+    decimal.TryParse(ViewBag.MascotaPeso?.ToString() ?? "0", System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out pesoDecimal);
+    string? pesoDisplay = ViewBag.MascotaPesoDisplay?.ToString();
+    string pesoFormateado = PesoHelper.FormatearPeso(pesoDecimal, pesoDisplay);
+    
     // 🖼️ Ruta de imagen (usar MascotaAvatar del ViewBag si está disponible, sino construir con raza exacta)
     var rutaMascota = ViewBag.MascotaAvatar ?? $"/img/mascotas/{mascotaEspecie}s/{mascotaRaza}/{mascotaEspecie}_basico.png";
 }
@@ -28,12 +38,25 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background: url('/img/fondos/consultorio.jpg') center/cover no-repeat fixed;
   font-family: 'Poppins', sans-serif;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   overflow-x: hidden;
+  color: var(--marron);
+  transition: background .4s ease, color .4s ease;
+}
+
+body.tema-claro {
+  background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+  color: var(--marron);
+}
+
+body.tema-oscuro {
+  background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: overlay;
+  filter: brightness(0.6);
   color: var(--marron);
 }
 
@@ -124,7 +147,7 @@ body.tema-oscuro .cerrar-menu {
 .overlay.activo { opacity: 1; pointer-events: auto; }
 
 main {
-  margin-top: 90px;
+  margin-top: 80px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -221,7 +244,7 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background: url('/img/fondos/consultorio.jpg') center/cover no-repeat fixed;
+  background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
   font-family: 'Poppins', sans-serif;
   display: flex;
   justify-content: center;
@@ -278,7 +301,7 @@ header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 .overlay.activo { opacity: 1; pointer-events: auto; }
 
 main {
-  margin-top: 90px;
+  margin-top: 80px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -423,7 +446,7 @@ html, body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background: url('/img/fondos/consultorio.jpg') center/cover no-repeat fixed;
+  background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
   font-family: 'Poppins', sans-serif;
   display: flex;
   justify-content: center;
@@ -480,7 +503,7 @@ header { position: fixed; top: 15px; left: 20px; z-index: 10; }
 .overlay.activo { opacity: 1; pointer-events: auto; }
 
 main {
-  margin-top: 90px;
+  margin-top: 80px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -713,7 +736,7 @@ main {
 
 </style>
 </head>
-<body>
+<body class="tema-@tema">
 <header>
   <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
 </header>
@@ -751,9 +774,12 @@ function cerrar(){ menu.classList.remove("abierto"); overlay.classList.remove("a
 
 const especie = "@mascotaEspecie";
 const raza = "@mascotaRaza";
+const edadMeses = parseInt("@mascotaEdadMeses") || 0;
+const peso = parseFloat("@pesoDecimal.ToString(System.Globalization.CultureInfo.InvariantCulture)") || 0;
+const rutaMascota = "@rutaMascota";
 let curiosidades = [];
 
-// Cargar curiosidades desde la base de datos
+// Cargar curiosidades desde la base de datos primero
 fetch(`/Home/ObtenerCuriosidades?especie=${encodeURIComponent(especie)}&raza=${encodeURIComponent(raza)}`)
   .then(r => r.json())
   .then(data => {
@@ -763,24 +789,55 @@ fetch(`/Home/ObtenerCuriosidades?especie=${encodeURIComponent(especie)}&raza=${e
         titulo: `Dato ${c.categoria}`,
         categoria: c.categoria
       }));
+      mostrarCartas();
     } else {
+      // Si no hay en BD, cargar desde JSON
+      cargarConsejosDesdeJSON();
+    }
+  })
+  .catch(err => {
+    console.error('Error al cargar curiosidades desde BD:', err);
+    cargarConsejosDesdeJSON();
+  });
+
+function cargarConsejosDesdeJSON() {
+  fetch("/data/consejos.json")
+    .then(r => r.json())
+    .then(data => {
+      // Filtrar consejos por especie, raza, edad y peso
+      const filtrados = data.filter(c => {
+        const especieMatch = c.especie === especie || c.especie === "general";
+        const razaMatch = c.raza === raza || c.raza === "general";
+        const edadMatch = edadMeses >= (c.edadMin || 0) && edadMeses <= (c.edadMax || 999);
+        const pesoMatch = peso >= (c.pesoMin || 0) && peso <= (c.pesoMax || 999);
+        return especieMatch && razaMatch && edadMatch && pesoMatch;
+      });
+      
+      if (filtrados.length > 0) {
+        curiosidades = filtrados.map(c => ({
+          texto: c.texto,
+          titulo: "Consejo",
+          categoria: "General"
+        }));
+      } else {
+        curiosidades = [{ 
+          texto: "No hay curiosidades específicas para esta raza aún, pero recordá cuidar su bienestar todos los días 🐶",
+          titulo: "Consejo General",
+          categoria: "General"
+        }];
+      }
+      mostrarCartas();
+    })
+    .catch(err => {
+      console.error('Error al cargar consejos desde JSON:', err);
       curiosidades = [{ 
-        texto: "No hay curiosidades específicas para esta raza aún, pero recordá cuidar su bienestar todos los días 🐶",
+        texto: "Error al cargar curiosidades. Recordá cuidar su bienestar todos los días 🐶",
         titulo: "Consejo General",
         categoria: "General"
       }];
-    }
-    mostrarCartas();
-  })
-  .catch(err => {
-    console.error('Error al cargar curiosidades:', err);
-    curiosidades = [{ 
-      texto: "Error al cargar curiosidades. Recordá cuidar su bienestar todos los días 🐶",
-      titulo: "Consejo General",
-      categoria: "General"
-    }];
-    mostrarCartas();
-  });
+      mostrarCartas();
+    });
+}
 
 function mostrarCartas() {
   const contenedor = document.getElementById("contenedor-cartas");
@@ -789,7 +846,7 @@ function mostrarCartas() {
     const carta = document.createElement("div");
     carta.className = "carta";
     carta.innerHTML = `
-      <img src="${"@rutaMascota"}" alt="Mascota" />
+      <img src="${rutaMascota}" alt="Mascota" />
       <h2>${c.titulo || "Dato curioso"}</h2>
       <p>${c.texto}</p>
       <div class="reaccion like">💚</div>

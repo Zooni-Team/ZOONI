@@ -15,7 +15,8 @@
         :root {
             --verde: #3ac37d;
             --verde-hover: #2ea968;
-            --marron: #8B5E3C;
+            --amarillo: #FFD85A;
+            --marron: #4B3B2B;
             --gris: #555;
             --gris-claro: #ccc;
             --fondo-claro: #f9f9f8;
@@ -28,46 +29,49 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            background: @(tema == "oscuro" ? "var(--fondo-oscuro)" : "var(--fondo-claro)");
-            color: @(tema == "oscuro" ? "var(--texto-oscuro)" : "var(--texto-claro)");
-            transition: background-color .4s ease, color .4s ease;
+            transition: background .4s ease, color .4s ease;
             overflow-x: hidden;
-            padding-top: 60px;
+            padding-top: 80px;
+        }
+
+        body.tema-claro {
+            background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+            color: var(--texto-claro);
+        }
+
+        body.tema-oscuro {
+            background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+            background-color: rgba(0, 0, 0, 0.5);
+            background-blend-mode: overlay;
+            filter: brightness(0.6);
+            color: var(--texto-oscuro);
         }
 
         /* Header */
         header {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: @(tema == "oscuro" ? "#1e1e1e" : "#ffffff");
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            z-index: 1000;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: background-color .4s ease;
+            top: 15px;
+            left: 20px;
+            z-index: 10;
+            transition: opacity .3s ease, visibility .3s ease;
         }
 
         .menu-icon {
-            width: 28px;
-            height: 28px;
+            width: 38px;
+            height: 38px;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: transform .25s ease, filter .3s ease;
+            filter: brightness(0);
+        }
+        
+        body.tema-oscuro .menu-icon {
+            filter: brightness(0) invert(1);
         }
 
         .menu-icon:hover { transform: scale(1.1); }
-
-        header.menu-oculto .menu-icon {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        header.menu-oculto {
-            opacity: 0;
-            pointer-events: none;
+        
+        header h1 {
+            display: none;
         }
 
         .btn-volver {
@@ -112,9 +116,9 @@
             top: 0;
             left: 0;
             transform: translateX(-100%);
-            width: 250px;
+            width: 240px;
             height: 100%;
-            background: #ffffff;
+            backdrop-filter: blur(12px);
             box-shadow: 4px 0 12px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
@@ -122,17 +126,15 @@
             gap: 1rem;
             transition: transform 0.35s ease, background .4s ease, color .4s ease;
             z-index: 999;
-            border-top-right-radius: 18px;
-            border-bottom-right-radius: 18px;
-            overflow-y: auto;
+            border-right: none;
         }
 
         body.tema-claro .menu-lateral {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.97);
         }
 
         body.tema-oscuro .menu-lateral {
-            background: rgba(30,30,30,0.98);
+            background: rgba(30, 30, 30, 0.97);
             box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
         }
 
@@ -142,16 +144,15 @@
 
         .cerrar-menu {
             align-self: flex-end;
-            font-size: 1.4rem;
+            font-size: 1.6rem;
             cursor: pointer;
             margin-bottom: 1.5rem;
             transition: transform 0.2s ease;
-            color: var(--gris);
-            line-height: 1;
+            color: inherit;
         }
 
         body.tema-claro .cerrar-menu {
-            color: var(--gris);
+            color: var(--marron);
         }
 
         body.tema-oscuro .cerrar-menu {
@@ -165,18 +166,15 @@
         .menu-lateral a {
             text-decoration: none;
             font-weight: 600;
-            font-size: 1.05rem;
-            padding: 0.5rem 0.8rem;
-            border-radius: 10px;
+            font-size: 1.1rem;
+            padding: 0.6rem 0.8rem;
+            border-radius: 12px;
             transition: all .25s ease;
-            color: var(--gris);
-            display: flex;
-            align-items: center;
-            line-height: 1.4;
+            color: inherit;
         }
 
         body.tema-claro .menu-lateral a {
-            color: var(--gris);
+            color: var(--marron);
         }
 
         body.tema-oscuro .menu-lateral a {
@@ -184,8 +182,8 @@
         }
 
         body.tema-claro .menu-lateral a:hover { 
-            background: var(--verde); 
-            color: #fff; 
+            background: var(--amarillo);
+            color: #3c2a00;
         }
 
         body.tema-oscuro .menu-lateral a:hover {
@@ -199,7 +197,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.25);
+            background: rgba(0,0,0,0.45);
             opacity: 0;
             pointer-events: none;
             transition: opacity .3s ease;
@@ -402,7 +400,6 @@
 <body class="tema-@tema">
     <header>
         <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
-        <h1>Planificador de Servicios</h1>
     </header>
 
     <div class="menu-lateral" id="menuLateral">
@@ -572,14 +569,12 @@
         function cerrarMenu() {
             menu.classList.remove("abierto");
             overlay.classList.remove("activo");
-            if (header) header.classList.remove("menu-oculto");
         }
 
         abrir.addEventListener("click", (e) => {
             e.stopPropagation();
             menu.classList.add("abierto");
             overlay.classList.add("activo");
-            if (header) header.classList.add("menu-oculto");
         });
 
         cerrar.addEventListener("click", cerrarMenu);

@@ -37,12 +37,15 @@ html, body {
 }
 
 body.tema-claro {
-    background: var(--fondo-claro);
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
     color: var(--texto-claro);
 }
 
 body.tema-oscuro {
-    background: var(--fondo-oscuro);
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: overlay;
+    filter: brightness(0.6);
     color: var(--texto-oscuro);
 }
 
@@ -62,8 +65,8 @@ header {
 }
 
 .menu-icon {
-    width: 34px;
-    height: 34px;
+    width: 38px;
+    height: 38px;
     cursor: pointer;
     transition: transform .25s ease, filter .3s ease;
     filter: brightness(0);
@@ -85,32 +88,33 @@ body:has(.menu-lateral.abierto) header .menu-icon {
     top: 0;
     left: 0;
     transform: translateX(-100%);
-    width: 250px;
+    width: 240px;
     height: 100%;
     backdrop-filter: blur(12px);
-    box-shadow: 4px 0 14px rgba(0,0,0,0.25);
+    box-shadow: 4px 0 12px rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
     padding: 2.5rem 1.2rem;
     gap: 1rem;
     transition: transform 0.35s ease, background .4s ease, color .4s ease;
     z-index: 999;
+    border-right: none;
 }
 body.tema-claro .menu-lateral {
-    background: rgba(255,255,255,0.96);
+    background: rgba(255, 255, 255, 0.97);
 }
 body.tema-oscuro .menu-lateral {
-    background: rgba(30,30,30,0.96);
-    box-shadow: 4px 0 14px rgba(0, 0, 0, 0.5);
+    background: rgba(30, 30, 30, 0.97);
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
 }
 .menu-lateral.abierto { transform: translateX(0); }
 
 .menu-lateral a {
     text-decoration: none;
     font-weight: 600;
-    font-size: 1.05rem;
-    padding: 0.5rem 0.8rem;
-    border-radius: 10px;
+    font-size: 1.1rem;
+    padding: 0.6rem 0.8rem;
+    border-radius: 12px;
     transition: all .25s ease;
     color: inherit;
 }
@@ -131,9 +135,9 @@ body.tema-oscuro .menu-lateral a:hover {
 
 .cerrar-menu {
     align-self: flex-end;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     cursor: pointer;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     transition: transform 0.2s ease;
     color: inherit;
 }

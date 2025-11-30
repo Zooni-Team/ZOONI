@@ -39,9 +39,9 @@
     :root { --verde:#39b77c; --amarillo:#FFD85A; --rojo:#ff6767; --celeste:#c6f1ff; --marron:#3c2a1b; --blanco:#fff; --fondo:#fffaf4; }
     *{box-sizing:border-box}
     body{margin:0;font-family:'Poppins',sans-serif;display:flex;flex-direction:column;align-items:center;transition:background .4s ease, color .4s ease}
-    body.tema-claro{background:var(--fondo);color:var(--marron);}
-    body.tema-oscuro{background:#121212;color:#ffffff;}
-    .ficha-top{width:90%;max-width:430px;margin-top:20px;border-radius:24px;box-shadow:0 6px 18px rgba(0,0,0,.12);text-align:center;padding:1.6rem;transition:background .4s ease, color .4s ease}
+    body.tema-claro{background:url('/img/fondos/bosque.png') center center / cover no-repeat fixed;color:var(--marron);}
+    body.tema-oscuro{background:url('/img/fondos/bosque.png') center center / cover no-repeat fixed;background-color:rgba(0,0,0,0.5);background-blend-mode:overlay;filter:brightness(0.6);color:#ffffff;}
+    .ficha-top{width:90%;max-width:430px;margin-top:80px;border-radius:24px;box-shadow:0 6px 18px rgba(0,0,0,.12);text-align:center;padding:1.6rem;transition:background .4s ease, color .4s ease}
     body.tema-claro .ficha-top{background:var(--blanco);}
     body.tema-oscuro .ficha-top{background:rgba(30,30,30,0.95);box-shadow:0 6px 18px rgba(0,0,0,.5);}
     .ficha-top img{width:140px;height:auto;animation:flotar 3s ease-in-out infinite;filter:drop-shadow(0 3px 6px rgba(0,0,0,.25))}

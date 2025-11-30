@@ -45,12 +45,15 @@ html, body {
 }
 
 body.tema-claro {
-    background: var(--fondo-claro);
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
     color: var(--texto-claro);
 }
 
 body.tema-oscuro {
-    background: var(--fondo-oscuro);
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    background-blend-mode: overlay;
+    filter: brightness(0.6);
     color: var(--texto-oscuro);
 }
 

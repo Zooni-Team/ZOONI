@@ -43,11 +43,14 @@ body {
   transition: background .4s ease, color .4s ease;
 }
 body.tema-claro {
-  background: var(--fondo);
+  background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
   color: var(--marron);
 }
 body.tema-oscuro {
-  background: #121212;
+  background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  background-blend-mode: overlay;
+  filter: brightness(0.6);
   color: #ffffff;
 }
 

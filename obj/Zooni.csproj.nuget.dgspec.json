@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\nacho\\zooni\\Zooni.csproj": {}
+    "C:\\Users\\nacho\\OneDrive\\Desktop\\ZOONI\\Zooni.csproj": {}
   },
   "projects": {
-    "C:\\Users\\nacho\\zooni\\Zooni.csproj": {
+    "C:\\Users\\nacho\\OneDrive\\Desktop\\ZOONI\\Zooni.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\nacho\\zooni\\Zooni.csproj",
+        "projectUniqueName": "C:\\Users\\nacho\\OneDrive\\Desktop\\ZOONI\\Zooni.csproj",
         "projectName": "Zooni",
-        "projectPath": "C:\\Users\\nacho\\zooni\\Zooni.csproj",
+        "projectPath": "C:\\Users\\nacho\\OneDrive\\Desktop\\ZOONI\\Zooni.csproj",
         "packagesPath": "C:\\Users\\nacho\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\nacho\\zooni\\obj\\",
+        "outputPath": "C:\\Users\\nacho\\OneDrive\\Desktop\\ZOONI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\nacho\\AppData\\Roaming\\NuGet\\NuGet.Config"
