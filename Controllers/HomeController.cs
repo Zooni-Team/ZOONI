@@ -407,6 +407,31 @@ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
                 return RedirectToAction("Calendario");
             }
 
+            // Si tiene Id_Evento, es una edición
+            if (ev.Id_Evento > 0)
+            {
+                string queryUpdate = @"
+                    UPDATE CalendarioEvento 
+                    SET Titulo = @Titulo, Descripcion = @Descripcion, Fecha = @Fecha, Tipo = @Tipo
+                    WHERE Id_Evento = @Id_Evento AND Id_User = @Id_User";
+
+                var parametrosUpdate = new Dictionary<string, object>
+                {
+                    { "@Id_Evento", ev.Id_Evento },
+                    { "@Id_User", ev.Id_User },
+                    { "@Titulo", ev.Titulo },
+                    { "@Descripcion", ev.Descripcion ?? "" },
+                    { "@Fecha", ev.Fecha },
+                    { "@Tipo", ev.Tipo }
+                };
+
+                BD.ExecuteNonQuery(queryUpdate, parametrosUpdate);
+
+                TempData["ExitoCalendario"] = "Evento actualizado con éxito ✏️";
+                return RedirectToAction("Calendario");
+            }
+
+            // Es un nuevo evento - crear calendario si no existe
             string queryCal = "SELECT TOP 1 Id_Calendario FROM Calendario WHERE Id_User = @Id_User AND Activo = 1";
             var paramCal = new Dictionary<string, object> { { "@Id_User", idUser.Value } };
             object idCal = BD.ExecuteScalar(queryCal, paramCal);
@@ -2598,6 +2623,12 @@ public IActionResult CambiarAvatar(string avatarRuta)
     TempData["Exito"] = "Avatar cambiado exitosamente ✅";
     return RedirectToAction("Closet");
 }
+
+    [HttpGet]
+    public IActionResult Planificador()
+    {
+        return RedirectToAction("Index", "Planificador");
+    }
 
     [HttpGet]
     public IActionResult Comunidad()

@@ -1,0 +1,51 @@
+@* Menú lateral unificado para todas las vistas *@
+
+<!-- Menú lateral -->
+<div class="menu-lateral" id="menuLateral">
+    <div class="cerrar-menu" id="cerrarMenu">✖</div>
+    <a href="/Home/Index">🏠 Inicio</a>
+    <a href="/Home/Comunidad">👥 Comunidad</a>
+    <a href="/Home/Planificador">📅 Planificador de Servicios</a>
+    <a href="/Marketplace">🛒 Marketplace</a>
+    <a href="/Home/FichaMedica">💉 Ficha médica</a>
+    <a href="/Home/Calendario">📅 Calendario</a>
+    <a href="/Chat/ChatZooni">💬 ChatBot</a>
+    <a href="/Home/Closet">👕 Closet</a>
+    <a href="/Home/Perfil">👤 Perfil</a>
+    <a href="/Home/Configuracion">⚙️ Configuración</a>
+    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
+</div>
+
+<!-- Overlay del menú -->
+<div class="overlay" id="overlay"></div>
+
+<script>
+// ===== Menú lateral =====
+(function() {
+    const menu = document.getElementById("menuLateral");
+    const overlay = document.getElementById("overlay");
+    const abrir = document.getElementById("abrirMenu");
+    const cerrar = document.getElementById("cerrarMenu");
+    const header = document.querySelector("header");
+
+    function abrirMenu() {
+        if (menu) menu.classList.add("abierto");
+        if (overlay) overlay.classList.add("activo");
+        if (header) header.classList.add("menu-oculto");
+    }
+
+    function cerrarMenuFn() {
+        if (menu) menu.classList.remove("abierto");
+        if (overlay) overlay.classList.remove("activo");
+        if (header) header.classList.remove("menu-oculto");
+    }
+
+    if (abrir) abrir.addEventListener("click", abrirMenu);
+    if (cerrar) cerrar.addEventListener("click", cerrarMenuFn);
+    if (overlay) overlay.addEventListener("click", cerrarMenuFn);
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") cerrarMenuFn();
+    });
+})();
+</script>

@@ -10,11 +10,49 @@ namespace Zooni.Controllers
 {
     public class PlanificadorController : BaseController
     {
+        // Asegurar que existan las tablas necesarias
+        private void AsegurarTablasReservas()
+        {
+            try
+            {
+                // Crear tabla ReservaProveedor si no existe
+                string crearTabla = @"
+                    IF NOT EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[ReservaProveedor]') AND type in (N'U'))
+                    BEGIN
+                        CREATE TABLE [dbo].[ReservaProveedor](
+                            [Id_Reserva] [int] IDENTITY(1,1) NOT NULL,
+                            [Id_User] [int] NOT NULL,
+                            [Id_Proveedor] [int] NOT NULL,
+                            [Id_Mascota] [int] NOT NULL,
+                            [Id_TipoServicio] [int] NOT NULL,
+                            [Fecha_Inicio] [datetime2](7) NOT NULL,
+                            [Fecha_Fin] [datetime2](7) NULL,
+                            [Hora_Inicio] [time](0) NOT NULL,
+                            [Hora_Fin] [time](0) NULL,
+                            [Duracion_Horas] [decimal](5,2) NULL,
+                            [Precio_Total] [decimal](12, 2) NOT NULL,
+                            [Id_EstadoReserva] [int] NOT NULL DEFAULT 1,
+                            [Notas] [nvarchar](1000) NULL,
+                            [Direccion_Servicio] [nvarchar](500) NULL,
+                            [Latitud_Servicio] [decimal](10, 8) NULL,
+                            [Longitud_Servicio] [decimal](11, 8) NULL,
+                            [Compartir_Ubicacion] [bit] NOT NULL DEFAULT 0,
+                            [Fecha_Creacion] [datetime2](7) NOT NULL DEFAULT GETDATE(),
+                            CONSTRAINT [PK_ReservaProveedor] PRIMARY KEY CLUSTERED ([Id_Reserva] ASC)
+                        )
+                    END";
+                BD.ExecuteNonQuery(crearTabla, new Dictionary<string, object>());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error creando tabla ReservaProveedor: " + ex.Message);
+            }
+        }
+
         // ============================
         // GET: Planificador de Servicios
         // ============================
         [HttpGet]
-        [Route("Home/Planificador")]
         public IActionResult Index()
         {
             var userId = HttpContext.Session.GetInt32("UserId");
@@ -24,6 +62,9 @@ namespace Zooni.Controllers
             // Redirigir proveedores a su dashboard
             var redirect = RedirigirProveedorSiEsNecesario();
             if (redirect != null) return redirect;
+
+            // Asegurar que existan las tablas
+            AsegurarTablasReservas();
 
             try
             {
@@ -46,51 +87,65 @@ namespace Zooni.Controllers
                 DataTable mascotasDt = BD.ExecuteQuery(mascotasQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
                 ViewBag.Mascotas = mascotasDt;
 
-                // Obtener reservas activas y próximas
-                string reservasQuery = @"
-                    SELECT 
-                        RP.Id_Reserva,
-                        RP.Fecha_Inicio,
-                        RP.Hora_Inicio,
-                        RP.Duracion_Horas,
-                        RP.Precio_Total,
-                        RP.Id_EstadoReserva,
-                        ER.Descripcion AS Estado,
-                        M.Nombre AS MascotaNombre,
-                        M.Especie AS MascotaEspecie,
-                        PS.NombreCompleto AS ProveedorNombre,
-                        PS.Id_Proveedor,
-                        TS.Descripcion AS TipoServicio,
-                        RP.Notas
-                    FROM ReservaProveedor RP
-                    INNER JOIN Mascota M ON RP.Id_Mascota = M.Id_Mascota
-                    INNER JOIN ProveedorServicio PS ON RP.Id_Proveedor = PS.Id_Proveedor
-                    INNER JOIN TipoServicio TS ON RP.Id_TipoServicio = TS.Id_TipoServicio
-                    LEFT JOIN EstadoReserva ER ON RP.Id_EstadoReserva = ER.Id_EstadoReserva
-                    WHERE RP.Id_User = @UserId
-                      AND RP.Fecha_Inicio >= CAST(GETDATE() AS DATE)
-                    ORDER BY RP.Fecha_Inicio ASC, RP.Hora_Inicio ASC";
-                
-                DataTable reservasDt = BD.ExecuteQuery(reservasQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
-                ViewBag.Reservas = reservasDt;
+                // Obtener reservas activas y próximas (manejo seguro si la tabla está vacía)
+                try
+                {
+                    string reservasQuery = @"
+                        SELECT 
+                            RP.Id_Reserva,
+                            RP.Fecha_Inicio,
+                            RP.Hora_Inicio,
+                            RP.Duracion_Horas,
+                            RP.Precio_Total,
+                            RP.Id_EstadoReserva,
+                            ER.Descripcion AS Estado,
+                            M.Nombre AS MascotaNombre,
+                            M.Especie AS MascotaEspecie,
+                            PS.NombreCompleto AS ProveedorNombre,
+                            PS.Id_Proveedor,
+                            TS.Descripcion AS TipoServicio,
+                            RP.Notas
+                        FROM ReservaProveedor RP
+                        INNER JOIN Mascota M ON RP.Id_Mascota = M.Id_Mascota
+                        INNER JOIN ProveedorServicio PS ON RP.Id_Proveedor = PS.Id_Proveedor
+                        INNER JOIN TipoServicio TS ON RP.Id_TipoServicio = TS.Id_TipoServicio
+                        LEFT JOIN EstadoReserva ER ON RP.Id_EstadoReserva = ER.Id_EstadoReserva
+                        WHERE RP.Id_User = @UserId
+                          AND RP.Fecha_Inicio >= CAST(GETDATE() AS DATE)
+                        ORDER BY RP.Fecha_Inicio ASC, RP.Hora_Inicio ASC";
+                    
+                    DataTable reservasDt = BD.ExecuteQuery(reservasQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+                    ViewBag.Reservas = reservasDt;
+                }
+                catch
+                {
+                    ViewBag.Reservas = new DataTable();
+                }
 
-                // Obtener proveedores favoritos (con los que más ha contratado)
-                string favoritosQuery = @"
-                    SELECT TOP 5
-                        PS.Id_Proveedor,
-                        PS.NombreCompleto,
-                        PS.Precio_Hora,
-                        COUNT(RP.Id_Reserva) AS CantidadReservas,
-                        AVG(CAST(R.Calificacion AS FLOAT)) AS CalificacionPromedio
-                    FROM ProveedorServicio PS
-                    INNER JOIN ReservaProveedor RP ON PS.Id_Proveedor = RP.Id_Proveedor
-                    LEFT JOIN Resena R ON PS.Id_Proveedor = R.Id_Proveedor
-                    WHERE RP.Id_User = @UserId
-                    GROUP BY PS.Id_Proveedor, PS.NombreCompleto, PS.Precio_Hora
-                    ORDER BY CantidadReservas DESC";
-                
-                DataTable favoritosDt = BD.ExecuteQuery(favoritosQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
-                ViewBag.Favoritos = favoritosDt;
+                // Obtener proveedores favoritos (manejo seguro)
+                try
+                {
+                    string favoritosQuery = @"
+                        SELECT TOP 5
+                            PS.Id_Proveedor,
+                            PS.NombreCompleto,
+                            PS.Precio_Hora,
+                            COUNT(RP.Id_Reserva) AS CantidadReservas,
+                            AVG(CAST(R.Calificacion AS FLOAT)) AS CalificacionPromedio
+                        FROM ProveedorServicio PS
+                        INNER JOIN ReservaProveedor RP ON PS.Id_Proveedor = RP.Id_Proveedor
+                        LEFT JOIN Resena R ON PS.Id_Proveedor = R.Id_Proveedor
+                        WHERE RP.Id_User = @UserId
+                        GROUP BY PS.Id_Proveedor, PS.NombreCompleto, PS.Precio_Hora
+                        ORDER BY CantidadReservas DESC";
+                    
+                    DataTable favoritosDt = BD.ExecuteQuery(favoritosQuery, new Dictionary<string, object> { { "@UserId", userId.Value } });
+                    ViewBag.Favoritos = favoritosDt;
+                }
+                catch
+                {
+                    ViewBag.Favoritos = new DataTable();
+                }
 
                 ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
                 return View("~/Views/Home/Planificador/Index.cshtml");

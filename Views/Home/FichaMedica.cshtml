@@ -38,6 +38,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>@ViewData["Title"]</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/global.css" />
 <style>
 :root {
     --verde: #39b77c;
@@ -88,27 +89,28 @@ body.tema-oscuro .menu-icon {
 .menu-lateral {
     position: fixed;
     top: 0;
-    left: -260px;
+    left: 0; 
+    transform: translateX(-100%);
     width: 240px;
     height: 100%;
-    box-shadow: 4px 0 14px rgba(0,0,0,0.15);
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 12px rgba(0,0,0,0.15);
     display: flex;
     flex-direction: column;
     padding: 2.5rem 1.2rem;
     gap: 1rem;
-    transition: all .4s ease;
-    z-index: 9;
-    border-top-right-radius: 18px;
-    border-bottom-right-radius: 18px;
+    transition: transform 0.35s ease, background .4s ease, color .4s ease;
+    z-index: 999;
+    border-radius: 0 !important;
 }
 body.tema-claro .menu-lateral {
-    background: #ffffff;
+    background: rgba(255, 255, 255, 0.97);
 }
 body.tema-oscuro .menu-lateral {
-    background: rgba(30,30,30,0.98);
-    box-shadow: 4px 0 14px rgba(0, 0, 0, 0.5);
+    background: rgba(30, 30, 30, 0.97);
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.5);
 }
-.menu-lateral.abierto { left: 0; }
+.menu-lateral.abierto { transform: translateX(0); }
 .menu-lateral a {
     text-decoration: none;
     font-weight: 600;
@@ -132,11 +134,11 @@ body.tema-oscuro .menu-lateral a:hover {
     background: var(--verde);
     color: #ffffff;
 }
-.cerrar-menu { 
-    align-self: flex-end; 
-    font-size: 1.6rem; 
-    cursor: pointer; 
-    margin-bottom: 1.2rem; 
+.cerrar-menu {
+    align-self: flex-end;
+    font-size: 1.6rem;
+    cursor: pointer;
+    margin-bottom: 1.5rem;
     transition: transform 0.2s ease;
     color: inherit;
 }
@@ -146,9 +148,7 @@ body.tema-claro .cerrar-menu {
 body.tema-oscuro .cerrar-menu {
     color: #ffffff;
 }
-.cerrar-menu:hover {
-    transform: scale(1.2);
-}
+.cerrar-menu:hover { transform: scale(1.2); }
 .overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: rgba(0,0,0,0.25); opacity: 0; pointer-events: none;
@@ -432,67 +432,7 @@ body.tema-oscuro .consejo {
     }
     .mascota-img { width: 160px; }
 }
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    left: -260px;
-    width: 240px;
-    height: 100%;
-    background: rgba(255,255,255,0.96);
-    backdrop-filter: blur(12px);
-    box-shadow: 4px 0 14px rgba(0,0,0,0.15);
-    display: flex;
-    flex-direction: column;
-    padding: 2.5rem 1.2rem;
-    gap: 1rem;
-    transition: all .4s ease;
-    z-index: 9;
-    border-top-right-radius: 18px;
-    border-bottom-right-radius: 18px;
-    
-}
-.menu-lateral.abierto { left: 0; }
-.menu-lateral {
-    left: -260px;
-    overflow-y: hidden;
-}
-.menu-lateral a {
-    text-decoration: none;
-    font-weight: 600;
-    color: var(--marron);
-    font-size: 1.1rem;
-    padding: 0.6rem 0.8rem;
-    border-radius: 12px;
-    transition: all .25s ease;
-}
-.menu-lateral a:hover {
-    background: var(--amarillo);
-    color: #3c2a00;
-}
-.menu-lateral {
-    position: fixed;
-    top: 0;
-    left: 0;
-    transform: translateX(-100%);
-    width: 240px;
-    height: 100%;
-    background: rgba(255,255,255,0.98);
-    backdrop-filter: blur(16px);
-    box-shadow: 4px 0 18px rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
-    padding: 2.5rem 1.2rem;
-    gap: 1rem;
-    transition: transform 0.35s ease;
-    border-top-right-radius: 18px;
-    border-bottom-right-radius: 18px;
-    z-index: 9999; 
-}
-
-.menu-lateral.abierto {
-    transform: translateX(0);
-}
-7
+/* Estilos del menú ya definidos arriba */
 </style>
 </head>
 
@@ -501,24 +441,7 @@ body.tema-oscuro .consejo {
     <img src="~/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
 </header>
 
-<div class="menu-lateral" id="menuLateral">
-    <div class="cerrar-menu" id="cerrarMenu">✖</div>
-    <a href="/Home/Index">🏠 Inicio</a>
-    <a href="/Home/Comunidad">👥 Comunidad</a>
-    <a href="/Home/Planificador">📅 Planificador de Servicios</a>
-    <a href="/Marketplace">🛒 Marketplace</a>
-    <a href="/home/FichaMedica">💉 Ficha médica</a>
-    <a href="/home/calendario">📅 Calendario</a>
-    <a href="/Chat/ChatZooni">💬 ChatBot</a>
-    <a href="/Home/Closet">👕 Closet</a>
-    <a href="/Home/Perfil">👤 Perfil</a>
-    <a href="/Home/configuracion">⚙️ Configuración</a>
-    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
-</div>
-
-
-
-<div class="overlay" id="overlay"></div>
+@await Html.PartialAsync("_MenuLateral")
 
 <main>
     @Html.AntiForgeryToken()

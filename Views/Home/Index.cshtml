@@ -18,6 +18,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>@ViewData["Title"]</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/global.css" />
 <style>
 :root {
     --verde: #3ac37d;
@@ -94,7 +95,7 @@ body.tema-oscuro .menu-icon {
     gap: 1rem;
     transition: transform 0.35s ease, background .4s ease, color .4s ease;
     z-index: 999;
-    border-right: none;
+    border-radius: 0 !important;
 }
 body.tema-claro .menu-lateral {
     background: rgba(255, 255, 255, 0.97);
@@ -274,8 +275,8 @@ body.tema-oscuro .mascota-nombre {
     flex-direction: column;
     gap: 15px;
     width: 100%;
-    margin-top: -5%;
-    padding-bottom: 100px; /* Espacio para los botones flotantes */
+    margin-top: -19%;
+    padding-bottom: 90px; /* Espacio para los botones flotantes */
 }
 .boton {
     background: linear-gradient(180deg, #FFD85A 0%, #FFCA3B 100%);
@@ -660,22 +661,7 @@ body.tema-oscuro footer {
     </div>
 </header>
 
-<div class="menu-lateral" id="menuLateral">
-    <div class="cerrar-menu" id="cerrarMenu">✖</div>
-           <a href="/Home/Index">🏠 Inicio</a>
-           <a href="/Home/Comunidad">👥 Comunidad</a>
-           <a href="/Home/Planificador">📅 Planificador de Servicios</a>
-           <a href="/Marketplace">🛒 Marketplace</a>
-    <a href="/Home/FichaMedica">💉 Ficha médica</a>
-    <a href="/Home/Calendario">📅 Calendario</a>
-    <a href="/Chat/ChatZooni">💬 ChatBot</a>
-    <a href="/Home/Closet">👕 Closet</a>
-    <a href="/Home/Perfil">👤 Perfil</a>
-    <a href="/Home/Configuracion">⚙️ Configuración</a>
-    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
-</div>
-
-<div class="overlay" id="overlay"></div>
+@await Html.PartialAsync("_MenuLateral")
 
 <main>
 @if (mascotaNombre != null)
@@ -755,21 +741,6 @@ else
 
 
 <script>
-const menu = document.getElementById("menuLateral");
-const overlay = document.getElementById("overlay");
-const abrir = document.getElementById("abrirMenu");
-const cerrar = document.getElementById("cerrarMenu");
-function cerrarMenu() {
-    menu.classList.remove("abierto");
-    overlay.classList.remove("activo");
-}
-abrir.addEventListener("click", () => {
-    menu.classList.add("abierto");
-    overlay.classList.add("activo");
-});
-cerrar.addEventListener("click", cerrarMenu);
-overlay.addEventListener("click", cerrarMenu);
-
 // ========== PERSONALIZACIÓN DE BOTONES ==========
 const STORAGE_KEY = 'zooni_botones_personalizados';
 const contenedorBotones = document.getElementById('contenedorBotones');
@@ -1012,13 +983,10 @@ function abrirModalAgregar() {
     const lista = document.getElementById('listaServicios');
     lista.innerHTML = '';
     
-    // Contar botones personalizados actuales
-    const botonesPersonalizados = Array.from(contenedorBotones.querySelectorAll('.boton')).filter(b => 
-        b.querySelector('.btn-eliminar-boton')?.getAttribute('data-personalizado') === 'true'
-    );
-    const cantidadPersonalizados = botonesPersonalizados.length;
-    const maxPersonalizados = 4;
-    const disponibles = maxPersonalizados - cantidadPersonalizados;
+    // Contar TODOS los botones actuales (máximo 4 en total)
+    const botonesActuales = contenedorBotones.querySelectorAll('.boton').length;
+    const maxBotones = 4;
+    const disponibles = maxBotones - botonesActuales;
     
     // Obtener el botón del modal
     const btnModal = document.querySelector('#modalAgregar .btn-modal');
@@ -1027,7 +995,7 @@ function abrirModalAgregar() {
     if (disponibles <= 0) {
         const mensaje = document.createElement('div');
         mensaje.style.cssText = 'padding: 15px; text-align: center; color: #ff4444; font-weight: 600; font-size: 0.9rem; line-height: 1.4;';
-        mensaje.textContent = `Ya tenés el máximo de ${maxPersonalizados} botones personalizados. Eliminá alguno para agregar más.`;
+        mensaje.textContent = `Ya tenés el máximo de ${maxBotones} botones. Eliminá alguno para agregar más.`;
         lista.appendChild(mensaje);
         
         // Cambiar el botón a "Ok" y que cierre el modal
@@ -1121,20 +1089,17 @@ function cerrarModalAgregar() {
 function agregarServiciosSeleccionados() {
     const checkboxes = document.querySelectorAll('#listaServicios input[type="checkbox"]:checked:not(:disabled)');
     
-    // Contar botones personalizados actuales
-    const botonesPersonalizados = Array.from(contenedorBotones.querySelectorAll('.boton')).filter(b => 
-        b.querySelector('.btn-eliminar-boton')?.getAttribute('data-personalizado') === 'true'
-    );
-    const cantidadPersonalizados = botonesPersonalizados.length;
-    const maxPersonalizados = 4;
+    // Contar TODOS los botones actuales (máximo 4 en total)
+    const botonesActuales = contenedorBotones.querySelectorAll('.boton').length;
+    const maxBotones = 4;
     
-    if (cantidadPersonalizados >= maxPersonalizados) {
-        alert(`Ya tenés el máximo de ${maxPersonalizados} botones personalizados. Eliminá alguno para agregar más.`);
+    if (botonesActuales >= maxBotones) {
+        alert(`Ya tenés el máximo de ${maxBotones} botones. Eliminá alguno para agregar más.`);
         return;
     }
     
     let agregados = 0;
-    const disponibles = maxPersonalizados - cantidadPersonalizados;
+    const disponibles = maxBotones - botonesActuales;
     
     checkboxes.forEach((checkbox, index) => {
         if (agregados >= disponibles) {
@@ -1157,7 +1122,7 @@ function agregarServiciosSeleccionados() {
         guardarBotones();
         cerrarModalAgregar();
         if (agregados < checkboxes.length) {
-            alert(`Se agregaron ${agregados} botón(es). Límite de ${maxPersonalizados} botones personalizados alcanzado.`);
+            alert(`Se agregaron ${agregados} botón(es). Límite de ${maxBotones} botones alcanzado.`);
         }
     } else {
         alert('No hay servicios seleccionados o ya están agregados');

@@ -14,6 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 <title>@ViewData["Title"]</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/global.css" />
 <style>
 :root {
     --verde: #3ac37d;
@@ -98,7 +99,7 @@ body:has(.menu-lateral.abierto) header .menu-icon {
     gap: 1rem;
     transition: transform 0.35s ease, background .4s ease, color .4s ease;
     z-index: 999;
-    border-right: none;
+    border-radius: 0 !important;
 }
 body.tema-claro .menu-lateral {
     background: rgba(255, 255, 255, 0.97);
@@ -137,7 +138,7 @@ body.tema-oscuro .menu-lateral a:hover {
     align-self: flex-end;
     font-size: 1.6rem;
     cursor: pointer;
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
     transition: transform 0.2s ease;
     color: inherit;
 }
@@ -147,19 +148,17 @@ body.tema-claro .cerrar-menu {
 body.tema-oscuro .cerrar-menu {
     color: #ffffff;
 }
-.cerrar-menu:hover {
-    transform: scale(1.2);
-}
+.cerrar-menu:hover { transform: scale(1.2); }
 
 .overlay {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0,0,0,0.45);
+    background: rgba(0,0,0,0.25);
     opacity: 0;
     pointer-events: none;
     transition: opacity .3s ease;
-    z-index: 998;
+    z-index: 8;
 }
 .overlay.activo {
     opacity: 1;
@@ -504,21 +503,7 @@ body.tema-oscuro .card:hover {
     <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
 </header>
 
-<div class="menu-lateral" id="menuLateral">
-    <div class="cerrar-menu" id="cerrarMenu">✖</div>
-    <a href="/Home/Index">🏠 Inicio</a>
-    <a href="/Home/Comunidad">👥 Comunidad</a>
-    <a href="/Home/Planificador">📅 Planificador de Servicios</a>
-    <a href="/Marketplace">🛒 Marketplace</a>
-    <a href="/Home/FichaMedica">💉 Ficha médica</a>
-    <a href="/Home/Calendario">📅 Calendario</a>
-    <a href="/Chat/ChatZooni">💬 ChatBot</a>
-    <a href="/Home/Closet">👕 Closet</a>
-    <a href="/Home/Perfil">👤 Perfil</a>
-    <a href="/Home/Configuracion">⚙️ Configuración</a>
-    <a href="/Auth/Logout" style="color:red;">🚪 Cerrar sesión</a>
-</div>
-<div class="overlay" id="overlay"></div>
+@await Html.PartialAsync("_MenuLateral")
 
 <main>
     <h1>🐾 Configuración de Mascotas</h1>
