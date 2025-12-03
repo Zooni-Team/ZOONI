@@ -127,6 +127,7 @@ Podés compartirlo y utilizarlo con atribución, **pero no está permitido modif
 ## 📬 Contacto
 
 📎 **LinkedIn (Theo Trosman):** [linkedin.com/in/theotrosman](https://www.linkedin.com/in/theotrosman/)  
+📎 **LinkedIn (Ignacio Eskenazi):** [linkedin.com/in/ignacioeskenazi](https://ar.linkedin.com/in/ignacio-eskenazi-96b639329)
 📧 **Soporte:** support@zooni.info
 
 ---
