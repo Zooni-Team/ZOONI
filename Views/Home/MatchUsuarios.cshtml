@@ -1,0 +1,679 @@
+@{
+    ViewData["Title"] = "Match - Zooni";
+    Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/global.css" />
+<style>
+:root {
+    --verde: #39b77c;
+    --amarillo: #FFD85A;
+    --marron: #3c2a1b;
+    --rojo: #ff5c5c;
+    --azul: #5b9cf6;
+    --fondo-claro: #f9f9f8;
+    --fondo-oscuro: #121212;
+    --texto-claro: #3c2a1b;
+    --texto-oscuro: #ffffff;
+    --card-claro: rgba(255,255,255,0.97);
+    --card-oscuro: rgba(30,30,30,0.97);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+}
+body.tema-claro { background: var(--fondo-claro); color: var(--texto-claro); }
+body.tema-oscuro { background: var(--fondo-oscuro); color: var(--texto-oscuro); }
+
+/* ---- HEADER ---- */
+.top-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 100;
+}
+body.tema-claro .top-bar { background: rgba(249,249,248,0.95); border-bottom: 1px solid rgba(0,0,0,0.07); }
+body.tema-oscuro .top-bar { background: rgba(18,18,18,0.95); border-bottom: 1px solid rgba(255,255,255,0.07); }
+
+.top-bar-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--verde);
+    letter-spacing: -0.5px;
+}
+.top-bar-title span { color: inherit; }
+
+.btn-filtros {
+    background: var(--amarillo);
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: #5b4500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 2px 8px rgba(255,216,90,0.4);
+}
+.btn-filtros:hover { transform: scale(1.04); box-shadow: 0 4px 14px rgba(255,216,90,0.5); }
+
+/* ---- AREA PRINCIPAL ---- */
+.match-area {
+    position: fixed;
+    top: 60px; bottom: 110px;
+    left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+/* ---- STACK DE CARDS ---- */
+.cards-stack {
+    position: relative;
+    width: 340px;
+    height: 520px;
+}
+
+@@media (max-width: 400px) {
+    .cards-stack { width: 92vw; height: 72vw; min-height: 420px; }
+}
+
+.match-card {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+    cursor: grab;
+    user-select: none;
+    transition: transform 0.08s ease, box-shadow 0.2s;
+    will-change: transform;
+    background: #ddd;
+}
+.match-card:active { cursor: grabbing; }
+
+.match-card:nth-child(2) { transform: rotate(2deg) translateY(8px) scale(0.97); z-index: 1; }
+.match-card:nth-child(3) { transform: rotate(-1.5deg) translateY(16px) scale(0.94); z-index: 0; }
+.match-card:nth-child(1) { z-index: 2; }
+
+.card-foto {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+}
+
+.card-gradient {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 55%;
+    background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.3) 60%, transparent 100%);
+    pointer-events: none;
+}
+
+.card-info {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 20px 22px 22px;
+    color: white;
+    pointer-events: none;
+}
+.card-nombre {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 4px;
+    color: #ffffff;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+}
+.card-sub {
+    font-size: 0.9rem;
+    opacity: 0.9;
+    margin: 0 0 8px;
+    color: #ffffff;
+}
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+.card-tag {
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.3);
+}
+.card-tag.verde { background: rgba(57,183,124,0.7); border-color: var(--verde); }
+
+/* ---- INDICADORES LIKE/NOPE ---- */
+.stamp {
+    position: absolute;
+    top: 30px;
+    font-size: 2.2rem;
+    font-weight: 900;
+    border: 4px solid;
+    border-radius: 10px;
+    padding: 6px 14px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+    z-index: 10;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+.stamp-like {
+    left: 20px;
+    color: var(--verde);
+    border-color: var(--verde);
+    transform: rotate(-15deg);
+}
+.stamp-nope {
+    right: 20px;
+    color: var(--rojo);
+    border-color: var(--rojo);
+    transform: rotate(15deg);
+}
+
+/* ---- BOTONES DE ACCION ---- */
+.action-bar {
+    position: fixed;
+    bottom: 30px;
+    left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 10px 0 14px;
+    z-index: 50;
+}
+
+.btn-accion {
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .2s, box-shadow .2s;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.btn-accion:hover { transform: scale(1.12); }
+.btn-accion:active { transform: scale(0.95); }
+
+.btn-nope  { width: 60px; height: 60px; background: white; color: var(--rojo); box-shadow: 0 4px 16px rgba(255,92,92,0.25); }
+.btn-like  { width: 70px; height: 70px; background: var(--verde); color: white; box-shadow: 0 4px 20px rgba(57,183,124,0.4); }
+.btn-super { width: 52px; height: 52px; background: white; color: var(--azul); box-shadow: 0 4px 16px rgba(91,156,246,0.25); }
+.btn-rewind { width: 48px; height: 48px; background: white; color: var(--amarillo); box-shadow: 0 4px 14px rgba(255,216,90,0.3); font-size: 1.2rem; }
+
+body.tema-oscuro .btn-nope  { background: #2a2a2a; }
+body.tema-oscuro .btn-super { background: #2a2a2a; }
+body.tema-oscuro .btn-rewind { background: #2a2a2a; }
+
+/* ---- BOTTOM NAV ---- */
+.bottom-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 100;
+    border-top: 1px solid rgba(0,0,0,0.08);
+}
+body.tema-claro .bottom-nav { background: rgba(255,255,255,0.97); }
+body.tema-oscuro .bottom-nav { background: rgba(20,20,20,0.97); border-top-color: rgba(255,255,255,0.08); }
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.45;
+    font-size: 0.68rem;
+    font-weight: 600;
+    transition: opacity .2s, transform .2s;
+    padding: 6px 12px;
+    border-radius: 12px;
+}
+.nav-item.activo { opacity: 1; color: var(--verde); }
+.nav-item:hover { opacity: 0.8; transform: translateY(-2px); }
+.nav-item .nav-icon { font-size: 1.4rem; }
+
+/* ---- MODAL MATCH ---- */
+.modal-match {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.modal-match.activo { display: flex; }
+
+.match-explosion {
+    text-align: center;
+    animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@@keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+.match-titulo {
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 30px rgba(57,183,124,0.6);
+    margin-bottom: 8px;
+}
+.match-subtitulo { color: #ffffff; font-size: 1.1rem; margin-bottom: 30px; opacity: 0.9; }
+#matchNombre { color: #ffffff; }
+
+.match-avatares {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+.match-avatar {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--verde);
+    box-shadow: 0 0 20px rgba(57,183,124,0.5);
+}
+.match-corazon { font-size: 2.5rem; }
+
+.btn-match-chat {
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 14px 40px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 14px;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(57,183,124,0.4);
+}
+.btn-match-chat:hover { transform: scale(1.05); }
+
+.btn-match-seguir {
+    background: transparent;
+    color: white;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-radius: 30px;
+    padding: 12px 40px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color .2s;
+}
+.btn-match-seguir:hover { border-color: white; }
+
+/* ---- EMPTY STATE ---- */
+.empty-state {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    text-align: center;
+    padding: 40px 30px;
+}
+.empty-state.visible { display: flex; }
+.empty-emoji { font-size: 4rem; }
+.empty-title { font-size: 1.4rem; font-weight: 700; margin: 0; }
+.empty-sub { opacity: 0.6; font-size: 0.95rem; margin: 0; }
+.btn-recargar {
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 12px 28px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: transform .2s;
+}
+.btn-recargar:hover { transform: scale(1.04); }
+
+/* ---- AVATAR PERSONA (arriba izquierda, más grande) ---- */
+.card-persona-avatar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+    z-index: 6;
+    pointer-events: none;
+}
+
+/* ---- AVATAR MASCOTA (arriba izquierda, debajo de la persona) ---- */
+.card-mascota-avatar {
+    position: absolute;
+    top: 60px;
+    left: 60px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.95);
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    object-fit: contain;
+    padding: 3px;
+    z-index: 7;
+    pointer-events: none;
+}
+.menu-icon {
+    width: 34px; height: 34px;
+    cursor: pointer;
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0);
+}
+body.tema-oscuro .menu-icon { filter: brightness(0) invert(1); }
+.menu-icon:hover { transform: scale(1.1); }
+</style>
+</head>
+<body class="tema-@tema">
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+    <div class="top-bar-title">🐾 Match</div>
+    <button class="btn-filtros" onclick="abrirFiltros()">⚙️ Filtros</button>
+</div>
+
+@await Html.PartialAsync("_MenuLateral")
+
+<!-- AREA DE CARDS -->
+<div class="match-area">
+    <div class="cards-stack" id="cardsStack">
+
+        <!-- Card 1 (top) -->
+        <div class="match-card" id="card-0" data-id="0">
+            <img class="card-foto" src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=600&q=80" alt="Golden Retriever" />
+            <img class="card-persona-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sofía" />
+            <img class="card-mascota-avatar" src="/img/mascotas/perros/golden retriever/perro_basico.png" alt="Golden Retriever" />
+            <div class="card-gradient"></div>
+            <div class="stamp stamp-like" id="stamp-like-0">❤️ LIKE</div>
+            <div class="stamp stamp-nope" id="stamp-nope-0">✖ NOPE</div>
+            <div class="card-info">
+                <p class="card-nombre">Sofía, 26</p>
+                <p class="card-sub">📍 Palermo, Buenos Aires</p>
+                <div class="card-tags">
+                    <span class="card-tag verde">🐶 Golden Retriever</span>
+                    <span class="card-tag">Paseos</span>
+                    <span class="card-tag">Parques</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="match-card" id="card-1" data-id="1">
+            <img class="card-foto" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=600&q=80" alt="Gato Siamés" />
+            <img class="card-persona-avatar" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Matías" />
+            <img class="card-mascota-avatar" src="/img/mascotas/gatos/siames/gato_basico.png" alt="Siamés" />
+            <div class="card-gradient"></div>
+            <div class="stamp stamp-like" id="stamp-like-1">❤️ LIKE</div>
+            <div class="stamp stamp-nope" id="stamp-nope-1">✖ NOPE</div>
+            <div class="card-info">
+                <p class="card-nombre">Matías, 30</p>
+                <p class="card-sub">📍 Belgrano, Buenos Aires</p>
+                <div class="card-tags">
+                    <span class="card-tag verde">🐱 Gato Siamés</span>
+                    <span class="card-tag">Veterinaria</span>
+                    <span class="card-tag">Adopción</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="match-card" id="card-2" data-id="2">
+            <img class="card-foto" src="https://images.unsplash.com/photo-1505628346881-b72b27e84530?w=600&q=80" alt="Beagle" />
+            <img class="card-persona-avatar" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Valentina" />
+            <img class="card-mascota-avatar" src="/img/mascotas/perros/beagle/perro_basico.png" alt="Beagle" />
+            <div class="card-gradient"></div>
+            <div class="stamp stamp-like" id="stamp-like-2">❤️ LIKE</div>
+            <div class="stamp stamp-nope" id="stamp-nope-2">✖ NOPE</div>
+            <div class="card-info">
+                <p class="card-nombre">Valentina, 24</p>
+                <p class="card-sub">📍 San Telmo, Buenos Aires</p>
+                <div class="card-tags">
+                    <span class="card-tag verde">🐶 Beagle</span>
+                    <span class="card-tag">Entrenamiento</span>
+                    <span class="card-tag">Playdates</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty state -->
+        <div class="empty-state" id="emptyState">
+            <div class="empty-emoji">🐾</div>
+            <p class="empty-title">¡Ya viste a todos!</p>
+            <p class="empty-sub">Volvé más tarde o ajustá los filtros para ver más usuarios.</p>
+            <button class="btn-recargar" onclick="recargarCards()">🔄 Recargar</button>
+        </div>
+    </div>
+</div>
+
+<!-- BOTONES DE ACCION -->
+<div class="action-bar">
+    <button class="btn-accion btn-rewind" onclick="deshacerSwipe()" title="Deshacer">↩️</button>
+    <button class="btn-accion btn-nope"  onclick="swipeCard('left')"  title="No me interesa">✖</button>
+    <button class="btn-accion btn-like"  onclick="swipeCard('right')" title="Me gusta">❤️</button>
+    <button class="btn-accion btn-super" onclick="swipeCard('super')" title="Super like">⭐</button>
+</div>
+
+
+
+<!-- MODAL MATCH -->
+<div class="modal-match" id="modalMatch">
+    <div class="match-explosion">
+        <div class="match-titulo">¡Es un Match! 🎉</div>
+        <div class="match-subtitulo">A vos y a <span id="matchNombre">Sofía</span> les gustaron sus mascotas</div>
+        <div class="match-avatares">
+            <img class="match-avatar" src="https://randomuser.me/api/portraits/lego/1.jpg" alt="Yo" id="matchAvatarMio" />
+            <div class="match-corazon">💚</div>
+            <img class="match-avatar" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Match" id="matchAvatarOtro" />
+        </div>
+        <button class="btn-match-chat" onclick="irAlChat()">💬 Enviar mensaje</button><br/>
+        <button class="btn-match-seguir" onclick="cerrarMatch()">Seguir explorando</button>
+    </div>
+</div>
+
+<script>
+// ===== DATOS MOCK =====
+const usuarios = [
+    { id: 0, nombre: "Sofía, 26",    sub: "📍 Palermo",   foto: "https://randomuser.me/api/portraits/women/44.jpg" },
+    { id: 1, nombre: "Matías, 30",   sub: "📍 Belgrano",  foto: "https://randomuser.me/api/portraits/men/32.jpg"   },
+    { id: 2, nombre: "Valentina, 24",sub: "📍 San Telmo", foto: "https://randomuser.me/api/portraits/women/68.jpg" },
+];
+
+let cardActual = 0;
+let historial = [];
+const stack = document.getElementById('cardsStack');
+
+// ===== SWIPE CON DRAG =====
+function initDrag(card) {
+    let startX, startY, isDragging = false;
+    let currentX = 0;
+
+    const onStart = (e) => {
+        isDragging = true;
+        const pt = e.touches ? e.touches[0] : e;
+        startX = pt.clientX;
+        startY = pt.clientY;
+        card.style.transition = 'none';
+    };
+
+    const onMove = (e) => {
+        if (!isDragging) return;
+        const pt = e.touches ? e.touches[0] : e;
+        currentX = pt.clientX - startX;
+        const currentY = pt.clientY - startY;
+        const rotate = currentX * 0.08;
+        card.style.transform = `translateX(${currentX}px) translateY(${currentY * 0.3}px) rotate(${rotate}deg)`;
+
+        const id = card.dataset.id;
+        const likeStamp = document.getElementById(`stamp-like-${id}`);
+        const nopeStamp = document.getElementById(`stamp-nope-${id}`);
+        if (likeStamp) likeStamp.style.opacity = Math.max(0, currentX / 80);
+        if (nopeStamp) nopeStamp.style.opacity = Math.max(0, -currentX / 80);
+    };
+
+    const onEnd = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        card.style.transition = 'transform 0.3s ease';
+        if (currentX > 90)       lanzarCard(card, 'right');
+        else if (currentX < -90) lanzarCard(card, 'left');
+        else {
+            card.style.transform = '';
+            const id = card.dataset.id;
+            const likeStamp = document.getElementById(`stamp-like-${id}`);
+            const nopeStamp = document.getElementById(`stamp-nope-${id}`);
+            if (likeStamp) likeStamp.style.opacity = 0;
+            if (nopeStamp) nopeStamp.style.opacity = 0;
+        }
+        currentX = 0;
+    };
+
+    card.addEventListener('mousedown', onStart);
+    card.addEventListener('touchstart', onStart, { passive: true });
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('touchmove', onMove, { passive: true });
+    document.addEventListener('mouseup', onEnd);
+    document.addEventListener('touchend', onEnd);
+}
+
+function lanzarCard(card, direccion) {
+    const xOut = direccion === 'right' ? 800 : (direccion === 'left' ? -800 : 0);
+    const yOut = direccion === 'super' ? -800 : 0;
+    const rot  = direccion === 'right' ? 30 : (direccion === 'left' ? -30 : 0);
+    card.style.transition = 'transform 0.45s ease, opacity 0.45s ease';
+    card.style.transform = `translateX(${xOut}px) translateY(${yOut}px) rotate(${rot}deg)`;
+    card.style.opacity = '0';
+
+    historial.push({ card, direccion });
+
+    setTimeout(() => {
+        card.remove();
+        cardActual++;
+        actualizarStack();
+        if (direccion === 'right' && Math.random() > 0.5) mostrarMatch(card.dataset.id);
+    }, 450);
+}
+
+function actualizarStack() {
+    const cards = stack.querySelectorAll('.match-card');
+    if (cards.length === 0) {
+        document.getElementById('emptyState').classList.add('visible');
+        return;
+    }
+    cards.forEach((c, i) => {
+        c.style.transition = 'transform 0.3s ease';
+        if (i === 0) { c.style.transform = ''; c.style.zIndex = 2; initDrag(c); }
+        else if (i === 1) { c.style.transform = 'rotate(2deg) translateY(8px) scale(0.97)'; c.style.zIndex = 1; }
+        else { c.style.transform = 'rotate(-1.5deg) translateY(16px) scale(0.94)'; c.style.zIndex = 0; }
+    });
+}
+
+function swipeCard(dir) {
+    const topCard = stack.querySelector('.match-card');
+    if (!topCard) return;
+    lanzarCard(topCard, dir);
+}
+
+function deshacerSwipe() {
+    if (historial.length === 0) return;
+    const { card } = historial.pop();
+    card.style.transition = 'none';
+    card.style.transform = '';
+    card.style.opacity = '1';
+    document.getElementById('emptyState').classList.remove('visible');
+    const cards = stack.querySelectorAll('.match-card');
+    if (cards.length > 0) {
+        stack.insertBefore(card, cards[0]);
+    } else {
+        stack.appendChild(card);
+    }
+    actualizarStack();
+}
+
+function recargarCards() {
+    location.reload();
+}
+
+// ===== MATCH MODAL =====
+function mostrarMatch(id) {
+    const u = usuarios[id] || usuarios[0];
+    document.getElementById('matchNombre').textContent = u.nombre.split(',')[0];
+    document.getElementById('matchAvatarOtro').src = u.foto;
+    document.getElementById('modalMatch').classList.add('activo');
+}
+function cerrarMatch() {
+    document.getElementById('modalMatch').classList.remove('activo');
+}
+function irAlChat() {
+    cerrarMatch();
+    window.location.href = '/Home/ChatsListado';
+}
+
+// ===== FILTROS =====
+function abrirFiltros() {
+    window.location.href = '/Home/MatchFiltros';
+}
+
+// ===== MENU =====
+document.getElementById('abrirMenu').addEventListener('click', () => {
+    document.querySelector('.menu-lateral')?.classList.add('abierto');
+    document.querySelector('.overlay')?.classList.add('activo');
+});
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+    const cards = stack.querySelectorAll('.match-card');
+    if (cards.length > 0) initDrag(cards[0]);
+});
+</script>
+</body>
+</html>

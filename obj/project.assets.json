@@ -8819,23 +8819,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\48857025\\.nuget\\packages\\": {},
+    "C:\\Users\\49123993\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\48857025\\ZOONI\\Zooni.csproj",
+      "projectUniqueName": "C:\\Users\\49123993\\ZOONI\\Zooni.csproj",
       "projectName": "Zooni",
-      "projectPath": "C:\\Users\\48857025\\ZOONI\\Zooni.csproj",
-      "packagesPath": "C:\\Users\\48857025\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\48857025\\ZOONI\\obj\\",
+      "projectPath": "C:\\Users\\49123993\\ZOONI\\Zooni.csproj",
+      "packagesPath": "C:\\Users\\49123993\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\49123993\\ZOONI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\48857025\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\49123993\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -8861,7 +8861,8 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      }
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -8933,7 +8934,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.206/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

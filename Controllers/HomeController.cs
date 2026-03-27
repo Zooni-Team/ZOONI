@@ -6579,5 +6579,26 @@ public IActionResult EliminarAmigo([FromBody] EliminarAmigoRequest request)
                 return Json(new { success = false, message = ex.Message });
             }
         }
+
+        // ============================
+        // GET: Match de usuarios (maqueta)
+        // ============================
+        [HttpGet]
+        public IActionResult MatchUsuarios()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null) return RedirectToAction("Login", "Auth");
+            ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult MatchFiltros()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null) return RedirectToAction("Login", "Auth");
+            ViewBag.Tema = HttpContext.Session.GetString("Tema") ?? "claro";
+            return View();
+        }
     }
 }

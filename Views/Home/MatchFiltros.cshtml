@@ -1,0 +1,557 @@
+@{
+    ViewData["Title"] = "Filtros Match - Zooni";
+    Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/global.css" />
+<style>
+:root {
+    --verde: #39b77c;
+    --amarillo: #FFD85A;
+    --marron: #3c2a1b;
+    --rojo: #ff5c5c;
+    --fondo-claro: #f9f9f8;
+    --fondo-oscuro: #121212;
+    --texto-claro: #3c2a1b;
+    --texto-oscuro: #ffffff;
+    --card-claro: rgba(255,255,255,0.97);
+    --card-oscuro: rgba(30,30,30,0.97);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0; padding: 0;
+    width: 100%; min-height: 100%;
+    font-family: 'Poppins', sans-serif;
+}
+body.tema-claro { background: var(--fondo-claro); color: var(--texto-claro); }
+body.tema-oscuro { background: var(--fondo-oscuro); color: var(--texto-oscuro); }
+
+/* ---- TOP BAR ---- */
+.top-bar {
+    position: sticky;
+    top: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    z-index: 100;
+}
+body.tema-claro .top-bar { background: rgba(249,249,248,0.97); border-bottom: 1px solid rgba(0,0,0,0.07); }
+body.tema-oscuro .top-bar { background: rgba(18,18,18,0.97); border-bottom: 1px solid rgba(255,255,255,0.07); }
+
+.btn-back {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: inherit;
+    padding: 6px;
+    border-radius: 10px;
+    transition: background .2s;
+    line-height: 1;
+}
+.btn-back:hover { background: rgba(0,0,0,0.07); }
+body.tema-oscuro .btn-back:hover { background: rgba(255,255,255,0.07); }
+
+.top-bar-title { font-size: 1.2rem; font-weight: 700; }
+
+.btn-reset {
+    background: none;
+    border: none;
+    color: var(--rojo);
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 6px 10px;
+    border-radius: 10px;
+    transition: background .2s;
+}
+.btn-reset:hover { background: rgba(255,92,92,0.1); }
+
+/* ---- CONTENIDO ---- */
+.filtros-content {
+    padding: 20px 20px 120px;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* ---- SECCIONES ---- */
+.seccion {
+    margin-bottom: 28px;
+}
+.seccion-titulo {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.5;
+    margin-bottom: 14px;
+}
+
+/* ---- CARD CONTENEDOR ---- */
+.filtro-card {
+    border-radius: 18px;
+    padding: 18px 20px;
+    margin-bottom: 12px;
+}
+body.tema-claro .filtro-card { background: var(--card-claro); box-shadow: 0 2px 12px rgba(0,0,0,0.07); }
+body.tema-oscuro .filtro-card { background: var(--card-oscuro); box-shadow: 0 2px 12px rgba(0,0,0,0.3); }
+
+.filtro-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+.filtro-label {
+    font-weight: 600;
+    font-size: 1rem;
+}
+.filtro-valor {
+    font-weight: 700;
+    color: var(--verde);
+    font-size: 0.95rem;
+    min-width: 60px;
+    text-align: right;
+}
+
+/* ---- RANGE SLIDER ---- */
+.range-wrap {
+    margin-top: 14px;
+    position: relative;
+}
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+}
+body.tema-claro input[type=range] { background: #e0e0e0; }
+body.tema-oscuro input[type=range] { background: #3a3a3a; }
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: var(--verde);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(57,183,124,0.4);
+    transition: transform .15s;
+}
+input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+.range-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+    opacity: 0.5;
+    margin-top: 6px;
+}
+
+/* ---- TOGGLE SWITCH ---- */
+.toggle-switch {
+    position: relative;
+    width: 50px;
+    height: 28px;
+    flex-shrink: 0;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+    position: absolute;
+    inset: 0;
+    border-radius: 28px;
+    cursor: pointer;
+    transition: background .3s;
+}
+body.tema-claro .toggle-slider { background: #ddd; }
+body.tema-oscuro .toggle-slider { background: #444; }
+.toggle-slider::before {
+    content: '';
+    position: absolute;
+    width: 22px; height: 22px;
+    left: 3px; top: 3px;
+    border-radius: 50%;
+    background: white;
+    transition: transform .3s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+}
+.toggle-switch input:checked + .toggle-slider { background: var(--verde); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+/* ---- CHIPS (selección múltiple) ---- */
+.chips-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+.chip {
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all .2s;
+    user-select: none;
+}
+body.tema-claro .chip { background: #f0f0f0; color: var(--marron); border-color: #e0e0e0; }
+body.tema-oscuro .chip { background: #2a2a2a; color: #ddd; border-color: #3a3a3a; }
+.chip.seleccionado {
+    background: var(--verde);
+    color: white;
+    border-color: var(--verde);
+    box-shadow: 0 2px 8px rgba(57,183,124,0.3);
+}
+.chip:hover:not(.seleccionado) {
+    border-color: var(--verde);
+    color: var(--verde);
+}
+
+/* ---- SELECT ---- */
+.filtro-select {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    transition: border-color .2s;
+    margin-top: 4px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2339b77c' stroke-width='2' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+}
+body.tema-claro .filtro-select { background-color: #f0f0f0; color: var(--marron); }
+body.tema-oscuro .filtro-select { background-color: #2a2a2a; color: #ddd; }
+.filtro-select:focus { border-color: var(--verde); }
+
+/* ---- DIVIDER ---- */
+.filtro-divider {
+    height: 1px;
+    margin: 14px 0;
+    opacity: 0.1;
+    background: currentColor;
+}
+
+/* ---- BOTON APLICAR ---- */
+.btn-aplicar-wrap {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    padding: 16px 20px;
+    z-index: 200;
+}
+body.tema-claro .btn-aplicar-wrap { background: rgba(249,249,248,0.97); border-top: 1px solid rgba(0,0,0,0.07); }
+body.tema-oscuro .btn-aplicar-wrap { background: rgba(18,18,18,0.97); border-top: 1px solid rgba(255,255,255,0.07); }
+
+.btn-aplicar {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+    margin: 0 auto;
+    background: var(--verde);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 16px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 4px 20px rgba(57,183,124,0.4);
+}
+.btn-aplicar:hover { transform: scale(1.02); box-shadow: 0 6px 24px rgba(57,183,124,0.5); }
+.btn-aplicar:active { transform: scale(0.98); }
+
+/* ---- BADGE CONTADOR ---- */
+.filtros-activos-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--verde);
+    color: white;
+    border-radius: 50%;
+    width: 20px; height: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-left: 6px;
+    vertical-align: middle;
+}
+</style>
+</head>
+<body class="tema-@tema">
+
+<!-- TOP BAR -->
+<div class="top-bar">
+    <button class="btn-back" onclick="history.back()">←</button>
+    <div class="top-bar-title">⚙️ Filtros</div>
+    <button class="btn-reset" onclick="resetearFiltros()">Resetear</button>
+</div>
+
+<div class="filtros-content">
+
+    <!-- DISTANCIA -->
+    <div class="seccion">
+        <div class="seccion-titulo">📍 Ubicación</div>
+        <div class="filtro-card">
+            <div class="filtro-row">
+                <span class="filtro-label">Distancia máxima</span>
+                <span class="filtro-valor" id="valDistancia">10 km</span>
+            </div>
+            <div class="range-wrap">
+                <input type="range" id="rangeDistancia" min="1" max="100" value="10"
+                       oninput="actualizarValor('valDistancia', this.value, ' km')" />
+                <div class="range-labels"><span>1 km</span><span>100 km</span></div>
+            </div>
+            <div class="filtro-divider"></div>
+            <div class="filtro-row">
+                <span class="filtro-label">Solo usuarios cercanos</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="toggleCercanos" checked />
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- MASCOTA -->
+    <div class="seccion">
+        <div class="seccion-titulo">🐾 Tipo de mascota</div>
+        <div class="filtro-card">
+            <div class="chips-wrap" id="chipsEspecie">
+                <div class="chip seleccionado" onclick="toggleChip(this)">🐶 Perro</div>
+                <div class="chip seleccionado" onclick="toggleChip(this)">🐱 Gato</div>
+                <div class="chip" onclick="toggleChip(this)">🐰 Conejo</div>
+                <div class="chip" onclick="toggleChip(this)">🦜 Ave</div>
+                <div class="chip" onclick="toggleChip(this)">🐠 Pez</div>
+                <div class="chip" onclick="toggleChip(this)">🦎 Reptil</div>
+                <div class="chip" onclick="toggleChip(this)">Cualquiera</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDAD DE LA MASCOTA -->
+    <div class="seccion">
+        <div class="seccion-titulo">🎂 Edad de la mascota</div>
+        <div class="filtro-card">
+            <div class="filtro-row">
+                <span class="filtro-label">Rango de edad</span>
+                <span class="filtro-valor" id="valEdadMascota">0 – 5 años</span>
+            </div>
+            <div class="range-wrap">
+                <input type="range" id="rangeEdadMin" min="0" max="20" value="0"
+                       oninput="actualizarRangoEdad()" />
+                <input type="range" id="rangeEdadMax" min="0" max="20" value="5"
+                       oninput="actualizarRangoEdad()" style="margin-top:8px;" />
+                <div class="range-labels"><span>Cachorro</span><span>20+ años</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- INTERESES -->
+    <div class="seccion">
+        <div class="seccion-titulo">💡 Intereses en común</div>
+        <div class="filtro-card">
+            <div class="chips-wrap" id="chipsIntereses">
+                <div class="chip seleccionado" onclick="toggleChip(this)">🦮 Paseos</div>
+                <div class="chip" onclick="toggleChip(this)">🏥 Veterinaria</div>
+                <div class="chip seleccionado" onclick="toggleChip(this)">🌳 Parques</div>
+                <div class="chip" onclick="toggleChip(this)">🎾 Juegos</div>
+                <div class="chip" onclick="toggleChip(this)">🏠 Playdates</div>
+                <div class="chip" onclick="toggleChip(this)">🎓 Entrenamiento</div>
+                <div class="chip" onclick="toggleChip(this)">❤️ Adopción</div>
+                <div class="chip" onclick="toggleChip(this)">✂️ Peluquería</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- USUARIO -->
+    <div class="seccion">
+        <div class="seccion-titulo">👤 Sobre el usuario</div>
+        <div class="filtro-card">
+            <div class="filtro-row">
+                <span class="filtro-label">Rango de edad</span>
+                <span class="filtro-valor" id="valEdadUsuario">18 – 40</span>
+            </div>
+            <div class="range-wrap">
+                <input type="range" id="rangeEdadUsuarioMin" min="18" max="70" value="18"
+                       oninput="actualizarRangoEdadUsuario()" />
+                <input type="range" id="rangeEdadUsuarioMax" min="18" max="70" value="40"
+                       oninput="actualizarRangoEdadUsuario()" style="margin-top:8px;" />
+                <div class="range-labels"><span>18</span><span>70+</span></div>
+            </div>
+            <div class="filtro-divider"></div>
+            <div class="filtro-row">
+                <span class="filtro-label">Género</span>
+            </div>
+            <div class="chips-wrap" style="margin-top:10px;" id="chipsGenero">
+                <div class="chip seleccionado" onclick="toggleChipUnico(this, 'chipsGenero')">Todos</div>
+                <div class="chip" onclick="toggleChipUnico(this, 'chipsGenero')">Hombre</div>
+                <div class="chip" onclick="toggleChipUnico(this, 'chipsGenero')">Mujer</div>
+                <div class="chip" onclick="toggleChipUnico(this, 'chipsGenero')">No binario</div>
+            </div>
+            <div class="filtro-divider"></div>
+            <div class="filtro-row">
+                <span class="filtro-label">Solo verificados</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="toggleVerificados" />
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            <div class="filtro-divider"></div>
+            <div class="filtro-row">
+                <span class="filtro-label">Solo con foto de perfil</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="toggleConFoto" checked />
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- OBJETIVO -->
+    <div class="seccion">
+        <div class="seccion-titulo">🎯 Objetivo del match</div>
+        <div class="filtro-card">
+            <div class="chips-wrap" id="chipsObjetivo">
+                <div class="chip seleccionado" onclick="toggleChipUnico(this, 'chipsObjetivo')">Amigos para mascotas</div>
+                <div class="chip" onclick="toggleChipUnico(this, 'chipsObjetivo')">Compañero de paseos</div>
+                <div class="chip" onclick="toggleChipUnico(this, 'chipsObjetivo')">Cuidado compartido</div>
+                <div class="chip" onclick="toggleChipUnico(this, 'chipsObjetivo')">Comunidad</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ORDENAR POR -->
+    <div class="seccion">
+        <div class="seccion-titulo">🔃 Ordenar por</div>
+        <div class="filtro-card">
+            <select class="filtro-select" id="selectOrden">
+                <option value="cercania">📍 Cercanía</option>
+                <option value="actividad">⚡ Actividad reciente</option>
+                <option value="mascotas">🐾 Más mascotas en común</option>
+                <option value="intereses">💡 Más intereses en común</option>
+            </select>
+        </div>
+    </div>
+
+</div>
+
+<!-- BOTON APLICAR -->
+<div class="btn-aplicar-wrap">
+    <button class="btn-aplicar" onclick="aplicarFiltros()">
+        Ver resultados <span class="filtros-activos-badge" id="badgeFiltros">5</span>
+    </button>
+</div>
+
+<script>
+function actualizarValor(id, val, sufijo) {
+    document.getElementById(id).textContent = val + sufijo;
+    actualizarBadge();
+}
+
+function actualizarRangoEdad() {
+    const min = parseInt(document.getElementById('rangeEdadMin').value);
+    const max = parseInt(document.getElementById('rangeEdadMax').value);
+    document.getElementById('valEdadMascota').textContent = `${min} – ${max} años`;
+    actualizarBadge();
+}
+
+function actualizarRangoEdadUsuario() {
+    const min = parseInt(document.getElementById('rangeEdadUsuarioMin').value);
+    const max = parseInt(document.getElementById('rangeEdadUsuarioMax').value);
+    document.getElementById('valEdadUsuario').textContent = `${min} – ${max}`;
+    actualizarBadge();
+}
+
+function toggleChip(chip) {
+    chip.classList.toggle('seleccionado');
+    actualizarBadge();
+}
+
+function toggleChipUnico(chip, grupoId) {
+    const grupo = document.getElementById(grupoId);
+    grupo.querySelectorAll('.chip').forEach(c => c.classList.remove('seleccionado'));
+    chip.classList.add('seleccionado');
+    actualizarBadge();
+}
+
+function actualizarBadge() {
+    let count = 0;
+    document.querySelectorAll('.chip.seleccionado').forEach(() => count++);
+    document.getElementById('badgeFiltros').textContent = count;
+}
+
+function resetearFiltros() {
+    // Distancia
+    document.getElementById('rangeDistancia').value = 10;
+    document.getElementById('valDistancia').textContent = '10 km';
+    document.getElementById('toggleCercanos').checked = true;
+
+    // Edad mascota
+    document.getElementById('rangeEdadMin').value = 0;
+    document.getElementById('rangeEdadMax').value = 5;
+    document.getElementById('valEdadMascota').textContent = '0 – 5 años';
+
+    // Edad usuario
+    document.getElementById('rangeEdadUsuarioMin').value = 18;
+    document.getElementById('rangeEdadUsuarioMax').value = 40;
+    document.getElementById('valEdadUsuario').textContent = '18 – 40';
+
+    // Chips
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('seleccionado'));
+    document.querySelector('#chipsEspecie .chip:nth-child(1)').classList.add('seleccionado');
+    document.querySelector('#chipsEspecie .chip:nth-child(2)').classList.add('seleccionado');
+    document.querySelector('#chipsIntereses .chip:nth-child(1)').classList.add('seleccionado');
+    document.querySelector('#chipsIntereses .chip:nth-child(3)').classList.add('seleccionado');
+    document.querySelector('#chipsGenero .chip:nth-child(1)').classList.add('seleccionado');
+    document.querySelector('#chipsObjetivo .chip:nth-child(1)').classList.add('seleccionado');
+
+    // Toggles
+    document.getElementById('toggleVerificados').checked = false;
+    document.getElementById('toggleConFoto').checked = true;
+
+    // Orden
+    document.getElementById('selectOrden').value = 'cercania';
+
+    actualizarBadge();
+}
+
+function aplicarFiltros() {
+    // Recolectar valores
+    const filtros = {
+        distancia: document.getElementById('rangeDistancia').value,
+        soloCercanos: document.getElementById('toggleCercanos').checked,
+        especies: [...document.querySelectorAll('#chipsEspecie .chip.seleccionado')].map(c => c.textContent.trim()),
+        intereses: [...document.querySelectorAll('#chipsIntereses .chip.seleccionado')].map(c => c.textContent.trim()),
+        genero: document.querySelector('#chipsGenero .chip.seleccionado')?.textContent.trim(),
+        objetivo: document.querySelector('#chipsObjetivo .chip.seleccionado')?.textContent.trim(),
+        orden: document.getElementById('selectOrden').value,
+        soloVerificados: document.getElementById('toggleVerificados').checked,
+        soloConFoto: document.getElementById('toggleConFoto').checked,
+    };
+    // Guardar en sessionStorage para que la pantalla de match los use
+    sessionStorage.setItem('matchFiltros', JSON.stringify(filtros));
+    window.location.href = '/Home/MatchUsuarios';
+}
+
+// Init badge
+document.addEventListener('DOMContentLoaded', actualizarBadge);
+</script>
+</body>
+</html>
