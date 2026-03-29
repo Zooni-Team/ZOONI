@@ -91,11 +91,11 @@ Zooni no solo digitaliza, **humaniza**: cada mascota tiene una historia y la app
 
 ## 🧑‍💻 Equipo
 
-**Theo Trosman** — Project Leader, Fullstack & Branding  
+**Theo Trosman** — Project Leader and Branding
 **Ignacio Eskenazi** — UX / UI Design  
-**Santiago Dobrovitsky** — Fullstack Developer MVC  
+**Santiago Dobrovitsky** — Fullstack Developer
 **Lucas Dueñaz** — Investigación, redacción y estructura  
-
+**Lior Tanel** — Fullstack Developer
 ---
 
 ## 📈 Algunos Números
