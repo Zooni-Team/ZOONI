@@ -343,6 +343,45 @@ var tema = HttpContext.Session.GetString("Tema") ?? "claro";
         }
 
         [HttpGet]
+        public IActionResult Eventos()
+        {
+            var userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null) return RedirectToAction("Login", "Auth");
+
+            var tema = HttpContext.Session.GetString("Tema") ?? "claro";
+            ViewBag.Tema = tema;
+
+            var eventos = new List<EventoPublico>();
+            try
+            {
+                var dt = BD.ExecuteQuery("SELECT * FROM EventoPublico WHERE Activo = 1 ORDER BY Fecha ASC");
+                foreach (DataRow row in dt.Rows)
+                {
+                    eventos.Add(new EventoPublico
+                    {
+                        Id_Evento    = Convert.ToInt32(row["Id_Evento"]),
+                        Titulo       = row["Titulo"]?.ToString() ?? "",
+                        Descripcion  = row["Descripcion"]?.ToString() ?? "",
+                        Organizador  = row["Organizador"]?.ToString() ?? "",
+                        Fecha        = Convert.ToDateTime(row["Fecha"]),
+                        Hora         = row["Hora"]?.ToString() ?? "",
+                        Lugar        = row["Lugar"]?.ToString() ?? "",
+                        Imagen       = row["Imagen"]?.ToString() ?? "",
+                        Especie      = row["Especie"]?.ToString() ?? "",
+                        Raza         = row["Raza"]?.ToString() ?? "",
+                        Activo       = Convert.ToBoolean(row["Activo"])
+                    });
+                }
+            }
+            catch
+            {
+                // Si la tabla no existe aún, mostramos lista vacía
+            }
+
+            return View(eventos);
+        }
+
+        [HttpGet]
         public IActionResult Calendario()
         {
             var userId = HttpContext.Session.GetInt32("UserId");

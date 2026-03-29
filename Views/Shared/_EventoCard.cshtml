@@ -1,0 +1,55 @@
+@model Zooni.Models.EventoPublico
+@{
+    var fechaFormateada = Model.Fecha.ToString("dddd d 'de' MMMM 'de' yyyy", new System.Globalization.CultureInfo("es-AR"));
+    fechaFormateada = char.ToUpper(fechaFormateada[0]) + fechaFormateada.Substring(1);
+    var tieneImagen = !string.IsNullOrEmpty(Model.Imagen);
+}
+
+<div class="evento-card">
+    <div class="evento-img-wrap">
+        @if (tieneImagen)
+        {
+            <img src="@Model.Imagen" alt="@Model.Titulo" loading="lazy" />
+        }
+        else
+        {
+            <div class="evento-img-placeholder">🐾</div>
+        }
+        @if (!string.IsNullOrEmpty(Model.Raza))
+        {
+            <span class="evento-badge">@Model.Raza</span>
+        }
+    </div>
+
+    <div class="evento-body">
+        <h2 class="evento-titulo">@Model.Titulo</h2>
+
+        <div class="evento-meta">
+            <span class="meta-chip">📅 @fechaFormateada</span>
+            @if (!string.IsNullOrEmpty(Model.Hora))
+            {
+                <span class="meta-chip">🕘 @Model.Hora hs</span>
+            }
+            @if (!string.IsNullOrEmpty(Model.Lugar))
+            {
+                <span class="meta-chip">📍 @Model.Lugar</span>
+            }
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.Descripcion))
+        {
+            <p class="evento-desc">@Model.Descripcion</p>
+        }
+
+        @if (!string.IsNullOrEmpty(Model.Organizador))
+        {
+            <div class="evento-organizador">
+                🏛️ <span>@Model.Organizador</span>
+            </div>
+        }
+
+        <button class="btn-calendario" onclick="alert('Próximamente: agregar al calendario')">
+            📅 Agregar al calendario
+        </button>
+    </div>
+</div>

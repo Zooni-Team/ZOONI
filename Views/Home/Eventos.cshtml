@@ -1,0 +1,261 @@
+@using Zooni.Models
+@model List<EventoPublico>
+@{
+    ViewData["Title"] = "Eventos - Zooni";
+    Layout = null;
+    var tema = ViewBag.Tema ?? Context.Session.GetString("Tema") ?? "claro";
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>@ViewData["Title"]</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="~/css/global.css" />
+<style>
+:root {
+    --verde: #39b77c;
+    --amarillo: #FFD85A;
+    --marron: #3c2a1b;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+    margin: 0; padding: 0;
+    width: 100%; min-height: 100%;
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+}
+
+body.tema-claro {
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+    color: #3c2a1b;
+}
+body.tema-oscuro {
+    background: url('/img/fondos/bosque.png') center center / cover no-repeat fixed;
+    background-color: rgba(0,0,0,0.5);
+    background-blend-mode: overlay;
+    color: #f1f1f1;
+}
+
+/* ── Header ── */
+header {
+    position: fixed;
+    top: 15px; left: 20px;
+    z-index: 1000;
+}
+.menu-icon {
+    width: 38px; height: 38px;
+    cursor: pointer;
+    transition: transform .25s ease, filter .3s ease;
+    filter: brightness(0);
+}
+body.tema-oscuro .menu-icon { filter: brightness(0) invert(1); }
+.menu-icon:hover { transform: scale(1.1); }
+header.menu-oculto .menu-icon { opacity: 0; pointer-events: none; }
+
+/* ── Menú lateral ── */
+.menu-lateral {
+    position: fixed; top: 0; left: 0;
+    transform: translateX(-100%);
+    width: 240px; height: 100%;
+    backdrop-filter: blur(12px);
+    box-shadow: 4px 0 12px rgba(0,0,0,0.15);
+    display: flex; flex-direction: column;
+    padding: 2.5rem 1.2rem; gap: 1rem;
+    transition: transform 0.35s ease, background .4s ease;
+    z-index: 999; border-radius: 0 !important;
+}
+body.tema-claro  .menu-lateral { background: rgba(255,255,255,0.97); }
+body.tema-oscuro .menu-lateral { background: rgba(30,30,30,0.97); box-shadow: 4px 0 12px rgba(0,0,0,0.5); }
+.menu-lateral.abierto { transform: translateX(0); }
+.menu-lateral a {
+    text-decoration: none; font-weight: 600; font-size: 1.1rem;
+    padding: .6rem .8rem; border-radius: 12px;
+    transition: all .25s ease; color: inherit;
+}
+body.tema-claro  .menu-lateral a { color: var(--marron); }
+body.tema-oscuro .menu-lateral a { color: #fff; }
+body.tema-claro  .menu-lateral a:hover { background: var(--amarillo); color: #3c2a00; }
+body.tema-oscuro .menu-lateral a:hover { background: var(--verde); color: #fff; }
+.cerrar-menu {
+    align-self: flex-end; font-size: 1.6rem; cursor: pointer;
+    margin-bottom: 1.5rem; transition: transform .2s ease; color: inherit;
+}
+body.tema-claro  .cerrar-menu { color: var(--marron); }
+body.tema-oscuro .cerrar-menu { color: #fff; }
+.cerrar-menu:hover { transform: scale(1.2); }
+.overlay {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.25);
+    opacity: 0; pointer-events: none;
+    transition: opacity .3s ease; z-index: 8;
+}
+.overlay.activo { opacity: 1; pointer-events: auto; }
+
+/* ── Main ── */
+main {
+    width: 100%; max-width: 680px;
+    margin: 90px auto 60px auto;
+    padding: 0 20px;
+}
+
+.page-title {
+    text-align: center;
+    font-size: 1.8rem; font-weight: 700;
+    margin-bottom: 6px;
+}
+body.tema-claro  .page-title { color: #1a1a1a; text-shadow: none; }
+body.tema-oscuro .page-title { color: #f1f1f1; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
+
+.page-subtitle {
+    text-align: center; font-size: .95rem;
+    margin-bottom: 28px;
+    color: #1a1a1a;
+    text-shadow: none;
+    opacity: .75;
+}
+
+/* ── Tarjeta de evento ── */
+.evento-card {
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+body.tema-claro  .evento-card { background: rgba(255,255,255,0.92); border: 1px solid #e8e8e8; }
+body.tema-oscuro .evento-card { background: rgba(20,20,20,0.88); border: 1px solid #333; }
+.evento-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.15); }
+
+.evento-img-wrap {
+    width: 100%; height: 220px;
+    overflow: hidden; position: relative;
+    background: linear-gradient(135deg, #d4f0e2 0%, #a8dfc0 100%);
+}
+.evento-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.evento-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem;
+}
+
+.evento-badge {
+    position: absolute; top: 14px; left: 14px;
+    background: var(--verde); color: #fff;
+    font-size: .75rem; font-weight: 700;
+    padding: 4px 12px; border-radius: 20px;
+    letter-spacing: .5px; text-transform: uppercase;
+}
+
+.evento-body { padding: 20px 22px 22px; }
+
+.evento-titulo {
+    font-size: 1.2rem; font-weight: 700;
+    margin: 0 0 10px;
+    line-height: 1.35;
+}
+body.tema-claro  .evento-titulo { color: var(--marron); }
+body.tema-oscuro .evento-titulo { color: #f1f1f1; }
+
+.evento-meta {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    margin-bottom: 14px;
+}
+.meta-chip {
+    display: flex; align-items: center; gap: 5px;
+    font-size: .82rem; font-weight: 600;
+    padding: 5px 12px; border-radius: 20px;
+}
+body.tema-claro  .meta-chip { background: #f0faf5; color: #2a7a55; border: 1px solid #c5e8d6; }
+body.tema-oscuro .meta-chip { background: #1a3328; color: #6ddba8; border: 1px solid #2a5040; }
+
+.evento-desc {
+    font-size: .9rem; line-height: 1.6;
+    margin-bottom: 16px; opacity: .8;
+}
+
+.evento-organizador {
+    display: flex; align-items: center; gap: 8px;
+    font-size: .82rem; font-weight: 600;
+    padding: 10px 14px; border-radius: 12px;
+    margin-bottom: 18px;
+}
+body.tema-claro  .evento-organizador { background: #fffbee; color: #7a5a00; border: 1px solid #ffe9a0; }
+body.tema-oscuro .evento-organizador { background: #2a2510; color: #ffd85a; border: 1px solid #4a3f10; }
+
+.btn-calendario {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    width: 100%; padding: 13px;
+    background: var(--verde); color: #fff;
+    border: none; border-radius: 14px;
+    font-size: 1rem; font-weight: 700;
+    cursor: pointer;
+    transition: background .25s ease, transform .2s ease;
+}
+.btn-calendario:hover { background: #2da56e; transform: translateY(-2px); }
+.btn-calendario:active { transform: translateY(0); }
+
+/* ── Empty state ── */
+.empty-state {
+    text-align: center; padding: 60px 20px;
+    opacity: .5; font-size: 1rem;
+}
+.empty-state .icon { font-size: 3rem; margin-bottom: 12px; }
+
+@@media (max-width: 480px) {
+    .page-title { font-size: 1.5rem; }
+    .evento-img-wrap { height: 180px; }
+    .evento-body { padding: 16px 16px 18px; }
+}
+</style>
+</head>
+<body class="tema-@tema">
+
+<header id="headerPrincipal">
+    <img src="/img/icons/hamburger.png" alt="Menú" class="menu-icon" id="abrirMenu" />
+</header>
+
+@await Html.PartialAsync("_MenuLateral")
+
+<main>
+    <p class="page-title">🎉 Eventos</p>
+    <p class="page-subtitle">Actividades y jornadas para vos y tu mascota</p>
+
+    @{
+        var eventoDemo = new Zooni.Models.EventoPublico
+        {
+            Id_Evento   = 0,
+            Titulo      = "Jornada de Vacunación Gratuita para Golden Retrievers",
+            Descripcion = "El Gobierno de la Ciudad Autónoma de Buenos Aires organiza una jornada de vacunación gratuita para Golden Retrievers. Se aplicarán vacunas antirrábicas, séxtuple y contra la leptospirosis. Traé el carnet sanitario de tu mascota.",
+            Organizador = "Gobierno Ciudad Autónoma de Buenos Aires",
+            Fecha       = new DateTime(2026, 4, 15, 9, 0, 0),
+            Hora        = "09:00",
+            Lugar       = "Parque Centenario, Av. Díaz Vélez 4900, CABA",
+            Imagen      = "/img/eventos/vacunacion-golden-retriever.jpg",
+            Especie     = "Perro",
+            Raza        = "Golden Retriever"
+        };
+        var listaEventos = (Model != null && Model.Any()) ? Model : new List<Zooni.Models.EventoPublico> { eventoDemo };
+    }
+    @foreach (var ev in listaEventos)
+    {
+        @await Html.PartialAsync("_EventoCard", ev)
+    }
+</main>
+
+<script>
+(function () {
+    const tema = '@tema';
+    document.body.className = 'tema-' + tema;
+})();
+</script>
+</body>
+</html>
