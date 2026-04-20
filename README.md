@@ -1,5 +1,5 @@
 <div align="center">
-<img width="180" height="1536" alt="SMOKING1" src="https://github.com/user-attachments/assets/69924974-655b-4a5b-afb9-c888982d7896" />
+<img alt="SMOKING1" src="https://github.com/user-attachments/assets/69924974-655b-4a5b-afb9-c888982d7896" />
 
   # 🦮 Zooni – Tu mascota, tu mundo
 
